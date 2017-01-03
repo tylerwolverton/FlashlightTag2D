@@ -7,20 +7,17 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 
-//Key press surfaces constants
-enum KeyPressSurfaces
-{
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
-};
-
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+
+enum EInputValues
+{
+	UP = 0x0001,
+	DOWN = 0x002,
+	LEFT = 0x004,
+	RIGHT = 0x0008
+};
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -33,9 +30,6 @@ SDL_Texture* gTexture = NULL;
 
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
-
-//The images that correspond to a keypress
-SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
 //Current displayed image
 SDL_Surface* gCurrentSurface = NULL;
@@ -54,7 +48,7 @@ bool init()
 	}
 
 	//Create window
-	gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	gWindow = SDL_CreateWindow("SDLGame1", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (gWindow == NULL)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -83,6 +77,7 @@ bool init()
 	return true;
 }
 
+uint32_t handleInput();
 
 SDL_Surface* loadBMPSurface(std::string path)
 {
@@ -166,46 +161,6 @@ SDL_Texture* loadTexture(std::string path)
 //Loads media
 bool loadMedia()
 {
-	//Load default surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadBMPSurface("resources/press.bmp");
-	if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL)
-	{
-		printf("Failed to load default image!\n");
-		return false;
-	}
-
-	//Load up surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadBMPSurface("resources/up.bmp");
-	if (gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL)
-	{
-		printf("Failed to load up image!\n");
-		return false;
-	}
-
-	//Load down surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadBMPSurface("resources/down.bmp");
-	if (gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL)
-	{
-		printf("Failed to load down image!\n");
-		return false;
-	}
-
-	//Load left surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadBMPSurface("resources/left.bmp");
-	if (gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL)
-	{
-		printf("Failed to load left image!\n");
-		return false;
-	}
-
-	//Load right surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadBMPSurface("resources/right.bmp");
-	if (gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL)
-	{
-		printf("Failed to load right image!\n");
-		return false;
-	}
-
 	gPNGSurface = loadPNGSurface("resources/loaded.png");
 	if (gPNGSurface == NULL)
 	{
@@ -257,138 +212,153 @@ int main(int argc, char* args[])
 		if (!loadMedia())
 		{
 			printf("Failed to load media!\n");
+			close();
+
+			return 1;
 		}
-		else
+
+		uint32_t buttonState = 0;
+		while (buttonState != UINT32_MAX)
 		{
-			SDL_Event e;
+			buttonState = handleInput();
 
-			//Set default current surface
-			//gCurrentSurface = gPNGSurface;
+			//Apply the image
+			//SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
 
-			bool quit = false;
-			while (!quit)
-			{
-				//Handle events on queue
-				// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
-				while (SDL_PollEvent(&e) != 0)
-				{
-					//User requests quit
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-					}
-					//User presses a key
-					//else if (e.type == SDL_KEYDOWN)
-					//{
-					//	//Select surfaces based on key press
-					//	switch (e.key.keysym.sym)
-					//	{
-					//	case SDLK_UP:
-					//		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
-					//		break;
+			//Update the surface
+			//SDL_UpdateWindowSurface(gWindow);
 
-					//	case SDLK_DOWN:
-					//		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-					//		break;
+			//Clear screen
+			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+			SDL_RenderClear(gRenderer);
 
-					//	case SDLK_LEFT:
-					//		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
-					//		break;
+			//Top left corner viewport
+			SDL_Rect topLeftViewport;
+			topLeftViewport.x = 0;
+			topLeftViewport.y = 0;
+			topLeftViewport.w = SCREEN_WIDTH / 2;
+			topLeftViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport(gRenderer, &topLeftViewport);
 
-					//	case SDLK_RIGHT:
-					//		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
-					//		break;
+			//Render texture to screen
+			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
-					//	default:
-					//		gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
-					//		break;
-					//	}
-					//}
-				}
+			//Top right corner viewport
+			SDL_Rect topRightViewport;
+			topRightViewport.x = SCREEN_WIDTH / 2;
+			topRightViewport.y = 0;
+			topRightViewport.w = SCREEN_WIDTH / 2;
+			topRightViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport(gRenderer, &topRightViewport);
 
-				//Apply the image
-				//SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
+			//Render texture to screen
+			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
-				//Update the surface
-				//SDL_UpdateWindowSurface(gWindow);
+			SDL_Rect bottomViewport;
+			bottomViewport.x = 0;
+			bottomViewport.y = SCREEN_HEIGHT / 2;
+			bottomViewport.w = SCREEN_WIDTH;
+			bottomViewport.h = SCREEN_HEIGHT / 2;
+			SDL_RenderSetViewport(gRenderer, &bottomViewport);
 
-				//Clear screen
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(gRenderer);
+			//Render texture to screen
+			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
-				//Top left corner viewport
-				SDL_Rect topLeftViewport;
-				topLeftViewport.x = 0;
-				topLeftViewport.y = 0;
-				topLeftViewport.w = SCREEN_WIDTH / 2;
-				topLeftViewport.h = SCREEN_HEIGHT / 2;
-				SDL_RenderSetViewport(gRenderer, &topLeftViewport);
+			SDL_Rect minimapViewport;
+			minimapViewport.x = SCREEN_WIDTH - 150;
+			minimapViewport.y = SCREEN_HEIGHT - 150;
+			minimapViewport.w = 150;
+			minimapViewport.h = 150;
+			SDL_RenderSetViewport(gRenderer, &minimapViewport);
 
-				//Render texture to screen
-				SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+			//Render texture to screen
+			SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
-				//Top right corner viewport
-				SDL_Rect topRightViewport;
-				topRightViewport.x = SCREEN_WIDTH / 2;
-				topRightViewport.y = 0;
-				topRightViewport.w = SCREEN_WIDTH / 2;
-				topRightViewport.h = SCREEN_HEIGHT / 2;
-				SDL_RenderSetViewport(gRenderer, &topRightViewport);
+			////Render red filled quad
+			//SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+			//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+			//SDL_RenderFillRect(gRenderer, &fillRect);
 
-				//Render texture to screen
-				SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+			////Render green outlined quad
+			//SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
+			//SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
+			//SDL_RenderDrawRect(gRenderer, &outlineRect);
 
-				SDL_Rect bottomViewport;
-				bottomViewport.x = 0;
-				bottomViewport.y = SCREEN_HEIGHT / 2;
-				bottomViewport.w = SCREEN_WIDTH;
-				bottomViewport.h = SCREEN_HEIGHT / 2;
-				SDL_RenderSetViewport(gRenderer, &bottomViewport);
+			////Draw blue horizontal line
+			//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
+			//SDL_RenderDrawLine(gRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2);
 
-				//Render texture to screen
-				SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+			////Draw vertical line of yellow dots
+			//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
+			//for (int i = 0; i < SCREEN_HEIGHT; i += 4)
+			//{
+			//	SDL_RenderDrawPoint(gRenderer, SCREEN_WIDTH / 2, i);
+			//}
 
-				SDL_Rect minimapViewport;
-				minimapViewport.x = SCREEN_WIDTH - 150;
-				minimapViewport.y = SCREEN_HEIGHT - 150;
-				minimapViewport.w = 150;
-				minimapViewport.h = 150;
-				SDL_RenderSetViewport(gRenderer, &minimapViewport);
+			//Render texture to screen
+			//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
-				//Render texture to screen
-				SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
-				////Render red filled quad
-				//SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-				//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-				//SDL_RenderFillRect(gRenderer, &fillRect);
-
-				////Render green outlined quad
-				//SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-				//SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
-				//SDL_RenderDrawRect(gRenderer, &outlineRect);
-
-				////Draw blue horizontal line
-				//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
-				//SDL_RenderDrawLine(gRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2);
-
-				////Draw vertical line of yellow dots
-				//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
-				//for (int i = 0; i < SCREEN_HEIGHT; i += 4)
-				//{
-				//	SDL_RenderDrawPoint(gRenderer, SCREEN_WIDTH / 2, i);
-				//}
-
-				//Render texture to screen
-				//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
-				//Update screen
-				SDL_RenderPresent(gRenderer);
-			}
+			//Update screen
+			SDL_RenderPresent(gRenderer);
 		}
 	}
 
 	close();
 
 	return 0;
+}
+
+// Returns
+uint32_t handleInput()
+{
+	uint32_t buttonState = 0;
+
+	//Handle events on queue
+	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
+	SDL_Event e;
+	while (SDL_PollEvent(&e) != 0)
+	{
+		//User requests quit
+		if (e.type == SDL_QUIT)
+		{
+			return UINT32_MAX;
+		}
+
+		const Uint8 *keys = SDL_GetKeyboardState(NULL);
+
+		if (keys[SDL_SCANCODE_W])
+		{
+			buttonState |= 1 << 1;
+		}
+		else
+		{
+			buttonState &= ~(1 << 1);
+		}
+		if (keys[SDL_SCANCODE_A])
+		{
+			buttonState |= 1 << 2;
+		}
+		else
+		{
+			buttonState &= ~(1 << 2);
+		}
+		if (keys[SDL_SCANCODE_S])
+			buttonState |= 1 << 3;
+		else
+		{
+			buttonState &= ~(1 << 3);
+		}
+		if (keys[SDL_SCANCODE_D])
+		{
+			buttonState |= 1 << 4;
+		}
+		else
+		{
+			buttonState &= ~(1 << 4);
+		}
+		if (keys[SDL_SCANCODE_ESCAPE])
+			buttonState = UINT32_MAX;
+
+		return buttonState;
+	}
 }
