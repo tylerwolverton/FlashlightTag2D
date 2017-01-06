@@ -1,3 +1,5 @@
-﻿  main.cpp
+﻿  ActorComponent.cpp
+  Actor.cpp
+  Generating Code...
   SDLGame1.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.exe
   SDLGame1.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.pdb (Partial PDB)

@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include "Actor.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -133,6 +134,19 @@ void close()
 	SDL_Quit();
 }
 
+Actor::ActorId curActorId = 0;
+Actor::ComponentId curComponentId = 0;
+
+Actor::ActorId GetNextActorId()
+{
+	return curActorId++;
+}
+
+Actor::ComponentId GetNextComponentId()
+{
+	return curComponentId++;
+}
+
 int main(int argc, char* args[])
 {
 	if (!init())
@@ -153,11 +167,16 @@ int main(int argc, char* args[])
 	uint32_t buttonState = 0;
 	bool isGameRunning = true;
 	int xPos = 0, yPos = 0;
+	int tickCount = 0;
 	while (isGameRunning)
 	{
 		isGameRunning = handleInput(buttonState);
 		
-		ProcessInput(buttonState, xPos, yPos);
+		if (--tickCount <= 0)
+		{
+			ProcessInput(buttonState, xPos, yPos);
+			tickCount = 60;
+		}
 
 		//Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
