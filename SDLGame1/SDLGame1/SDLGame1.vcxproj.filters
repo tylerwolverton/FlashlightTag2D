@@ -24,12 +24,18 @@
     <ClCompile Include="ActorComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ActorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActorComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
