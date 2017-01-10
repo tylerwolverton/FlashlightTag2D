@@ -22,7 +22,7 @@ public:
 	void Destroy();
 	void Update(int delatMs);
 
-	ActorId GetId() { return m_id; }
+	ActorId GetId() const { return m_id; }
 
 	template<class ComponentType>
 	std::weak_ptr<ComponentType> GetComponent(ComponentId id)
