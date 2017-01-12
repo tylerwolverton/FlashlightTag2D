@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include "Types.h"
 #include "Actor.h"
 
 //Screen dimension constants
@@ -132,19 +133,6 @@ void close()
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
-}
-
-Actor::ActorId curActorId = 0;
-Actor::ComponentId curComponentId = 0;
-
-Actor::ActorId GetNextActorId()
-{
-	return curActorId++;
-}
-
-Actor::ComponentId GetNextComponentId()
-{
-	return curComponentId++;
 }
 
 int main(int argc, char* args[])

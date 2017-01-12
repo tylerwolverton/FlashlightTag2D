@@ -2,6 +2,8 @@
 #include <map>
 #include <memory>
 
+#include "Types.h"
+
 class Actor
 {
 	friend class ActorFactory;

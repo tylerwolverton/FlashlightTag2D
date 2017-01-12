@@ -1,5 +1,5 @@
 #pragma once
-#include "ActorFactory.h"
+#include "Types.h"
 
 class ActorComponent
 {

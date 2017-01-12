@@ -2,16 +2,7 @@
 #include <memory>
 #include <map>
 
-#include "ActorComponent.h"
-#include "Actor.h"
-
-typedef ActorComponent *(*ActorComponentCreator)();
-typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
-
-typedef unsigned long ActorId;
-typedef unsigned long ComponentId;
-typedef std::shared_ptr<Actor> StrongActorPtr;
-typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
+#include "Types.h"
 
 class ActorFactory
 {
