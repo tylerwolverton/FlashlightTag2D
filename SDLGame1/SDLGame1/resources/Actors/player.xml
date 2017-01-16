@@ -1,0 +1,10 @@
+<Actor resource="actors\player.xml">
+
+	<InputComponent> </>
+
+    <BaseScriptComponent>
+        <ScriptObject constructor="AddPlayer" destructor="RemovePlayer" />
+        <ScriptData actorType="Teapot" />
+    </BaseScriptComponent>
+
+</Actor>

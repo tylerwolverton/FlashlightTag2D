@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <tinyxml2.h>
 #include <stdio.h>
 #include <string>
 #include "Types.h"

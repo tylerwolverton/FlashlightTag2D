@@ -7,7 +7,7 @@ public:
 	InputComponent();
 	virtual ~InputComponent();
 
-	bool VInit() override;
+	bool VInit(tinyxml2::XMLElement* pData) override;
 	void VPostInit() override;
 	void VUpdate(int deltaMs) override;
 

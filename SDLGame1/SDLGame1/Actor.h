@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <memory>
+#include <tinyxml2.h>
 
 #include "Types.h"
 
@@ -19,7 +20,7 @@ public:
 	explicit Actor(ActorId id);
 	virtual ~Actor();
 
-	bool Init();
+	bool Init(tinyxml2::XMLElement* root);
 	void PostInit();
 	void Destroy();
 	void Update(int delatMs);
