@@ -10,14 +10,6 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-enum EInputValues
-{
-	UP = 0x0001,
-	DOWN = 0x002,
-	LEFT = 0x004,
-	RIGHT = 0x0008
-};
-
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
@@ -217,57 +209,57 @@ int main(int argc, char* args[])
 }
 
 // Returns
-bool handleInput(uint32_t& buttonState)
-{
-	//Handle events on queue
-	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
-	SDL_Event e;
-	while (SDL_PollEvent(&e) != 0)
-	{
-		//User requests quit
-		if (e.type == SDL_QUIT)
-		{
-			return false;
-		}
-
-		const Uint8 *keys = SDL_GetKeyboardState(NULL);
-
-		if (keys[SDL_SCANCODE_W])
-		{
-			buttonState |= 1 << 1;
-		}
-		else
-		{
-			buttonState &= ~(1 << 1);
-		}
-		if (keys[SDL_SCANCODE_A])
-		{
-			buttonState |= 1 << 2;
-		}
-		else
-		{
-			buttonState &= ~(1 << 2);
-		}
-		if (keys[SDL_SCANCODE_S])
-			buttonState |= 1 << 3;
-		else
-		{
-			buttonState &= ~(1 << 3);
-		}
-		if (keys[SDL_SCANCODE_D])
-		{
-			buttonState |= 1 << 4;
-		}
-		else
-		{
-			buttonState &= ~(1 << 4);
-		}
-		if (keys[SDL_SCANCODE_ESCAPE])
-			return false;
-	}
-
-	return true;
-}
+//bool handleInput(uint32_t& buttonState)
+//{
+//	//Handle events on queue
+//	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
+//	SDL_Event e;
+//	while (SDL_PollEvent(&e) != 0)
+//	{
+//		//User requests quit
+//		if (e.type == SDL_QUIT)
+//		{
+//			return false;
+//		}
+//
+//		const Uint8 *keys = SDL_GetKeyboardState(NULL);
+//
+//		if (keys[SDL_SCANCODE_W])
+//		{
+//			buttonState |= 1 << 1;
+//		}
+//		else
+//		{
+//			buttonState &= ~(1 << 1);
+//		}
+//		if (keys[SDL_SCANCODE_A])
+//		{
+//			buttonState |= 1 << 2;
+//		}
+//		else
+//		{
+//			buttonState &= ~(1 << 2);
+//		}
+//		if (keys[SDL_SCANCODE_S])
+//			buttonState |= 1 << 3;
+//		else
+//		{
+//			buttonState &= ~(1 << 3);
+//		}
+//		if (keys[SDL_SCANCODE_D])
+//		{
+//			buttonState |= 1 << 4;
+//		}
+//		else
+//		{
+//			buttonState &= ~(1 << 4);
+//		}
+//		if (keys[SDL_SCANCODE_ESCAPE])
+//			return false;
+//	}
+//
+//	return true;
+//}
 
 void ProcessInput(uint32_t buttonState, int& xPos, int& yPos)
 {
