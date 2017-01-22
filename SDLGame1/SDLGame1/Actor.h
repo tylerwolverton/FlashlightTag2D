@@ -17,13 +17,13 @@ private:
 	ActorComponentMap m_componentMap;
 
 public:
-	explicit Actor(ActorId id);
+	Actor(ActorId id);
 	virtual ~Actor();
 
 	bool Init(tinyxml2::XMLElement* root);
 	void PostInit();
 	void Destroy();
-	void Update(int delatMs);
+	virtual void Update(int delatMs);
 
 	ActorId GetId() const { return m_id; }
 

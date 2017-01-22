@@ -1,5 +1,6 @@
 #pragma once
 #include "ActorComponent.h"
+#include "Command.h"
 
 class InputComponent : public ActorComponent
 {
@@ -27,6 +28,14 @@ public:
 		};
 
 
+private:
+	std::list<std::shared_ptr<Command>> HandleInput();
+
+	std::shared_ptr<Command> buttonEsc;
+	std::shared_ptr<Command> buttonW;
+	std::shared_ptr<Command> buttonA;
+	std::shared_ptr<Command> buttonS;
+	std::shared_ptr<Command> buttonD;
 
 	//	inline constexpr EInputValues operator|=(EInputValues& a, EInputValues b)
 	//	{
