@@ -1,6 +1,6 @@
 #pragma once
 #include "ActorComponent.h"
-#include "Command.h"
+class Command;
 
 class InputComponent : public ActorComponent
 {
@@ -8,11 +8,11 @@ public:
 	InputComponent();
 	virtual ~InputComponent();
 
-	bool VInit(tinyxml2::XMLElement* pData) override;
-	void VPostInit() override;
-	void VUpdate(int deltaMs) override;
+	bool Init(tinyxml2::XMLElement* pData) override;
+	void PostInit() override;
+	void Update(GameActor& actor, int deltaMs) override;
 
-	ComponentId VGetComponentId() const override;
+	ComponentId GetComponentId() const;
 
 	/*class InputState {
 	public:*/

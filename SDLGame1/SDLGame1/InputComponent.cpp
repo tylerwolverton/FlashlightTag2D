@@ -1,9 +1,13 @@
 #include "InputComponent.h"
+#include "GameActor.h"
+#include "Command.h"
 #include <SDL.h>
 #include <list>
 
 InputComponent::InputComponent()
 {
+	buttonW = std::make_shared<MoveUp>();
+	buttonS = std::make_shared<MoveDown>();
 }
 
 
@@ -11,24 +15,23 @@ InputComponent::~InputComponent()
 {
 }
 
-bool InputComponent::VInit(tinyxml2::XMLElement* pData)
+bool InputComponent::Init(tinyxml2::XMLElement* pData)
 {
 	return true;
 }
 
-void InputComponent::VPostInit()
+void InputComponent::PostInit()
 {
 }
 
-void InputComponent::VUpdate(int deltaMs)
+void InputComponent::Update(GameActor& actor, int deltaMs)
 {
-	
-
+	actor.commands = std::make_shared<CommandList>(HandleInput());
 }
 
-std::list<std::shared_ptr<Command>> InputComponent::HandleInput()
+CommandList InputComponent::HandleInput()
 {
-	std::list<std::shared_ptr<Command>> commandList;
+	CommandList commandList;
 	uint32_t buttonState = 0;
 	//Handle events on queue
 	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
@@ -90,7 +93,7 @@ std::list<std::shared_ptr<Command>> InputComponent::HandleInput()
 	return commandList;
 }
 
-ComponentId InputComponent::VGetComponentId() const
+ComponentId InputComponent::GetComponentId() const
 {
 	return ComponentId();
 }

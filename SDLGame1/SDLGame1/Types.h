@@ -1,9 +1,11 @@
 #pragma once
 #include <memory>
 #include <map>
+#include <list>
 
 class Actor;
 class ActorComponent;
+class Command;
 
 typedef ActorComponent *(*ActorComponentCreator)();
 typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
@@ -13,6 +15,7 @@ typedef unsigned long ComponentId;
 typedef std::shared_ptr<Actor> StrongActorPtr;
 typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
 
+typedef std::list<std::shared_ptr<Command>> CommandList;
 //const char* PlayerActor = "PlayerActor";
 
 

@@ -14,3 +14,10 @@ public:
 	virtual ~MoveUp() {}
 	virtual void execute(GameActor& actor) { actor.MoveUp(); };
 };
+
+class MoveDown : public Command
+{
+public:
+	virtual ~MoveDown() {}
+	virtual void execute(GameActor& actor) { actor.MoveDown(); };
+};

@@ -2,6 +2,7 @@
 #include <tinyxml2.h>
 
 #include "Types.h"
+class GameActor;
 
 class ActorComponent
 {
@@ -13,11 +14,11 @@ protected:
 public:
 	virtual ~ActorComponent() { m_pOwner.reset(); }
 
-	virtual bool VInit(tinyxml2::XMLElement* pData) = 0;
-	virtual void VPostInit() {}
-	virtual void VUpdate(int deltaMs) {}
+	virtual bool Init(tinyxml2::XMLElement* pData) = 0;
+	virtual void PostInit() {}
+	virtual void Update(GameActor& actor, int deltaMs) {}
 
-	virtual ComponentId VGetComponentId() const = 0;
+	virtual ComponentId GetComponentId() const = 0;
 
 	static ComponentId GetIdFromName(const char* componentStr)
 	{

@@ -69,7 +69,7 @@ StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)
 	// initialize the component if we found one
 	if (pComponent)
 	{
-		if (!pComponent->VInit(pData))
+		if (!pComponent->Init(pData))
 		{
 			//GCC_ERROR("Component failed to initialize: " + std::string(name));
 			return StrongActorComponentPtr();

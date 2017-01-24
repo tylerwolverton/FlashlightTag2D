@@ -19,6 +19,12 @@
     <Filter Include="Header Files\FlashLightTag">
       <UniqueIdentifier>{bb26e4dc-63e6-4ed4-862e-5cbe3aa8e30c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FlashLightTag\Components">
+      <UniqueIdentifier>{96c8e8a7-0b57-4c42-a8e6-b0e8b5a264ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FlashLightTag\Components">
+      <UniqueIdentifier>{ce1ff7ff-b889-4bfb-88c8-43d54582c3ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,9 +36,6 @@
     <ClCompile Include="ActorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameActor.cpp">
       <Filter>Source Files\FlashLightTag</Filter>
     </ClCompile>
@@ -40,7 +43,10 @@
       <Filter>Source Files\FlashLightTag</Filter>
     </ClCompile>
     <ClCompile Include="BaseLogicComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FlashLightTag\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>Source Files\FlashLightTag\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +62,6 @@
     <ClInclude Include="Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -68,8 +71,11 @@
     <ClInclude Include="Behavior.h">
       <Filter>Header Files\FlashLightTag</Filter>
     </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>Header Files\FlashLightTag\Components</Filter>
+    </ClInclude>
     <ClInclude Include="BaseLogicComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FlashLightTag\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

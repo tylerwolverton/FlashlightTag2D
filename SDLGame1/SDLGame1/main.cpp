@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include "Types.h"
-#include "Actor.h"
+#include "GameActor.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -57,8 +57,8 @@ bool init()
 	return true;
 }
 
-bool handleInput(uint32_t& buttonState);
-void ProcessInput(uint32_t buttonState, int& xPos, int& yPos);
+//bool handleInput(uint32_t& buttonState);
+//void ProcessInput(uint32_t buttonState, int& xPos, int& yPos);
 
 //Loads individual image as texture
 SDL_Texture* loadTexture(std::string path)
@@ -147,15 +147,16 @@ int main(int argc, char* args[])
 
 	uint32_t buttonState = 0;
 	bool isGameRunning = true;
-	int xPos = 0, yPos = 0;
+	auto player = new GameActor();
 	int tickCount = 0;
 	while (isGameRunning)
 	{
-		isGameRunning = handleInput(buttonState);
+		//isGameRunning = handleInput(buttonState);
 		
 		if (--tickCount <= 0)
 		{
-			ProcessInput(buttonState, xPos, yPos);
+			player->Update(tickCount);
+			//ProcessInput(buttonState, xPos, yPos);
 			tickCount = 60;
 		}
 
@@ -175,8 +176,8 @@ int main(int argc, char* args[])
 		SDL_RenderCopy(gRenderer, gBackgroundTexture, NULL, NULL);
 
 		SDL_Rect imgPartRect;
-		imgPartRect.x = xPos;
-		imgPartRect.y = yPos;
+		imgPartRect.x = player->posX;
+		imgPartRect.y = player->posY;
 		imgPartRect.w = 100;
 		imgPartRect.h = 100;
 
@@ -261,26 +262,26 @@ int main(int argc, char* args[])
 //	return true;
 //}
 
-void ProcessInput(uint32_t buttonState, int& xPos, int& yPos)
-{
-	if ((buttonState >> 1) & 1)
-	{
-		// W was pressed
-		yPos -= 1;
-	}
-	if ((buttonState >> 2) & 1)
-	{
-		// A was pressed
-		xPos -= 1;
-	}
-	if ((buttonState >> 3) & 1)
-	{
-		// S was pressed
-		yPos += 1;
-	}
-	if ((buttonState >> 4) & 1)
-	{
-		// D was pressed
-		xPos += 1;
-	}
-}
+//void ProcessInput(uint32_t buttonState, int& xPos, int& yPos)
+//{
+//	if ((buttonState >> 1) & 1)
+//	{
+//		// W was pressed
+//		yPos -= 1;
+//	}
+//	if ((buttonState >> 2) & 1)
+//	{
+//		// A was pressed
+//		xPos -= 1;
+//	}
+//	if ((buttonState >> 3) & 1)
+//	{
+//		// S was pressed
+//		yPos += 1;
+//	}
+//	if ((buttonState >> 4) & 1)
+//	{
+//		// D was pressed
+//		xPos += 1;
+//	}
+//}
