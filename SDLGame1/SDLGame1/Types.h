@@ -5,6 +5,7 @@
 
 class Actor;
 class ActorComponent;
+class GameActor;
 class Command;
 
 typedef ActorComponent *(*ActorComponentCreator)();
@@ -14,8 +15,10 @@ typedef unsigned long ActorId;
 typedef unsigned long ComponentId;
 typedef std::shared_ptr<Actor> StrongActorPtr;
 typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
+typedef std::shared_ptr<GameActor> StrongGameActorPtr;
 
 typedef std::list<std::shared_ptr<Command>> CommandList;
+typedef std::list<StrongActorComponentPtr> ComponentList;
 //const char* PlayerActor = "PlayerActor";
 
 

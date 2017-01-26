@@ -1,16 +1,16 @@
 #pragma once
 #include "Types.h"
 //#include "Actor.h"
-class InputComponent;
+//class InputComponent;
 class Command;
 
 class GameActor //:
 	//public Actor
 {
 public:
-	int posX, posY;
+	int posX = 0, posY = 0;
 
-	GameActor();
+	GameActor(ComponentList components);
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs);
@@ -21,6 +21,7 @@ public:
 	std::shared_ptr<CommandList> commands;
 
 private:
-	std::shared_ptr<InputComponent> inputComponent;
+	ComponentList m_components;
+	//std::shared_ptr<InputComponent> inputComponent;
 };
 

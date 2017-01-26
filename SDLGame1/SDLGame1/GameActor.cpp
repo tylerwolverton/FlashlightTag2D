@@ -1,10 +1,11 @@
 #include "GameActor.h"
-#include "InputComponent.h"
+#include "ActorComponent.h"
 #include "Command.h"
 
-GameActor::GameActor()
+GameActor::GameActor(ComponentList components)
+	: m_components(components)
 {
-	inputComponent = std::make_shared<InputComponent>();
+	//inputComponent = std::make_shared<InputComponent>();
 	commands = std::make_shared<CommandList>();
 }
 
@@ -16,7 +17,11 @@ GameActor::~GameActor()
 
 void GameActor::Update(int deltaMs)
 {
-	inputComponent->Update(*this, deltaMs);
+	//inputComponent->Update(*this, deltaMs);
+	for (auto comp : m_components)
+	{
+		comp->Update(*this, deltaMs);
+	}
 
 	for (auto command : *commands)
 	{

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include "Types.h"
+#include "ActorFactory.h"
 #include "GameActor.h"
 
 //Screen dimension constants
@@ -147,18 +148,19 @@ int main(int argc, char* args[])
 
 	uint32_t buttonState = 0;
 	bool isGameRunning = true;
-	auto player = new GameActor();
+	auto actorFactory = new ActorFactory();
+	auto player = actorFactory->CreatePlayer();
 	int tickCount = 0;
 	while (isGameRunning)
 	{
 		//isGameRunning = handleInput(buttonState);
 		
-		if (--tickCount <= 0)
-		{
+		//if (--tickCount <= 0)
+		//{
 			player->Update(tickCount);
 			//ProcessInput(buttonState, xPos, yPos);
 			tickCount = 60;
-		}
+		//}
 
 		//Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);

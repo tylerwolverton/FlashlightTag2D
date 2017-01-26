@@ -17,6 +17,7 @@ public:
 	ActorFactory();
 	
 	StrongActorPtr CreateActor(const char* actorResource);
+	StrongGameActorPtr CreatePlayer();
 
 	virtual StrongActorComponentPtr VCreateComponent(tinyxml2::XMLElement* pData);
 
