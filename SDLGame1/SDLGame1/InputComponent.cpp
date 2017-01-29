@@ -32,7 +32,7 @@ void InputComponent::Update(GameActor& actor, int deltaMs)
 CommandList InputComponent::HandleInput()
 {
 	CommandList commandList;
-	uint32_t buttonState = 0;
+	//uint32_t buttonState = 0;
 	//Handle events on queue
 	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
 	SDL_Event e;
@@ -42,7 +42,7 @@ CommandList InputComponent::HandleInput()
 		if (e.type == SDL_QUIT)
 		{
 			commandList.push_back(buttonEsc);
-			buttonState |= EInputValues::Esc;
+			//buttonState |= EInputValues::Esc;
 		}
 
 		const Uint8 *keys = SDL_GetKeyboardState(NULL);
@@ -50,43 +50,43 @@ CommandList InputComponent::HandleInput()
 		if (keys[SDL_SCANCODE_W])
 		{
 			commandList.push_back(buttonW);
-			buttonState |= EInputValues::W;
+			//buttonState |= EInputValues::W;
 		}
 		else
 		{
-			buttonState &= ~(EInputValues::W);
+			//buttonState &= ~(EInputValues::W);
 		}
 		if (keys[SDL_SCANCODE_A])
 		{
 			commandList.push_back(buttonA);
-			buttonState |= EInputValues::A;
+			//buttonState |= EInputValues::A;
 		}
 		else
 		{
-			buttonState &= ~(EInputValues::A);
+			//buttonState &= ~(EInputValues::A);
 		}
 		if (keys[SDL_SCANCODE_S])
 		{
 			commandList.push_back(buttonS);
-			buttonState |= EInputValues::S;
+			//buttonState |= EInputValues::S;
 		}
 		else
 		{
-			buttonState &= ~(EInputValues::S);
+			//buttonState &= ~(EInputValues::S);
 		}
 		if (keys[SDL_SCANCODE_D])
 		{
 			commandList.push_back(buttonD);
-			buttonState |= EInputValues::D;
+			//buttonState |= EInputValues::D;
 		}
 		else
 		{
-			buttonState &= ~(EInputValues::D);
+			//buttonState &= ~(EInputValues::D);
 		}
 		if (keys[SDL_SCANCODE_ESCAPE])
 		{
 			commandList.push_back(buttonEsc);
-			buttonState |= EInputValues::Esc;
+			//buttonState |= EInputValues::Esc;
 		}
 	}
 

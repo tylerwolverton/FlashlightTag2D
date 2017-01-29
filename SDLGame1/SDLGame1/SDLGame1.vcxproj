@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorFactory.cpp" />
+    <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="BaseLogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="GameActor.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorFactory.h" />
+    <ClInclude Include="AIComponent.h" />
     <ClInclude Include="BaseLogicComponent.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Command.h" />

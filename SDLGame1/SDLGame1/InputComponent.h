@@ -14,19 +14,15 @@ public:
 
 	ComponentId GetComponentId() const;
 
-	/*class InputState {
-	public:*/
-
-		enum EInputValues : uint32_t
-		{
-			None = 0,
-			Esc = 1 << 0,
-			W = 1 << 1,
-			A = 1 << 2,
-			S = 1 << 3,
-			D = 1 << 4
-		};
-
+	enum EInputValues : uint32_t
+	{
+		None = 0,
+		Esc = 1 << 0,
+		W = 1 << 1,
+		A = 1 << 2,
+		S = 1 << 3,
+		D = 1 << 4
+	};
 
 private:
 	std::list<std::shared_ptr<Command>> HandleInput();
@@ -36,16 +32,5 @@ private:
 	std::shared_ptr<Command> buttonA;
 	std::shared_ptr<Command> buttonS;
 	std::shared_ptr<Command> buttonD;
-
-	//	inline constexpr EInputValues operator|=(EInputValues& a, EInputValues b)
-	//	{
-	//		return a = static_cast<EInputValues> (a | b);
-	//	}
-
-	//	inline constexpr EInputValues operator&=(EInputValues& a, EInputValues b)
-	//	{
-	//		return a = static_cast<EInputValues> (a & b);
-	//	}
-	//};
 };
 

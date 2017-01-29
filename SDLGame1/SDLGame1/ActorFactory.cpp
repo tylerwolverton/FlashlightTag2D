@@ -3,6 +3,7 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "InputComponent.h"
+#include "AIComponent.h"
 
 using namespace tinyxml2;
 
@@ -69,6 +70,14 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 	components.push_back(std::make_shared<InputComponent>());
 
 	return std::make_shared<GameActor>(components);
+}
+
+StrongGameActorPtr ActorFactory::CreateEnemy()
+{
+	ComponentList components = ComponentList();
+	components.push_back(std::make_shared<AIComponent>());
+
+	return std::make_shared<GameActor>(components, 200, 100);
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

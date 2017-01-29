@@ -150,6 +150,7 @@ int main(int argc, char* args[])
 	bool isGameRunning = true;
 	auto actorFactory = new ActorFactory();
 	auto player = actorFactory->CreatePlayer();
+	auto enemy = actorFactory->CreateEnemy();
 	int tickCount = 0;
 	while (isGameRunning)
 	{
@@ -158,6 +159,7 @@ int main(int argc, char* args[])
 		//if (--tickCount <= 0)
 		//{
 			player->Update(tickCount);
+			enemy->Update(tickCount);
 			//ProcessInput(buttonState, xPos, yPos);
 			tickCount = 60;
 		//}
@@ -178,14 +180,29 @@ int main(int argc, char* args[])
 		SDL_RenderCopy(gRenderer, gBackgroundTexture, NULL, NULL);
 
 		SDL_Rect imgPartRect;
-		imgPartRect.x = player->posX;
-		imgPartRect.y = player->posY;
+		imgPartRect.x = player->m_posX;
+		imgPartRect.y = player->m_posY;
 		imgPartRect.w = 100;
 		imgPartRect.h = 100;
 
 		SDL_Rect locationRect;
 		locationRect.x = 0;
 		locationRect.y = 0;
+		locationRect.w = 100;
+		locationRect.h = 100;
+
+		//SDL_RenderSetViewport(gRenderer, &topLeftViewport);
+		SDL_RenderCopy(gRenderer, gSpriteTexture, &locationRect, &imgPartRect);
+
+		//SDL_Rect imgPartRect;
+		imgPartRect.x = enemy->m_posX;
+		imgPartRect.y = enemy->m_posY;
+		imgPartRect.w = 100;
+		imgPartRect.h = 100;
+
+		//SDL_Rect locationRect;
+		locationRect.x = 50;
+		locationRect.y = 50;
 		locationRect.w = 100;
 		locationRect.h = 100;
 

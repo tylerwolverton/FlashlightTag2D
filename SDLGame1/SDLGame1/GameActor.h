@@ -8,15 +8,15 @@ class GameActor //:
 	//public Actor
 {
 public:
-	int posX = 0, posY = 0;
+	int m_posX, m_posY;
 
-	GameActor(ComponentList components);
+	GameActor(ComponentList components, int posX = 0, int posY = 0);
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs);
 
-	virtual void MoveUp() { posY -= 10; };
-	virtual void MoveDown() { posY += 10; };
+	virtual void MoveUp() { m_posY -= 10; };
+	virtual void MoveDown() { m_posY += 10; };
 
 	std::shared_ptr<CommandList> commands;
 

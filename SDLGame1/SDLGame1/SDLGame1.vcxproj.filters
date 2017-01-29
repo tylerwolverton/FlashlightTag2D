@@ -48,6 +48,9 @@
     <ClCompile Include="InputComponent.cpp">
       <Filter>Source Files\FlashLightTag\Components</Filter>
     </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Source Files\FlashLightTag\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -75,6 +78,9 @@
       <Filter>Header Files\FlashLightTag\Components</Filter>
     </ClInclude>
     <ClInclude Include="BaseLogicComponent.h">
+      <Filter>Header Files\FlashLightTag\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
       <Filter>Header Files\FlashLightTag\Components</Filter>
     </ClInclude>
   </ItemGroup>
