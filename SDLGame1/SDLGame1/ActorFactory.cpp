@@ -3,11 +3,13 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "InputComponent.h"
+#include "GraphicsComponent.h"
 #include "AIComponent.h"
 
 using namespace tinyxml2;
 
-ActorFactory::ActorFactory()
+ActorFactory::ActorFactory(SDL_Renderer* renderer)
+	: m_renderer(renderer)
 {
 }
 
@@ -68,16 +70,33 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<InputComponent>());
+	auto sprite = loadTexture(m_renderer, "resources/SpriteSheet.png");
+	if (sprite == NULL)
+	{
+		printf("Failed to load texture image!\n");
+		return NULL;
+	}
 
-	return std::make_shared<GameActor>(components);
+	components.push_back(std::make_shared<GraphicsComponent>(m_renderer));
+
+	return std::make_shared<GameActor>(components, 0, 0, sprite);
 }
 
 StrongGameActorPtr ActorFactory::CreateEnemy()
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<AIComponent>());
+	
+	auto sprite = loadTexture(m_renderer, "resources/SpriteSheet.png");
+	if (sprite == NULL)
+	{
+		printf("Failed to load texture image!\n");
+		return NULL;
+	}
 
-	return std::make_shared<GameActor>(components, 200, 100);
+	components.push_back(std::make_shared<GraphicsComponent>(m_renderer));
+
+	return std::make_shared<GameActor>(components, 200, 100, sprite);
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

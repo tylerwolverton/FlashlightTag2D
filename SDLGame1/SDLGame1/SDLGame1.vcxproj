@@ -147,6 +147,7 @@
     <ClCompile Include="BaseLogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="GameActor.cpp" />
+    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="GameActor.h" />
+    <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="InputComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -166,6 +168,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Types.h" />
+    <ClInclude Include="SDLUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

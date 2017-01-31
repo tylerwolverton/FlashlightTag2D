@@ -7,6 +7,7 @@ AIComponent::AIComponent()
 {
 	moveTimer = 0;
 	moveDirection = 0;
+	moveLength = 10;
 }
 
 
@@ -37,22 +38,34 @@ CommandList AIComponent::SimpleMove()
 	}
 	else
 	{
-		moveDirection = (moveDirection + 1) % 2;
-		moveTimer = 60;
-	}
+		if (moveLength < 0)
+		{
+			moveDirection = (moveDirection + 1) % 4;
+			moveLength = 10;
+		}
+		else
+		{
+			moveLength--;
+		}
+		
+		moveTimer = 300;
 
-	switch (moveDirection)
-	{
-		case 0:
-			commandList.push_back(std::make_shared<MoveDown>());
-			break;
-		case 1:
-			commandList.push_back(std::make_shared<MoveUp>());
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
+
+		switch (moveDirection)
+		{
+			case 0:
+				commandList.push_back(std::make_shared<MoveDown>());
+				break;
+			case 1:
+				commandList.push_back(std::make_shared<MoveRight>());
+				break;
+			case 2:
+				commandList.push_back(std::make_shared<MoveUp>());
+				break;
+			case 3:
+				commandList.push_back(std::make_shared<MoveLeft>());
+				break;
+		}
 	}
 
 	

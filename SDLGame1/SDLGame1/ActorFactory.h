@@ -3,6 +3,7 @@
 #include <map>
 #include <tinyxml2.h>
 
+#include "SDLUtils.h"
 #include "Types.h"
 
 class ActorFactory
@@ -14,7 +15,9 @@ protected:
 	GenericObjectFactory<ActorComponent, ComponentId> m_componentFactory;
 
 public:
-	ActorFactory();
+	SDL_Renderer* m_renderer;
+
+	ActorFactory(SDL_Renderer* renderer);
 	
 	StrongActorPtr CreateActor(const char* actorResource);
 	StrongGameActorPtr CreatePlayer();

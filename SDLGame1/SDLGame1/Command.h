@@ -21,3 +21,17 @@ public:
 	virtual ~MoveDown() {}
 	virtual void execute(GameActor& actor) { actor.MoveDown(); };
 };
+
+class MoveRight : public Command
+{
+public:
+	virtual ~MoveRight() {}
+	virtual void execute(GameActor& actor) { actor.MoveRight(); };
+};
+
+class MoveLeft : public Command
+{
+public:
+	virtual ~MoveLeft() {}
+	virtual void execute(GameActor& actor) { actor.MoveLeft(); };
+};

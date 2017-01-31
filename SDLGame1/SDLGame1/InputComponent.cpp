@@ -8,6 +8,8 @@ InputComponent::InputComponent()
 {
 	buttonW = std::make_shared<MoveUp>();
 	buttonS = std::make_shared<MoveDown>();
+	buttonD = std::make_shared<MoveRight>();
+	buttonA = std::make_shared<MoveLeft>();
 }
 
 

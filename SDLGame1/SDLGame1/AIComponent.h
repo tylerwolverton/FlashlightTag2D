@@ -21,5 +21,6 @@ public:
 private:
 	int moveTimer;
 	int moveDirection;
+	int moveLength;
 };
 

@@ -51,6 +51,9 @@
     <ClCompile Include="AIComponent.cpp">
       <Filter>Source Files\FlashLightTag\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsComponent.cpp">
+      <Filter>Source Files\FlashLightTag\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -82,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="AIComponent.h">
       <Filter>Header Files\FlashLightTag\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsComponent.h">
+      <Filter>Header Files\FlashLightTag\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLUtils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
