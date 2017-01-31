@@ -11,9 +11,10 @@ class GameActor //:
 {
 public:
 	int m_posX, m_posY;
+	int m_size;
 	SDL_Texture* m_sprite;
 
-	GameActor(ComponentList components, int posX = 0, int posY = 0, SDL_Texture* sprite = NULL);
+	GameActor(ComponentList components, int posX = 0, int posY = 0, int size = 100, SDL_Texture* sprite = NULL);
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs);

@@ -77,9 +77,9 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 		return NULL;
 	}
 
-	components.push_back(std::make_shared<GraphicsComponent>(m_renderer));
+	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 
-	return std::make_shared<GameActor>(components, 0, 0, sprite);
+	return std::make_shared<GameActor>(components, 0, 0, 100, sprite);
 }
 
 StrongGameActorPtr ActorFactory::CreateEnemy()
@@ -94,9 +94,9 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 		return NULL;
 	}
 
-	components.push_back(std::make_shared<GraphicsComponent>(m_renderer));
+	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 
-	return std::make_shared<GameActor>(components, 200, 100, sprite);
+	return std::make_shared<GameActor>(components, 200, 100, 100, sprite);
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

@@ -1,9 +1,13 @@
 #include "GraphicsComponent.h"
 #include "GameActor.h"
 
-GraphicsComponent::GraphicsComponent(SDL_Renderer* renderer)
-	: m_renderer(renderer)
+GraphicsComponent::GraphicsComponent(SDL_Renderer* renderer, int animationTimer)
+	: m_renderer(renderer),
+	  m_animationTimer(animationTimer)
 {
+	xFrame = 0;
+	yFrame = 0;
+	curAnimationTime = animationTimer;
 }
 
 
@@ -28,18 +32,34 @@ ComponentId GraphicsComponent::GetComponentId() const
 
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
+	int spriteWidth, spriteHeight;
+	SDL_QueryTexture(actor.m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
+
 	SDL_Rect imgPartRect;
 	imgPartRect.x = actor.m_posX;
 	imgPartRect.y = actor.m_posY;
-	imgPartRect.w = 100;
-	imgPartRect.h = 100;
+	imgPartRect.w = actor.m_size;
+	imgPartRect.h = actor.m_size;
 
 	SDL_Rect locationRect;
-	locationRect.x = 0;
-	locationRect.y = 0;
-	locationRect.w = 100;
-	locationRect.h = 100;
+	locationRect.x = xFrame;
+	locationRect.y = yFrame;
+	locationRect.w = xFrame + actor.m_size;
+	locationRect.h = yFrame + actor.m_size;
 
+	if (curAnimationTime < 0)
+	{
+		curAnimationTime = m_animationTimer;
+
+		xFrame = (xFrame + actor.m_size) % spriteWidth;
+
+		if (xFrame == 0)
+			yFrame = (yFrame + actor.m_size) % spriteHeight;
+	}
+	else
+	{
+		curAnimationTime--;
+	}
 	//SDL_RenderSetViewport(gRenderer, &topLeftViewport);
 	SDL_RenderCopy(m_renderer, actor.m_sprite, &locationRect, &imgPartRect);
 }

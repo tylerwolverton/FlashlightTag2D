@@ -1,6 +1,7 @@
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\vc140.pdb
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\vc140.idb
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\actor.obj
+c:\github\sdlgame1\sdlgame1\sdlgame1\debug\actorfactory.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\aicomponent.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\baselogiccomponent.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\behavior.obj
@@ -8,15 +9,12 @@ c:\github\sdlgame1\sdlgame1\sdlgame1\debug\gameactor.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\graphicscomponent.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\inputcomponent.obj
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\main.obj
-c:\github\sdlgame1\sdlgame1\sdlgame1\debug\actorfactory.obj
+c:\github\sdlgame1\sdlgame1\debug\sdlgame1.ilk
+c:\github\sdlgame1\sdlgame1\debug\sdlgame1.exe
 c:\github\sdlgame1\sdlgame1\debug\sdlgame1.pdb
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\cl.command.1.tlog
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\cl.read.1.tlog
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\cl.write.1.tlog
-c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link-cvtres.read.1.tlog
-c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link-cvtres.write.1.tlog
-c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link-rc.read.1.tlog
-c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link-rc.write.1.tlog
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link.command.1.tlog
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link.read.1.tlog
 c:\github\sdlgame1\sdlgame1\sdlgame1\debug\sdlgame1.tlog\link.write.1.tlog
