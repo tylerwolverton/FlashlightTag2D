@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include "Types.h"
+#include "Vector2D.h"
 #include "ActorFactory.h"
 #include "GameActor.h"
 

@@ -36,8 +36,8 @@ void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 	SDL_QueryTexture(actor.m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
 
 	SDL_Rect imgPartRect;
-	imgPartRect.x = actor.m_posX;
-	imgPartRect.y = actor.m_posY;
+	imgPartRect.x = actor.m_position.x;
+	imgPartRect.y = actor.m_position.y;
 	imgPartRect.w = actor.m_size;
 	imgPartRect.h = actor.m_size;
 

@@ -1,4 +1,5 @@
 #include "ActorFactory.h"
+#include "Vector2D.h"
 #include "Actor.h"
 #include "GameActor.h"
 #include "ActorComponent.h"
@@ -79,7 +80,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 
-	return std::make_shared<GameActor>(components, 0, 0, 100, sprite);
+	return std::make_shared<GameActor>(components, Vector2D<int>(0, 0), 100, sprite);
 }
 
 StrongGameActorPtr ActorFactory::CreateEnemy()
@@ -96,7 +97,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 
-	return std::make_shared<GameActor>(components, 200, 100, 100, sprite);
+	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), 100, sprite);
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

@@ -1,12 +1,11 @@
-﻿  main.cpp
-  InputComponent.cpp
-  GraphicsComponent.cpp
+﻿  GraphicsComponent.cpp
   GameActor.cpp
-  Behavior.cpp
-  BaseLogicComponent.cpp
-  AIComponent.cpp
   ActorFactory.cpp
-  Actor.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  InputComponent.cpp
+  AIComponent.cpp
   Generating Code...
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.exe
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.pdb (Partial PDB)
