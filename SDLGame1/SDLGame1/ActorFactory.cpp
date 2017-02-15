@@ -6,6 +6,8 @@
 #include "InputComponent.h"
 #include "GraphicsComponent.h"
 #include "AIComponent.h"
+#include "FollowTargetAIComponent.h"
+#include "World.h"
 
 using namespace tinyxml2;
 
@@ -80,7 +82,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 
-	return std::make_shared<GameActor>(components, Vector2D<int>(0, 0), 100, sprite);
+	return std::make_shared<GameActor>(components, Vector2D<int>(0, 0), Vector2D<int>(100, 100), sprite);
 }
 
 StrongGameActorPtr ActorFactory::CreateEnemy()
@@ -97,7 +99,15 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 
-	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), 100, sprite);
+	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), Vector2D<int>(100, 100), sprite);
+}
+
+StrongGameActorPtr ActorFactory::CreateCamera(const GameActor& target)
+{
+	ComponentList components = ComponentList();
+	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
+
+	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

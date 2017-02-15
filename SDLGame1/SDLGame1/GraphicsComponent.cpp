@@ -38,23 +38,23 @@ void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 	SDL_Rect imgPartRect;
 	imgPartRect.x = actor.m_position.x;
 	imgPartRect.y = actor.m_position.y;
-	imgPartRect.w = actor.m_size;
-	imgPartRect.h = actor.m_size;
+	imgPartRect.w = actor.m_size.x;
+	imgPartRect.h = actor.m_size.y;
 
 	SDL_Rect locationRect;
 	locationRect.x = xFrame;
 	locationRect.y = yFrame;
-	locationRect.w = xFrame + actor.m_size;
-	locationRect.h = yFrame + actor.m_size;
+	locationRect.w = xFrame + actor.m_size.x;
+	locationRect.h = yFrame + actor.m_size.y;
 
 	if (curAnimationTime < 0)
 	{
 		curAnimationTime = m_animationTimer;
 
-		xFrame = (xFrame + actor.m_size) % spriteWidth;
+		xFrame = (xFrame + actor.m_size.x) % spriteWidth;
 
 		if (xFrame == 0)
-			yFrame = (yFrame + actor.m_size) % spriteHeight;
+			yFrame = (yFrame + actor.m_size.y) % spriteHeight;
 	}
 	else
 	{

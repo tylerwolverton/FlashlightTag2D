@@ -146,10 +146,12 @@
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="BaseLogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
+    <ClCompile Include="FollowTargetAIComponent.cpp" />
     <ClCompile Include="GameActor.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="BaseLogicComponent.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="FollowTargetAIComponent.h" />
     <ClInclude Include="GameActor.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="InputComponent.h">
@@ -170,6 +173,7 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="SDLUtils.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

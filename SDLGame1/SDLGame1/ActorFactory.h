@@ -22,6 +22,7 @@ public:
 	StrongActorPtr CreateActor(const char* actorResource);
 	StrongGameActorPtr CreatePlayer();
 	StrongGameActorPtr CreateEnemy();
+	StrongGameActorPtr CreateCamera(const GameActor& target);
 
 	virtual StrongActorComponentPtr VCreateComponent(tinyxml2::XMLElement* pData);
 

@@ -1,14 +1,8 @@
 #include <tinyxml2.h>
 #include <stdio.h>
 #include <string>
-#include "Types.h"
-#include "Vector2D.h"
-#include "ActorFactory.h"
-#include "GameActor.h"
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+#include "World.h"
+#include "GraphicsComponent.h"
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -30,7 +24,7 @@ bool init()
 	}
 
 	//Create window
-	gWindow = SDL_CreateWindow("SDLGame1", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	gWindow = SDL_CreateWindow("SDLGame1", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, World::SCREEN_WIDTH, World::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (gWindow == NULL)
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -89,6 +83,8 @@ void close()
 
 int main(int argc, char* args[])
 {
+	auto world = new World();
+
 	if (!init())
 	{
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -104,35 +100,60 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	bool isGameRunning = true;
-	auto actorFactory = new ActorFactory(gRenderer);
-	auto player = actorFactory->CreatePlayer();
-	auto enemy = actorFactory->CreateEnemy();
-	int tickCount = 0;
-	while (isGameRunning)
-	{
-		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(gRenderer);
+	world->RunGame(gRenderer);
+	//bool isGameRunning = true;
+	//auto actorFactory = new ActorFactory(gRenderer);
+	//auto player = actorFactory->CreatePlayer();
+	//auto enemy = actorFactory->CreateEnemy();
+	//int tickCount = 0;
+	//while (isGameRunning)
+	//{
+	//	//Clear screen
+	//	SDL_RenderClear(gRenderer);
 
-		//Top left corner viewport
-		SDL_Rect topLeftViewport;
-		topLeftViewport.x = 0;
-		topLeftViewport.y = 0;
-		topLeftViewport.w = SCREEN_WIDTH;
-		topLeftViewport.h = SCREEN_HEIGHT;
-		SDL_RenderSetViewport(gRenderer, &topLeftViewport);
+	//	//The camera area
+	//	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
-		//Render texture to screen
-		SDL_RenderCopy(gRenderer, gBackgroundTexture, NULL, NULL);
+	//	//Top left corner viewport
+	//	SDL_Rect topLeftViewport;
+	//	topLeftViewport.x = 0;
+	//	topLeftViewport.y = 0;
+	//	topLeftViewport.w = SCREEN_WIDTH;
+	//	topLeftViewport.h = SCREEN_HEIGHT;
+	//	SDL_RenderSetViewport(gRenderer, &topLeftViewport);
 
-		player->Update(tickCount);
-		enemy->Update(tickCount);
-		tickCount = 60;
+	//	//Render texture to screen
+	//	SDL_RenderCopy(gRenderer, gBackgroundTexture, NULL, NULL);
 
-		//Update screen
-		SDL_RenderPresent(gRenderer);
-	}
+	//	player->Update(tickCount);
+	//	enemy->Update(tickCount);
+	//	tickCount = 60;
+
+	//	//Center the camera over the dot
+	//	camera.x = (player->m_position.x + player->m_size / 2) - SCREEN_WIDTH / 2;
+	//	camera.y = (player->m_position.y + player->m_size / 2) - SCREEN_HEIGHT / 2;
+
+	//	//Keep the camera in bounds
+	//	if (camera.x < 0)
+	//	{
+	//		camera.x = 0;
+	//	}
+	//	if (camera.y < 0)
+	//	{
+	//		camera.y = 0;
+	//	}
+	//	if (camera.x > LEVEL_WIDTH - camera.w)
+	//	{
+	//		camera.x = LEVEL_WIDTH - camera.w;
+	//	}
+	//	if (camera.y > LEVEL_HEIGHT - camera.h)
+	//	{
+	//		camera.y = LEVEL_HEIGHT - camera.h;
+	//	}
+
+	//	//Update screen
+	//	SDL_RenderPresent(gRenderer);
+	//}
 
 	close();
 	return 0;
