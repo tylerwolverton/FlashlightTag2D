@@ -7,7 +7,7 @@ class FollowTargetAIComponent : public ActorComponent
 {
 public:
 	FollowTargetAIComponent();
-	FollowTargetAIComponent(const GameActor& p_target);
+	FollowTargetAIComponent(StrongGameActorPtr p_target);
 	virtual ~FollowTargetAIComponent();
 
 	bool Init(tinyxml2::XMLElement* pData) override;
@@ -16,7 +16,7 @@ public:
 
 	ComponentId GetComponentId() const;
 
-	void SetTargetActor(const GameActor& actor);
+	void SetTargetActor(StrongGameActorPtr actor);
 
 private:
 	StrongGameActorPtr target;

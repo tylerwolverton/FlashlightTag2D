@@ -7,6 +7,7 @@ class Actor;
 class ActorComponent;
 class GameActor;
 class Command;
+class World;
 
 typedef ActorComponent *(*ActorComponentCreator)();
 typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
@@ -16,6 +17,7 @@ typedef unsigned long ComponentId;
 typedef std::shared_ptr<Actor> StrongActorPtr;
 typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
 typedef std::shared_ptr<GameActor> StrongGameActorPtr;
+typedef std::shared_ptr<World> StrongWorldPtr;
 
 typedef std::list<std::shared_ptr<Command>> CommandList;
 typedef std::list<StrongActorComponentPtr> ComponentList;

@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <SDL.h>
 #include "Types.h"
 
@@ -15,12 +16,15 @@ public:
 	static const int SCREEN_WIDTH = 640;
 	static const int SCREEN_HEIGHT = 480;
 
-	SDL_Rect cameraList[MAX_CAMERAS];
+	StrongGameActorPtr cameraList[MAX_CAMERAS];
 
 	World();
 	virtual ~World();
 
 	void RunGame(SDL_Renderer* renderer);
+	void AddCamera(StrongGameActorPtr camera);
+
+	StrongGameActorPtr GetCurrentCamera() { return cameraList[curCamera]; };
 
 private:
 	int curCamera;

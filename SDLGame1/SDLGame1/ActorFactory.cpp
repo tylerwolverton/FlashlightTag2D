@@ -69,7 +69,7 @@ StrongActorPtr ActorFactory::CreateActor(const char* actorResource)
 	return pActor;
 }
 
-StrongGameActorPtr ActorFactory::CreatePlayer()
+StrongGameActorPtr ActorFactory::CreatePlayer(StrongWorldPtr world)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<InputComponent>());
@@ -82,10 +82,10 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 
-	return std::make_shared<GameActor>(components, Vector2D<int>(0, 0), Vector2D<int>(100, 100), sprite);
+	return std::make_shared<GameActor>(world, components, Vector2D<int>(0, 0), Vector2D<int>(100, 100), sprite);
 }
 
-StrongGameActorPtr ActorFactory::CreateEnemy()
+StrongGameActorPtr ActorFactory::CreateEnemy(StrongWorldPtr world)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<AIComponent>());
@@ -99,15 +99,15 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 
-	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), Vector2D<int>(100, 100), sprite);
+	return std::make_shared<GameActor>(world, components, Vector2D<int>(200, 100), Vector2D<int>(100, 100), sprite);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(const GameActor& target)
+StrongGameActorPtr ActorFactory::CreateCamera(StrongWorldPtr world, StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
 
-	return std::make_shared<GameActor>(components, Vector2D<int>(200, 100), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
+	return std::make_shared<GameActor>(world, components, Vector2D<int>(200, 100), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

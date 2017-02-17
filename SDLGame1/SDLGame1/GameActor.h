@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Types.h"
 #include "Vector2D.h"
 
@@ -6,6 +7,7 @@ struct SDL_Texture;
 //#include "Actor.h"
 //class InputComponent;
 class Command;
+class World;
 
 class GameActor //:
 	//public Actor
@@ -14,8 +16,9 @@ public:
 	Vector2D<int> m_position;
 	Vector2D<int> m_size;
 	SDL_Texture* m_sprite;
+	StrongWorldPtr m_world;
 
-	GameActor(ComponentList components, Vector2D<int> pos = Vector2D<int>(0, 0), Vector2D<int> size = Vector2D<int>(0, 0), SDL_Texture* sprite = NULL);
+	GameActor(StrongWorldPtr world, ComponentList components, Vector2D<int> pos = Vector2D<int>(0, 0), Vector2D<int> size = Vector2D<int>(0, 0), SDL_Texture* sprite = NULL);
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs);

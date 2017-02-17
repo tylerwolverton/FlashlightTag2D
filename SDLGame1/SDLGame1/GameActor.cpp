@@ -3,8 +3,9 @@
 #include "ActorComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ComponentList components, Vector2D<int> pos, Vector2D<int> size, SDL_Texture* sprite)
-	: m_components(components),
+GameActor::GameActor(StrongWorldPtr world, ComponentList components, Vector2D<int> pos, Vector2D<int> size, SDL_Texture* sprite)
+	: m_world(world),
+	  m_components(components),
 	  m_position(pos),
 	  m_size(size),
 	  m_sprite(sprite)

@@ -6,6 +6,8 @@
 #include "SDLUtils.h"
 #include "Types.h"
 
+class World;
+
 class ActorFactory
 {
 	ActorId m_lastActorId;
@@ -20,9 +22,9 @@ public:
 	ActorFactory(SDL_Renderer* renderer);
 	
 	StrongActorPtr CreateActor(const char* actorResource);
-	StrongGameActorPtr CreatePlayer();
-	StrongGameActorPtr CreateEnemy();
-	StrongGameActorPtr CreateCamera(const GameActor& target);
+	StrongGameActorPtr CreatePlayer(StrongWorldPtr world);
+	StrongGameActorPtr CreateEnemy(StrongWorldPtr world);
+	StrongGameActorPtr CreateCamera(StrongWorldPtr world, StrongGameActorPtr target);
 
 	virtual StrongActorComponentPtr VCreateComponent(tinyxml2::XMLElement* pData);
 

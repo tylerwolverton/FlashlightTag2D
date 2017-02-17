@@ -6,8 +6,8 @@ FollowTargetAIComponent::FollowTargetAIComponent()
 	target = nullptr;
 }
 
-FollowTargetAIComponent::FollowTargetAIComponent(const GameActor& p_target)
-	: target(std::make_shared<GameActor>(p_target))
+FollowTargetAIComponent::FollowTargetAIComponent(StrongGameActorPtr p_target)
+	: target(p_target)
 {
 }
 
@@ -26,7 +26,7 @@ void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs)
 ComponentId FollowTargetAIComponent::GetComponentId() const { return ComponentId(); }
 
 
-void FollowTargetAIComponent::SetTargetActor(const GameActor& actor)
+void FollowTargetAIComponent::SetTargetActor(StrongGameActorPtr actor)
 {
-	target = std::make_shared<GameActor>(actor);
+	target = actor;
 }
