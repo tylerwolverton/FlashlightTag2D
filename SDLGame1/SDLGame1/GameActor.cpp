@@ -3,17 +3,15 @@
 #include "ActorComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(StrongWorldPtr world, ComponentList components, Vector2D<int> pos, Vector2D<int> size, SDL_Texture* sprite)
+GameActor::GameActor(World*  world, ComponentList components, Vector2D<int> pos, Vector2D<int> size, SDL_Texture* sprite)
 	: m_world(world),
 	  m_components(components),
 	  m_position(pos),
 	  m_size(size),
 	  m_sprite(sprite)
 {
-	//inputComponent = std::make_shared<InputComponent>();
 	commands = std::make_shared<CommandList>();
 }
-
 
 GameActor::~GameActor()
 {
@@ -21,10 +19,10 @@ GameActor::~GameActor()
 	m_sprite = NULL;
 }
 
-
-void GameActor::Update(int deltaMs)
+void GameActor::Update(int deltaMs, uint32_t input)
 {
-	//inputComponent->Update(*this, deltaMs);
+	m_input = input;
+
 	for (auto comp : m_components)
 	{
 		comp->Update(*this, deltaMs);

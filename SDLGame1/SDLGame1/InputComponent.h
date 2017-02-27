@@ -14,19 +14,7 @@ public:
 
 	ComponentId GetComponentId() const;
 
-	enum EInputValues : uint32_t
-	{
-		None = 0,
-		Esc = 1 << 0,
-		W = 1 << 1,
-		A = 1 << 2,
-		S = 1 << 3,
-		D = 1 << 4
-	};
-
 private:
-	std::list<std::shared_ptr<Command>> HandleInput();
-
 	std::shared_ptr<Command> buttonEsc;
 	std::shared_ptr<Command> buttonW;
 	std::shared_ptr<Command> buttonA;

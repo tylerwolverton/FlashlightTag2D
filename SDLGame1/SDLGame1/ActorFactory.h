@@ -22,9 +22,9 @@ public:
 	ActorFactory(SDL_Renderer* renderer);
 	
 	StrongActorPtr CreateActor(const char* actorResource);
-	StrongGameActorPtr CreatePlayer(StrongWorldPtr world);
-	StrongGameActorPtr CreateEnemy(StrongWorldPtr world);
-	StrongGameActorPtr CreateCamera(StrongWorldPtr world, StrongGameActorPtr target);
+	StrongGameActorPtr CreatePlayer(World*  world);
+	StrongGameActorPtr CreateEnemy(World*  world);
+	StrongGameActorPtr CreateCamera(World*  world, StrongGameActorPtr target);
 
 	virtual StrongActorComponentPtr VCreateComponent(tinyxml2::XMLElement* pData);
 

@@ -69,7 +69,7 @@ StrongActorPtr ActorFactory::CreateActor(const char* actorResource)
 	return pActor;
 }
 
-StrongGameActorPtr ActorFactory::CreatePlayer(StrongWorldPtr world)
+StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<InputComponent>());
@@ -80,12 +80,13 @@ StrongGameActorPtr ActorFactory::CreatePlayer(StrongWorldPtr world)
 		return NULL;
 	}
 
+	world->graphicsComponentList.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
 
 	return std::make_shared<GameActor>(world, components, Vector2D<int>(0, 0), Vector2D<int>(100, 100), sprite);
 }
 
-StrongGameActorPtr ActorFactory::CreateEnemy(StrongWorldPtr world)
+StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<AIComponent>());
@@ -97,17 +98,18 @@ StrongGameActorPtr ActorFactory::CreateEnemy(StrongWorldPtr world)
 		return NULL;
 	}
 
+	world->graphicsComponentList.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
 
 	return std::make_shared<GameActor>(world, components, Vector2D<int>(200, 100), Vector2D<int>(100, 100), sprite);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(StrongWorldPtr world, StrongGameActorPtr target)
+StrongGameActorPtr ActorFactory::CreateCamera(World* world, StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
-	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
+	//components.push_back(std::make_shared<FollowTargetAIComponent>(target));
 
-	return std::make_shared<GameActor>(world, components, Vector2D<int>(200, 100), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
+	return std::make_shared<GameActor>(world, components, Vector2D<int>(0, 0), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
 }
 
 StrongActorComponentPtr ActorFactory::VCreateComponent(XMLElement* pData)

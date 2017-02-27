@@ -1,16 +1,15 @@
 #include "World.h"
 
 #include "Vector2D.h"
+#include "InputManager.h"
 #include "ActorFactory.h"
 #include "GameActor.h"
-
+#include "ActorComponent.h"
 
 World::World()
 {
-	numCameras = 0;
-	curCamera = -1;
+	currentCamera = nullptr;
 }
-
 
 World::~World()
 {
@@ -20,14 +19,18 @@ void World::RunGame(SDL_Renderer* renderer)
 {
 	bool isGameRunning = true;
 	auto actorFactory = new ActorFactory(renderer);
+	auto inputManager = new InputManager();
 
-	StrongWorldPtr thisWorld = std::make_shared<World>(*this);
-	auto player = actorFactory->CreatePlayer(thisWorld);
-	auto enemy = actorFactory->CreateEnemy(thisWorld);
-	auto camera = actorFactory->CreateCamera(thisWorld, player);
-	thisWorld->AddCamera(camera);
+	//StrongWorldPtr thisWorld = std::make_shared<World>(*this);
+	auto player = AddEntity(actorFactory->CreatePlayer(this));
+	AddEntity(actorFactory->CreateEnemy(this));
+	AddCamera(actorFactory->CreateCamera(this, player));
 
-	int tickCount = 0;
+	//int tickCount = 0;
+	auto timeStepMs = 1000.f / 60; //eg. 30Hz
+	float timeLastMs = 0;
+	float timeCurrentMs = 0;
+	float timeAccumulatedMs = 0;
 	while (isGameRunning)
 	{
 		//Clear screen
@@ -41,10 +44,27 @@ void World::RunGame(SDL_Renderer* renderer)
 		topLeftViewport.h = SCREEN_HEIGHT;
 		SDL_RenderSetViewport(renderer, &topLeftViewport);
 
-		player->Update(tickCount);
-		enemy->Update(tickCount);
-		camera->Update(tickCount);
-		tickCount = 60;
+		auto input = inputManager->ReadInput();
+
+		timeLastMs = timeCurrentMs;
+		timeCurrentMs = SDL_GetTicks();
+		auto timeDeltaMs = timeCurrentMs - timeLastMs;
+		timeAccumulatedMs += timeDeltaMs;
+
+		while (timeAccumulatedMs >= timeStepMs)
+		{
+			for (auto entity : entityList)
+			{
+				entity->Update((int)timeAccumulatedMs, input);
+			}
+
+			timeAccumulatedMs -= timeStepMs;
+		}
+
+		/*for (auto comp : graphicsComponentList)
+		{
+			comp->Update(, (int)timeAccumulatedMs);
+		}*/
 
 		//Update screen
 		SDL_RenderPresent(renderer);
@@ -53,15 +73,17 @@ void World::RunGame(SDL_Renderer* renderer)
 
 void World::AddCamera(StrongGameActorPtr camera)
 {
-	if (numCameras + 1 > MAX_CAMERAS)
+	if (currentCamera == nullptr)
 	{
-		return;
+		currentCamera = camera;
 	}
 
-	cameraList[numCameras] = camera;
+	cameraList.push_back(camera);
+	entityList.push_back(camera);
+}
 
-	numCameras++;
-
-	if (curCamera < 0)
-		curCamera = 0;
+StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
+{
+	entityList.push_back(entity);
+	return entity;
 }

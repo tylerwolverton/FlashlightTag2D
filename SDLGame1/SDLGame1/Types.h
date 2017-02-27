@@ -19,10 +19,11 @@ typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
 typedef std::shared_ptr<GameActor> StrongGameActorPtr;
 typedef std::shared_ptr<World> StrongWorldPtr;
 
+typedef std::list<std::shared_ptr<GameActor>> StrongGameActorPtrList;
+
 typedef std::list<std::shared_ptr<Command>> CommandList;
 typedef std::list<StrongActorComponentPtr> ComponentList;
 //const char* PlayerActor = "PlayerActor";
-
 
 static std::map<const char*, ComponentId> ComponentIdNameMap =
 {
@@ -30,6 +31,15 @@ static std::map<const char*, ComponentId> ComponentIdNameMap =
 	{"InputComponent", 1}
 };
 
+enum EInputValues : uint32_t
+{
+	None = 0,
+	Esc = 1 << 0,
+	W = 1 << 1,
+	A = 1 << 2,
+	S = 1 << 3,
+	D = 1 << 4
+};
 
 // ----------------------------------- templates ----------------------------------------------------------------------
 
