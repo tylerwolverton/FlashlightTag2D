@@ -2,11 +2,13 @@
 
 #include "Vector2D.h"
 #include "InputManager.h"
+#include "GraphicsManager.h"
 #include "ActorFactory.h"
 #include "GameActor.h"
 #include "ActorComponent.h"
 
-World::World()
+World::World(SDL_Renderer* p_renderer)
+	: renderer(p_renderer)
 {
 	currentCamera = nullptr;
 }
@@ -15,11 +17,12 @@ World::~World()
 {
 }
 
-void World::RunGame(SDL_Renderer* renderer)
+void World::RunGame()
 {
 	bool isGameRunning = true;
-	auto actorFactory = new ActorFactory(renderer);
+	auto actorFactory = new ActorFactory();
 	auto inputManager = new InputManager();
+	auto graphicsManager = new GraphicsManager();
 
 	//StrongWorldPtr thisWorld = std::make_shared<World>(*this);
 	auto player = AddEntity(actorFactory->CreatePlayer(this));
@@ -61,10 +64,7 @@ void World::RunGame(SDL_Renderer* renderer)
 			timeAccumulatedMs -= timeStepMs;
 		}
 
-		/*for (auto comp : graphicsComponentList)
-		{
-			comp->Update(, (int)timeAccumulatedMs);
-		}*/
+		graphicsManager->Render(entityList, GetCurrentCamera(), renderer);
 
 		//Update screen
 		SDL_RenderPresent(renderer);

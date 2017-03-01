@@ -22,6 +22,7 @@ public:
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs, uint32_t input = 0);
+	StrongActorComponentPtr GetComponentByName(EComponentNames componentName);
 
 	virtual void MoveUp() { m_position.y -= 10; };
 	virtual void MoveDown() { m_position.y += 10; };

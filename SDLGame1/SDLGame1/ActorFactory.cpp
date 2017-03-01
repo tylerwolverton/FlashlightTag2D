@@ -11,8 +11,7 @@
 
 using namespace tinyxml2;
 
-ActorFactory::ActorFactory(SDL_Renderer* renderer)
-	: m_renderer(renderer)
+ActorFactory::ActorFactory()
 {
 }
 
@@ -73,15 +72,14 @@ StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<InputComponent>());
-	auto sprite = loadTexture(m_renderer, "resources/SpriteSheet.png");
+	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
 		return NULL;
 	}
 
-	world->graphicsComponentList.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
-	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 1000));
+	components.push_back(std::make_shared<GraphicsComponent>(1000));
 
 	return std::make_shared<GameActor>(world, components, Vector2D<int>(0, 0), Vector2D<int>(100, 100), sprite);
 }
@@ -91,15 +89,14 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<AIComponent>());
 	
-	auto sprite = loadTexture(m_renderer, "resources/SpriteSheet.png");
+	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
 		return NULL;
 	}
 
-	world->graphicsComponentList.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
-	components.push_back(std::make_shared<GraphicsComponent>(m_renderer, 6000));
+	components.push_back(std::make_shared<GraphicsComponent>(6000));
 
 	return std::make_shared<GameActor>(world, components, Vector2D<int>(200, 100), Vector2D<int>(100, 100), sprite);
 }

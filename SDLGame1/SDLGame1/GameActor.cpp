@@ -37,3 +37,16 @@ void GameActor::Update(int deltaMs, uint32_t input)
 		commands->clear();
 	}
 }
+
+StrongActorComponentPtr GameActor::GetComponentByName(EComponentNames componentName)
+{
+	for (auto component : m_components)
+	{
+		if (component->GetComponentName() == componentName)
+		{
+			return component;
+		}
+	}
+
+	return nullptr;
+}

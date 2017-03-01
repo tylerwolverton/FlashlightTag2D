@@ -57,3 +57,8 @@ ComponentId InputComponent::GetComponentId() const
 {
 	return ComponentId();
 }
+
+EComponentNames InputComponent::GetComponentName() const
+{
+	return EComponentNames::InputComponentEnum;
+}

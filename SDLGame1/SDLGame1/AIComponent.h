@@ -17,6 +17,7 @@ public:
 	CommandList SimpleMove();
 
 	ComponentId GetComponentId() const;
+	virtual EComponentNames GetComponentName() const override;
 
 private:
 	int moveTimer;

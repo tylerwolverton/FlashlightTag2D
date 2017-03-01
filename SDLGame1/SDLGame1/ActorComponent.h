@@ -19,6 +19,7 @@ public:
 	virtual void Update(GameActor& actor, int deltaMs) {}
 
 	virtual ComponentId GetComponentId() const = 0;
+	virtual EComponentNames GetComponentName() const = 0;
 
 	static ComponentId GetIdFromName(const char* componentStr)
 	{

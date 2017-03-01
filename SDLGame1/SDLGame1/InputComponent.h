@@ -13,6 +13,7 @@ public:
 	void Update(GameActor& actor, int deltaMs) override;
 
 	ComponentId GetComponentId() const;
+	virtual EComponentNames GetComponentName() const override;
 
 private:
 	std::shared_ptr<Command> buttonEsc;

@@ -25,6 +25,10 @@ void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs)
 
 ComponentId FollowTargetAIComponent::GetComponentId() const { return ComponentId(); }
 
+EComponentNames FollowTargetAIComponent::GetComponentName() const
+{
+	return EComponentNames::FollowTargetAIComponentEnum;
+}
 
 void FollowTargetAIComponent::SetTargetActor(StrongGameActorPtr actor)
 {

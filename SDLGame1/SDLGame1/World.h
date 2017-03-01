@@ -18,12 +18,13 @@ public:
 
 	StrongGameActorPtrList entityList;
 	StrongGameActorPtrList cameraList;
-	ComponentList graphicsComponentList;
+	ComponentList graphicsComponentList; 
+	SDL_Renderer* renderer;
 
-	World();
+	World(SDL_Renderer* renderer);
 	virtual ~World();
 
-	void RunGame(SDL_Renderer* renderer);
+	void RunGame();
 	void AddCamera(StrongGameActorPtr camera);
 	StrongGameActorPtr AddEntity(StrongGameActorPtr entity);
 

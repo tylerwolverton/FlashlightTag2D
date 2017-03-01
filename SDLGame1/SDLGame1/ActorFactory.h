@@ -17,9 +17,7 @@ protected:
 	GenericObjectFactory<ActorComponent, ComponentId> m_componentFactory;
 
 public:
-	SDL_Renderer* m_renderer;
-
-	ActorFactory(SDL_Renderer* renderer);
+	ActorFactory();
 	
 	StrongActorPtr CreateActor(const char* actorResource);
 	StrongGameActorPtr CreatePlayer(World*  world);

@@ -25,10 +25,19 @@ typedef std::list<std::shared_ptr<Command>> CommandList;
 typedef std::list<StrongActorComponentPtr> ComponentList;
 //const char* PlayerActor = "PlayerActor";
 
+enum EComponentNames
+{
+	NoneComponentEnum,
+	AIComponentEnum,
+	BaseLogicComponentEnum,
+	FollowTargetAIComponentEnum,
+	GraphicsComponentEnum,
+	InputComponentEnum
+};
+
 static std::map<const char*, ComponentId> ComponentIdNameMap =
 {
-	{"NoneComponent",  0},
-	{"InputComponent", 1}
+	{ "NoneComponent",  0 }
 };
 
 enum EInputValues : uint32_t

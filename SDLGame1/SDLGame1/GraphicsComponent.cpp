@@ -2,13 +2,14 @@
 #include "GameActor.h"
 #include "World.h"
 
-GraphicsComponent::GraphicsComponent(SDL_Renderer* renderer, int animationTimer)
-	: m_renderer(renderer),
-	  m_animationTimer(animationTimer)
+GraphicsComponent::GraphicsComponent(int animationTimer)
+	: m_animationTimer(animationTimer)
 {
 	xFrame = 0;
 	yFrame = 0;
 	curAnimationTime = animationTimer;
+	animationFrameRect.x = 0; animationFrameRect.y = 0;
+	animationFrameRect.h = 0; animationFrameRect.w = 0;
 }
 
 
@@ -31,18 +32,16 @@ ComponentId GraphicsComponent::GetComponentId() const
 	return ComponentId();
 }
 
+EComponentNames GraphicsComponent::GetComponentName() const
+{
+	return EComponentNames::GraphicsComponentEnum;
+}
+
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
 	int spriteWidth, spriteHeight;
 	SDL_QueryTexture(actor.m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
 
-	SDL_Rect imgPartRect;
-	imgPartRect.x = actor.m_position.x - actor.m_world->GetCurrentCamera()->m_position.x;
-	imgPartRect.y = actor.m_position.y - actor.m_world->GetCurrentCamera()->m_position.y;
-	imgPartRect.w = actor.m_size.x;
-	imgPartRect.h = actor.m_size.y;
-
-	SDL_Rect animationFrameRect;
 	animationFrameRect.x = xFrame;
 	animationFrameRect.y = yFrame;
 	animationFrameRect.w = xFrame + actor.m_size.x;
@@ -61,6 +60,4 @@ void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 	{
 		curAnimationTime--;
 	}
-	//SDL_RenderSetViewport(gRenderer, &topLeftViewport);
-	SDL_RenderCopy(m_renderer, actor.m_sprite, &animationFrameRect, &imgPartRect);
 }

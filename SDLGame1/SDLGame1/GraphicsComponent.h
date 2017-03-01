@@ -8,9 +8,9 @@ class GraphicsComponent :
 	public ActorComponent
 {
 public:
-	SDL_Renderer* m_renderer;
+	SDL_Rect animationFrameRect;
 
-	GraphicsComponent(SDL_Renderer* renderer, int animationTimer);
+	GraphicsComponent(int animationTimer);
 	virtual ~GraphicsComponent();
 
 	virtual bool Init(tinyxml2::XMLElement* pData) override;
@@ -18,6 +18,7 @@ public:
 	virtual void Update(GameActor& actor, int deltaMs) override;
 
 	virtual ComponentId GetComponentId() const override;
+	virtual EComponentNames GetComponentName() const override;
 
 private:
 	int curAnimationTime, m_animationTimer;

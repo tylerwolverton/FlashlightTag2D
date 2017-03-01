@@ -76,3 +76,8 @@ ComponentId AIComponent::GetComponentId() const
 {
 	return ComponentId();
 }
+
+EComponentNames AIComponent::GetComponentName() const
+{
+	return EComponentNames::AIComponentEnum;
+}
