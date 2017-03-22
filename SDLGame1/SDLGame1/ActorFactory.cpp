@@ -104,7 +104,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 StrongGameActorPtr ActorFactory::CreateCamera(World* world, StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
-	//components.push_back(std::make_shared<FollowTargetAIComponent>(target));
+	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
 
 	return std::make_shared<GameActor>(world, components, Vector2D<int>(0, 0), Vector2D<int>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT));
 }

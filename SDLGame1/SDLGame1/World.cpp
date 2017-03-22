@@ -29,6 +29,14 @@ void World::RunGame()
 	AddEntity(actorFactory->CreateEnemy(this));
 	AddCamera(actorFactory->CreateCamera(this, player));
 
+
+	auto backgroundSprite = loadTexture(renderer, "resources/background.png");
+	if (backgroundSprite == NULL)
+	{
+		printf("Failed to load texture image!\n");
+		return;
+	}
+
 	//int tickCount = 0;
 	auto timeStepMs = 1000.f / 60; //eg. 30Hz
 	float timeLastMs = 0;
@@ -64,6 +72,7 @@ void World::RunGame()
 			timeAccumulatedMs -= timeStepMs;
 		}
 
+		graphicsManager->RenderBackground(backgroundSprite, GetCurrentCamera(), renderer, LEVEL_WIDTH, LEVEL_HEIGHT);
 		graphicsManager->Render(entityList, GetCurrentCamera(), renderer);
 
 		//Update screen

@@ -33,3 +33,23 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		}
 	}
 }
+
+void GraphicsManager::RenderBackground(SDL_Texture* sprite, StrongGameActorPtr currentCamera, SDL_Renderer* renderer, int screenWidth, int screenHeight)
+{
+	int spriteWidth, spriteHeight;
+	SDL_QueryTexture(sprite, NULL, NULL, &spriteWidth, &spriteHeight);
+
+	for (int i = 0; i < screenWidth; i += spriteWidth)
+	{
+		for (int j = 0; j < screenHeight; j += spriteHeight)
+		{
+			SDL_Rect imgPartRect;
+			imgPartRect.x = i - currentCamera->m_position.x;
+			imgPartRect.y = j - currentCamera->m_position.y;
+			imgPartRect.w = spriteWidth;
+			imgPartRect.h = spriteHeight;
+
+			SDL_RenderCopy(renderer, sprite, NULL, &imgPartRect);
+		}
+	}
+}

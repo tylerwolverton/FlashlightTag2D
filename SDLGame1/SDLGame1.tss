@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\ActorFactory.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\World.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GraphicsManager.cpp</string>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GraphicsManager.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GraphicsComponent.cpp</string>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GraphicsComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\SDLUtils.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GameActor.cpp</string>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\GameActor.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\SDLGame1\SDLGame1\SDLGame1\Actor.cpp</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>
