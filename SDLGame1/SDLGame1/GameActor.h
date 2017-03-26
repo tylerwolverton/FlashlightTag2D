@@ -6,7 +6,6 @@
 
 struct SDL_Texture;
 class Command;
-class World;
 
 class GameActor //:
 	//public Actor
@@ -14,11 +13,9 @@ class GameActor //:
 public:
 	Vector2D<int> m_position;
 	Vector2D<int> m_size;
-	SDL_Texture* m_sprite;
-	World*  m_world;
 	uint32_t m_input;
 
-	GameActor(World*  world, ComponentList components, Vector2D<int> pos = Vector2D<int>(0, 0), Vector2D<int> size = Vector2D<int>(0, 0), SDL_Texture* sprite = NULL);
+	GameActor(ComponentList components, Vector2D<int> pos = Vector2D<int>(0, 0), Vector2D<int> size = Vector2D<int>(0, 0));
 	virtual ~GameActor();
 
 	virtual void Update(int delatMs, uint32_t input = 0);

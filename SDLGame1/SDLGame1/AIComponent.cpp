@@ -50,7 +50,6 @@ CommandList AIComponent::SimpleMove()
 		
 		moveTimer = 300;
 
-
 		switch (moveDirection)
 		{
 			case 0:
@@ -67,7 +66,6 @@ CommandList AIComponent::SimpleMove()
 				break;
 		}
 	}
-
 	
 	return commandList;
 }

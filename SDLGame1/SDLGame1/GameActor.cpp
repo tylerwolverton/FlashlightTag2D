@@ -3,20 +3,16 @@
 #include "ActorComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(World*  world, ComponentList components, Vector2D<int> pos, Vector2D<int> size, SDL_Texture* sprite)
-	: m_world(world),
-	  m_components(components),
+GameActor::GameActor(ComponentList components, Vector2D<int> pos, Vector2D<int> size)
+	: m_components(components),
 	  m_position(pos),
-	  m_size(size),
-	  m_sprite(sprite)
+	  m_size(size)
 {
 	commands = std::make_shared<CommandList>();
 }
 
 GameActor::~GameActor()
 {
-	SDL_DestroyTexture(m_sprite);
-	m_sprite = NULL;
 }
 
 void GameActor::Update(int deltaMs, uint32_t input)

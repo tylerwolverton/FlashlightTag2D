@@ -25,6 +25,12 @@
     <Filter Include="Source Files\FlashLightTag\Components">
       <UniqueIdentifier>{ce1ff7ff-b889-4bfb-88c8-43d54582c3ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FlashLightTag\Managers">
+      <UniqueIdentifier>{4eddb056-5cbc-48ae-8943-41fc2a418db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FlashLightTag\Managers">
+      <UniqueIdentifier>{6f7e0755-4ac4-4792-bef3-7ac10e793405}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,14 +63,20 @@
     <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FollowTargetAIComponent.cpp">
       <Filter>Source Files\FlashLightTag\Components</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Source Files\FlashLightTag\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\FlashLightTag\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="GraphicsManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FlashLightTag\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Source Files\FlashLightTag\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,14 +122,20 @@
     <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FollowTargetAIComponent.h">
       <Filter>Header Files\FlashLightTag\Components</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Header Files\FlashLightTag\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\FlashLightTag\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="GraphicsManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\FlashLightTag\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Header Files\FlashLightTag\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

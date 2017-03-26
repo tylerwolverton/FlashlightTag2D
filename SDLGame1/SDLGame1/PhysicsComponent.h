@@ -1,19 +1,11 @@
 #pragma once
 #include "ActorComponent.h"
-#include "SDLUtils.h"
-
-class GameActor;
-struct SDL_Texture;
-
-class GraphicsComponent :
+class PhysicsComponent :
 	public ActorComponent
 {
 public:
-	SDL_Rect animationFrameRect;
-	SDL_Texture* m_sprite;
-
-	GraphicsComponent(SDL_Texture* sprite, int animationTimer);
-	virtual ~GraphicsComponent();
+	PhysicsComponent();
+	virtual ~PhysicsComponent();
 
 	virtual bool Init(tinyxml2::XMLElement* pData) override;
 	virtual void PostInit() override;
@@ -21,9 +13,5 @@ public:
 
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
-
-private:
-	int curAnimationTime, m_animationTimer;
-	int xFrame, yFrame;
 };
 

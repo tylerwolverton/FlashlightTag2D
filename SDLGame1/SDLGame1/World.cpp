@@ -29,7 +29,6 @@ void World::RunGame()
 	AddEntity(actorFactory->CreateEnemy(this));
 	AddCamera(actorFactory->CreateCamera(this, player));
 
-
 	auto backgroundSprite = loadTexture(renderer, "resources/background.png");
 	if (backgroundSprite == NULL)
 	{

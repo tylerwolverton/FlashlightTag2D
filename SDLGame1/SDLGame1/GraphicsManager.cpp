@@ -3,7 +3,6 @@
 #include "GraphicsComponent.h"
 #include "GameActor.h"
 
-
 GraphicsManager::GraphicsManager()
 {
 }
@@ -29,7 +28,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 			std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
 
-			SDL_RenderCopy(renderer, actor->m_sprite, &(rawGraphicsComponent->animationFrameRect), &imgPartRect);
+			SDL_RenderCopy(renderer, rawGraphicsComponent->m_sprite, &(rawGraphicsComponent->animationFrameRect), &imgPartRect);
 		}
 	}
 }

@@ -2,19 +2,21 @@
 #include "GameActor.h"
 #include "World.h"
 
-GraphicsComponent::GraphicsComponent(int animationTimer)
+GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer)
 	: m_animationTimer(animationTimer)
 {
 	xFrame = 0;
 	yFrame = 0;
+	m_sprite = sprite;
 	curAnimationTime = animationTimer;
 	animationFrameRect.x = 0; animationFrameRect.y = 0;
 	animationFrameRect.h = 0; animationFrameRect.w = 0;
 }
 
-
 GraphicsComponent::~GraphicsComponent()
 {
+	SDL_DestroyTexture(m_sprite);
+	m_sprite = NULL;
 }
 
 bool GraphicsComponent::Init(tinyxml2::XMLElement* pData)
@@ -40,7 +42,7 @@ EComponentNames GraphicsComponent::GetComponentName() const
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
 	int spriteWidth, spriteHeight;
-	SDL_QueryTexture(actor.m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
+	SDL_QueryTexture(m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
 
 	animationFrameRect.x = xFrame;
 	animationFrameRect.y = yFrame;

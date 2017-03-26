@@ -11,7 +11,6 @@ InputComponent::InputComponent()
 	buttonA = std::make_shared<MoveLeft>();
 }
 
-
 InputComponent::~InputComponent()
 {
 }

@@ -32,7 +32,8 @@ enum EComponentNames
 	BaseLogicComponentEnum,
 	FollowTargetAIComponentEnum,
 	GraphicsComponentEnum,
-	InputComponentEnum
+	InputComponentEnum,
+	PhysicsComponentEnum
 };
 
 static std::map<const char*, ComponentId> ComponentIdNameMap =

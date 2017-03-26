@@ -1,6 +1,15 @@
-﻿  World.cpp
-c:\github\sdlgame1\sdlgame1\sdlgame1\world.cpp(61): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  GraphicsManager.cpp
+﻿  PhysicsManager.cpp
+  GraphicsComponent.cpp
+  GameActor.cpp
+  AIComponent.cpp
   Generating Code...
+  Compiling...
+  InputComponent.cpp
+  ActorFactory.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  World.cpp
+  GraphicsManager.cpp
+  FollowTargetAIComponent.cpp
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.exe
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.pdb (Partial PDB)
