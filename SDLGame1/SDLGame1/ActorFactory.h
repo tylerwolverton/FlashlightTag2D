@@ -19,15 +19,9 @@ protected:
 public:
 	ActorFactory();
 	
-	StrongActorPtr CreateActor(const char* actorResource);
 	StrongGameActorPtr CreatePlayer(World*  world);
 	StrongGameActorPtr CreateEnemy(World*  world);
 	StrongGameActorPtr CreateCamera(World*  world, StrongGameActorPtr target);
-
-	virtual StrongActorComponentPtr VCreateComponent(tinyxml2::XMLElement* pData);
-
-protected:
-	virtual StrongActorComponentPtr ActorComponentCreator();
 
 private:
 	ActorId GetNextActorId() { ++m_lastActorId; return m_lastActorId; };

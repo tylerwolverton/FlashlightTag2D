@@ -36,7 +36,6 @@ void World::RunGame()
 		return;
 	}
 
-	//int tickCount = 0;
 	auto timeStepMs = 1000.f / 60; //eg. 30Hz
 	float timeLastMs = 0;
 	float timeCurrentMs = 0;

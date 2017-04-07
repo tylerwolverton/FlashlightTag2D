@@ -2,13 +2,10 @@
 #include "Types.h"
 
 #include <SDL.h>
-//#include <SDL_image.h>
 
 class GraphicsManager
 {
 public:
-	//SDL_Renderer* m_renderer;
-
 	GraphicsManager();
 	~GraphicsManager();
 

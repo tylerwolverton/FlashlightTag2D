@@ -3,6 +3,7 @@
 #include "SDLUtils.h"
 
 class GameActor;
+class TransformComponent;
 struct SDL_Texture;
 
 class GraphicsComponent :
@@ -11,8 +12,9 @@ class GraphicsComponent :
 public:
 	SDL_Rect animationFrameRect;
 	SDL_Texture* m_sprite;
+	std::shared_ptr<TransformComponent> m_TransformComponent;
 
-	GraphicsComponent(SDL_Texture* sprite, int animationTimer);
+	GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
 	virtual bool Init(tinyxml2::XMLElement* pData) override;

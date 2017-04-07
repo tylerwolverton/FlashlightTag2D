@@ -8,5 +8,7 @@ public:
 	~PhysicsManager();
 
 	void Update(StrongGameActorPtrList gameActors);
+
+	bool PhysicsManager::CircleCollision(StrongGameActorPtr actor1, StrongGameActorPtr actor2);
 };
 

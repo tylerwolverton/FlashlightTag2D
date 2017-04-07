@@ -28,28 +28,28 @@ void InputComponent::Update(GameActor& actor, int deltaMs)
 {
 	CommandList commandList;
 
-	if (actor.m_input & EInputValues::W)
+	if (actor.GetInput() & EInputValues::W)
 	{
 		commandList.push_back(buttonW);
 	}
-	if (actor.m_input & EInputValues::A)
+	if (actor.GetInput() & EInputValues::A)
 	{
 		commandList.push_back(buttonA);
 	}
-	if (actor.m_input & EInputValues::S)
+	if (actor.GetInput() & EInputValues::S)
 	{
 		commandList.push_back(buttonS);
 	}
-	if (actor.m_input & EInputValues::D)
+	if (actor.GetInput() & EInputValues::D)
 	{
 		commandList.push_back(buttonD);
 	}
-	if (actor.m_input & EInputValues::Esc)
+	if (actor.GetInput() & EInputValues::Esc)
 	{
 		commandList.push_back(buttonEsc);
 	}
 
-	actor.commands = std::make_shared<CommandList>(commandList);
+	actor.GetCommands() = std::make_shared<CommandList>(commandList);
 }
 
 ComponentId InputComponent::GetComponentId() const

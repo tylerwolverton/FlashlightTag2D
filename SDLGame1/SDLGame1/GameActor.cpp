@@ -3,12 +3,10 @@
 #include "ActorComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ComponentList components, Vector2D<int> pos, Vector2D<int> size)
-	: m_components(components),
-	  m_position(pos),
-	  m_size(size)
+GameActor::GameActor(ComponentList components)
+	: m_components(components)
 {
-	commands = std::make_shared<CommandList>();
+	m_commands = std::make_shared<CommandList>();
 }
 
 GameActor::~GameActor()
@@ -23,14 +21,14 @@ void GameActor::Update(int deltaMs, uint32_t input)
 	{
 		comp->Update(*this, deltaMs);
 
-		for (auto command : *commands)
+		for (auto command : *GetCommands())
 		{
 			if (command)
 			{
 				command->execute(*this);
 			}
 		}
-		commands->clear();
+		GetCommands()->clear();
 	}
 }
 

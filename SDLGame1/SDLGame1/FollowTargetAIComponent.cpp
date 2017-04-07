@@ -1,4 +1,5 @@
 #include "FollowTargetAIComponent.h"
+#include "TransformComponent.h"
 #include "GameActor.h"
 
 FollowTargetAIComponent::FollowTargetAIComponent()
@@ -20,7 +21,16 @@ void FollowTargetAIComponent::PostInit() {}
 
 void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs) 
 {
-	actor.m_position = target->m_position;
+	StrongActorComponentPtr actorTransformComponent = actor.GetComponentByName(EComponentNames::TransformComponentEnum);
+	StrongActorComponentPtr targetTransformComponent = target->GetComponentByName(EComponentNames::TransformComponentEnum);
+	if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)
+	{
+		return;
+	}
+
+	std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
+	std::shared_ptr<TransformComponent> rawTargetTransformComponent = std::dynamic_pointer_cast<TransformComponent>(targetTransformComponent);
+	rawActorTransformComponent->SetPosition(rawTargetTransformComponent->GetPosition());
 }
 
 ComponentId FollowTargetAIComponent::GetComponentId() const { return ComponentId(); }
