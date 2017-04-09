@@ -10,10 +10,6 @@ public:
 	TransformComponent(Vector2D<float> position, Vector2D<float> size);
 	virtual ~TransformComponent();
 
-	virtual bool Init(tinyxml2::XMLElement* pData);
-	virtual void PostInit() {}
-	virtual void Update(GameActor& actor, int deltaMs) {}
-
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 

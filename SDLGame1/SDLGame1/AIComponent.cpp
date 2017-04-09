@@ -10,17 +10,7 @@ AIComponent::AIComponent()
 	moveLength = 10;
 }
 
-
 AIComponent::~AIComponent()
-{
-}
-
-bool AIComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
-void AIComponent::PostInit()
 {
 }
 

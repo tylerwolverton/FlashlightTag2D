@@ -15,15 +15,6 @@ InputComponent::~InputComponent()
 {
 }
 
-bool InputComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
-void InputComponent::PostInit()
-{
-}
-
 void InputComponent::Update(GameActor& actor, int deltaMs)
 {
 	CommandList commandList;

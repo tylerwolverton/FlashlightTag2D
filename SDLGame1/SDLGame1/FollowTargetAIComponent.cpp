@@ -16,9 +16,6 @@ FollowTargetAIComponent::~FollowTargetAIComponent()
 {
 }
 
-bool FollowTargetAIComponent::Init(tinyxml2::XMLElement* pData) { return true; }
-void FollowTargetAIComponent::PostInit() {}
-
 void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs) 
 {
 	StrongActorComponentPtr actorTransformComponent = actor.GetComponentByName(EComponentNames::TransformComponentEnum);

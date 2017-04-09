@@ -21,16 +21,6 @@ GraphicsComponent::~GraphicsComponent()
 	m_sprite = NULL;
 }
 
-bool GraphicsComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
-void GraphicsComponent::PostInit()
-{
-
-}
-
 ComponentId GraphicsComponent::GetComponentId() const
 {
 	return ComponentId();

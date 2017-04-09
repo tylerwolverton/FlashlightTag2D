@@ -17,8 +17,6 @@ public:
 	GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
-	virtual bool Init(tinyxml2::XMLElement* pData) override;
-	virtual void PostInit() override;
 	virtual void Update(GameActor& actor, int deltaMs) override;
 
 	virtual ComponentId GetComponentId() const override;

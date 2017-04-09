@@ -14,8 +14,6 @@ protected:
 public:
 	virtual ~ActorComponent() { m_pOwner.reset(); }
 
-	virtual bool Init(tinyxml2::XMLElement* pData) = 0;
-	virtual void PostInit() {}
 	virtual void Update(GameActor& actor, int deltaMs) {}
 
 	virtual ComponentId GetComponentId() const = 0;

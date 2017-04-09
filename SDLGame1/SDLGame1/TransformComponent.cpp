@@ -16,11 +16,6 @@ TransformComponent::~TransformComponent()
 {
 }
 
-bool TransformComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
 ComponentId TransformComponent::GetComponentId() const
 {
 	return ComponentId();

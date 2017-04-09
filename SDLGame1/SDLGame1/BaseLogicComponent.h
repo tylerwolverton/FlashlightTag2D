@@ -15,8 +15,6 @@ public:
 	virtual void MoveRight();
 	virtual void MoveLeft(); 
 
-	virtual bool Init(tinyxml2::XMLElement* pData);
-	virtual void PostInit() {}
 	virtual void Update(GameActor& actor, int deltaMs) {}
 
 	virtual ComponentId GetComponentId() const override;

@@ -10,8 +10,6 @@ public:
 	AIComponent();
 	virtual ~AIComponent();
 
-	bool Init(tinyxml2::XMLElement* pData) override;
-	void PostInit() override;
 	void Update(GameActor& actor, int deltaMs) override;
 
 	CommandList SimpleMove();

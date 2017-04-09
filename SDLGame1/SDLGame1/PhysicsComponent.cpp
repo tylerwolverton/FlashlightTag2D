@@ -8,16 +8,6 @@ PhysicsComponent::~PhysicsComponent()
 {
 }
 
-bool PhysicsComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
-void PhysicsComponent::PostInit()
-{
-
-}
-
 ComponentId PhysicsComponent::GetComponentId() const
 {
 	return ComponentId();
@@ -30,5 +20,4 @@ EComponentNames PhysicsComponent::GetComponentName() const
 
 void PhysicsComponent::Update(GameActor& actor, int deltaMs)
 {
-	
 }

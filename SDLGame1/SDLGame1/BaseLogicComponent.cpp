@@ -9,11 +9,6 @@ BaseLogicComponent::~BaseLogicComponent()
 {
 }
 
-bool BaseLogicComponent::Init(tinyxml2::XMLElement* pData)
-{
-	return true;
-}
-
 ComponentId BaseLogicComponent::GetComponentId() const
 {
 	return ComponentId();
