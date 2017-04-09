@@ -10,10 +10,10 @@ public:
 	BaseLogicComponent(std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~BaseLogicComponent();
 
-	virtual void MoveUp()    { m_TransformComponent->SetPosition(Vector2D<float>(m_TransformComponent->GetPosition().x, m_TransformComponent->GetPosition().y - 10)); };
-	virtual void MoveDown()  { m_TransformComponent->SetPosition(Vector2D<float>(m_TransformComponent->GetPosition().x, m_TransformComponent->GetPosition().y + 10)); };
-	virtual void MoveRight() { m_TransformComponent->SetPosition(Vector2D<float>(m_TransformComponent->GetPosition().x + 10, m_TransformComponent->GetPosition().y)); };
-	virtual void MoveLeft()  { m_TransformComponent->SetPosition(Vector2D<float>(m_TransformComponent->GetPosition().x - 10, m_TransformComponent->GetPosition().y)); };
+	virtual void MoveUp();
+	virtual void MoveDown();
+	virtual void MoveRight();
+	virtual void MoveLeft(); 
 
 	virtual bool Init(tinyxml2::XMLElement* pData);
 	virtual void PostInit() {}

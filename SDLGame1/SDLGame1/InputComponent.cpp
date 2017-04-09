@@ -49,7 +49,7 @@ void InputComponent::Update(GameActor& actor, int deltaMs)
 		commandList.push_back(buttonEsc);
 	}
 
-	actor.GetCommands() = std::make_shared<CommandList>(commandList);
+	actor.SetCommands(std::make_shared<CommandList>(commandList));
 }
 
 ComponentId InputComponent::GetComponentId() const
