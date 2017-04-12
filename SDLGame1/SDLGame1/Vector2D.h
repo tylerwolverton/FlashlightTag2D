@@ -11,9 +11,13 @@ public:
 		: x(p_x),
 		  y(p_y) { }
 
+	Vector2D(const Vector2D& p_vec)
+		: x(p_vec.x),
+		  y(p_vec.y) { }
+
 	Vector2D operator+(const Vector2D& rhs)
 	{
-		Vector2D newVec = this;
+		Vector2D newVec(*this);
 		newVec.x += rhs.x;
 		newVec.y += rhs.y;
 		
@@ -22,7 +26,7 @@ public:
 
 	Vector2D operator-(const Vector2D& rhs)
 	{
-		Vector2D newVec = this;
+		Vector2D newVec(*this);
 		newVec.x -= rhs.x;
 		newVec.y -= rhs.y;
 
@@ -43,7 +47,7 @@ public:
 
 	Vector2D operator*(const T& scalar)
 	{
-		Vector2D newVec = this;
+		Vector2D newVec(*this);
 		newVec.x *= scalar;
 		newVec.y *= scalar;
 
@@ -62,7 +66,7 @@ public:
 
 	Vector2D Normalize()
 	{
-		Vector2D newVec = this;
+		Vector2D newVec(*this);
 		T length = newVec.Length();
 
 		newVec.x /= length;

@@ -1,6 +1,7 @@
 #include "PhysicsComponent.h"
 
-PhysicsComponent::PhysicsComponent()
+PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent)
+	: m_TransformComponent(transformComponent)
 {
 }
 
@@ -16,8 +17,4 @@ ComponentId PhysicsComponent::GetComponentId() const
 EComponentNames PhysicsComponent::GetComponentName() const
 {
 	return EComponentNames::PhysicsComponentEnum;
-}
-
-void PhysicsComponent::Update(GameActor& actor, int deltaMs)
-{
 }

@@ -7,6 +7,8 @@
 #include "BaseLogicComponent.h"
 #include "InputComponent.h"
 #include "GraphicsComponent.h"
+#include "PhysicsComponent.h"
+#include "PlayerPhysicsComponent.h"
 #include "AIComponent.h"
 #include "FollowTargetAIComponent.h"
 #include "World.h"
@@ -26,6 +28,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 	
 	components.push_back(std::make_shared<InputComponent>());
 	components.push_back(std::make_shared<BaseLogicComponent>(transformCompPtr));
+	components.push_back(std::make_shared<PlayerPhysicsComponent>(transformCompPtr));
 
 	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
@@ -48,6 +51,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 
 	components.push_back(std::make_shared<AIComponent>());
 	components.push_back(std::make_shared<BaseLogicComponent>(transformCompPtr));
+	components.push_back(std::make_shared<PhysicsComponent>(transformCompPtr));
 	
 	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)

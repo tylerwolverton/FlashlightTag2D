@@ -12,8 +12,9 @@ public:
 	~PhysicsManager();
 
 	void Update(StrongGameActorPtrList gameActors);
+	void ResolveCollisions(StrongGameActorPtrList gameActors);
 
-	bool PhysicsManager::CircleCollision(StrongGameActorPtr actor1, StrongGameActorPtr actor2);
+	bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
 
 private:
 

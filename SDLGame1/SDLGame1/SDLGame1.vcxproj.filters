@@ -90,6 +90,9 @@
     <ClCompile Include="PlayerLogicComponent.cpp">
       <Filter>Source Files\FlashLightTag\Components\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerPhysicsComponent.cpp">
+      <Filter>Source Files\FlashLightTag\Components\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -153,6 +156,9 @@
       <Filter>Header Files\FlashLightTag\Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerLogicComponent.h">
+      <Filter>Header Files\FlashLightTag\Components\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPhysicsComponent.h">
       <Filter>Header Files\FlashLightTag\Components\Actors</Filter>
     </ClInclude>
   </ItemGroup>

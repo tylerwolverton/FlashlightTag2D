@@ -3,6 +3,7 @@
 #include "Vector2D.h"
 #include "InputManager.h"
 #include "GraphicsManager.h"
+#include "PhysicsManager.h"
 #include "ActorFactory.h"
 #include "GameActor.h"
 #include "ActorComponent.h"
@@ -22,6 +23,7 @@ void World::RunGame()
 	bool isGameRunning = true;
 	auto actorFactory = new ActorFactory();
 	auto inputManager = new InputManager();
+	auto physicsManager = new PhysicsManager();
 	auto graphicsManager = new GraphicsManager();
 
 	//StrongWorldPtr thisWorld = std::make_shared<World>(*this);
@@ -66,6 +68,8 @@ void World::RunGame()
 			{
 				entity->Update((int)timeAccumulatedMs, input);
 			}
+
+			physicsManager->ResolveCollisions(entityList);
 
 			timeAccumulatedMs -= timeStepMs;
 		}
