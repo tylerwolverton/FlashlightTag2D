@@ -15,5 +15,5 @@ void PlayerPhysicsComponent::SignalCollision(GameActor& actor)
 {
 	std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actor.GetComponentByName(TransformComponentEnum));
 	Vector2D<float> dist = rawActorTransformComponent->GetPosition() - m_TransformComponent->GetPosition();
-	m_TransformComponent->SetPosition(m_TransformComponent->GetPosition() + (dist.Normalize() * 5));
+	m_TransformComponent->SetPosition(m_TransformComponent->GetPosition() + (dist.Normalize() * -5));
 }

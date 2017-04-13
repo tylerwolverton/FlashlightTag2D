@@ -54,6 +54,24 @@ public:
 		return newVec;
 	}
 
+	Vector2D operator/(const T& scalar)
+	{
+		Vector2D newVec(*this);
+		newVec.x /= scalar;
+		newVec.y /= scalar;
+
+		return newVec;
+	}
+
+	/*Vector2D operator=(const Vector2D& rhs)
+	{
+		Vector2D newVec(*this);
+		newVec.x = rhs.x;
+		newVec.y = rhs.y;
+
+		return newVec;
+	}*/
+
 	T Dot(const Vector2D& rhs)
 	{
 		return (x * rhs.x) + (y * rhs.y);

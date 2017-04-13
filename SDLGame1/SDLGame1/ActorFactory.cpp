@@ -60,7 +60,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 		return NULL;
 	}
 
-	components.push_back(std::make_shared<GraphicsComponent>(sprite, 6000, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>(sprite, 600, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }

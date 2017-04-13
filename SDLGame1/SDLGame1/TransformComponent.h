@@ -19,8 +19,8 @@ public:
 	Vector2D<float> GetSize() { return m_size; }
 	void SetSize(Vector2D<float> size) { m_size = size; }
 
-	float GetRadius() { return m_size.x; }
-	void SetRadius(float radius) { m_size.x = radius; m_size.y = radius; }
+	float GetRadius() { return m_size.x / 2; }
+	void SetRadius(float radius) { m_size.x = radius * 2; m_size.y = radius * 2; }
 
 private:
 	Vector2D<float> m_position;

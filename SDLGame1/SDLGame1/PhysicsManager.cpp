@@ -56,7 +56,7 @@ bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameAc
 	std::shared_ptr<TransformComponent> rawInnerActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(innerActor->GetComponentByName(TransformComponentEnum));
 	
 	Vector2D<float> dist = rawActorTransformComponent->GetPosition() - rawInnerActorTransformComponent->GetPosition();
-	Vector2D<float> sizeSum = rawActorTransformComponent->GetSize() + rawInnerActorTransformComponent->GetSize();
+	float sizeSum = rawActorTransformComponent->GetRadius() + rawInnerActorTransformComponent->GetRadius();
 
-	return dist.Length() < sizeSum.Length();
+	return dist.Length() < sizeSum;
 }

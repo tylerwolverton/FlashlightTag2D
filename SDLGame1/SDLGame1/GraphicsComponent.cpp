@@ -6,7 +6,8 @@
 GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_sprite(sprite),
 	  m_animationTimer(animationTimer),
-	  m_TransformComponent(transformComponent)
+	  m_TransformComponent(transformComponent),
+	  imageOffset(transformComponent->GetSize() / 2)
 {
 	xFrame = 0;
 	yFrame = 0;

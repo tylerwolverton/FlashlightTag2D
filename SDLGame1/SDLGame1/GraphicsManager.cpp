@@ -43,13 +43,13 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		auto actorPos = rawActorTransformComponent->GetPosition();
 		auto actorSize = rawActorTransformComponent->GetSize();
 
+		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
+
 		SDL_Rect imgPartRect;
-		imgPartRect.x = actorPos.x - cameraPos.x;
-		imgPartRect.y = actorPos.y - cameraPos.y;
+		imgPartRect.x = actorPos.x - cameraPos.x - rawGraphicsComponent->imageOffset.x;
+		imgPartRect.y = actorPos.y - cameraPos.y - rawGraphicsComponent->imageOffset.y;
 		imgPartRect.w = actorSize.x;
 		imgPartRect.h = actorSize.y;
-
-		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
 
 		SDL_RenderCopy(renderer, rawGraphicsComponent->m_sprite, &(rawGraphicsComponent->animationFrameRect), &imgPartRect);
 	}
