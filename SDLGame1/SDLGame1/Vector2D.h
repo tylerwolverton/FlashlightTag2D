@@ -33,6 +33,15 @@ public:
 		return newVec;
 	}
 
+	Vector2D operator-()
+	{
+		Vector2D newVec(*this);
+		newVec.x = -newVec.x;
+		newVec.y = -newVec.y;
+
+		return newVec;
+	}
+
 	void operator+=(const Vector2D& rhs)
 	{
 		x += rhs.x;
@@ -63,14 +72,11 @@ public:
 		return newVec;
 	}
 
-	/*Vector2D operator=(const Vector2D& rhs)
+	void operator=(const Vector2D& rhs)
 	{
-		Vector2D newVec(*this);
-		newVec.x = rhs.x;
-		newVec.y = rhs.y;
-
-		return newVec;
-	}*/
+		this->x = rhs.x;
+		this->y = rhs.y;
+	}
 
 	T Dot(const Vector2D& rhs)
 	{

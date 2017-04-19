@@ -1,6 +1,7 @@
 #pragma once
 #include "ActorComponent.h"
 #include "TransformComponent.h"
+#include "PhysicsComponent.h"
 #include "Behavior.h"
 
 class BaseLogicComponent :
@@ -8,6 +9,7 @@ class BaseLogicComponent :
 {
 public:
 	BaseLogicComponent(std::shared_ptr<TransformComponent> transformComponent);
+	BaseLogicComponent(std::shared_ptr<PhysicsComponent> physicsComponent);
 	virtual ~BaseLogicComponent();
 
 	virtual void MoveUp();
@@ -22,6 +24,7 @@ public:
 
 private:
 	std::shared_ptr<TransformComponent> m_TransformComponent;
+	std::shared_ptr<PhysicsComponent> m_PhysicsComponent;
 	std::shared_ptr<Behavior> behavior;
 };
 

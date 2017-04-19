@@ -18,7 +18,7 @@ void PhysicsManager::Update(StrongGameActorPtrList gameActors)
 
 void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 {
-	for (auto& actor : gameActors)
+	for (const auto& actor : gameActors)
 	{
 		StrongActorComponentPtr actorPhysicsComponent = actor->GetComponentByName(EComponentNames::PhysicsComponentEnum);
 		if (actorPhysicsComponent == nullptr)
@@ -28,7 +28,7 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 
 		std::shared_ptr<PhysicsComponent> rawActorPhysicsComponent = std::dynamic_pointer_cast<PhysicsComponent>(actorPhysicsComponent);
 		
-		for (auto& innerActor : gameActors)
+		for (const auto& innerActor : gameActors)
 		{
 			if (actor != innerActor)
 			{

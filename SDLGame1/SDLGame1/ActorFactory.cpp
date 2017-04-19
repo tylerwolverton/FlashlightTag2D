@@ -25,10 +25,12 @@ StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 
 	auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(0, 0), 100.0f);
 	components.push_back(transformCompPtr);
-	
+
 	components.push_back(std::make_shared<InputComponent>());
-	components.push_back(std::make_shared<BaseLogicComponent>(transformCompPtr));
-	components.push_back(std::make_shared<PlayerPhysicsComponent>(transformCompPtr));
+
+	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr);
+	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
+	components.push_back(physicsCompPtr);
 
 	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
@@ -50,8 +52,10 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 	components.push_back(transformCompPtr);
 
 	components.push_back(std::make_shared<AIComponent>());
-	components.push_back(std::make_shared<BaseLogicComponent>(transformCompPtr));
-	components.push_back(std::make_shared<PhysicsComponent>(transformCompPtr));
+
+	auto physicsCompPtr = std::make_shared<PhysicsComponent>(transformCompPtr);
+	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
+	components.push_back(physicsCompPtr);
 	
 	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
