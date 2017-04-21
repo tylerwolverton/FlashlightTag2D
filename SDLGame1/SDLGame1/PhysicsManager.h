@@ -1,5 +1,6 @@
 #pragma once
 #include "Types.h"
+#include "PhysicsComponent.h"
 
 #include <vector>
 
@@ -14,8 +15,8 @@ public:
 	void Update(StrongGameActorPtrList gameActors);
 	void ResolveCollisions(StrongGameActorPtrList gameActors);
 
-	bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
-
+	bool CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
+	void MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp);
 private:
 
 };

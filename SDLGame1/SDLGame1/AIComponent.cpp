@@ -16,7 +16,7 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, int deltaMs)
 {
-	actor.SetCommands(std::make_shared<CommandList>(SimpleMove()));
+	//actor.SetCommands(std::make_shared<CommandList>(SimpleMove()));
 }
 
 CommandList AIComponent::SimpleMove()

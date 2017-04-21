@@ -1,11 +1,11 @@
 #include "PhysicsComponent.h"
 #include "TransformComponent.h"
 
-PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent)
+PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, Vector2D<float> velocity, float maxSpeed, float mass)
 	: m_TransformComponent(transformComponent),
-	  m_velocity(Vector2D<float>(0, 0)),
-	  m_maxSpeed(10),
-	  m_mass(1)
+	  m_velocity(velocity),
+	  m_maxSpeed(maxSpeed),
+	  m_mass(mass)
 {
 }
 
@@ -15,8 +15,8 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::Update(GameActor& actor, int deltaMs)
 {
+	ApplyFriction(0.5f);
 	MoveActor();
-	//ApplyFriction(0.1f);
 }
 
 ComponentId PhysicsComponent::GetComponentId() const
@@ -65,14 +65,15 @@ void PhysicsComponent::SetVelocityToMax()
 void PhysicsComponent::AddForce(Vector2D<float> force)
 {
 	//f = ma;
-	AddVelocity(force / m_mass);
+	if(force.Length() > 0)
+		AddVelocity(force / m_mass);
 }
 
 void PhysicsComponent::ApplyFriction(float fricCoeff)
 {
 	auto dirVec = m_velocity.Normalize();
 
-	AddForce(-dirVec);// *-fricCoeff);
+	AddForce(dirVec * -fricCoeff);
 }
 
 void PhysicsComponent::MoveActor()

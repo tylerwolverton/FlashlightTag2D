@@ -1,5 +1,4 @@
 #include "PhysicsManager.h"
-#include "PhysicsComponent.h"
 #include "TransformComponent.h"
 #include "GameActor.h"
 
@@ -42,6 +41,7 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 
 				if (CheckCircleCollision(actor, innerActor))
 				{
+					MoveActors(rawActorPhysicsComponent, rawInnerActorPhysicsComponent);
 					rawActorPhysicsComponent->SignalCollision(*innerActor);
 					rawInnerActorPhysicsComponent->SignalCollision(*actor);
 				}
@@ -59,4 +59,15 @@ bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameAc
 	float sizeSum = rawActorTransformComponent->GetRadius() + rawInnerActorTransformComponent->GetRadius();
 
 	return dist.Length() < sizeSum;
+}
+
+void PhysicsManager::MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp)
+{
+	/*Vector2D<float> vecFromActorToInnerActor = actorPhysicsComp->GetTransformComponent()->GetPosition() 
+												- innerActorPhysicsComp->GetTransformComponent()->GetPosition();*/
+
+
+
+	actorPhysicsComp->AddForce(innerActorPhysicsComp->GetVelocity());
+	innerActorPhysicsComp->AddForce(actorPhysicsComp->GetVelocity());
 }

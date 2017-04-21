@@ -8,7 +8,7 @@ class PhysicsComponent :
 	public ActorComponent
 {
 public:
-	PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent);
+	PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, Vector2D<float> velocity, float maxSpeed, float mass);
 	virtual ~PhysicsComponent();
 
 	void Update(GameActor& actor, int deltaMs) override;
@@ -16,6 +16,8 @@ public:
 
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
+
+	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_TransformComponent; }
 
 	Vector2D<float> GetVelocity() { return m_velocity; }
 	void SetVelocity(Vector2D<float> newVelocity);

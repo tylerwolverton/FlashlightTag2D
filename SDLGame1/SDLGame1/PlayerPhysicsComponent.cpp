@@ -2,8 +2,8 @@
 #include "TransformComponent.h"
 #include "GameActor.h"
 
-PlayerPhysicsComponent::PlayerPhysicsComponent(std::shared_ptr<TransformComponent> transformComponent)
-	: PhysicsComponent(transformComponent)
+PlayerPhysicsComponent::PlayerPhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, Vector2D<float> velocity, float maxSpeed, float mass)
+	: PhysicsComponent(transformComponent, velocity, maxSpeed, mass)
 {
 }
 
