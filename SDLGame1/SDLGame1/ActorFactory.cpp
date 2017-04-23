@@ -28,7 +28,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 
 	components.push_back(std::make_shared<InputComponent>());
 
-	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, Vector2D<float>(0, 0), 15, 1);
+	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, Vector2D<float>(0, 0), 10, 1);
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 

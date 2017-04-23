@@ -24,6 +24,9 @@ public:
 	void AddVelocity(Vector2D<float> velocity);
 	void SetVelocityToMax();
 
+	float GetMass() { return m_mass; }
+	Vector2D<float> GetMomentum() { return m_velocity * m_mass; }
+
 	void AddForce(Vector2D<float> force);
 
 	void ApplyFriction(float fricCoeff);

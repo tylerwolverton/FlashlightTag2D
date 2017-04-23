@@ -1,16 +1,3 @@
-﻿  ActorFactory.cpp
-c:\github\sdlgame1\sdlgame1\sdlgame1\actorfactory.cpp(75): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(901): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
-          with
-          [
-              _Ty=PlayerPhysicsComponent
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
-          with
-          [
-              _Ty=PlayerPhysicsComponent
-          ]
-  c:\github\sdlgame1\sdlgame1\sdlgame1\actorfactory.cpp(31): note: see reference to function template instantiation 'std::shared_ptr<PlayerPhysicsComponent> std::make_shared<PlayerPhysicsComponent,std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+﻿  PhysicsManager.cpp
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.exe
   SDLGame1.vcxproj -> C:\GitHub\SDLGame1\SDLGame1\Debug\SDLGame1.pdb (Partial PDB)

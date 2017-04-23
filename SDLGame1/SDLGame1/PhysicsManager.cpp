@@ -63,11 +63,9 @@ bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameAc
 
 void PhysicsManager::MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp)
 {
-	/*Vector2D<float> vecFromActorToInnerActor = actorPhysicsComp->GetTransformComponent()->GetPosition() 
-												- innerActorPhysicsComp->GetTransformComponent()->GetPosition();*/
+	auto actorMomentum = actorPhysicsComp->GetMomentum();
+	auto innerActorMomentum = innerActorPhysicsComp->GetMomentum();
 
-
-
-	actorPhysicsComp->AddForce(innerActorPhysicsComp->GetVelocity());
-	innerActorPhysicsComp->AddForce(actorPhysicsComp->GetVelocity());
+	actorPhysicsComp->SetVelocity(innerActorMomentum / actorPhysicsComp->GetMass());
+	innerActorPhysicsComp->SetVelocity(actorMomentum / innerActorPhysicsComp->GetMass());
 }
