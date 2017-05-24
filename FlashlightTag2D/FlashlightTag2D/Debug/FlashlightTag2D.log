@@ -1,0 +1,44 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SDLGame1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  World.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\world.cpp(61): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  TransformComponent.cpp
+  PlayerPhysicsComponent.cpp
+  PlayerLogicComponent.cpp
+  PhysicsManager.cpp
+  PhysicsComponent.cpp
+  main.cpp
+  InputManager.cpp
+  InputComponent.cpp
+  GraphicsManager.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(79): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(80): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  GraphicsComponent.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicscomponent.cpp(42): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicscomponent.cpp(43): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  GameActor.cpp
+  FollowTargetAIComponent.cpp
+  Behavior.cpp
+  BaseLogicComponent.cpp
+  AIComponent.cpp
+  ActorFactory.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(75): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(901): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+          with
+          [
+              _Ty=PlayerPhysicsComponent
+          ]
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+          with
+          [
+              _Ty=PlayerPhysicsComponent
+          ]
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(31): note: see reference to function template instantiation 'std::shared_ptr<PlayerPhysicsComponent> std::make_shared<PlayerPhysicsComponent,std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+  Actor.cpp
+  Generating Code...
+  FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
+  FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)
