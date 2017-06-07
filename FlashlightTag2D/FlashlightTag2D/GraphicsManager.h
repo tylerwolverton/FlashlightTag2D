@@ -2,14 +2,51 @@
 #include "Types.h"
 
 #include <SDL.h>
+#include <glew.h>
+#include "Shader.h"
+#define GL3_PROTOTYPES 1
 
 class GraphicsManager
 {
 public:
-	GraphicsManager();
+	GraphicsManager(SDL_Window* window);
 	~GraphicsManager();
 
 	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera, SDL_Renderer* renderer);
 	void GraphicsManager::RenderBackground(SDL_Texture* sprite, StrongGameActorPtr currentCamera, SDL_Renderer* renderer, int screenWidth, int screenHeight);
+
+	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera);
+	void ClearScreen();
+
+private:
+	SDL_Window* m_window;
+
+	// Our opengl context handle
+	SDL_GLContext m_mainContext;
+
+	// Our object has 4 points
+	const uint32_t points = 4;
+
+	// Each poin has three values ( x, y, z)
+	const uint32_t floatsPerPoint = 2;
+
+	// This is the object we'll draw ( a simple square )
+	//const GLfloat diamond[4][3] = {
+	//	{ -0.5,  0.5,  0.5 }, // Top left
+	//	{ 0.5,  0.5,  0.5 }, // Top right
+	//	{ 0.5, -0.5,  0.5 }, // Bottom right 
+	//	{ -0.5, -0.5,  0.5 }, // Bottom left
+	//};
+
+	Shader m_shader;
+	GLuint VBO, VAO, EBO;
+	// Create variables for storing the ID of our VAO and VBO
+	//GLuint vbo[2], vao[1];
+
+	// The positons of the position and color data within the VAO
+	const uint32_t positionAttributeIndex = 0;
+
+	bool SetOpenGLAttributes();
+	bool SetupBufferObjects();
 };
 

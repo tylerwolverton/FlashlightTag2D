@@ -123,6 +123,9 @@
     <ClInclude Include="World.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -140,5 +143,13 @@
     <Filter Include="Engine\Managers">
       <UniqueIdentifier>{0bb86f3f-c837-4df2-ace6-62f393c94d31}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BasicShader.vert">
+      <Filter>Game</Filter>
+    </None>
+    <None Include="BasicShader.frag">
+      <Filter>Game</Filter>
+    </None>
   </ItemGroup>
 </Project>

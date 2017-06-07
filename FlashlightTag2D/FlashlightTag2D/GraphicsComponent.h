@@ -17,6 +17,7 @@ public:
 	Vector2D<float> imageOffset;
 
 	GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
+	GraphicsComponent(int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
 	virtual void Update(GameActor& actor, int deltaMs) override;

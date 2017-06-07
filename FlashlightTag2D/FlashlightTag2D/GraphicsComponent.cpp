@@ -16,6 +16,18 @@ GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, st
 	animationFrameRect.h = 0; animationFrameRect.w = 0;
 }
 
+GraphicsComponent::GraphicsComponent(int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
+	: m_animationTimer(animationTimer),
+	m_TransformComponent(transformComponent),
+	imageOffset(transformComponent->GetSize() / 2)
+{
+	xFrame = 0;
+	yFrame = 0;
+	curAnimationTime = animationTimer;
+	animationFrameRect.x = 0; animationFrameRect.y = 0;
+	animationFrameRect.h = 0; animationFrameRect.w = 0;
+}
+
 GraphicsComponent::~GraphicsComponent()
 {
 	SDL_DestroyTexture(m_sprite);
@@ -34,7 +46,7 @@ EComponentNames GraphicsComponent::GetComponentName() const
 
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
-	int spriteWidth, spriteHeight;
+	/*int spriteWidth, spriteHeight;
 	SDL_QueryTexture(m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
 
 	animationFrameRect.x = xFrame;
@@ -54,5 +66,5 @@ void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 	else
 	{
 		curAnimationTime--;
-	}
+	}*/
 }

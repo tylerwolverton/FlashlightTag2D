@@ -19,7 +19,7 @@ ActorFactory::ActorFactory()
 {
 }
 
-StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
+StrongGameActorPtr ActorFactory::CreatePlayer()
 {
 	ComponentList components = ComponentList();
 
@@ -32,19 +32,19 @@ StrongGameActorPtr ActorFactory::CreatePlayer(World* world)
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 
-	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
+	/*auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
 		return NULL;
-	}
+	}*/
 
-	components.push_back(std::make_shared<GraphicsComponent>(sprite, 1000, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>(1000, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }
 
-StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
+StrongGameActorPtr ActorFactory::CreateEnemy()
 {
 	ComponentList components = ComponentList();
 
@@ -57,19 +57,19 @@ StrongGameActorPtr ActorFactory::CreateEnemy(World* world)
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	
-	auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
+	/*auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
 		return NULL;
-	}
+	}*/
 
-	components.push_back(std::make_shared<GraphicsComponent>(sprite, 600, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>(600, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(World* world, StrongGameActorPtr target)
+StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<TransformComponent>(Vector2D<float>(0, 0), Vector2D<float>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT)));

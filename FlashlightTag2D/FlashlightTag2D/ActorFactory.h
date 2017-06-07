@@ -19,9 +19,9 @@ protected:
 public:
 	ActorFactory();
 	
-	StrongGameActorPtr CreatePlayer(World*  world);
-	StrongGameActorPtr CreateEnemy(World*  world);
-	StrongGameActorPtr CreateCamera(World*  world, StrongGameActorPtr target);
+	StrongGameActorPtr CreatePlayer();
+	StrongGameActorPtr CreateEnemy();
+	StrongGameActorPtr CreateCamera(StrongGameActorPtr target);
 
 private:
 	ActorId GetNextActorId() { ++m_lastActorId; return m_lastActorId; };
