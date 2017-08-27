@@ -5,3 +5,5 @@
 *.db
 *.db
 *.suo
+*.obj
+FlashlightTag2D/FlashlightTag2D/Debug/vc140.pdb

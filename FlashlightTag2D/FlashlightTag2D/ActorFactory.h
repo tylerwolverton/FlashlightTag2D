@@ -10,12 +10,6 @@ class World;
 
 class ActorFactory
 {
-	ActorId m_lastActorId;
-
-protected:
-	ActorComponentCreatorMap m_actorComponentCreators;
-	GenericObjectFactory<ActorComponent, ComponentId> m_componentFactory;
-
 public:
 	ActorFactory();
 	
@@ -23,7 +17,12 @@ public:
 	StrongGameActorPtr CreateEnemy(World*  world);
 	StrongGameActorPtr CreateCamera(World*  world, StrongGameActorPtr target);
 
+protected:
+	ActorComponentCreatorMap m_actorComponentCreators;
+	GenericObjectFactory<ActorComponent, ComponentId> m_componentFactory;
+
 private:
-	ActorId GetNextActorId() { ++m_lastActorId; return m_lastActorId; };
+	ActorId m_lastActorId;
+	ActorId get_next_actor_id() { ++m_lastActorId; return m_lastActorId; };
 };
 

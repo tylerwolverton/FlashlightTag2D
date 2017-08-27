@@ -23,8 +23,8 @@ public:
 	virtual EComponentNames GetComponentName() const override;
 
 private:
-	std::shared_ptr<TransformComponent> m_TransformComponent;
-	std::shared_ptr<PhysicsComponent> m_PhysicsComponent;
-	std::shared_ptr<Behavior> behavior;
+	std::shared_ptr<TransformComponent> m_pTransformComponent;
+	std::shared_ptr<PhysicsComponent> m_pPhysicsComponent;
+	std::shared_ptr<Behavior> m_pBehavior;
 };
 

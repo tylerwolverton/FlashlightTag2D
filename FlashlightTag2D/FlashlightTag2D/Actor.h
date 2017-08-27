@@ -12,10 +12,6 @@ class Actor
 public:
 	typedef std::map<ComponentId, StrongActorComponentPtr> ActorComponentMap;
 
-private:
-	ActorId m_id;
-	ActorComponentMap m_componentMap;
-
 public:
 	Actor(ActorId id);
 	virtual ~Actor();
@@ -46,6 +42,9 @@ public:
 	}
 
 private:
-	void AddComponent(StrongActorComponentPtr pComponent);
+	void add_component(StrongActorComponentPtr pComponent);
+
+	ActorId m_id;
+	ActorComponentMap m_componentMap;
 };
 

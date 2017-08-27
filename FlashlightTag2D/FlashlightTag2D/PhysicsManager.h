@@ -17,7 +17,5 @@ public:
 
 	bool CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
 	void MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp);
-private:
-
 };
 

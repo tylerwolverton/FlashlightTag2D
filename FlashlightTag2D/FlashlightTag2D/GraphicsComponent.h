@@ -11,11 +11,6 @@ class GraphicsComponent :
 	public ActorComponent
 {
 public:
-	SDL_Rect animationFrameRect;
-	SDL_Texture* m_sprite;
-	std::shared_ptr<TransformComponent> m_TransformComponent;
-	Vector2D<float> imageOffset;
-
 	GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
@@ -24,8 +19,18 @@ public:
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
+	SDL_Rect GetAnimationFrameRect() { return m_animationFrameRect; };
+	SDL_Texture* GetSprite() { return m_sprite; };
+	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; };
+	Vector2D<float> GetImageOffset() { return m_imageOffset; };
+
 private:
-	int curAnimationTime, m_animationTimer;
-	int xFrame, yFrame;
+	SDL_Rect m_animationFrameRect;
+	SDL_Texture* m_sprite;
+	std::shared_ptr<TransformComponent> m_pTransformComponent;
+	Vector2D<float> m_imageOffset;
+
+	int m_curAnimationTime, m_animationTimer;
+	int m_xFrame, m_yFrame;
 };
 

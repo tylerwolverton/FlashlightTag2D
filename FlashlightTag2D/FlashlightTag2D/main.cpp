@@ -54,7 +54,7 @@ bool init()
 bool loadMedia()
 {
 	//Load PNG texture
-	gBackgroundTexture = loadTexture(gRenderer, "resources/background.png");
+	gBackgroundTexture = LoadTexture(gRenderer, "resources/background.png");
 	if (gBackgroundTexture == NULL)
 	{
 		printf("Failed to load texture image!\n");

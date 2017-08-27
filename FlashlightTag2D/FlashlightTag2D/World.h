@@ -16,11 +16,6 @@ public:
 	static const int SCREEN_WIDTH = 640;
 	static const int SCREEN_HEIGHT = 480;
 
-	StrongGameActorPtrList entityList;
-	StrongGameActorPtrList cameraList;
-	ComponentList graphicsComponentList; 
-	SDL_Renderer* renderer;
-
 	World(SDL_Renderer* renderer);
 	virtual ~World();
 
@@ -28,9 +23,14 @@ public:
 	void AddCamera(StrongGameActorPtr camera);
 	StrongGameActorPtr AddEntity(StrongGameActorPtr entity);
 
-	StrongGameActorPtr GetCurrentCamera() { return currentCamera; };
+	StrongGameActorPtr GetCurrentCamera() { return m_pCurrentCamera; };
+	SDL_Renderer* GetRenderer() { return m_renderer; };
 
 private:
-	StrongGameActorPtr currentCamera;
+	StrongGameActorPtrList m_pEntityList;
+	ComponentList m_graphicsComponentList;
+	StrongGameActorPtrList m_pCameraList;
+	StrongGameActorPtr m_pCurrentCamera;
+	SDL_Renderer* m_renderer;
 };
 

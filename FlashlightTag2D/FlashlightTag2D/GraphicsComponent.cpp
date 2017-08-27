@@ -6,14 +6,14 @@
 GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_sprite(sprite),
 	  m_animationTimer(animationTimer),
-	  m_TransformComponent(transformComponent),
-	  imageOffset(transformComponent->GetSize() / 2)
+	  m_pTransformComponent(transformComponent),
+	  m_imageOffset(transformComponent->GetSize() / 2)
 {
-	xFrame = 0;
-	yFrame = 0;
-	curAnimationTime = animationTimer;
-	animationFrameRect.x = 0; animationFrameRect.y = 0;
-	animationFrameRect.h = 0; animationFrameRect.w = 0;
+	m_xFrame = 0;
+	m_yFrame = 0;
+	m_curAnimationTime = animationTimer;
+	m_animationFrameRect.x = 0; m_animationFrameRect.y = 0;
+	m_animationFrameRect.h = 0; m_animationFrameRect.w = 0;
 }
 
 GraphicsComponent::~GraphicsComponent()
@@ -37,22 +37,22 @@ void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 	int spriteWidth, spriteHeight;
 	SDL_QueryTexture(m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
 
-	animationFrameRect.x = xFrame;
-	animationFrameRect.y = yFrame;
-	animationFrameRect.w = xFrame + m_TransformComponent->GetSize().x;
-	animationFrameRect.h = yFrame + m_TransformComponent->GetSize().y;
+	m_animationFrameRect.x = m_xFrame;
+	m_animationFrameRect.y = m_yFrame;
+	m_animationFrameRect.w = m_xFrame + m_pTransformComponent->GetSize().x;
+	m_animationFrameRect.h = m_yFrame + m_pTransformComponent->GetSize().y;
 
-	if (curAnimationTime < 0)
+	if (m_curAnimationTime < 0)
 	{
-		curAnimationTime = m_animationTimer;
+		m_curAnimationTime = m_animationTimer;
 
-		xFrame = (int)(xFrame + m_TransformComponent->GetSize().x) % spriteWidth;
+		m_xFrame = (int)(m_xFrame + m_pTransformComponent->GetSize().x) % spriteWidth;
 
-		if (xFrame == 0)
-			yFrame = (int)(yFrame + m_TransformComponent->GetSize().y) % spriteHeight;
+		if (m_xFrame == 0)
+			m_yFrame = (int)(m_yFrame + m_pTransformComponent->GetSize().y) % spriteHeight;
 	}
 	else
 	{
-		curAnimationTime--;
+		m_curAnimationTime--;
 	}
 }

@@ -1,8 +1,7 @@
 #pragma once
 #include "BaseLogicComponent.h"
 
-class PlayerLogicComponent //:
-	//public BaseLogicComponent
+class PlayerLogicComponent 
 {
 public:
 	PlayerLogicComponent();

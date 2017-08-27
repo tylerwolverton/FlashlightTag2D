@@ -18,8 +18,8 @@ public:
 	virtual EComponentNames GetComponentName() const override;
 
 private:
-	int moveTimer;
-	int moveDirection;
-	int moveLength;
+	int m_moveTimer;
+	int m_moveDirection;
+	int m_moveLength;
 };
 

@@ -4,7 +4,7 @@
 #include <string>
 
 //Loads individual image as texture
-static SDL_Texture* loadTexture(SDL_Renderer* renderer, std::string path)
+static SDL_Texture* LoadTexture(SDL_Renderer* renderer, std::string path)
 {
 	//The final texture
 	SDL_Texture* newTexture = NULL;

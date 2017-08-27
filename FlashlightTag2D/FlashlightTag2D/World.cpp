@@ -8,10 +8,10 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 
-World::World(SDL_Renderer* p_renderer)
-	: renderer(p_renderer)
+World::World(SDL_Renderer* renderer)
+	: m_renderer(renderer)
 {
-	currentCamera = nullptr;
+	m_pCurrentCamera = nullptr;
 }
 
 World::~World()
@@ -31,7 +31,7 @@ void World::RunGame()
 	AddEntity(actorFactory->CreateEnemy(this));
 	AddCamera(actorFactory->CreateCamera(this, player));
 
-	auto backgroundSprite = loadTexture(renderer, "resources/background.png");
+	auto backgroundSprite = LoadTexture(m_renderer, "resources/background.png");
 	if (backgroundSprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
@@ -45,7 +45,7 @@ void World::RunGame()
 	while (isGameRunning)
 	{
 		//Clear screen
-		SDL_RenderClear(renderer);
+		SDL_RenderClear(m_renderer);
 
 		//Top left corner viewport
 		SDL_Rect topLeftViewport;
@@ -53,7 +53,7 @@ void World::RunGame()
 		topLeftViewport.y = 0;
 		topLeftViewport.w = SCREEN_WIDTH;
 		topLeftViewport.h = SCREEN_HEIGHT;
-		SDL_RenderSetViewport(renderer, &topLeftViewport);
+		SDL_RenderSetViewport(m_renderer, &topLeftViewport);
 
 		auto input = inputManager->ReadInput();
 
@@ -64,37 +64,37 @@ void World::RunGame()
 
 		while (timeAccumulatedMs >= timeStepMs)
 		{
-			for (auto entity : entityList)
+			for (auto entity : m_pEntityList)
 			{
 				entity->Update((int)timeAccumulatedMs, input);
 			}
 
-			physicsManager->ResolveCollisions(entityList);
+			physicsManager->ResolveCollisions(m_pEntityList);
 
 			timeAccumulatedMs -= timeStepMs;
 		}
 
-		graphicsManager->RenderBackground(backgroundSprite, GetCurrentCamera(), renderer, LEVEL_WIDTH, LEVEL_HEIGHT);
-		graphicsManager->Render(entityList, GetCurrentCamera(), renderer);
+		graphicsManager->RenderBackground(backgroundSprite, GetCurrentCamera(), m_renderer, LEVEL_WIDTH, LEVEL_HEIGHT);
+		graphicsManager->Render(m_pEntityList, GetCurrentCamera(), m_renderer);
 
 		//Update screen
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(m_renderer);
 	}
 }
 
 void World::AddCamera(StrongGameActorPtr camera)
 {
-	if (currentCamera == nullptr)
+	if (m_pCurrentCamera == nullptr)
 	{
-		currentCamera = camera;
+		m_pCurrentCamera = camera;
 	}
 
-	cameraList.push_back(camera);
-	entityList.push_back(camera);
+	m_pCameraList.push_back(camera);
+	m_pEntityList.push_back(camera);
 }
 
 StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
 {
-	entityList.push_back(entity);
+	m_pEntityList.push_back(entity);
 	return entity;
 }
