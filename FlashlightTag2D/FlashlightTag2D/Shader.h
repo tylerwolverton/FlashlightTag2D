@@ -58,7 +58,7 @@ public:
 		if (!LoadFragmentShader("BasicShader.frag"))
 			return false;
 
-		// All shaders has been create, now we must put them together into one large object
+		// All shaders has been created, now we must put them together into one large object
 		return LinkShaders();
 	}
 
@@ -197,7 +197,6 @@ public:
 		glDetachShader(shaderProgram, fragmentShader);
 
 		glDeleteProgram(shaderProgram);
-
 
 		glDeleteShader(vertexshader);
 		glDeleteShader(fragmentShader);

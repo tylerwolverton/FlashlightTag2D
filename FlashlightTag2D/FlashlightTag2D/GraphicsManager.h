@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <glew.h>
+#include <vector>
 #include "Shader.h"
 #define GL3_PROTOTYPES 1
 
@@ -38,6 +39,7 @@ private:
 	//	{ -0.5, -0.5,  0.5 }, // Bottom left
 	//};
 
+	unsigned int m_texture;
 	Shader m_shader;
 	GLuint VBO, VAO, EBO;
 	// Create variables for storing the ID of our VAO and VBO
@@ -47,6 +49,6 @@ private:
 	const uint32_t positionAttributeIndex = 0;
 
 	bool SetOpenGLAttributes();
-	bool SetupBufferObjects();
+	bool SetupBufferObjects(const std::vector< std::vector<float> > vertices);
 };
 

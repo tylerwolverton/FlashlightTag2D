@@ -6,26 +6,26 @@
 GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_sprite(sprite),
 	  m_animationTimer(animationTimer),
-	  m_TransformComponent(transformComponent),
-	  imageOffset(transformComponent->GetSize() / 2)
+	  m_transformComponent(transformComponent),
+	  m_imageOffset(transformComponent->GetSize() / 2)
 {
-	xFrame = 0;
-	yFrame = 0;
-	curAnimationTime = animationTimer;
-	animationFrameRect.x = 0; animationFrameRect.y = 0;
-	animationFrameRect.h = 0; animationFrameRect.w = 0;
+	m_xFrame = 0;
+	m_yFrame = 0;
+	m_curAnimationTime = animationTimer;
+	m_animationFrameRect.x = 0; m_animationFrameRect.y = 0;
+	m_animationFrameRect.h = 0; m_animationFrameRect.w = 0;
 }
 
 GraphicsComponent::GraphicsComponent(int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_animationTimer(animationTimer),
-	m_TransformComponent(transformComponent),
-	imageOffset(transformComponent->GetSize() / 2)
+	  m_transformComponent(transformComponent),
+	  m_imageOffset(transformComponent->GetSize() / 2)
 {
-	xFrame = 0;
-	yFrame = 0;
-	curAnimationTime = animationTimer;
-	animationFrameRect.x = 0; animationFrameRect.y = 0;
-	animationFrameRect.h = 0; animationFrameRect.w = 0;
+	m_xFrame = 0;
+	m_yFrame = 0;
+	m_curAnimationTime = animationTimer;
+	m_animationFrameRect.x = 0; m_animationFrameRect.y = 0;
+	m_animationFrameRect.h = 0; m_animationFrameRect.w = 0;
 }
 
 GraphicsComponent::~GraphicsComponent()
@@ -42,6 +42,33 @@ ComponentId GraphicsComponent::GetComponentId() const
 EComponentNames GraphicsComponent::GetComponentName() const
 {
 	return EComponentNames::GraphicsComponentEnum;
+}
+
+std::vector<float> GraphicsComponent::GetScaledVertices(int screenWidth, int screenHeight)
+{
+	std::vector<float> vertices;
+
+	if (screenHeight < 1 || screenWidth < 1)
+	{
+		return vertices;
+	}
+
+	auto pos = m_transformComponent->GetPosition();
+
+	// Top Right
+	vertices.push_back((pos.x + m_imageOffset.x)/screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
+	//vertices.push_back(1.0f); vertices.push_back(0.0f); vertices.push_back(0.0f);
+	// Bottom Right
+	vertices.push_back((pos.x + m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
+	//vertices.push_back(0.0f); vertices.push_back(1.0f); vertices.push_back(0.0f);
+	// Bottom Left
+	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
+	//vertices.push_back(0.0f); vertices.push_back(0.0f); vertices.push_back(1.0f);
+	// Top Left 
+	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
+	//vertices.push_back(1.0f); vertices.push_back(0.0f); vertices.push_back(1.0f);
+
+	return vertices;
 }
 
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)

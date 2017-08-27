@@ -3,6 +3,8 @@
 #include "SDLUtils.h"
 #include "Vector2D.h"
 
+#include <vector>
+
 class GameActor;
 class TransformComponent;
 struct SDL_Texture;
@@ -11,10 +13,10 @@ class GraphicsComponent :
 	public ActorComponent
 {
 public:
-	SDL_Rect animationFrameRect;
+	SDL_Rect m_animationFrameRect;
 	SDL_Texture* m_sprite;
-	std::shared_ptr<TransformComponent> m_TransformComponent;
-	Vector2D<float> imageOffset;
+	std::shared_ptr<TransformComponent> m_transformComponent;
+	Vector2D<float> m_imageOffset;
 
 	GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	GraphicsComponent(int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
@@ -25,8 +27,10 @@ public:
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
+	std::vector<float> GetScaledVertices(int screenWidth, int screenHeight);
+
 private:
-	int curAnimationTime, m_animationTimer;
-	int xFrame, yFrame;
+	int m_curAnimationTime, m_animationTimer;
+	int m_xFrame, m_yFrame;
 };
 

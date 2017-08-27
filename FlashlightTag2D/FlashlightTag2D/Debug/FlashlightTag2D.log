@@ -1,13 +1,13 @@
 ﻿  GraphicsManager.cpp
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(181): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(182): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(183): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(184): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(209): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(210): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(253): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(254): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(255): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(256): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(211): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(212): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(237): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(238): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  GraphicsComponent.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  World.cpp
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)
