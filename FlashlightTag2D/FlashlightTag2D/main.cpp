@@ -88,18 +88,18 @@ bool init()
 }
 
 //Loads media
-//bool loadMedia()
-//{
-//	//Load PNG texture
-//	gBackgroundTexture = loadTexture(gRenderer, "resources/background.png");
-//	if (gBackgroundTexture == NULL)
-//	{
-//		printf("Failed to load texture image!\n");
-//		return false;
-//	}
-//
-//	return true;
-//}
+bool loadMedia()
+{
+	//Load PNG texture
+	gBackgroundTexture = LoadTexture(gRenderer, "resources/background.png");
+	if (gBackgroundTexture == NULL)
+	{
+		printf("Failed to load texture image!\n");
+		return false;
+	}
+
+	return true;
+}
 
 //Frees media and shuts down SDL
 void close()

@@ -5,11 +5,11 @@
 
 FollowTargetAIComponent::FollowTargetAIComponent()
 {
-	target = nullptr;
+	m_pTarget = nullptr;
 }
 
-FollowTargetAIComponent::FollowTargetAIComponent(StrongGameActorPtr p_target)
-	: target(p_target)
+FollowTargetAIComponent::FollowTargetAIComponent(StrongGameActorPtr target)
+	: m_pTarget(target)
 {
 }
 
@@ -20,7 +20,7 @@ FollowTargetAIComponent::~FollowTargetAIComponent()
 void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs) 
 {
 	StrongActorComponentPtr actorTransformComponent = actor.GetComponentByName(EComponentNames::TransformComponentEnum);
-	StrongActorComponentPtr targetTransformComponent = target->GetComponentByName(EComponentNames::TransformComponentEnum);
+	StrongActorComponentPtr targetTransformComponent = m_pTarget->GetComponentByName(EComponentNames::TransformComponentEnum);
 	if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)
 	{
 		return;
@@ -40,5 +40,5 @@ EComponentNames FollowTargetAIComponent::GetComponentName() const
 
 void FollowTargetAIComponent::SetTargetActor(StrongGameActorPtr actor)
 {
-	target = actor;
+	m_pTarget = actor;
 }

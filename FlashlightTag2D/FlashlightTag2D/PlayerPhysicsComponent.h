@@ -11,6 +11,5 @@ public:
 	virtual ~PlayerPhysicsComponent();
 
 	virtual void SignalCollision(GameActor& actor) override;
-
 };
 

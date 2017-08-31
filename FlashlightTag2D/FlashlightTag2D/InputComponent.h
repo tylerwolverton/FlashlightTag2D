@@ -14,10 +14,10 @@ public:
 	virtual EComponentNames GetComponentName() const override;
 
 private:
-	std::shared_ptr<Command> buttonEsc;
-	std::shared_ptr<Command> buttonW;
-	std::shared_ptr<Command> buttonA;
-	std::shared_ptr<Command> buttonS;
-	std::shared_ptr<Command> buttonD;
+	std::shared_ptr<Command> m_pButtonEsc;
+	std::shared_ptr<Command> m_pButtonW;
+	std::shared_ptr<Command> m_pButtonA;
+	std::shared_ptr<Command> m_pButtonS;
+	std::shared_ptr<Command> m_pButtonD;
 };
 

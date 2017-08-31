@@ -15,10 +15,10 @@
 //	currentCamera = nullptr;
 //}
 
-World::World(SDL_Window* p_window)
-	: window(p_window)
+World::World(SDL_Window* window)
+	: m_window(window)
 {
-	currentCamera = nullptr;
+	m_pCurrentCamera = nullptr;
 }
 
 World::~World()
@@ -31,14 +31,14 @@ void World::RunGame()
 	auto actorFactory = new ActorFactory();
 	auto inputManager = new InputManager();
 	auto physicsManager = new PhysicsManager();
-	auto graphicsManager = new GraphicsManager(window);
+	auto graphicsManager = new GraphicsManager(m_window);
 
 	//StrongWorldPtr thisWorld = std::make_shared<World>(*this);
 	auto player = AddEntity(actorFactory->CreatePlayer());
 	AddEntity(actorFactory->CreateEnemy());
 	AddCamera(actorFactory->CreateCamera(player));
 
-	/*auto backgroundSprite = loadTexture(renderer, "resources/background.png");
+	/*auto backgroundSprite = LoadTexture(m_renderer, "resources/background.png");
 	if (backgroundSprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
@@ -53,7 +53,7 @@ void World::RunGame()
 	{
 		//Clear screen
 		//graphicsManager->ClearScreen();
-		//SDL_RenderClear(renderer);
+		//SDL_RenderClear(m_renderer);
 
 		//Top left corner viewport
 		/*SDL_Rect topLeftViewport;
@@ -61,7 +61,8 @@ void World::RunGame()
 		topLeftViewport.y = 0;
 		topLeftViewport.w = SCREEN_WIDTH;
 		topLeftViewport.h = SCREEN_HEIGHT;
-		SDL_RenderSetViewport(renderer, &topLeftViewport);*/
+
+		SDL_RenderSetViewport(m_renderer, &topLeftViewport);*/
 
 		auto input = inputManager->ReadInput();
 
@@ -72,39 +73,39 @@ void World::RunGame()
 
 		while (timeAccumulatedMs >= timeStepMs)
 		{
-			for (auto entity : entityList)
+			for (auto entity : m_pEntityList)
 			{
 				entity->Update((int)timeAccumulatedMs, input);
 			}
 
-			physicsManager->ResolveCollisions(entityList);
+			physicsManager->ResolveCollisions(m_pEntityList);
 
 			timeAccumulatedMs -= timeStepMs;
 		}
 
 		//graphicsManager->ClearScreen();
 		//graphicsManager->RenderBackground(backgroundSprite, GetCurrentCamera(), renderer, LEVEL_WIDTH, LEVEL_HEIGHT);
-		graphicsManager->Render(entityList, GetCurrentCamera());
+		graphicsManager->Render(m_pEntityList, GetCurrentCamera());
 
 		//Update screen
 		//SDL_RenderPresent(renderer);
-		SDL_GL_SwapWindow(window);
+		SDL_GL_SwapWindow(m_window);
 	}
 }
 
 void World::AddCamera(StrongGameActorPtr camera)
 {
-	if (currentCamera == nullptr)
+	if (m_pCurrentCamera == nullptr)
 	{
-		currentCamera = camera;
+		m_pCurrentCamera = camera;
 	}
 
-	cameraList.push_back(camera);
-	entityList.push_back(camera);
+	m_pCameraList.push_back(camera);
+	m_pEntityList.push_back(camera);
 }
 
 StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
 {
-	entityList.push_back(entity);
+	m_pEntityList.push_back(entity);
 	return entity;
 }

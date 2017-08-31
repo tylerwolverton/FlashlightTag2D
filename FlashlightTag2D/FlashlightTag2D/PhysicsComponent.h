@@ -17,7 +17,7 @@ public:
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
-	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_TransformComponent; }
+	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; }
 
 	Vector2D<float> GetVelocity() { return m_velocity; }
 	void SetVelocity(Vector2D<float> newVelocity);
@@ -33,7 +33,7 @@ public:
 	void MoveActor();
 
 protected:
-	std::shared_ptr<TransformComponent> m_TransformComponent;
+	std::shared_ptr<TransformComponent> m_pTransformComponent;
 	Vector2D<float> m_velocity;
 	float m_maxSpeed;
 	float m_mass;

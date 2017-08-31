@@ -7,7 +7,7 @@ class FollowTargetAIComponent : public ActorComponent
 {
 public:
 	FollowTargetAIComponent();
-	FollowTargetAIComponent(StrongGameActorPtr p_target);
+	FollowTargetAIComponent(StrongGameActorPtr target);
 	virtual ~FollowTargetAIComponent();
 
 	void Update(GameActor& actor, int deltaMs) override;
@@ -18,6 +18,6 @@ public:
 	void SetTargetActor(StrongGameActorPtr actor);
 
 private:
-	StrongGameActorPtr target;
+	StrongGameActorPtr m_pTarget;
 };
 

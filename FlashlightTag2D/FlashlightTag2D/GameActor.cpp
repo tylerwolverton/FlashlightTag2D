@@ -6,7 +6,7 @@
 GameActor::GameActor(ComponentList components)
 	: m_components(components)
 {
-	m_commands = std::make_shared<CommandList>();
+	m_pCommands = std::make_shared<CommandList>();
 }
 
 GameActor::~GameActor()
@@ -25,7 +25,7 @@ void GameActor::Update(int deltaMs, uint32_t input)
 		{
 			if (command)
 			{
-				command->execute(*this);
+				command->Execute(*this);
 			}
 		}
 		GetCommands()->clear();

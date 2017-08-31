@@ -2,7 +2,7 @@
 #include "TransformComponent.h"
 
 PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, Vector2D<float> velocity, float maxSpeed, float mass)
-	: m_TransformComponent(transformComponent),
+	: m_pTransformComponent(transformComponent),
 	  m_velocity(velocity),
 	  m_maxSpeed(maxSpeed),
 	  m_mass(mass)
@@ -78,5 +78,5 @@ void PhysicsComponent::ApplyFriction(float fricCoeff)
 
 void PhysicsComponent::MoveActor()
 {
-	m_TransformComponent->SetPosition(m_TransformComponent->GetPosition() + m_velocity);
+	m_pTransformComponent->SetPosition(m_pTransformComponent->GetPosition() + m_velocity);
 }

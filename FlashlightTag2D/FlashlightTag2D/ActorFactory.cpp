@@ -32,7 +32,9 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 
-	/*auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
+	/*
+	auto sprite = LoadTexture(world->GetRenderer(), "resources/SpriteSheet.png");
+
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");
@@ -57,7 +59,8 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	
-	/*auto sprite = loadTexture(world->renderer, "resources/SpriteSheet.png");
+	/*auto sprite = LoadTexture(world->GetRenderer(), "resources/SpriteSheet.png");
+
 	if (sprite == NULL)
 	{
 		printf("Failed to load texture image!\n");

@@ -8,9 +8,6 @@ class ActorComponent
 {
 	friend class ActorFactory;
 
-protected:
-	StrongActorPtr m_pOwner;
-
 public:
 	virtual ~ActorComponent() { m_pOwner.reset(); }
 
@@ -21,11 +18,13 @@ public:
 
 	static ComponentId GetIdFromName(const char* componentStr)
 	{
-		//void* rawId = HashedString::hash_name(componentStr);
 		return ComponentIdNameMap.find(componentStr)->second;
 	}
 
+protected:
+	StrongActorPtr m_pOwner;
+
 private:
-	void SetOwner(StrongActorPtr pOwner) { m_pOwner = pOwner; }
+	void set_owner(StrongActorPtr pOwner) { m_pOwner = pOwner; }
 };
 

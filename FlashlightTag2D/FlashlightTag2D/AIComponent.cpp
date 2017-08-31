@@ -5,9 +5,9 @@
 
 AIComponent::AIComponent()
 {
-	moveTimer = 0;
-	moveDirection = 0;
-	moveLength = 10;
+	m_moveTimer = 0;
+	m_moveDirection = 0;
+	m_moveLength = 10;
 }
 
 AIComponent::~AIComponent()
@@ -22,25 +22,25 @@ void AIComponent::Update(GameActor& actor, int deltaMs)
 CommandList AIComponent::SimpleMove()
 {
 	CommandList commandList;
-	if (moveTimer > 0)
+	if (m_moveTimer > 0)
 	{
-		moveTimer--;
+		m_moveTimer--;
 	}
 	else
 	{
-		if (moveLength < 0)
+		if (m_moveLength < 0)
 		{
-			moveDirection = (moveDirection + 1) % 4;
-			moveLength = 10;
+			m_moveDirection = (m_moveDirection + 1) % 4;
+			m_moveLength = 10;
 		}
 		else
 		{
-			moveLength--;
+			m_moveLength--;
 		}
 		
-		moveTimer = 300;
+		m_moveTimer = 300;
 
-		switch (moveDirection)
+		switch (m_moveDirection)
 		{
 			case 0:
 				commandList.push_back(std::make_shared<MoveDown>());
