@@ -2,7 +2,30 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SDLUtils.h</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Vector2D.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\main.cpp</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
