@@ -41,14 +41,18 @@ private:
 
 	unsigned int m_texture;
 	Shader m_shader;
-	GLuint VBO, VAO, EBO;
+	GLuint VBO, VAO, EBO, m_quadVAO;
 	// Create variables for storing the ID of our VAO and VBO
 	//GLuint vbo[2], vao[1];
 
 	// The positons of the position and color data within the VAO
 	const uint32_t positionAttributeIndex = 0;
 
-	bool SetOpenGLAttributes();
-	bool SetupBufferObjects(const std::vector< std::vector<float> > vertices);
+	bool setOpenGLAttributes();
+	bool initializeRenderData();
+	bool setupBufferObjects(const std::vector< std::vector<float> > vertices); 
+	/*void drawSprite(Texture2D &texture, glm::vec2 position,
+		glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f,
+		glm::vec3 color = glm::vec3(1.0f));*/
 };
 

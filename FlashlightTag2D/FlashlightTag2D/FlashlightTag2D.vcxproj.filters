@@ -56,6 +56,9 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Matrix4.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -128,6 +131,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Matrix4.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

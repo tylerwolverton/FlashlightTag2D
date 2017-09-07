@@ -3,12 +3,14 @@
 #include "GraphicsComponent.h"
 #include "TransformComponent.h"
 #include "GameActor.h"
+#include "Vector2D.h"
+#include "Matrix4.h"
 #include "stb_image.h"
 
 GraphicsManager::GraphicsManager(SDL_Window* window)
 	: m_window(window)
 {
-	SetOpenGLAttributes();
+	setOpenGLAttributes();
 
 	// Create our opengl context and attach it to our window
 	m_mainContext = SDL_GL_CreateContext(m_window);
@@ -25,6 +27,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 		m_shader.UseProgram();
 	}
 	//SetupBufferObjects();
+	initializeRenderData();
 }
 
 GraphicsManager::~GraphicsManager()
@@ -37,7 +40,7 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
-bool GraphicsManager::SetOpenGLAttributes()
+bool GraphicsManager::setOpenGLAttributes()
 {
 	// Set our OpenGL version.
 	// SDL_GL_CONTEXT_CORE gives us only the newer version, deprecated functions are disabled
@@ -54,7 +57,37 @@ bool GraphicsManager::SetOpenGLAttributes()
 	return true;
 }
 
-bool GraphicsManager::SetupBufferObjects(const std::vector< std::vector<float> > verticesVector)
+bool GraphicsManager::initializeRenderData()
+{
+	// Configure VAO/VBO
+	GLuint VBO;
+	GLfloat vertices[] = {
+		// Pos      // Tex
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f,
+
+		0.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 1.0f, 0.0f
+	};
+
+	glGenVertexArrays(1, &this->m_quadVAO);
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindVertexArray(this->m_quadVAO);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	return true;
+}
+
+bool GraphicsManager::setupBufferObjects(const std::vector< std::vector<float> > verticesVector)
 {
 	//GLfloat vertices[] = {
 	//	0.25f,  0.25f, 0.0f,  // Top Right
@@ -277,13 +310,34 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 			continue;
 		}
 
-		/*std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
+		std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
 		auto actorPos = rawActorTransformComponent->GetPosition();
-		auto actorSize = rawActorTransformComponent->GetSize();*/
+		auto actorSize = rawActorTransformComponent->GetSize();
 
-		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
+		// Prepare transformations
+		m_shader.UseProgram();
+		Matrix4<float> model;
+		model = model.Translate(actorPos);
+		
+		/*model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+		
+		model = glm::scale(model, glm::vec3(size, 1.0f));*/
+		
+		//this->m_shader.SetMatrix4("model", model);
+		//this->m_shader.SetVector3f("spriteColor", color);
+		
+		glActiveTexture(GL_TEXTURE0);
+		//texture.Bind();
+		
+		glBindVertexArray(this->m_quadVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+
+		/*std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
 		verticesVector.push_back(rawGraphicsComponent->GetScaledVertices(windowWidth, windowHeight));
-		verticesSize += 3;
+		verticesSize += 3;*/
 
 		/*SDL_Rect imgPartRect;
 		imgPartRect.x = actorPos.x - cameraPos.x - rawGraphicsComponent->m_imageOffset.x;
@@ -333,14 +387,32 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 		//SDL_RenderCopy(renderer, rawGraphicsComponent->m_sprite, &(rawGraphicsComponent->animationFrameRect), &imgPartRect);
 	}
-
-	SetupBufferObjects(verticesVector);
-
-	// ..:: Triangle Drawing code (in Game loop) :: ..
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, verticesSize, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
 }
+
+//void GraphicsManager::drawSprite(Texture2D &texture, glm::vec2 position,
+//	glm::vec2 size, GLfloat rotate, glm::vec3 color)
+//{
+//	// Prepare transformations
+//	m_shader.Use();
+//	glm::mat4 model;
+//	model = glm::translate(model, glm::vec3(position, 0.0f));
+//
+//	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+//	model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
+//	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+//
+//	model = glm::scale(model, glm::vec3(size, 1.0f));
+//
+//	this->shader.SetMatrix4("model", model);
+//	this->shader.SetVector3f("spriteColor", color);
+//
+//	glActiveTexture(GL_TEXTURE0);
+//	texture.Bind();
+//
+//	glBindVertexArray(this->quadVAO);
+//	glDrawArrays(GL_TRIANGLES, 0, 6);
+//	glBindVertexArray(0);
+//}
 
 void GraphicsManager::ClearScreen()
 {
