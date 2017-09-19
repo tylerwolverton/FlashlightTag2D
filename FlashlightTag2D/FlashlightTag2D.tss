@@ -2,20 +2,32 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.cpp</string>
-      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.h</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\main.cpp</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.cpp</string>
       <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.cpp</string>
-      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.h</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.cpp</string>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BasicShader.frag</string>
       <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BasicShader.vert</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Matrix4.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Vector2D.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\TransformComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
       <string>C:\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Shader.h</string>

@@ -1,13 +1,16 @@
 ﻿  GraphicsManager.cpp
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(243): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(244): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(246): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(271): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(272): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-  Compiling...
-  Matrix4.cpp
-  Generating Code...
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(101): warning C4838: conversion from 'int' to 'GLfloat' requires a narrowing conversion
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(96): note: while compiling class template member function 'std::unique_ptr<Matrix4<GLfloat>,std::default_delete<_Ty>> Matrix4<GLfloat>::CreateOrthoMatrix(int,int,int,int,int,int)'
+          with
+          [
+              _Ty=Matrix4<GLfloat>
+          ]
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(330): note: see reference to function template instantiation 'std::unique_ptr<Matrix4<GLfloat>,std::default_delete<_Ty>> Matrix4<GLfloat>::CreateOrthoMatrix(int,int,int,int,int,int)' being compiled
+          with
+          [
+              _Ty=Matrix4<GLfloat>
+          ]
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(320): note: see reference to class template instantiation 'Matrix4<GLfloat>' being compiled
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(101): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

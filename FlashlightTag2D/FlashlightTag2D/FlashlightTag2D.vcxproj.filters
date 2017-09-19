@@ -56,9 +56,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="Matrix4.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">

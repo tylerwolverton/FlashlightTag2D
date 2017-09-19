@@ -49,8 +49,8 @@ public:
 		shaderProgram = glCreateProgram();
 
 		// Bind the location of our attributes
-		BindAttributeLocation(0, "in_Position");
-		BindAttributeLocation(1, "in_Color");
+		/*BindAttributeLocation(0, "in_Position");
+		BindAttributeLocation(1, "in_Color");*/
 
 		if (!LoadVertexShader("BasicShader.vert"))
 			return false;
@@ -187,6 +187,11 @@ public:
 
 		std::cout << "=======================================\n\n";
 		delete shaderInfoLog;
+	}
+
+	void SetMatrix4(std::string name, GLfloat* value )
+	{
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, false, value);
 	}
 
 	void CleanUp()

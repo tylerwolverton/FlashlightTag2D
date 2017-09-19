@@ -240,10 +240,10 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 		SDL_Rect imgPartRect;
 
-		imgPartRect.x = actorPos.x - cameraPos.x - rawGraphicsComponent->GetImageOffset().x;
-		imgPartRect.y = actorPos.y - cameraPos.y - rawGraphicsComponent->GetImageOffset().y;
-		imgPartRect.w = actorSize.x;
-		imgPartRect.h = actorSize.y;
+		imgPartRect.x = (int)(actorPos.x - cameraPos.x - rawGraphicsComponent->GetImageOffset().x);
+		imgPartRect.y = (int)(actorPos.y - cameraPos.y - rawGraphicsComponent->GetImageOffset().y);
+		imgPartRect.w = (int)(actorSize.x);
+		imgPartRect.h = (int)(actorSize.y);
 
 		SDL_RenderCopy(renderer, rawGraphicsComponent->GetSprite(), &(rawGraphicsComponent->GetAnimationFrameRect()), &imgPartRect);
 	}
@@ -268,8 +268,8 @@ void GraphicsManager::RenderBackground(SDL_Texture* sprite, StrongGameActorPtr c
 		for (int j = 0; j < screenHeight; j += spriteHeight)
 		{
 			SDL_Rect imgPartRect;
-			imgPartRect.x = i - cameraPos.x;
-			imgPartRect.y = j - cameraPos.y;
+			imgPartRect.x = i - (int)(cameraPos.x);
+			imgPartRect.y = j - (int)(cameraPos.y);
 			imgPartRect.w = spriteWidth;
 			imgPartRect.h = spriteHeight;
 
@@ -310,14 +310,15 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 			continue;
 		}
 
+		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
 		std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
 		auto actorPos = rawActorTransformComponent->GetPosition();
 		auto actorSize = rawActorTransformComponent->GetSize();
 
 		// Prepare transformations
 		m_shader.UseProgram();
-		Matrix4<float> model;
-		model = model.Translate(actorPos);
+		Matrix4<GLfloat> model;
+		model = model.Translate(actorPos - cameraPos - rawGraphicsComponent->GetImageOffset());
 		
 		/*model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
 		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -325,10 +326,12 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		
 		model = glm::scale(model, glm::vec3(size, 1.0f));*/
 		
-		//this->m_shader.SetMatrix4("model", model);
+		this->m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
+		this->m_shader.SetMatrix4("projection", Matrix4<GLfloat>::CreateOrthoMatrix(0, windowWidth, windowHeight, 0, 1, 100)->GetPtrToFlattenedData().get());
 		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);
+		
 		//texture.Bind();
 		
 		glBindVertexArray(this->m_quadVAO);
