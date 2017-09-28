@@ -41,7 +41,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 		return NULL;
 	}*/
 
-	components.push_back(std::make_shared<GraphicsComponent>(1000, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 1000, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }
@@ -67,7 +67,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 		return NULL;
 	}*/
 
-	components.push_back(std::make_shared<GraphicsComponent>(600, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>("resources/SpriteSheet.png", 600, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }

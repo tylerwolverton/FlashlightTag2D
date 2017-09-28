@@ -3,19 +3,20 @@
 #include "GameActor.h"
 #include "World.h"
 
-GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
-	: GraphicsComponent(animationTimer, transformComponent)
-{
-	m_sprite = sprite;
-}
+//GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
+//	: GraphicsComponent(animationTimer, transformComponent)
+//{
+//	m_sprite = sprite;
+//}
 
-GraphicsComponent::GraphicsComponent(int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
+GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_animationTimer(animationTimer),
 	  m_curAnimationTime(animationTimer),
 	  m_pTransformComponent(transformComponent),
 	  m_imageOffset(transformComponent->GetSize() / 2),
 	  m_xFrame(0),
-	  m_yFrame(0)
+	  m_yFrame(0),
+	  m_texture(Texture2D(texturePath))
 {
 	m_animationFrameRect.x = 0; m_animationFrameRect.y = 0;
 	m_animationFrameRect.h = 0; m_animationFrameRect.w = 0;
@@ -23,8 +24,6 @@ GraphicsComponent::GraphicsComponent(int animationTimer, std::shared_ptr<Transfo
 
 GraphicsComponent::~GraphicsComponent()
 {
-	SDL_DestroyTexture(m_sprite);
-	m_sprite = NULL;
 }
 
 ComponentId GraphicsComponent::GetComponentId() const

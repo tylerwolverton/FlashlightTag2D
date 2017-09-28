@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <glew.h>
 #include <vector>
+#include "Matrix4.h"
 #include "Shader.h"
 #define GL3_PROTOTYPES 1
 
@@ -31,22 +32,14 @@ private:
 	// Each poin has three values ( x, y, z)
 	const uint32_t floatsPerPoint = 2;
 
-	// This is the object we'll draw ( a simple square )
-	//const GLfloat diamond[4][3] = {
-	//	{ -0.5,  0.5,  0.5 }, // Top left
-	//	{ 0.5,  0.5,  0.5 }, // Top right
-	//	{ 0.5, -0.5,  0.5 }, // Bottom right 
-	//	{ -0.5, -0.5,  0.5 }, // Bottom left
-	//};
-
-	unsigned int m_texture;
+	//unsigned int m_texture;
 	Shader m_shader;
 	GLuint VBO, VAO, EBO, m_quadVAO;
-	// Create variables for storing the ID of our VAO and VBO
-	//GLuint vbo[2], vao[1];
 
 	// The positons of the position and color data within the VAO
 	const uint32_t positionAttributeIndex = 0;
+
+	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;
 
 	bool setOpenGLAttributes();
 	bool initializeRenderData();

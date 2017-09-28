@@ -189,9 +189,14 @@ public:
 		delete shaderInfoLog;
 	}
 
-	void SetMatrix4(std::string name, GLfloat* value )
+	void SetMatrix4(const std::string name, GLfloat* value )
 	{
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, false, value);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_TRUE, value);
+	}
+
+	void SetInt(const std::string &name, int value) const
+	{
+		glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
 	}
 
 	void CleanUp()

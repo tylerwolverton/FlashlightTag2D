@@ -1,16 +1,16 @@
-﻿  GraphicsManager.cpp
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(101): warning C4838: conversion from 'int' to 'GLfloat' requires a narrowing conversion
-  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(96): note: while compiling class template member function 'std::unique_ptr<Matrix4<GLfloat>,std::default_delete<_Ty>> Matrix4<GLfloat>::CreateOrthoMatrix(int,int,int,int,int,int)'
+﻿  ActorFactory.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(78): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(901): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
           with
           [
-              _Ty=Matrix4<GLfloat>
+              _Ty=PlayerPhysicsComponent
           ]
-  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(330): note: see reference to function template instantiation 'std::unique_ptr<Matrix4<GLfloat>,std::default_delete<_Ty>> Matrix4<GLfloat>::CreateOrthoMatrix(int,int,int,int,int,int)' being compiled
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
           with
           [
-              _Ty=Matrix4<GLfloat>
+              _Ty=PlayerPhysicsComponent
           ]
-  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(320): note: see reference to class template instantiation 'Matrix4<GLfloat>' being compiled
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\matrix4.h(101): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(31): note: see reference to function template instantiation 'std::shared_ptr<PlayerPhysicsComponent> std::make_shared<PlayerPhysicsComponent,std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

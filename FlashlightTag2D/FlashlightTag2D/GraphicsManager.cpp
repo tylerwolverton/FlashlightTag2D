@@ -4,8 +4,8 @@
 #include "TransformComponent.h"
 #include "GameActor.h"
 #include "Vector2D.h"
-#include "Matrix4.h"
-#include "stb_image.h"
+#include "Texture2D.h"
+//#include "stb_image.h"
 
 GraphicsManager::GraphicsManager(SDL_Window* window)
 	: m_window(window)
@@ -28,6 +28,12 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	}
 	//SetupBufferObjects();
 	initializeRenderData();
+
+	int windowWidth, windowHeight;
+	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
+	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, windowWidth, windowHeight, 0, -1, 1);
+	m_shader.SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
+	m_shader.SetInt("image", 0);
 }
 
 GraphicsManager::~GraphicsManager()
@@ -245,7 +251,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		imgPartRect.w = (int)(actorSize.x);
 		imgPartRect.h = (int)(actorSize.y);
 
-		SDL_RenderCopy(renderer, rawGraphicsComponent->GetSprite(), &(rawGraphicsComponent->GetAnimationFrameRect()), &imgPartRect);
+		//SDL_RenderCopy(renderer, rawGraphicsComponent->GetSprite(), &(rawGraphicsComponent->GetAnimationFrameRect()), &imgPartRect);
 	}
 }
 
@@ -288,23 +294,21 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 	std::shared_ptr<TransformComponent> rawCameraTransformComponent = std::dynamic_pointer_cast<TransformComponent>(cameraTransformComponent);
 	auto cameraPos = rawCameraTransformComponent->GetPosition();
-
+/*
 	int windowWidth, windowHeight;
-	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
+	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);*/
 
-	std::vector< std::vector<float> > verticesVector;
-	int verticesSize = 0;
+	//std::vector< std::vector<float> > verticesVector;
+	//int verticesSize = 0;
 	for (auto actor : gameActors)
 	{
 		StrongActorComponentPtr graphicsComponent = actor->GetComponentByName(EComponentNames::GraphicsComponentEnum);
-
 		if (graphicsComponent == nullptr)
 		{
 			continue;
 		}
 
 		StrongActorComponentPtr actorTransformComponent = actor->GetComponentByName(EComponentNames::TransformComponentEnum);
-
 		if (actorTransformComponent == nullptr)
 		{
 			continue;
@@ -319,68 +323,22 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		m_shader.UseProgram();
 		Matrix4<GLfloat> model;
 		model = model.Translate(actorPos - cameraPos - rawGraphicsComponent->GetImageOffset());
-		
+		model.Print();
+		m_projMatrix->Print();
+
+		(model * *(m_projMatrix.get())).Print();
 		/*model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
 		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
 		
 		model = glm::scale(model, glm::vec3(size, 1.0f));*/
 		
-		this->m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		this->m_shader.SetMatrix4("projection", Matrix4<GLfloat>::CreateOrthoMatrix(0, windowWidth, windowHeight, 0, 1, 100)->GetPtrToFlattenedData().get());
+		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
 		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		//texture.Bind();
-		
-		glBindVertexArray(this->m_quadVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindVertexArray(0);
-
-		/*std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
-		verticesVector.push_back(rawGraphicsComponent->GetScaledVertices(windowWidth, windowHeight));
-		verticesSize += 3;*/
-
-		/*SDL_Rect imgPartRect;
-		imgPartRect.x = actorPos.x - cameraPos.x - rawGraphicsComponent->m_imageOffset.x;
-		imgPartRect.y = actorPos.y - cameraPos.y - rawGraphicsComponent->m_imageOffset.y;
-		imgPartRect.w = actorSize.x;
-		imgPartRect.h = actorSize.y;
-
-		float x = actorPos.x - cameraPos.x - rawGraphicsComponent->m_imageOffset.x;
-		float y = actorPos.y - cameraPos.y - rawGraphicsComponent->m_imageOffset.y;
-		float w = actorSize.x;
-		float h = actorSize.y;*/
-
-		//// Texture code
-		//unsigned int texture;
-		//glGenTextures(1, &texture);
-		//glBindTexture(GL_TEXTURE_2D, texture);
-		//// set the texture wrapping/filtering options (on the currently bound texture object)
-		////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//int width, height, nrChannels;
-		//stbi_set_flip_vertically_on_load(true);
-		//unsigned char *data = stbi_load("resources/SpriteSheet.png", &width, &height, &nrChannels, 0);
-		//if (data)
-		//{
-		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		//	glGenerateMipmap(GL_TEXTURE_2D);
-		//}
-		//else
-		//{
-		//	std::cout << "Failed to load texture" << std::endl;
-		//}
-		//stbi_image_free(data);
-
-		// ..:: Triangle Drawing code (in Game loop) :: ..
-		/*glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);*/
+		rawGraphicsComponent->GetTexture().BindTexture();
 
 		// Draw triangles with texture
 		/*glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -388,7 +346,9 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);*/
 
-		//SDL_RenderCopy(renderer, rawGraphicsComponent->m_sprite, &(rawGraphicsComponent->animationFrameRect), &imgPartRect);
+		glBindVertexArray(this->m_quadVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
 	}
 }
 

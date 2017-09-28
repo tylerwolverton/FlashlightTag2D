@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector2D.h"
+#include <iostream>
 #include <vector>
 
 // A 4x4 matrix class in row major form
@@ -50,18 +51,24 @@ public:
 	std::unique_ptr<T[]> GetPtrToFlattenedData()
 	{
 		std::unique_ptr<T[]> pflat(new T[MATRIX_SIZE * MATRIX_SIZE]);
-		
+		T* flat = new T[MATRIX_SIZE * MATRIX_SIZE];
+		//std::cout << "Flattened ****************************" << std::endl;
 		int k = 0;
 		for (int i = 0; i < MATRIX_SIZE; i++)
 		{
 			for (int j = 0; j < MATRIX_SIZE; j++)
 			{
-				pflat[k] = Elements[i][j];
+				//(pflat.get())[k] = Elements[i][j];
+				flat[k] = Elements[i][j];
 				++k;
+
+				//std::cout << pflat[k] << ", ";
+				//std::cout << "flat[k]: " << flat[k-1] << ", Elements[i][j]: " << Elements[i][j] <<std::endl;
 			}
 		}
 
-		return pflat;
+		//std::cout << "****************************" << std::endl;
+		return std::unique_ptr<T[]>(flat);
 	}
 
 	Matrix4<T> Translate(Vector2D<T> pos)
@@ -74,7 +81,7 @@ public:
 		return newMatrix;
 	}
 
-	Matrix4<T> operator*(const Matrix4<T> inMatrix)
+	Matrix4<T> operator*(const Matrix4<T>& inMatrix)
 	{
 		Matrix4<T> newMatrix;
 		for (int i = 0; i < MATRIX_SIZE; i++)
@@ -82,17 +89,17 @@ public:
 			for (int j = 0; j < MATRIX_SIZE; j++)
 			{
 				newMatrix.Elements[i][j] =
-					this.Elements[i][0] * inMatrix.Elements[0][j] +
-					this.Elements[i][1] * inMatrix.Elements[1][j] +
-					this.Elements[i][2] * inMatrix.Elements[2][j] +
-					this.Elements[i][3] * inMatrix.Elements[3][j];
+					Elements[i][0] * inMatrix.Elements[0][j] +
+					Elements[i][1] * inMatrix.Elements[1][j] +
+					Elements[i][2] * inMatrix.Elements[2][j] +
+					Elements[i][3] * inMatrix.Elements[3][j];
 			}
 		}
 
 		return newMatrix;
 	}
 
-	static std::unique_ptr<Matrix4<T>> CreateOrthoMatrix(int left, int right, int top, int bottom, int near, int far)
+	static std::unique_ptr<Matrix4<T>> CreateOrthoMatrix(float left, float right, float top, float bottom, float near, float far)
 	{
 		T newElements[MATRIX_SIZE][MATRIX_SIZE] =
 					  { { 2/(right - left),0,0,0 },
@@ -106,6 +113,20 @@ public:
 		//copyElementArray(newElements, proj.Elements);
 
 		return pProj;
+	}
+
+	void Print()
+	{
+		std::cout << "****************************" << std::endl;
+		for (int i = 0; i < MATRIX_SIZE; i++)
+		{
+			for (int j = 0; j < MATRIX_SIZE; j++)
+			{
+				std::cout << Elements[i][j] << " ";
+			}
+			std::cout << std::endl;
+		}
+		std::cout << "****************************" << std::endl;
 	}
 
 private:

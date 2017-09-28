@@ -159,6 +159,7 @@
     <ClCompile Include="PlayerLogicComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="PlayerPhysicsComponent.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="SDLUtils.h" />
