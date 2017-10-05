@@ -294,12 +294,10 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 	std::shared_ptr<TransformComponent> rawCameraTransformComponent = std::dynamic_pointer_cast<TransformComponent>(cameraTransformComponent);
 	auto cameraPos = rawCameraTransformComponent->GetPosition();
-/*
-	int windowWidth, windowHeight;
-	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);*/
 
-	//std::vector< std::vector<float> > verticesVector;
-	//int verticesSize = 0;
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	for (auto actor : gameActors)
 	{
 		StrongActorComponentPtr graphicsComponent = actor->GetComponentByName(EComponentNames::GraphicsComponentEnum);
@@ -323,33 +321,32 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		m_shader.UseProgram();
 		Matrix4<GLfloat> model;
 		model = model.Translate(actorPos - cameraPos - rawGraphicsComponent->GetImageOffset());
-		model.Print();
-		m_projMatrix->Print();
+		//model.Print();
+		//m_projMatrix->Print();
 
-		(model * *(m_projMatrix.get())).Print();
+		//(model * *(m_projMatrix.get())).Print();
 		/*model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
 		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+		*/
+		model = model.Scale(actorSize);
 		
-		model = glm::scale(model, glm::vec3(size, 1.0f));*/
-		
+		Vector2D<GLfloat> texturePos(1, 1);
+
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
+		m_shader.SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
 		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);
 		
 		rawGraphicsComponent->GetTexture().BindTexture();
 
-		// Draw triangles with texture
-		/*glBindTexture(GL_TEXTURE_2D, m_texture);
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);*/
-
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 	}
+
+	SDL_GL_SwapWindow(m_window);
 }
 
 //void GraphicsManager::drawSprite(Texture2D &texture, glm::vec2 position,

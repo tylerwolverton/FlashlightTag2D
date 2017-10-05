@@ -1,16 +1,4 @@
-﻿  ActorFactory.cpp
-c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(78): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(901): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
-          with
-          [
-              _Ty=PlayerPhysicsComponent
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
-          with
-          [
-              _Ty=PlayerPhysicsComponent
-          ]
-  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(31): note: see reference to function template instantiation 'std::shared_ptr<PlayerPhysicsComponent> std::make_shared<PlayerPhysicsComponent,std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+﻿  GraphicsManager.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

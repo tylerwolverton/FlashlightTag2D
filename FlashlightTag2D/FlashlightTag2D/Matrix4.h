@@ -81,6 +81,16 @@ public:
 		return newMatrix;
 	}
 
+	Matrix4<T> Scale(Vector2D<T> size)
+	{
+		Matrix4<T> newMatrix(*this);
+
+		newMatrix.Elements[0][0] *= size.x;
+		newMatrix.Elements[1][1] *= size.y;
+
+		return newMatrix;
+	}
+
 	Matrix4<T> operator*(const Matrix4<T>& inMatrix)
 	{
 		Matrix4<T> newMatrix;

@@ -89,7 +89,7 @@ void World::RunGame()
 
 		//Update screen
 		//SDL_RenderPresent(renderer);
-		SDL_GL_SwapWindow(m_window);
+		//SDL_GL_SwapWindow(m_window);
 	}
 }
 

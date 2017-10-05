@@ -98,4 +98,15 @@ public:
 
 		return newVec;
 	}
+
+	std::unique_ptr<T[]> GetPtrToFlattenedData()
+	{
+		std::unique_ptr<T[]> pflat(new T[2]);
+		T* flat = new T[2] {x, y};
+		//std::cout << "Flattened ****************************" << std::endl;
+		
+
+		//std::cout << "****************************" << std::endl;
+		return std::unique_ptr<T[]>(flat);
+	}
 };

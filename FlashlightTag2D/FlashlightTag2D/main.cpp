@@ -128,14 +128,6 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	//Load media
-	//if (!loadMedia())
-	//{
-	//	printf("Failed to load media!\n");
-	//	close();
-	//	return 1;
-	//}
-
 	auto world = new World(gWindow);
 	world->RunGame();
 
