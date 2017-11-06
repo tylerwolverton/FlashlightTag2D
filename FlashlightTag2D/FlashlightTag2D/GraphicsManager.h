@@ -14,9 +14,6 @@ public:
 	GraphicsManager(SDL_Window* window);
 	~GraphicsManager();
 
-	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera, SDL_Renderer* renderer);
-	void GraphicsManager::RenderBackground(SDL_Texture* sprite, StrongGameActorPtr currentCamera, SDL_Renderer* renderer, int screenWidth, int screenHeight);
-
 	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera);
 	void ClearScreen();
 
@@ -44,8 +41,5 @@ private:
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
 	bool setupBufferObjects(const std::vector< std::vector<float> > vertices); 
-	/*void drawSprite(Texture2D &texture, glm::vec2 position,
-		glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f,
-		glm::vec3 color = glm::vec3(1.0f));*/
 };
 

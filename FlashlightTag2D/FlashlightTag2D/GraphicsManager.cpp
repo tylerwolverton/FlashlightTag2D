@@ -15,7 +15,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	// Create our opengl context and attach it to our window
 	m_mainContext = SDL_GL_CreateContext(m_window);
 
-	// This makes our buffer swap syncronized with the monitor's vertical refresh
+	// This makes our buffer swap synchronized with the monitor's vertical refresh
 	SDL_GL_SetSwapInterval(1);
 
 	// Init GLEW
@@ -87,6 +87,7 @@ bool GraphicsManager::initializeRenderData()
 	glBindVertexArray(this->m_quadVAO);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -95,28 +96,6 @@ bool GraphicsManager::initializeRenderData()
 
 bool GraphicsManager::setupBufferObjects(const std::vector< std::vector<float> > verticesVector)
 {
-	//GLfloat vertices[] = {
-	//	0.25f,  0.25f, 0.0f,  // Top Right
-	//	0.25f, -0.25f, 0.0f,  // Bottom Right
-	//	-0.25f, -0.25f, 0.0f,  // Bottom Left
-	//	-0.25f,  0.25f, 0.0f   // Top Left 
-	//};
-
-	GLfloat vertices2[] = {
-		0.75f,  0.75f, 0.0f,  // Top Right
-		0.75f, -0.75f, 0.0f,  // Bottom Right
-		-0.75f, -0.75f, 0.0f,  // Bottom Left
-		-0.75f,  0.75f, 0.0f   // Top Left 
-	};
-
-	GLfloat verticesTex[] = {
-		// positions          // colors           // texture coords
-		0.75f,  0.75f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.75f, -0.75f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.75f, -0.75f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.75f,  0.75f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
-	};
-
 	GLuint indices[] = {  // Note that we start from 0!
 		0, 1, 3,   // First Triangle
 		1, 2, 3    // Second Triangle
@@ -130,158 +109,27 @@ bool GraphicsManager::setupBufferObjects(const std::vector< std::vector<float> >
 	// ..:: Initialization code :: ..
 	// 1. Bind Vertex Array Object
 	glBindVertexArray(VAO);
+
 	// 2. Copy our vertices array in a vertex buffer for OpenGL to use
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	for (auto& vertices : verticesVector)
 	{
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices.front(), GL_DYNAMIC_DRAW);
 	}
+
 	// 3. Copy our index array in a element buffer for OpenGL to use
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	// 3. Then set the vertex attributes pointers
+
+	// 4. Then set the vertex attributes pointers
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	// color attribute
-	/*glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);*/
-	//// texture coord attribute
-	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	//glEnableVertexAttribArray(2);
-	// 4. Unbind VAO (NOT the EBO)
+
+	// 5. Unbind VAO (NOT the EBO)
 	glBindVertexArray(0);
-	
-	// Generate and assign a Vertex Array Object to our handle
-	/*glGenVertexArrays(1, vao);*/
-
-	// Bind our Vertex Array Object as the current used object
-	//glBindVertexArray(vao[0]);
-
-	// Positions
-	// ===================
-	// Bind our first VBO as being the active buffer and storing vertex attributes (coordinates)
-	//glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-	
-	//glBufferData(GL_ARRAY_BUFFER, (points * floatsPerPoint) * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
-
-	// Specify that our coordinate data is going into attribute index 0, and contains three floats per vertex
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	// Enable our attribute within the current VAO
-	//glEnableVertexAttribArray(positionAttributeIndex);
-
-	// Set up shader ( will be covered in the next part )
-	// ===================
-	/*if (!m_shader.Init())
-		return false;
-
-	m_shader.UseProgram();*/
-
-	//glBindVertexArray(VAO);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	//glBindVertexArray(0);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//glGenTextures(1, &m_texture);
-	//glBindTexture(GL_TEXTURE_2D, m_texture);
-	//// set the texture wrapping/filtering options (on the currently bound texture object)
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//int width, height, nrChannels;
-	//stbi_set_flip_vertically_on_load(true);
-	//unsigned char *data = stbi_load("resources/braidsprites.png", &width, &height, &nrChannels, 0);
-	//if (data)
-	//{
-	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width/7, height/4, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-	//	glGenerateMipmap(GL_TEXTURE_2D);
-	//}
-	//else
-	//{
-	//	std::cout << "Failed to load texture" << std::endl;
-	//}
-	//stbi_image_free(data);
 
 	return true;
-}
-
-void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera, SDL_Renderer* renderer)
-{
-	StrongActorComponentPtr cameraTransformComponent = currentCamera->GetComponentByName(EComponentNames::TransformComponentEnum);
-	if (cameraTransformComponent == nullptr)
-	{
-		return;
-	}
-
-	std::shared_ptr<TransformComponent> rawCameraTransformComponent = std::dynamic_pointer_cast<TransformComponent>(cameraTransformComponent);
-	auto cameraPos = rawCameraTransformComponent->GetPosition();
-
-	for (auto actor : gameActors)
-	{
-		StrongActorComponentPtr graphicsComponent = actor->GetComponentByName(EComponentNames::GraphicsComponentEnum);
-
-		if (graphicsComponent == nullptr)
-		{
-			continue;
-		}
-
-		StrongActorComponentPtr actorTransformComponent = actor->GetComponentByName(EComponentNames::TransformComponentEnum);
-
-		if (actorTransformComponent == nullptr)
-		{
-			continue;
-		}
-
-		std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
-		auto actorPos = rawActorTransformComponent->GetPosition();
-		auto actorSize = rawActorTransformComponent->GetSize();
-
-		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
-
-		SDL_Rect imgPartRect;
-
-		imgPartRect.x = (int)(actorPos.x - cameraPos.x - rawGraphicsComponent->GetImageOffset().x);
-		imgPartRect.y = (int)(actorPos.y - cameraPos.y - rawGraphicsComponent->GetImageOffset().y);
-		imgPartRect.w = (int)(actorSize.x);
-		imgPartRect.h = (int)(actorSize.y);
-
-		//SDL_RenderCopy(renderer, rawGraphicsComponent->GetSprite(), &(rawGraphicsComponent->GetAnimationFrameRect()), &imgPartRect);
-	}
-}
-
-void GraphicsManager::RenderBackground(SDL_Texture* sprite, StrongGameActorPtr currentCamera, SDL_Renderer* renderer, int screenWidth, int screenHeight)
-{
-	StrongActorComponentPtr cameraTransformComponent = currentCamera->GetComponentByName(EComponentNames::TransformComponentEnum);
-	if (cameraTransformComponent == nullptr)
-	{
-		return;
-	}
-
-	std::shared_ptr<TransformComponent> rawCameraTransformComponent = std::dynamic_pointer_cast<TransformComponent>(cameraTransformComponent);
-	auto cameraPos = rawCameraTransformComponent->GetPosition();
-
-	int spriteWidth, spriteHeight;
-	SDL_QueryTexture(sprite, NULL, NULL, &spriteWidth, &spriteHeight);
-
-	for (int i = 0; i < screenWidth; i += spriteWidth)
-	{
-		for (int j = 0; j < screenHeight; j += spriteHeight)
-		{
-			SDL_Rect imgPartRect;
-			imgPartRect.x = i - (int)(cameraPos.x);
-			imgPartRect.y = j - (int)(cameraPos.y);
-			imgPartRect.w = spriteWidth;
-			imgPartRect.h = spriteHeight;
-
-			SDL_RenderCopy(renderer, sprite, NULL, &imgPartRect);
-		}
-	}
 }
 
 void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera)
@@ -348,31 +196,6 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 	SDL_GL_SwapWindow(m_window);
 }
-
-//void GraphicsManager::drawSprite(Texture2D &texture, glm::vec2 position,
-//	glm::vec2 size, GLfloat rotate, glm::vec3 color)
-//{
-//	// Prepare transformations
-//	m_shader.Use();
-//	glm::mat4 model;
-//	model = glm::translate(model, glm::vec3(position, 0.0f));
-//
-//	model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-//	model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
-//	model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-//
-//	model = glm::scale(model, glm::vec3(size, 1.0f));
-//
-//	this->shader.SetMatrix4("model", model);
-//	this->shader.SetVector3f("spriteColor", color);
-//
-//	glActiveTexture(GL_TEXTURE0);
-//	texture.Bind();
-//
-//	glBindVertexArray(this->quadVAO);
-//	glDrawArrays(GL_TRIANGLES, 0, 6);
-//	glBindVertexArray(0);
-//}
 
 void GraphicsManager::ClearScreen()
 {

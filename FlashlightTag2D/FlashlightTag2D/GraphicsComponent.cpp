@@ -3,12 +3,6 @@
 #include "GameActor.h"
 #include "World.h"
 
-//GraphicsComponent::GraphicsComponent(SDL_Texture* sprite, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
-//	: GraphicsComponent(animationTimer, transformComponent)
-//{
-//	m_sprite = sprite;
-//}
-
 GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: m_animationTimer(animationTimer),
 	  m_curAnimationTime(animationTimer),
@@ -36,32 +30,28 @@ EComponentNames GraphicsComponent::GetComponentName() const
 	return EComponentNames::GraphicsComponentEnum;
 }
 
-std::vector<float> GraphicsComponent::GetScaledVertices(int screenWidth, int screenHeight)
-{
-	std::vector<float> vertices;
-
-	if (screenHeight < 1 || screenWidth < 1)
-	{
-		return vertices;
-	}
-
-	auto pos = m_pTransformComponent->GetPosition();
-
-	// Top Right
-	vertices.push_back((pos.x + m_imageOffset.x)/screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
-	//vertices.push_back(1.0f); vertices.push_back(0.0f); vertices.push_back(0.0f);
-	// Bottom Right
-	vertices.push_back((pos.x + m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
-	//vertices.push_back(0.0f); vertices.push_back(1.0f); vertices.push_back(0.0f);
-	// Bottom Left
-	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
-	//vertices.push_back(0.0f); vertices.push_back(0.0f); vertices.push_back(1.0f);
-	// Top Left 
-	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
-	//vertices.push_back(1.0f); vertices.push_back(0.0f); vertices.push_back(1.0f);
-
-	return vertices;
-}
+//std::vector<float> GraphicsComponent::GetScaledVertices(int screenWidth, int screenHeight)
+//{
+//	std::vector<float> vertices;
+//
+//	if (screenHeight < 1 || screenWidth < 1)
+//	{
+//		return vertices;
+//	}
+//
+//	auto pos = m_pTransformComponent->GetPosition();
+//
+//	// Top Right
+//	vertices.push_back((pos.x + m_imageOffset.x)/screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
+//	// Bottom Right
+//	vertices.push_back((pos.x + m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
+//	// Bottom Left
+//	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y + m_imageOffset.y) / screenHeight); vertices.push_back(0);
+//	// Top Left 
+//	vertices.push_back((pos.x - m_imageOffset.x) / screenWidth); vertices.push_back((pos.y - m_imageOffset.y) / screenHeight); vertices.push_back(0);
+//
+//	return vertices;
+//}
 
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
