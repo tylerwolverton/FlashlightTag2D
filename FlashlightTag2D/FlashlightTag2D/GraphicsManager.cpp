@@ -26,7 +26,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	{
 		m_shader.UseProgram();
 	}
-	//SetupBufferObjects();
+	
 	initializeRenderData();
 
 	int windowWidth, windowHeight;
@@ -39,8 +39,8 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 GraphicsManager::~GraphicsManager()
 {
 	glDisableVertexAttribArray(0);
-	/*glDeleteBuffers(1, vbo);
-	glDeleteVertexArrays(1, vao);*/
+	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &m_quadVAO);
 
 	// Delete our OpengL context
 	SDL_GL_DeleteContext(m_mainContext);
@@ -94,44 +94,6 @@ bool GraphicsManager::initializeRenderData()
 	return true;
 }
 
-bool GraphicsManager::setupBufferObjects(const std::vector< std::vector<float> > verticesVector)
-{
-	GLuint indices[] = {  // Note that we start from 0!
-		0, 1, 3,   // First Triangle
-		1, 2, 3    // Second Triangle
-	};
-
-	// Generate and assign two Vertex Buffer Objects to our handle
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	// ..:: Initialization code :: ..
-	// 1. Bind Vertex Array Object
-	glBindVertexArray(VAO);
-
-	// 2. Copy our vertices array in a vertex buffer for OpenGL to use
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	for (auto& vertices : verticesVector)
-	{
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices.front(), GL_DYNAMIC_DRAW);
-	}
-
-	// 3. Copy our index array in a element buffer for OpenGL to use
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	// 4. Then set the vertex attributes pointers
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// 5. Unbind VAO (NOT the EBO)
-	glBindVertexArray(0);
-
-	return true;
-}
-
 void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera)
 {
 	StrongActorComponentPtr cameraTransformComponent = currentCamera->GetComponentByName(EComponentNames::TransformComponentEnum);
@@ -179,10 +141,11 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		*/
 		model = model.Scale(actorSize);
 		
-		Vector2D<GLfloat> texturePos(1, 1);
+		//Vector2D<GLfloat> texturePos(1, 1);
 
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader.SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+		m_shader.SetVec2("textureSize", rawGraphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("texturePos", rawGraphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
 		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);

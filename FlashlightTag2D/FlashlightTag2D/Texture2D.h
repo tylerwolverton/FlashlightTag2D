@@ -8,10 +8,14 @@ public:
 	~Texture2D();
 	
 	void BindTexture();
+	int GetWidth() { return m_textureWidth; }
+	int GetHeight() { return m_textureHeight; }
 
 private:
 	void loadTexture(std::string texturePath);
 
 	unsigned int m_texture;
+	int m_textureWidth;
+	int m_textureHeight;
 };
 

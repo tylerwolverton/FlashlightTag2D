@@ -31,17 +31,8 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, Vector2D<float>(0, 0), 10, 1);
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
-
-	/*
-	auto sprite = LoadTexture(world->GetRenderer(), "resources/SpriteSheet.png");
-
-	if (sprite == NULL)
-	{
-		printf("Failed to load texture image!\n");
-		return NULL;
-	}*/
-
-	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 1000, transformCompPtr));
+	
+	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 500, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }
@@ -59,15 +50,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	
-	/*auto sprite = LoadTexture(world->GetRenderer(), "resources/SpriteSheet.png");
-
-	if (sprite == NULL)
-	{
-		printf("Failed to load texture image!\n");
-		return NULL;
-	}*/
-
-	components.push_back(std::make_shared<GraphicsComponent>("resources/SpriteSheet.png", 600, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>("resources/Untitled.png", 300, transformCompPtr));
 
 	return std::make_shared<GameActor>(components);
 }

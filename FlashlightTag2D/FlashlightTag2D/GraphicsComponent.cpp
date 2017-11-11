@@ -8,12 +8,10 @@ GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer
 	  m_curAnimationTime(animationTimer),
 	  m_pTransformComponent(transformComponent),
 	  m_imageOffset(transformComponent->GetSize() / 2),
-	  m_xFrame(0),
-	  m_yFrame(0),
-	  m_texture(Texture2D(texturePath))
+	  m_texture(Texture2D(texturePath)),
+	  m_texturePos(Vector2D<GLfloat>(0, 0))
 {
-	m_animationFrameRect.x = 0; m_animationFrameRect.y = 0;
-	m_animationFrameRect.h = 0; m_animationFrameRect.w = 0;
+	m_texturePos.y = m_texture.GetHeight() - transformComponent->GetSize().y;
 }
 
 GraphicsComponent::~GraphicsComponent()
@@ -55,25 +53,37 @@ EComponentNames GraphicsComponent::GetComponentName() const
 
 void GraphicsComponent::Update(GameActor& actor, int deltaMs)
 {
-	/*int spriteWidth, spriteHeight;
-	SDL_QueryTexture(m_sprite, NULL, NULL, &spriteWidth, &spriteHeight);
-
-	m_animationFrameRect.x = m_xFrame;
-	m_animationFrameRect.y = m_yFrame;
-	m_animationFrameRect.w = m_xFrame + m_pTransformComponent->GetSize().x;
-	m_animationFrameRect.h = m_yFrame + m_pTransformComponent->GetSize().y;
-
 	if (m_curAnimationTime < 0)
 	{
 		m_curAnimationTime = m_animationTimer;
 
-		m_xFrame = (int)(m_xFrame + m_pTransformComponent->GetSize().x) % spriteWidth;
-
-		if (m_xFrame == 0)
-			m_yFrame = (int)(m_yFrame + m_pTransformComponent->GetSize().y) % spriteHeight;
+		m_texturePos.x = (int)(m_texturePos.x + m_pTransformComponent->GetSize().x) % m_texture.GetWidth();
+		
+		if (m_texturePos.x == 0)
+		{
+			m_texturePos.y = (int)(m_texturePos.y - m_pTransformComponent->GetSize().y) % m_texture.GetHeight();
+		}
 	}
 	else
 	{
 		m_curAnimationTime--;
-	}*/
+	}
+}
+
+Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
+{
+	auto size = Vector2D<GLfloat>(m_pTransformComponent->GetSize()); 
+	size.x /= m_texture.GetWidth();
+	size.y /= m_texture.GetHeight();
+
+	return size;
+}
+
+Vector2D<GLfloat> GraphicsComponent::GetTexturePos()
+{
+	auto pos = m_texturePos;
+	pos.x /= m_texture.GetWidth();
+	pos.y /= m_texture.GetHeight();
+
+	return pos;
 }

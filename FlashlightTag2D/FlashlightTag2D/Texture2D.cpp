@@ -32,6 +32,9 @@ void Texture2D::loadTexture(std::string texturePath)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
+		m_textureWidth = width;
+		m_textureHeight = height;
+
 		std::cout << "Successfully loaded texture" << std::endl;
 	}
 	else

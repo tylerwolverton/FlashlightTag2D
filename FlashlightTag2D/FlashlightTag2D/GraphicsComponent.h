@@ -5,6 +5,7 @@
 #include "Texture2D.h"
 
 #include <vector>
+#include <glew.h>
 
 class GameActor;
 class TransformComponent;
@@ -23,17 +24,17 @@ public:
 	virtual EComponentNames GetComponentName() const override;
 
 	//std::vector<float> GetScaledVertices(int screenWidth, int screenHeight);
-	SDL_Rect GetAnimationFrameRect() { return m_animationFrameRect; };
 	Texture2D GetTexture() { return m_texture; };
 	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; };
 	Vector2D<float> GetImageOffset() { return m_imageOffset; };
+	Vector2D<GLfloat> GetTexturePos();
+	Vector2D<GLfloat> GetTextureSize();
 
 private:
-	SDL_Rect m_animationFrameRect;
 	Texture2D m_texture;
 	std::shared_ptr<TransformComponent> m_pTransformComponent;
 	Vector2D<float> m_imageOffset;
 	int m_curAnimationTime, m_animationTimer;
-	int m_xFrame, m_yFrame;
+	Vector2D<GLfloat> m_texturePos;
 };
 
