@@ -16,7 +16,9 @@ public:
 	static const int SCREEN_WIDTH = 640;
 	static const int SCREEN_HEIGHT = 480;
 
-	World(SDL_Renderer* renderer);
+	//World(SDL_Renderer* renderer);
+	World(SDL_Window* window);
+
 	virtual ~World();
 
 	void RunGame();
@@ -32,5 +34,6 @@ private:
 	StrongGameActorPtrList m_pCameraList;
 	StrongGameActorPtr m_pCurrentCamera;
 	SDL_Renderer* m_renderer;
+	SDL_Window* m_window;
 };
 

@@ -1,0 +1,99 @@
+﻿  World.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\shader.h(75): warning C4267: 'initializing': conversion from 'size_t' to 'int32_t', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\shader.h(108): warning C4267: 'initializing': conversion from 'size_t' to 'int32_t', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\world.cpp(69): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+  TransformComponent.cpp
+  stb_image.cpp
+  PlayerPhysicsComponent.cpp
+  PlayerLogicComponent.cpp
+  PhysicsManager.cpp
+  PhysicsComponent.cpp
+  main.cpp
+  InputManager.cpp
+  InputComponent.cpp
+  GraphicsManager.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\shader.h(75): warning C4267: 'initializing': conversion from 'size_t' to 'int32_t', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\shader.h(108): warning C4267: 'initializing': conversion from 'size_t' to 'int32_t', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(181): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(182): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(183): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(184): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(209): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(210): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(253): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(254): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(255): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\graphicsmanager.cpp(256): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  GraphicsComponent.cpp
+  GameActor.cpp
+  FollowTargetAIComponent.cpp
+  Behavior.cpp
+  BaseLogicComponent.cpp
+  AIComponent.cpp
+  ActorFactory.cpp
+c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(75): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(901): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+          with
+          [
+              _Ty=PlayerPhysicsComponent
+          ]
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\memory(971): note: see reference to function template instantiation 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+          with
+          [
+              _Ty=PlayerPhysicsComponent
+          ]
+  c:\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(31): note: see reference to function template instantiation 'std::shared_ptr<PlayerPhysicsComponent> std::make_shared<PlayerPhysicsComponent,std::shared_ptr<TransformComponent>&,Vector2D<float>,int,int>(std::shared_ptr<TransformComponent> &,Vector2D<float> &&,int &&,int &&)' being compiled
+  Actor.cpp
+  Generating Code...
+GraphicsComponent.obj : error LNK2019: unresolved external symbol SDL_DestroyTexture referenced in function "public: virtual __cdecl GraphicsComponent::~GraphicsComponent(void)" (??1GraphicsComponent@@UEAA@XZ)
+main.obj : error LNK2001: unresolved external symbol SDL_DestroyTexture
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_GL_SetAttribute referenced in function "private: bool __cdecl GraphicsManager::SetOpenGLAttributes(void)" (?SetOpenGLAttributes@GraphicsManager@@AEAA_NXZ)
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_GL_CreateContext referenced in function "public: __cdecl GraphicsManager::GraphicsManager(struct SDL_Window *)" (??0GraphicsManager@@QEAA@PEAUSDL_Window@@@Z)
+main.obj : error LNK2001: unresolved external symbol SDL_GL_CreateContext
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_GL_SetSwapInterval referenced in function "public: __cdecl GraphicsManager::GraphicsManager(struct SDL_Window *)" (??0GraphicsManager@@QEAA@PEAUSDL_Window@@@Z)
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_GL_SwapWindow referenced in function "public: void __cdecl GraphicsManager::ClearScreen(void)" (?ClearScreen@GraphicsManager@@QEAAXXZ)
+World.obj : error LNK2001: unresolved external symbol SDL_GL_SwapWindow
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_GL_DeleteContext referenced in function "public: __cdecl GraphicsManager::~GraphicsManager(void)" (??1GraphicsManager@@QEAA@XZ)
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_QueryTexture referenced in function "public: void __cdecl GraphicsManager::RenderBackground(struct SDL_Texture *,class std::shared_ptr<class GameActor>,struct SDL_Renderer *,int,int)" (?RenderBackground@GraphicsManager@@QEAAXPEAUSDL_Texture@@V?$shared_ptr@VGameActor@@@std@@PEAUSDL_Renderer@@HH@Z)
+GraphicsManager.obj : error LNK2019: unresolved external symbol SDL_RenderCopy referenced in function "public: void __cdecl GraphicsManager::Render(class std::list<class std::shared_ptr<class GameActor>,class std::allocator<class std::shared_ptr<class GameActor> > >,class std::shared_ptr<class GameActor>,struct SDL_Renderer *)" (?Render@GraphicsManager@@QEAAXV?$list@V?$shared_ptr@VGameActor@@@std@@V?$allocator@V?$shared_ptr@VGameActor@@@std@@@2@@std@@V?$shared_ptr@VGameActor@@@3@PEAUSDL_Renderer@@@Z)
+GraphicsManager.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function "public: __cdecl GraphicsManager::GraphicsManager(struct SDL_Window *)" (??0GraphicsManager@@QEAA@PEAUSDL_Window@@@Z)
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewBindBuffer
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewBufferData
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGenBuffers
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewAttachShader
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewBindAttribLocation
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewCompileShader
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewCreateShader
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewDisableVertexAttribArray
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewEnableVertexAttribArray
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramInfoLog
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGetProgramiv
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderInfoLog
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGetShaderiv
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewLinkProgram
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewShaderSource
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewVertexAttribPointer
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGenerateMipmap
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewBindVertexArray
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp___glewGenVertexArrays
+GraphicsManager.obj : error LNK2001: unresolved external symbol __imp_glewExperimental
+InputManager.obj : error LNK2019: unresolved external symbol SDL_GetKeyboardState referenced in function "public: unsigned int __cdecl InputManager::ReadInput(void)" (?ReadInput@InputManager@@QEAAIXZ)
+InputManager.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: unsigned int __cdecl InputManager::ReadInput(void)" (?ReadInput@InputManager@@QEAAIXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_GetError referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_DestroyWindow referenced in function "void __cdecl close(void)" (?close@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "void __cdecl close(void)" (?close@@YAXXZ)
+main.obj : error LNK2019: unresolved external symbol IMG_Init referenced in function "bool __cdecl init(void)" (?init@@YA_NXZ)
+main.obj : error LNK2019: unresolved external symbol IMG_Quit referenced in function "void __cdecl close(void)" (?close@@YAXXZ)
+World.obj : error LNK2019: unresolved external symbol SDL_GetTicks referenced in function "public: void __cdecl World::RunGame(void)" (?RunGame@World@@QEAAXXZ)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+..\..\SDL\SDL2-2.0.3\lib\x86\SDL2.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\..\SDL\SDL2-2.0.3\lib\x86\SDL2main.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\..\SDL\SDL2-2.0.3\lib\x86\SDL2_image.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\..\TinyXML2\lib\tinyxml2.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+..\..\glew-2.0.0\lib\Release\Win32\glew32.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\GitHub\FlashlightTag2D\FlashlightTag2D\x64\Debug\FlashlightTag2D.exe : fatal error LNK1120: 42 unresolved externals

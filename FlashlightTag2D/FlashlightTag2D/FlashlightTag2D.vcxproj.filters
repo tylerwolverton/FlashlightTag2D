@@ -55,6 +55,8 @@
     <ClCompile Include="World.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -123,6 +125,14 @@
     <ClInclude Include="World.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Matrix4.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -140,5 +150,13 @@
     <Filter Include="Engine\Managers">
       <UniqueIdentifier>{0bb86f3f-c837-4df2-ace6-62f393c94d31}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BasicShader.vert">
+      <Filter>Game</Filter>
+    </None>
+    <None Include="BasicShader.frag">
+      <Filter>Game</Filter>
+    </None>
   </ItemGroup>
 </Project>

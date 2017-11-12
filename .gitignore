@@ -5,5 +5,12 @@
 *.db
 *.db
 *.suo
+*.tlog
 *.obj
+*.log
+*.pdb
+*.idb
+FlashlightTag2D/FlashlightTag2D/x64/Debug/FlashlightTag2D.log
+*.idb
 FlashlightTag2D/FlashlightTag2D/Debug/vc140.pdb
+*.tlog
