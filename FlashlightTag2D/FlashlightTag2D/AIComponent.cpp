@@ -16,7 +16,10 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, int deltaMs)
 {
-	//actor.SetCommands(std::make_shared<CommandList>(SimpleMove()));
+	if (curBehavior != nullptr)
+	{
+		actor.SetCommands(std::make_shared<CommandList>(curBehavior->Update()));
+	}
 }
 
 CommandList AIComponent::SimpleMove()
