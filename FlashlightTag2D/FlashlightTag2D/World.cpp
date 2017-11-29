@@ -8,6 +8,9 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>         // std::chrono::seconds
+
 World::World(SDL_Window* window)
 	: m_window(window)
 {
@@ -48,7 +51,7 @@ void World::RunGame()
 		timeCurrentMs = SDL_GetTicks();
 		auto timeDeltaMs = timeCurrentMs - timeLastMs;
 		timeAccumulatedMs += timeDeltaMs;
-
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 		while (timeAccumulatedMs >= timeStepMs)
 		{
 			for (auto entity : m_pEntityList)

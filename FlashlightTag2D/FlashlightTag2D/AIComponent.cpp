@@ -30,7 +30,10 @@ void AIComponent::Update(GameActor& actor, int deltaMs)
 	//   Hider not found - use heuristic to search
 	//actor.SetCommands(std::make_shared<CommandList>(SearchForTargets()));
 
-	//actor.SetCommands(std::make_shared<CommandList>(SimpleMove()));
+	if (curBehavior != nullptr)
+	{
+		actor.SetCommands(std::make_shared<CommandList>(curBehavior->Update()));
+	}
 }
 
 CommandList AIComponent::SimpleMove()
