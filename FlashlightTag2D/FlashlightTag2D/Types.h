@@ -5,6 +5,7 @@
 
 class Actor;
 class ActorComponent;
+class Behavior;
 class GameActor;
 class Command;
 class World;
@@ -21,6 +22,7 @@ typedef std::shared_ptr<World> StrongWorldPtr;
 
 typedef std::list<std::shared_ptr<GameActor>> StrongGameActorPtrList;
 
+typedef std::list<std::shared_ptr<Behavior>> BehaviorList;
 typedef std::list<std::shared_ptr<Command>> CommandList;
 typedef std::list<StrongActorComponentPtr> ComponentList;
 //const char* PlayerActor = "PlayerActor";

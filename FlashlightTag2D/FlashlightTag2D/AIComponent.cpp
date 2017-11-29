@@ -16,6 +16,20 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, int deltaMs)
 {
+	// If hiding
+	//  Look for seeker in light cone
+	//   Seeker found - run away
+	//actor.SetCommands(std::make_shared<CommandList>(RunFromTarget()));
+	//   Seeker not found - stay or change hiding space
+	//actor.SetCommands(std::make_shared<CommandList>(Hide()));
+
+	// If seeking
+	//  Look for hider in light cone
+	//   Hider found - chase hider
+	//actor.SetCommands(std::make_shared<CommandList>(ChaseTarget()));
+	//   Hider not found - use heuristic to search
+	//actor.SetCommands(std::make_shared<CommandList>(SearchForTargets()));
+
 	//actor.SetCommands(std::make_shared<CommandList>(SimpleMove()));
 }
 

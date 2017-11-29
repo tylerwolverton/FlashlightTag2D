@@ -14,3 +14,7 @@ FlashlightTag2D/FlashlightTag2D/x64/Debug/FlashlightTag2D.log
 *.idb
 FlashlightTag2D/FlashlightTag2D/Debug/vc140.pdb
 *.tlog
+*.tss
+FlashlightTag2D/Debug/FlashlightTag2D.pdb
+*.ilk
+FlashlightTag2D/Debug/FlashlightTag2D.exe

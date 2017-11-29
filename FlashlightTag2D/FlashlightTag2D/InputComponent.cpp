@@ -5,6 +5,9 @@
 
 InputComponent::InputComponent()
 {
+	// TODO: If same button could be used for multiple things (a powerup changes an action for example)
+	//       an update method should be added to change command on button.
+	//       Could also handle in base logic instead by having the same command do multiple things
 	m_pButtonW = std::make_shared<MoveUp>();
 	m_pButtonS = std::make_shared<MoveDown>();
 	m_pButtonD = std::make_shared<MoveRight>();
