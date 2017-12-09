@@ -60,6 +60,7 @@
     <ClCompile Include="SeekBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -139,6 +140,7 @@
     <ClInclude Include="SeekBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
+    <ClInclude Include="ServiceLocator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

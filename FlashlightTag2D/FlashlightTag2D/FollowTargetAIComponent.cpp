@@ -19,16 +19,14 @@ FollowTargetAIComponent::~FollowTargetAIComponent()
 
 void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs) 
 {
-	StrongActorComponentPtr actorTransformComponent = actor.GetComponentByName(EComponentNames::TransformComponentEnum);
-	StrongActorComponentPtr targetTransformComponent = m_pTarget->GetComponentByName(EComponentNames::TransformComponentEnum);
+	auto actorTransformComponent = actor.GetTransformComponent();
+	auto targetTransformComponent = m_pTarget->GetTransformComponent();
 	if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)
 	{
 		return;
 	}
 
-	std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
-	std::shared_ptr<TransformComponent> rawTargetTransformComponent = std::dynamic_pointer_cast<TransformComponent>(targetTransformComponent);
-	rawActorTransformComponent->SetPosition(Vector2D<float>(rawTargetTransformComponent->GetPosition().x - World::SCREEN_WIDTH / 2, rawTargetTransformComponent->GetPosition().y - World::SCREEN_HEIGHT / 2));
+    actorTransformComponent->SetPosition(Vector2D<float>(targetTransformComponent->GetPosition().x - World::SCREEN_WIDTH / 2, targetTransformComponent->GetPosition().y - World::SCREEN_HEIGHT / 2));
 }
 
 ComponentId FollowTargetAIComponent::GetComponentId() const { return ComponentId(); }

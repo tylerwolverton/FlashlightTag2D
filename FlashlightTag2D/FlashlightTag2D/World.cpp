@@ -7,9 +7,7 @@
 #include "ActorFactory.h"
 #include "GameActor.h"
 #include "ActorComponent.h"
-
-#include <thread>         // std::this_thread::sleep_for
-#include <chrono>         // std::chrono::seconds
+#include "ServiceLocator.h"
 
 World::World(SDL_Window* window)
 	: m_window(window)
@@ -25,13 +23,14 @@ void World::RunGame()
 {
 	bool isGameRunning = true;
 	auto actorFactory = new ActorFactory();
+	ServiceLocator::Provide(actorFactory);
+
 	auto inputManager = new InputManager();
 	auto physicsManager = new PhysicsManager();
 	auto graphicsManager = new GraphicsManager(m_window);
 
-	//StrongWorldPtr thisWorld = std::make_shared<World>(*this);
-	auto player = AddEntity(actorFactory->CreatePlayer());
-	AddEntity(actorFactory->CreateEnemy());
+	auto player = actorFactory->CreatePlayer();
+	actorFactory->CreateEnemy();
 	AddCamera(actorFactory->CreateCamera(player));
 
 	auto timeStepMs = 1000.f / 60; //eg. 30Hz
@@ -51,21 +50,19 @@ void World::RunGame()
 		timeCurrentMs = SDL_GetTicks();
 		auto timeDeltaMs = timeCurrentMs - timeLastMs;
 		timeAccumulatedMs += timeDeltaMs;
-		std::this_thread::sleep_for(std::chrono::seconds(1));
 		while (timeAccumulatedMs >= timeStepMs)
 		{
-			for (auto entity : m_pEntityList)
+			for (auto entity : actorFactory->GetActorList())
 			{
 				entity->Update((int)timeAccumulatedMs, input);
 			}
 
-			physicsManager->ResolveCollisions(m_pEntityList);
+			physicsManager->ResolveCollisions(actorFactory->GetActorList());
 
 			timeAccumulatedMs -= timeStepMs;
 		}
 
-		//graphicsManager->RenderBackground(backgroundSprite, GetCurrentCamera(), renderer, LEVEL_WIDTH, LEVEL_HEIGHT);
-		graphicsManager->Render(m_pEntityList, GetCurrentCamera());
+		graphicsManager->Render(actorFactory->GetActorList(), GetCurrentCamera());
 	}
 }
 
@@ -77,11 +74,11 @@ void World::AddCamera(StrongGameActorPtr camera)
 	}
 
 	m_pCameraList.push_back(camera);
-	m_pEntityList.push_back(camera);
+	//m_pEntityList.push_back(camera);
 }
 
-StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
-{
-	m_pEntityList.push_back(entity);
-	return entity;
-}
+//StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
+//{
+//	m_pEntityList.push_back(entity);
+//	return entity;
+//}

@@ -1,10 +1,18 @@
 #include <SDL.h>
 #include "GameActor.h"
 #include "ActorComponent.h"
+#include "TransformComponent.h"
+#include "BaseLogicComponent.h"
+#include "InputComponent.h"
+#include "GraphicsComponent.h"
+#include "PhysicsComponent.h"
+#include "AIComponent.h"
+#include "FollowTargetAIComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ComponentList components)
-	: m_components(components)
+GameActor::GameActor(ComponentList components, std::string actorClassName)
+	: m_components(components),
+	  m_actorClassName(actorClassName)
 {
 	m_pCommands = std::make_shared<CommandList>();
 }
@@ -32,7 +40,7 @@ void GameActor::Update(int deltaMs, uint32_t input)
 	}
 }
 
-StrongActorComponentPtr GameActor::GetComponentByName(EComponentNames componentName)
+StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentName)
 {
 	for (auto component : m_components)
 	{
@@ -43,4 +51,81 @@ StrongActorComponentPtr GameActor::GetComponentByName(EComponentNames componentN
 	}
 
 	return nullptr;
+}
+
+StrongAIComponentPtr GameActor::GetAIComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::AIComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<AIComponent>(component);
+}
+
+StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::BaseLogicComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<BaseLogicComponent>(component);
+}
+
+StrongFollowTargetAIComponentPtr GameActor::GetFollowTargetAIComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::FollowTargetAIComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<FollowTargetAIComponent>(component);
+}
+
+StrongGraphicsComponentPtr GameActor::GetGraphicsComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::GraphicsComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<GraphicsComponent>(component);
+}
+
+StrongInputComponentPtr GameActor::GetInputComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::InputComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<InputComponent>(component);
+}
+
+StrongPhysicsComponentPtr GameActor::GetPhysicsComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::PhysicsComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<PhysicsComponent>(component);
+}
+
+StrongTransformComponentPtr GameActor::GetTransformComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::TransformComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<TransformComponent>(component);
 }

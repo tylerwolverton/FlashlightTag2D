@@ -34,7 +34,10 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 	
 	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 500, transformCompPtr));
 
-	return std::make_shared<GameActor>(components);
+	auto newActor = std::make_shared<GameActor>(components, "Player");
+	m_pEntityList.push_back(newActor);
+
+	return newActor;
 }
 
 StrongGameActorPtr ActorFactory::CreateEnemy()
@@ -52,7 +55,10 @@ StrongGameActorPtr ActorFactory::CreateEnemy()
 	
 	components.push_back(std::make_shared<GraphicsComponent>("resources/Untitled.png", 300, transformCompPtr));
 
-	return std::make_shared<GameActor>(components);
+	auto newActor = std::make_shared<GameActor>(components, "Enemy");
+	m_pEntityList.push_back(newActor);
+
+	return newActor;
 }
 
 StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
@@ -61,5 +67,8 @@ StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
 	components.push_back(std::make_shared<TransformComponent>(Vector2D<float>(0, 0), Vector2D<float>(World::SCREEN_WIDTH, World::SCREEN_HEIGHT)));
 	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
 
-	return std::make_shared<GameActor>(components);
+	auto newActor = std::make_shared<GameActor>(components, "Camera");
+	m_pEntityList.push_back(newActor);
+
+	return newActor;
 }

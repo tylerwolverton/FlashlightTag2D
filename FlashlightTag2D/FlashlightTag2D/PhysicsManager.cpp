@@ -19,31 +19,27 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 {
 	for (const auto& actor : gameActors)
 	{
-		StrongActorComponentPtr actorPhysicsComponent = actor->GetComponentByName(EComponentNames::PhysicsComponentEnum);
+		auto actorPhysicsComponent = actor->GetPhysicsComponent();
 		if (actorPhysicsComponent == nullptr)
 		{
 			continue;
 		}
 
-		std::shared_ptr<PhysicsComponent> rawActorPhysicsComponent = std::dynamic_pointer_cast<PhysicsComponent>(actorPhysicsComponent);
-		
 		for (const auto& innerActor : gameActors)
 		{
 			if (actor != innerActor)
 			{
-				StrongActorComponentPtr innerActorPhysicsComponent = innerActor->GetComponentByName(EComponentNames::PhysicsComponentEnum);
+				auto innerActorPhysicsComponent = innerActor->GetPhysicsComponent();
 				if (innerActorPhysicsComponent == nullptr)
 				{
 					continue;
 				}
 
-				std::shared_ptr<PhysicsComponent> rawInnerActorPhysicsComponent = std::dynamic_pointer_cast<PhysicsComponent>(innerActorPhysicsComponent);
-
 				if (CheckCircleCollision(actor, innerActor))
 				{
-					MoveActors(rawActorPhysicsComponent, rawInnerActorPhysicsComponent);
-					rawActorPhysicsComponent->SignalCollision(*innerActor);
-					rawInnerActorPhysicsComponent->SignalCollision(*actor);
+					MoveActors(actorPhysicsComponent, innerActorPhysicsComponent);
+                    actorPhysicsComponent->SignalCollision(*innerActor);
+                    innerActorPhysicsComponent->SignalCollision(*actor);
 				}
 			}
 		}
@@ -52,11 +48,11 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 
 bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor)
 {
-	std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actor->GetComponentByName(TransformComponentEnum));
-	std::shared_ptr<TransformComponent> rawInnerActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(innerActor->GetComponentByName(TransformComponentEnum));
-	
-	Vector2D<float> dist = rawActorTransformComponent->GetPosition() - rawInnerActorTransformComponent->GetPosition();
-	float sizeSum = rawActorTransformComponent->GetRadius() + rawInnerActorTransformComponent->GetRadius();
+	auto actorTransformComponent = actor->GetTransformComponent();
+    auto innerActorTransformComponent = innerActor->GetTransformComponent();
+
+	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
+	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
 
 	return dist.Length() < sizeSum;
 }

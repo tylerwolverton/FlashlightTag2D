@@ -6,8 +6,6 @@
 #include "SDLUtils.h"
 #include "Types.h"
 
-class World;
-
 class ActorFactory
 {
 public:
@@ -16,6 +14,7 @@ public:
 	StrongGameActorPtr CreatePlayer();
 	StrongGameActorPtr CreateEnemy();
 	StrongGameActorPtr CreateCamera(StrongGameActorPtr target);
+	StrongGameActorPtrList GetActorList() { return m_pEntityList; }
 
 protected:
 	ActorComponentCreatorMap m_actorComponentCreators;
@@ -24,5 +23,6 @@ protected:
 private:
 	ActorId m_lastActorId;
 	ActorId get_next_actor_id() { ++m_lastActorId; return m_lastActorId; };
+	StrongGameActorPtrList m_pEntityList;
 };
 

@@ -23,13 +23,13 @@ public:
 
 	void RunGame();
 	void AddCamera(StrongGameActorPtr camera);
-	StrongGameActorPtr AddEntity(StrongGameActorPtr entity);
+	//StrongGameActorPtr AddEntity(StrongGameActorPtr entity);
 
 	StrongGameActorPtr GetCurrentCamera() { return m_pCurrentCamera; };
 	SDL_Renderer* GetRenderer() { return m_renderer; };
 
 private:
-	StrongGameActorPtrList m_pEntityList;
+	//StrongGameActorPtrList m_pEntityList;
 	ComponentList m_graphicsComponentList;
 	StrongGameActorPtrList m_pCameraList;
 	StrongGameActorPtr m_pCurrentCamera;

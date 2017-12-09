@@ -18,13 +18,13 @@ public:
 	ComponentId GetComponentId() const;
 	virtual EComponentNames GetComponentName() const override;
 
-	void SetBehavior(Behavior* behavior) { curBehavior = behavior; }
+	void SetBehavior(Behavior* behavior) { m_pCurBehavior = behavior; }
 
 private:
-	BehaviorList m_behaviorList;
+	//BehaviorList m_behaviorList;
 	int m_moveTimer;
 	int m_moveDirection;
 	int m_moveLength;
-	Behavior* curBehavior;
+	Behavior* m_pCurBehavior;
 };
 

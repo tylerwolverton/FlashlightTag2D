@@ -159,6 +159,7 @@
     <ClCompile Include="PlayerLogicComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="PlayerLogicComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
     <ClInclude Include="SeekBehavior.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture2D.h" />

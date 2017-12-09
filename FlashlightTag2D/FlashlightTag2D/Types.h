@@ -9,6 +9,14 @@ class Behavior;
 class GameActor;
 class Command;
 class World;
+class AIComponent;
+class BaseLogicComponent;
+class FollowTargetAIComponent;
+class GraphicsComponent;
+class InputComponent;
+class PhysicsComponent;
+class AIComponent;
+class TransformComponent;
 
 typedef ActorComponent *(*ActorComponentCreator)();
 typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
@@ -16,7 +24,16 @@ typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
 typedef unsigned long ActorId;
 typedef unsigned long ComponentId;
 typedef std::shared_ptr<Actor> StrongActorPtr;
-typedef std::shared_ptr<ActorComponent> StrongActorComponentPtr;
+
+typedef std::shared_ptr<ActorComponent>          StrongActorComponentPtr;
+typedef std::shared_ptr<AIComponent>             StrongAIComponentPtr;
+typedef std::shared_ptr<BaseLogicComponent>      StrongBaseLogicComponentPtr;
+typedef std::shared_ptr<FollowTargetAIComponent> StrongFollowTargetAIComponentPtr;
+typedef std::shared_ptr<GraphicsComponent>       StrongGraphicsComponentPtr;
+typedef std::shared_ptr<InputComponent>          StrongInputComponentPtr;
+typedef std::shared_ptr<PhysicsComponent>        StrongPhysicsComponentPtr;
+typedef std::shared_ptr<TransformComponent>      StrongTransformComponentPtr;
+
 typedef std::shared_ptr<GameActor> StrongGameActorPtr;
 typedef std::shared_ptr<World> StrongWorldPtr;
 

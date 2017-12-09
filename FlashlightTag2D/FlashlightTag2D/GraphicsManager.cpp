@@ -96,41 +96,38 @@ bool GraphicsManager::initializeRenderData()
 
 void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera)
 {
-	StrongActorComponentPtr cameraTransformComponent = currentCamera->GetComponentByName(EComponentNames::TransformComponentEnum);
+	auto cameraTransformComponent = currentCamera->GetTransformComponent();
 	if (cameraTransformComponent == nullptr)
 	{
 		return;
 	}
 
-	std::shared_ptr<TransformComponent> rawCameraTransformComponent = std::dynamic_pointer_cast<TransformComponent>(cameraTransformComponent);
-	auto cameraPos = rawCameraTransformComponent->GetPosition();
+	auto cameraPos = cameraTransformComponent->GetPosition();
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (auto actor : gameActors)
 	{
-		StrongActorComponentPtr graphicsComponent = actor->GetComponentByName(EComponentNames::GraphicsComponentEnum);
-		if (graphicsComponent == nullptr)
-		{
-			continue;
-		}
+        auto graphicsComponent = actor->GetGraphicsComponent();
+        if (graphicsComponent == nullptr)
+        {
+            continue;
+        }
 
-		StrongActorComponentPtr actorTransformComponent = actor->GetComponentByName(EComponentNames::TransformComponentEnum);
-		if (actorTransformComponent == nullptr)
-		{
-			continue;
-		}
+        auto actorTransformComponent = actor->GetTransformComponent();
+        if (actorTransformComponent == nullptr)
+        {
+            continue;
+        }
 
-		std::shared_ptr<GraphicsComponent> rawGraphicsComponent = std::dynamic_pointer_cast<GraphicsComponent>(graphicsComponent);
-		std::shared_ptr<TransformComponent> rawActorTransformComponent = std::dynamic_pointer_cast<TransformComponent>(actorTransformComponent);
-		auto actorPos = rawActorTransformComponent->GetPosition();
-		auto actorSize = rawActorTransformComponent->GetSize();
+        auto actorPos = actorTransformComponent->GetPosition();
+		auto actorSize = actorTransformComponent->GetSize();
 
 		// Prepare transformations
 		m_shader.UseProgram();
 		Matrix4<GLfloat> model;
-		model = model.Translate(actorPos - cameraPos - rawGraphicsComponent->GetImageOffset());
+		model = model.Translate(actorPos - cameraPos - graphicsComponent->GetImageOffset());
 		//model.Print();
 		//m_projMatrix->Print();
 
@@ -144,13 +141,13 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		//Vector2D<GLfloat> texturePos(1, 1);
 
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader.SetVec2("textureSize", rawGraphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
-		m_shader.SetVec2("texturePos", rawGraphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
 		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		rawGraphicsComponent->GetTexture().BindTexture();
+		graphicsComponent->GetTexture().BindTexture();
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

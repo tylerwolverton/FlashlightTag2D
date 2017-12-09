@@ -1,5 +1,7 @@
 #include "AIComponent.h"
 #include "GameActor.h"
+#include "ServiceLocator.h"
+#include "ActorFactory.h"
 #include "Command.h"
 #include <memory>
 
@@ -8,6 +10,7 @@ AIComponent::AIComponent()
 	m_moveTimer = 0;
 	m_moveDirection = 0;
 	m_moveLength = 10;
+	m_pCurBehavior = nullptr;
 }
 
 AIComponent::~AIComponent()
@@ -18,6 +21,7 @@ void AIComponent::Update(GameActor& actor, int deltaMs)
 {
 	// If hiding
 	//  Look for seeker in light cone
+	/*auto actorList = ServiceLocator::GetActorFactory()->GetActorList();*/
 	//   Seeker found - run away
 	//actor.SetCommands(std::make_shared<CommandList>(RunFromTarget()));
 	//   Seeker not found - stay or change hiding space
@@ -30,9 +34,9 @@ void AIComponent::Update(GameActor& actor, int deltaMs)
 	//   Hider not found - use heuristic to search
 	//actor.SetCommands(std::make_shared<CommandList>(SearchForTargets()));
 
-	if (curBehavior != nullptr)
+	if (m_pCurBehavior != nullptr)
 	{
-		actor.SetCommands(std::make_shared<CommandList>(curBehavior->Update()));
+		actor.SetCommands(std::make_shared<CommandList>(m_pCurBehavior->Update()));
 	}
 }
 

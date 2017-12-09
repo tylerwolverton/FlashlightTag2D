@@ -15,11 +15,10 @@ public:
 	virtual ~MoveUp() {}
 	virtual void Execute(GameActor& actor)
 	{
-		StrongActorComponentPtr behaviorComponent = actor.GetComponentByName(EComponentNames::BaseLogicComponentEnum);
-
+		auto behaviorComponent = actor.GetBaseLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
-			std::dynamic_pointer_cast<BaseLogicComponent>(behaviorComponent)->MoveUp();
+			behaviorComponent->MoveUp();
 		}
 	};
 };
@@ -30,11 +29,10 @@ public:
 	virtual ~MoveDown() {}
 	virtual void Execute(GameActor& actor)
 	{
-		StrongActorComponentPtr behaviorComponent = actor.GetComponentByName(EComponentNames::BaseLogicComponentEnum);
-
+        auto behaviorComponent = actor.GetBaseLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
-			std::dynamic_pointer_cast<BaseLogicComponent>(behaviorComponent)->MoveDown();
+			behaviorComponent->MoveDown();
 		}
 	};
 };
@@ -45,11 +43,10 @@ public:
 	virtual ~MoveRight() {}
 	virtual void Execute(GameActor& actor)
 	{
-		StrongActorComponentPtr behaviorComponent = actor.GetComponentByName(EComponentNames::BaseLogicComponentEnum);
-
+        auto behaviorComponent = actor.GetBaseLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
-			std::dynamic_pointer_cast<BaseLogicComponent>(behaviorComponent)->MoveRight();
+			behaviorComponent->MoveRight();
 		}
 	};
 };
@@ -60,11 +57,10 @@ public:
 	virtual ~MoveLeft() {}
 	virtual void Execute(GameActor& actor)
 	{
-		StrongActorComponentPtr behaviorComponent = actor.GetComponentByName(EComponentNames::BaseLogicComponentEnum);
-
+        auto behaviorComponent = actor.GetBaseLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
-			std::dynamic_pointer_cast<BaseLogicComponent>(behaviorComponent)->MoveLeft();
+			behaviorComponent->MoveLeft();
 		}
 	};
 };
