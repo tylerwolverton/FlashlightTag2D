@@ -13,11 +13,12 @@ class InputComponent;
 class PhysicsComponent;
 class AIComponent;
 class TransformComponent;
+class GameStateComponent;
 
 class GameActor 
 {
 public:
-    GameActor(ComponentList components, std::string actorClassName);
+    GameActor(ComponentList components);
     virtual ~GameActor();
 
     virtual void Update(int delatMs, uint32_t input = 0);
@@ -52,6 +53,7 @@ public:
     StrongInputComponentPtr	         GetInputComponent();
     StrongPhysicsComponentPtr	     GetPhysicsComponent();
     StrongTransformComponentPtr	     GetTransformComponent();
+	StrongGameStateComponentPtr	     GetGameStateComponent();
 
     uint32_t GetInput() { return m_input; }
     void SetInput(uint32_t input) { m_input = input; }
@@ -59,14 +61,11 @@ public:
     std::shared_ptr<CommandList> GetCommands() { return m_pCommands; }
     void SetCommands(std::shared_ptr<CommandList> commands) { m_pCommands = commands; }
 
-    std::string GetActorClassName() { return m_actorClassName; }
-
 private:
     StrongActorComponentPtr getComponentByName(EComponentNames componentName);
 
     ComponentList m_components;
     uint32_t m_input;
     std::shared_ptr<CommandList> m_pCommands;
-    std::string m_actorClassName;
 };
 

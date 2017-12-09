@@ -1,4 +1,5 @@
-﻿  SeekBehavior.cpp
+﻿  World.cpp
 c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\servicelocator.h(19): warning C4091: 'static ': ignored on left of 'ServiceLocator' when no variable is declared
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\world.cpp(53): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

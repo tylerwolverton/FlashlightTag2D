@@ -15,7 +15,6 @@ private:
     CommandList moveTowardsTarget(StrongTransformComponentPtr thisActorTransformComponent,
                                   StrongTransformComponentPtr targetActorTransformComponent);
     CommandList moveInSearchPattern();
-    CommandList tagTarget();
 
     StrongGameActorPtr m_targetActor;
 

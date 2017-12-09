@@ -4,7 +4,11 @@
 #include <tinyxml2.h>
 
 #include "SDLUtils.h"
+#include "Vector2D.h"
 #include "Types.h"
+#include "GameTypes.h"
+
+class GameStateComponent;
 
 class ActorFactory
 {
@@ -12,7 +16,7 @@ public:
 	ActorFactory();
 	
 	StrongGameActorPtr CreatePlayer();
-	StrongGameActorPtr CreateEnemy();
+	StrongGameActorPtr CreateEnemy(Vector2D<float> position, EGameRole role);
 	StrongGameActorPtr CreateCamera(StrongGameActorPtr target);
 	StrongGameActorPtrList GetActorList() { return m_pEntityList; }
 

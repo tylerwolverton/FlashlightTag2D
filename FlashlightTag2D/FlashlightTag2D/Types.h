@@ -17,6 +17,7 @@ class InputComponent;
 class PhysicsComponent;
 class AIComponent;
 class TransformComponent;
+class GameStateComponent;
 
 typedef ActorComponent *(*ActorComponentCreator)();
 typedef std::map<std::string, ActorComponentCreator> ActorComponentCreatorMap;
@@ -33,6 +34,7 @@ typedef std::shared_ptr<GraphicsComponent>       StrongGraphicsComponentPtr;
 typedef std::shared_ptr<InputComponent>          StrongInputComponentPtr;
 typedef std::shared_ptr<PhysicsComponent>        StrongPhysicsComponentPtr;
 typedef std::shared_ptr<TransformComponent>      StrongTransformComponentPtr;
+typedef std::shared_ptr<GameStateComponent>      StrongGameStateComponentPtr;
 
 typedef std::shared_ptr<GameActor> StrongGameActorPtr;
 typedef std::shared_ptr<World> StrongWorldPtr;
@@ -53,7 +55,8 @@ enum EComponentNames
 	GraphicsComponentEnum,
 	InputComponentEnum,
 	PhysicsComponentEnum,
-	TransformComponentEnum
+	TransformComponentEnum,
+	GameStateComponentEnum
 };
 
 static std::map<const char*, ComponentId> ComponentIdNameMap =

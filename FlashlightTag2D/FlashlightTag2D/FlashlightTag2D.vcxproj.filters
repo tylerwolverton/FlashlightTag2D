@@ -60,7 +60,15 @@
     <ClCompile Include="SeekBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HideBehavior.cpp">
+      <Filter>Game\Behaviors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -140,7 +148,18 @@
     <ClInclude Include="SeekBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HideBehavior.h">
+      <Filter>Game\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTypes.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

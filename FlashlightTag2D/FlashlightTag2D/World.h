@@ -9,12 +9,12 @@ class World
 {
 public:
 	//The dimensions of the level
-	static const int LEVEL_WIDTH = 1280;
-	static const int LEVEL_HEIGHT = 960;
+	static const int LEVEL_WIDTH = 4000;
+	static const int LEVEL_HEIGHT = 2000;
 
 	//Screen dimension constants
-	static const int SCREEN_WIDTH = 640;
-	static const int SCREEN_HEIGHT = 480;
+	static const int SCREEN_WIDTH = 1920;
+	static const int SCREEN_HEIGHT = 1080;
 
 	//World(SDL_Renderer* renderer);
 	World(SDL_Window* window);

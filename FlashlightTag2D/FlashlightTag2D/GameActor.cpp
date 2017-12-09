@@ -8,11 +8,11 @@
 #include "PhysicsComponent.h"
 #include "AIComponent.h"
 #include "FollowTargetAIComponent.h"
+#include "GameStateComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ComponentList components, std::string actorClassName)
-	: m_components(components),
-	  m_actorClassName(actorClassName)
+GameActor::GameActor(ComponentList components)
+	: m_components(components)
 {
 	m_pCommands = std::make_shared<CommandList>();
 }
@@ -128,4 +128,15 @@ StrongTransformComponentPtr GameActor::GetTransformComponent()
 	}
 
 	return std::dynamic_pointer_cast<TransformComponent>(component);
+}
+
+StrongGameStateComponentPtr GameActor::GetGameStateComponent()
+{
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::GameStateComponentEnum);
+	if (component == nullptr)
+	{
+		return nullptr;
+	}
+
+	return std::dynamic_pointer_cast<GameStateComponent>(component);
 }

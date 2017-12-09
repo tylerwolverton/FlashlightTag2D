@@ -1,8 +1,10 @@
 #include "SeekBehavior.h"
 #include "ActorFactory.h"
 #include "ServiceLocator.h"
+#include "GameStateComponent.h"
 #include "Vector2D.h"
 #include "Command.h"
+#include "GameTypes.h"
 
 SeekBehavior::SeekBehavior()
 {
@@ -19,7 +21,7 @@ SeekBehavior::~SeekBehavior()
 CommandList SeekBehavior::Update(GameActor& thisActor)
 {
     // Use the current light cone and sound in surrounding area to see if any actors are close, then if a hider is seen, enter the chase state
-    // If already chasing and the hider is lost for long enough, enter the search state (create a ChaseBahavior?)
+    // If already chasing and the hider is lost for long enough, enter the search state
 
     auto thisActorTransformComponent = thisActor.GetTransformComponent();
     if (thisActorTransformComponent == nullptr)
@@ -37,11 +39,14 @@ CommandList SeekBehavior::Update(GameActor& thisActor)
         auto distToClosestActor = 300.0f;
         for (auto otherActor : actorList)
         {
-            // TODO: Rethink this type naming system to find the right game actors
-            // Create game state component? Contains actor type, enum for seeker or hider, etc.
-            auto actorName = otherActor->GetActorClassName();
+			auto gameStateComponent = otherActor->GetGameStateComponent();
+			if (gameStateComponent == nullptr)
+			{
+				continue;
+			}
+            
             if (//*otherActor != thisActor && 
-                (actorName == "Enemy" || actorName == "Player"))
+				gameStateComponent->GetRole() == EGameRole::Hider)
             {
                 auto otherActorTransformComponent = otherActor->GetTransformComponent();
                 if (otherActorTransformComponent == nullptr)
@@ -77,9 +82,11 @@ CommandList SeekBehavior::Update(GameActor& thisActor)
         }
 
         auto distToTargetActor = (targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
-        if (distToTargetActor < m_minTagDistance)
+		if (distToTargetActor < m_minTagDistance)
         {
-            tagTarget();
+			// Tag target
+			// Set to either seeker or out depending on the game mode
+			m_targetActor->GetGameStateComponent()->SetRole(EGameRole::Seeker);
         } 
         else if (distToTargetActor < m_maxChaseDistance)
         {
@@ -91,7 +98,7 @@ CommandList SeekBehavior::Update(GameActor& thisActor)
         m_currState = EState::Search;
     }
 
-    // Weird state, no actions taken
+    // No actions taken
     return CommandList();
 }
 
@@ -124,13 +131,6 @@ CommandList SeekBehavior::moveTowardsTarget(StrongTransformComponentPtr thisActo
 }
 
 CommandList SeekBehavior::moveInSearchPattern()
-{
-
-
-    return CommandList();
-}
-
-CommandList SeekBehavior::tagTarget()
 {
 
 

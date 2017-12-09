@@ -136,6 +136,8 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
 		*/
+
+        // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 		
 		//Vector2D<GLfloat> texturePos(1, 1);

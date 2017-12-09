@@ -1,6 +1,5 @@
 #pragma once
 #include "ActorComponent.h"
-#include "Behavior.h"
 
 class GameActor;
 
@@ -13,18 +12,7 @@ public:
 
 	void Update(GameActor& actor, int deltaMs) override;
 
-	CommandList SimpleMove();
-
 	ComponentId GetComponentId() const;
 	virtual EComponentNames GetComponentName() const override;
-
-	void SetBehavior(Behavior* behavior) { m_pCurBehavior = behavior; }
-
-private:
-	//BehaviorList m_behaviorList;
-	int m_moveTimer;
-	int m_moveDirection;
-	int m_moveLength;
-	Behavior* m_pCurBehavior;
 };
 

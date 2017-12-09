@@ -8,6 +8,8 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "ServiceLocator.h"
+#include "GameStateComponent.h"
+#include "GameTypes.h"
 
 World::World(SDL_Window* window)
 	: m_window(window)
@@ -30,7 +32,8 @@ void World::RunGame()
 	auto graphicsManager = new GraphicsManager(m_window);
 
 	auto player = actorFactory->CreatePlayer();
-	actorFactory->CreateEnemy();
+	actorFactory->CreateEnemy(Vector2D<float>(200.0f, 100.0f), EGameRole::Seeker);
+	actorFactory->CreateEnemy(Vector2D<float>(700.0f, 400.0f), EGameRole::Hider);
 	AddCamera(actorFactory->CreateCamera(player));
 
 	auto timeStepMs = 1000.f / 60; //eg. 30Hz
@@ -74,11 +77,4 @@ void World::AddCamera(StrongGameActorPtr camera)
 	}
 
 	m_pCameraList.push_back(camera);
-	//m_pEntityList.push_back(camera);
 }
-
-//StrongGameActorPtr World::AddEntity(StrongGameActorPtr entity)
-//{
-//	m_pEntityList.push_back(entity);
-//	return entity;
-//}
