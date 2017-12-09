@@ -7,6 +7,6 @@ public:
 	Behavior();
 	virtual ~Behavior();
 
-	virtual CommandList Update() = 0;
+	virtual CommandList Update(GameActor& actor) = 0;
 };
 
