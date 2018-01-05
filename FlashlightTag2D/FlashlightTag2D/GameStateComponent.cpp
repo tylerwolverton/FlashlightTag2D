@@ -14,7 +14,9 @@ GameStateComponent::~GameStateComponent()
 {
 }
 
-void GameStateComponent::Update(GameActor& actor, int deltaMs)
+// Maybe too much for this component to do? AI could actually select the behavior and this could just set the role
+// Player also needs role but not necessarily the same behavior
+void GameStateComponent::Update(GameActor& actor, float deltaMs)
 {
 	// Check for a role change and update behavior
 	if (m_curRole != m_prevRole)

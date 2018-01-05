@@ -21,7 +21,7 @@ GameActor::~GameActor()
 {
 }
 
-void GameActor::Update(int deltaMs, uint32_t input)
+void GameActor::Update(float deltaMs, uint32_t input)
 {
 	m_input = input;
 

@@ -10,7 +10,7 @@ public:
 	GameStateComponent(std::string actorName, EGameRole role);
 	virtual ~GameStateComponent();
 
-	virtual void Update(GameActor& actor, int deltaMs) override;
+	virtual void Update(GameActor& actor, float deltaMs) override;
 
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;

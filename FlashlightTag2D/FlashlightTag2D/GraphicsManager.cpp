@@ -31,7 +31,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 
 	int windowWidth, windowHeight;
 	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
-	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, windowWidth, windowHeight, 0, -1, 1);
+	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
 	m_shader.SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
 	m_shader.SetInt("image", 0);
 }

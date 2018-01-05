@@ -1,6 +1,7 @@
 #include "PhysicsManager.h"
 #include "TransformComponent.h"
 #include "GameActor.h"
+#include <stdlib.h>
 
 PhysicsManager::PhysicsManager()
 {
@@ -10,12 +11,12 @@ PhysicsManager::~PhysicsManager()
 {
 }
 
-void PhysicsManager::Update(StrongGameActorPtrList gameActors)
+void PhysicsManager::Update(StrongGameActorPtrList gameActors, float deltaTime)
 {
-
+	ResolveCollisions(gameActors, deltaTime);
 }
 
-void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
+void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime)
 {
 	for (const auto& actor : gameActors)
 	{
@@ -35,9 +36,11 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 					continue;
 				}
 
-				if (CheckCircleCollision(actor, innerActor))
+                auto collisionEvent = checkCircleCollision(actor, innerActor);
+				if (collisionEvent.penetrationDepth < 0)
 				{
-					MoveActors(actorPhysicsComponent, innerActorPhysicsComponent);
+                    resolvePenetration(actor, innerActor, collisionEvent);
+					//moveActors(actorPhysicsComponent, innerActorPhysicsComponent, -collisionEvent.penetrationDepth, deltaTime);
                     actorPhysicsComponent->SignalCollision(*innerActor);
                     innerActorPhysicsComponent->SignalCollision(*actor);
 				}
@@ -46,7 +49,7 @@ void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors)
 	}
 }
 
-bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor)
+PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor)
 {
 	auto actorTransformComponent = actor->GetTransformComponent();
     auto innerActorTransformComponent = innerActor->GetTransformComponent();
@@ -54,14 +57,42 @@ bool PhysicsManager::CheckCircleCollision(StrongGameActorPtr actor, StrongGameAc
 	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
 	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
 
-	return dist.Length() < sizeSum;
+    auto collisionEvent = CollisionEvent{ dist.Length() - sizeSum, dist.Normalize() };
+
+	return collisionEvent;
 }
 
-void PhysicsManager::MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp)
+void PhysicsManager::resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, PhysicsManager::CollisionEvent collisionEvent)
+{
+    auto actorTransformComponent = actor->GetTransformComponent();
+    auto innerActorTransformComponent = innerActor->GetTransformComponent();
+
+    auto moveDist = abs(collisionEvent.penetrationDepth) / 2;// / 2 + .02f;
+
+    actorTransformComponent->SetPosition(actorTransformComponent->GetPosition() + collisionEvent.normal * moveDist);
+    innerActorTransformComponent->SetPosition(innerActorTransformComponent->GetPosition() - collisionEvent.normal * moveDist);
+}
+
+void PhysicsManager::moveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp, float penetrationDepth, float deltaTime)
 {
 	auto actorMomentum = actorPhysicsComp->GetMomentum();
 	auto innerActorMomentum = innerActorPhysicsComp->GetMomentum();
 
-	actorPhysicsComp->SetVelocity(innerActorMomentum / actorPhysicsComp->GetMass());
-	innerActorPhysicsComp->SetVelocity(actorMomentum / innerActorPhysicsComp->GetMass());
+	// vrel = v1 - v2
+	// v1' = v1 - kn/m1
+	// v2' = v2 + kn/m2
+	// k = (e+1)vrel.Dot(n) / (1/m1 + 1/m2)n.Dot(n)
+
+	/*actorPhysicsComp->AddForce(innerActorPhysicsComp->GetVelocity() * innerActorPhysicsComp->GetMass() / deltaTime / 2);
+	innerActorPhysicsComp->AddForce(actorPhysicsComp->GetVelocity() * actorPhysicsComp->GetMass() / deltaTime / 2);*/
+
+	/*actorPhysicsComp->SetVelocity((innerActorMomentum / actorPhysicsComp->GetMass()) / deltaTime);
+	innerActorPhysicsComp->SetVelocity((actorMomentum / innerActorPhysicsComp->GetMass()) / deltaTime);*/
+    //auto actorMomentum = actorPhysicsComp->GetVelocity() * actorPhysicsComp->GetMass();
+    //auto innerActorMomentum = innerActorPhysicsComp->GetVelocity() * innerActorPhysicsComp->GetMass();
+
+    actorPhysicsComp->AddImpulse(-actorMomentum);
+    actorPhysicsComp->AddImpulse(innerActorMomentum);
+    innerActorPhysicsComp->AddImpulse(-innerActorMomentum);
+    innerActorPhysicsComp->AddImpulse(actorMomentum);
 }

@@ -15,7 +15,7 @@ AIComponent::~AIComponent()
 {
 }
 
-void AIComponent::Update(GameActor& actor, int deltaMs)
+void AIComponent::Update(GameActor& actor, float deltaMs)
 {
 	// If hiding
 	//  Look for seeker in light cone

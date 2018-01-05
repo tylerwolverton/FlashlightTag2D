@@ -18,7 +18,7 @@ InputComponent::~InputComponent()
 {
 }
 
-void InputComponent::Update(GameActor& actor, int deltaMs)
+void InputComponent::Update(GameActor& actor, float deltaMs)
 {
 	CommandList commandList;
 

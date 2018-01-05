@@ -17,7 +17,7 @@ FollowTargetAIComponent::~FollowTargetAIComponent()
 {
 }
 
-void FollowTargetAIComponent::Update(GameActor& actor, int deltaMs) 
+void FollowTargetAIComponent::Update(GameActor& actor, float deltaMs)
 {
 	auto actorTransformComponent = actor.GetTransformComponent();
 	auto targetTransformComponent = m_pTarget->GetTransformComponent();

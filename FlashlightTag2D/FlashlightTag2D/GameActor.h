@@ -21,7 +21,7 @@ public:
     GameActor(ComponentList components);
     virtual ~GameActor();
 
-    virtual void Update(int delatMs, uint32_t input = 0);
+    virtual void Update(float delatMs, uint32_t input = 0);
 
     // TODO: Move to a new base Actor class in engine
     //template <class T>

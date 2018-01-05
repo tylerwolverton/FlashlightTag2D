@@ -18,7 +18,7 @@ public:
 	GraphicsComponent(std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
-	virtual void Update(GameActor& actor, int deltaMs) override;
+	virtual void Update(GameActor& actor, float deltaMs) override;
 
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;

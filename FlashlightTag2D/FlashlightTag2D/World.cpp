@@ -50,17 +50,17 @@ void World::RunGame()
 		}
 
 		timeLastMs = timeCurrentMs;
-		timeCurrentMs = SDL_GetTicks();
+		timeCurrentMs = (float)SDL_GetTicks();
 		auto timeDeltaMs = timeCurrentMs - timeLastMs;
 		timeAccumulatedMs += timeDeltaMs;
 		while (timeAccumulatedMs >= timeStepMs)
 		{
 			for (auto entity : actorFactory->GetActorList())
 			{
-				entity->Update((int)timeAccumulatedMs, input);
+				entity->Update(timeAccumulatedMs, input);
 			}
 
-			physicsManager->ResolveCollisions(actorFactory->GetActorList());
+			physicsManager->Update(actorFactory->GetActorList(), timeAccumulatedMs);
 
 			timeAccumulatedMs -= timeStepMs;
 		}

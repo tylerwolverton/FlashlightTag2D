@@ -1,7 +1,7 @@
 #pragma once
 class ActorFactory;
 
-static class ServiceLocator
+class ServiceLocator
 {
 public:
 	/*ServiceLocator();

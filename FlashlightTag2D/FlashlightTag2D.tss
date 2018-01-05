@@ -59,6 +59,10 @@
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.cpp</string>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.h</string>
     </ArrayOfString>
@@ -77,6 +81,23 @@
     <ArrayOfString>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.cpp</string>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameTypes.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ServiceLocator.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Vector2D.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

@@ -17,7 +17,7 @@ public:
 	virtual void MoveRight();
 	virtual void MoveLeft(); 
 
-	virtual void Update(GameActor& actor, int deltaMs) {}
+	virtual void Update(GameActor& actor, float deltaMs) {}
 
 	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;

@@ -11,7 +11,7 @@ class ActorComponent
 public:
 	virtual ~ActorComponent() { m_pOwner.reset(); }
 
-	virtual void Update(GameActor& actor, int deltaMs) {}
+	virtual void Update(GameActor& actor, float deltaMs) {}
 
 	virtual ComponentId GetComponentId() const = 0;
 	virtual EComponentNames GetComponentName() const = 0;

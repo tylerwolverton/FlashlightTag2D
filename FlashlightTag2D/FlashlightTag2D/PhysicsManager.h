@@ -12,10 +12,24 @@ public:
 	PhysicsManager();
 	~PhysicsManager();
 
-	void Update(StrongGameActorPtrList gameActors);
-	void ResolveCollisions(StrongGameActorPtrList gameActors);
+	void Update(StrongGameActorPtrList gameActors, float deltaTime);
+	void ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime);
 
-	bool CheckCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
-	void MoveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp);
+private:
+    struct CollisionEvent
+    {
+        float penetrationDepth;
+        Vector2D<float> normal;
+
+        CollisionEvent(float p_penetrationDepth, Vector2D<float> p_normal)
+            : penetrationDepth(p_penetrationDepth),
+              normal(p_normal)
+        {
+        }
+    };
+
+    CollisionEvent checkCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
+	void moveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp, float penetrationDepth, float deltaTime);
+    void resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, CollisionEvent collisionEvent);
 };
 

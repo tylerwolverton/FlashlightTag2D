@@ -93,8 +93,11 @@ public:
 		Vector2D newVec(*this);
 		T length = newVec.Length();
 
-		newVec.x /= length;
-		newVec.y /= length;
+        if (length != 0)
+        {
+            newVec.x /= length;
+            newVec.y /= length;
+        }
 
 		return newVec;
 	}
