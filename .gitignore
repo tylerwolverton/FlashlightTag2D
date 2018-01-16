@@ -18,3 +18,8 @@ FlashlightTag2D/FlashlightTag2D/Debug/vc140.pdb
 FlashlightTag2D/Debug/FlashlightTag2D.pdb
 *.ilk
 FlashlightTag2D/Debug/FlashlightTag2D.exe
+*.exe
+*.ilk
+*.pdb
+*.tss
+*.log

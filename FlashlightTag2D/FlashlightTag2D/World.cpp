@@ -36,9 +36,9 @@ void World::RunGame()
 	actorFactory->CreateEnemy(Vector2D<float>(700.0f, 400.0f), EGameRole::Hider);
 	AddCamera(actorFactory->CreateCamera(player));
 
-	auto timeStepMs = 1000.f / 60; //eg. 30Hz
+	auto timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
-	float timeCurrentMs = 0;
+	float timeCurrentMs = (float)SDL_GetTicks();;
 	float timeAccumulatedMs = 0;
 	while (isGameRunning)
 	{
@@ -55,12 +55,13 @@ void World::RunGame()
 		timeAccumulatedMs += timeDeltaMs;
 		while (timeAccumulatedMs >= timeStepMs)
 		{
+            auto dt = timeAccumulatedMs / 1000;
 			for (auto entity : actorFactory->GetActorList())
 			{
-				entity->Update(timeAccumulatedMs, input);
+				entity->Update(dt, input); // Should this be in this sub loop?
 			}
 
-			physicsManager->Update(actorFactory->GetActorList(), timeAccumulatedMs);
+			physicsManager->Update(actorFactory->GetActorList(), dt);
 
 			timeAccumulatedMs -= timeStepMs;
 		}

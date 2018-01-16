@@ -15,7 +15,7 @@ public:
 		: x(p_vec.x),
 		  y(p_vec.y) { }
 
-	Vector2D operator+(const Vector2D& rhs)
+	Vector2D operator+(const Vector2D& rhs) const
 	{
 		Vector2D newVec(*this);
 		newVec.x += rhs.x;
@@ -24,7 +24,7 @@ public:
 		return newVec;
 	}
 
-	Vector2D operator-(const Vector2D& rhs)
+	Vector2D operator-(const Vector2D& rhs) const
 	{
 		Vector2D newVec(*this);
 		newVec.x -= rhs.x;
@@ -33,7 +33,7 @@ public:
 		return newVec;
 	}
 
-	Vector2D operator-()
+	Vector2D operator-() const
 	{
 		Vector2D newVec(*this);
 		newVec.x = -newVec.x;
@@ -54,7 +54,7 @@ public:
 		y -= rhs.y;
 	}
 
-	Vector2D operator*(const T& scalar)
+	Vector2D operator*(const T& scalar) const
 	{
 		Vector2D newVec(*this);
 		newVec.x *= scalar;
@@ -63,7 +63,7 @@ public:
 		return newVec;
 	}
 
-	Vector2D operator/(const T& scalar)
+	Vector2D operator/(const T& scalar) const
 	{
 		Vector2D newVec(*this);
 		newVec.x /= scalar;
@@ -78,17 +78,17 @@ public:
 		this->y = rhs.y;
 	}
 
-	T Dot(const Vector2D& rhs)
+	T Dot(const Vector2D& rhs) const
 	{
 		return (x * rhs.x) + (y * rhs.y);
 	}
 
-	T Length()
+	T Length() const
 	{
 		return std::sqrt((x * x) + (y * y));
 	}
 
-	Vector2D Normalize()
+	Vector2D Normalize() const
 	{
 		Vector2D newVec(*this);
 		T length = newVec.Length();
@@ -113,3 +113,33 @@ public:
 		return std::unique_ptr<T[]>(flat);
 	}
 };
+
+template <class T>
+Vector2D<T> operator-(const Vector2D<T>& lhs, const Vector2D<T>& rhs)
+{
+    Vector2D<T> newVec(lhs);
+    newVec.x -= rhs.x;
+    newVec.y -= rhs.y;
+
+    return newVec;
+}
+
+template <class T>
+Vector2D<T> operator+(const Vector2D<T>& lhs, const Vector2D<T>& rhs)
+{
+    Vector2D<T> newVec(lhs);
+    newVec.x += rhs.x;
+    newVec.y += rhs.y;
+
+    return newVec;
+}
+
+template <class T>
+Vector2D<T> operator*(const T& lhs, const Vector2D<T>& rhs)
+{
+    Vector2D<T> newVec(rhs);
+    newVec.x *= lhs;
+    newVec.y *= lhs;
+
+    return newVec;
+}

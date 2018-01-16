@@ -4,11 +4,13 @@
 PhysicsComponent::PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, 
 								   float maxSpeed, 
 								   float mass, 
+                                   float restitution,
                                    Vector2D<float> velocity,
                                    Vector2D<float> acceleration)
 	: m_pTransformComponent(transformComponent),
 	  m_maxSpeed(maxSpeed),
 	  m_mass(mass),
+      m_restitution(restitution),
 	  m_velocity(velocity),
 	  m_acceleration(acceleration),
       m_sumOfForces(Vector2D<float>(0, 0)),
@@ -22,8 +24,6 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::Update(GameActor& actor, float deltaMs)
 {
-    //m_sumOfForces = Vector2D<float>(0, 0);
-    //m_sumOfImpulses = Vector2D<float>(0, 0);
 	ApplyFriction(0.5f);
 	MoveActor(deltaMs);
 }
@@ -44,22 +44,23 @@ void PhysicsComponent::ApplyFriction(float fricCoeff)
 
 void PhysicsComponent::MoveActor(float deltaMs)
 {
-    auto newPosition = m_pTransformComponent->GetPosition();
-    // a = f / m
-    m_acceleration = m_sumOfForces / m_mass;
-    // v = v0 + a + (impulses / m)
-    addVelocity( m_sumOfImpulses / m_mass + m_acceleration * deltaMs);
+    //auto newPosition = m_pTransformComponent->GetPosition();
+    //// a = f / m
+    //m_acceleration = m_sumOfForces / m_mass;
+    //// v = v0 + a + (impulses / m)
+    //AddVelocity( m_sumOfImpulses / m_mass + m_acceleration/* * deltaMs*/);
 
-    m_pTransformComponent->SetPosition(newPosition + m_velocity);
+    //m_pTransformComponent->SetPosition(newPosition + m_velocity * deltaMs);
 
-    // Clear out forces and impulses after move
-    m_sumOfForces = Vector2D<float>(0, 0);
-    m_sumOfImpulses = Vector2D<float>(0, 0);
-    m_acceleration = Vector2D<float>(0, 0);
-    //m_velocity = Vector2D<float>(0, 0);
+    //// Clear out forces and impulses after move
+    ////m_sumOfForces = Vector2D<float>(0, 0);
+    //m_sumOfImpulses = Vector2D<float>(0, 0);
+    ////m_acceleration = Vector2D<float>(0, 0);
+    
+    m_pTransformComponent->SetPosition(m_pTransformComponent->GetPosition() + m_velocity);
 }
 
-void PhysicsComponent::SetVelocity(Vector2D<float> newVelocity)
+const void PhysicsComponent::SetVelocity(Vector2D<float> newVelocity)
 {
 	m_velocity = newVelocity;
 	if (m_velocity.Length() > m_maxSpeed)
@@ -72,7 +73,7 @@ void PhysicsComponent::SetVelocity(Vector2D<float> newVelocity)
 	}
 }
 
-void PhysicsComponent::SetVelocityToMax()
+const void PhysicsComponent::SetVelocityToMax()
 {
 	auto dirVec = m_velocity.Normalize();
 
@@ -88,10 +89,11 @@ void PhysicsComponent::AddImpulse(Vector2D<float> impulse)
 void PhysicsComponent::AddForce(Vector2D<float> force)
 {
     // f = m * a
-    m_sumOfForces += force;
+    //m_sumOfForces += force;
+    AddVelocity(force / m_mass);
 }
 
-void PhysicsComponent::addVelocity(Vector2D<float> velocity)
+void PhysicsComponent::AddVelocity(Vector2D<float> velocity)
 {
     m_velocity += velocity;
     if (m_velocity.Length() > m_maxSpeed)

@@ -29,7 +29,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 
 	components.push_back(std::make_shared<InputComponent>());
 
-	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 10.0f, 10.0f);
+	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 10.0f, 1.0f, .5f);
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	
@@ -52,7 +52,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole
 
 	components.push_back(std::make_shared<AIComponent>());
 
-	auto physicsCompPtr = std::make_shared<PhysicsComponent>(transformCompPtr, 10.0f, 1.0f);
+	auto physicsCompPtr = std::make_shared<PhysicsComponent>(transformCompPtr, 10.0f, 1.0f, .5f);
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	

@@ -11,6 +11,7 @@ public:
 	PhysicsComponent(std::shared_ptr<TransformComponent> transformComponent, 
 					float maxSpeed, 
 					float mass, 
+                    float restitution,
 					Vector2D<float> velocity = Vector2D<float>(0, 0), 
 					Vector2D<float> acceleration = Vector2D<float>(0, 0));
 	virtual ~PhysicsComponent();
@@ -23,12 +24,14 @@ public:
 
 	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; }
 
-	Vector2D<float> GetVelocity() { return m_velocity; }
-	void SetVelocity(Vector2D<float> newVelocity);
-	void SetVelocityToMax();
+	const Vector2D<float> GetVelocity() const { return m_velocity; }
+	const void SetVelocity(Vector2D<float> newVelocity);
+	const void SetVelocityToMax();
+    void AddVelocity(Vector2D<float> velocity);
 
-	float GetMass() { return m_mass; }
-	Vector2D<float> GetMomentum() { return m_velocity * m_mass; }
+	const float GetMass() { return m_mass; }
+	const Vector2D<float> GetMomentum() { return m_velocity * m_mass; }
+    const float GetRestitution() { return m_restitution; }
 
 	void AddImpulse(Vector2D<float> impulse);
 	void AddForce(Vector2D<float> force);
@@ -44,8 +47,6 @@ protected:
     Vector2D<float> m_sumOfImpulses;
 	float m_maxSpeed;
 	float m_mass;
-
-private:
-	void addVelocity(Vector2D<float> velocity);
+    float m_restitution;
 };
 

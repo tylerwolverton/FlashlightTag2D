@@ -29,7 +29,7 @@ private:
     };
 
     CollisionEvent checkCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
-	void moveActors(std::shared_ptr<PhysicsComponent>& actorPhysicsComp, std::shared_ptr<PhysicsComponent>& innerActorPhysicsComp, float penetrationDepth, float deltaTime);
-    void resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, CollisionEvent collisionEvent);
+	void resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, const CollisionEvent& collisionEvent);
+    void resolveCollision(StrongPhysicsComponentPtr actorPhysicsComp, StrongPhysicsComponentPtr innerActorPhysicsComp, const CollisionEvent& collisionEvent);
 };
 
