@@ -24,7 +24,7 @@ StrongGameActorPtr ActorFactory::CreatePlayer()
 {
 	ComponentList components = ComponentList();
 
-	auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(0, 0), 100.0f);
+	auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(0, 0), 100.0f, Vector2D<float>(1, 0));
 	components.push_back(transformCompPtr);
 
 	components.push_back(std::make_shared<InputComponent>());
@@ -47,7 +47,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole
 {
 	ComponentList components = ComponentList();
 
-	auto transformCompPtr = std::make_shared<TransformComponent>(position, 100.0f);
+	auto transformCompPtr = std::make_shared<TransformComponent>(position, 100.0f, Vector2D<float>(1, 0));
 	components.push_back(transformCompPtr);
 
 	components.push_back(std::make_shared<AIComponent>());
@@ -69,7 +69,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole
 StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
-	components.push_back(std::make_shared<TransformComponent>(Vector2D<float>(0.0f, 0.0f), Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT)));
+	components.push_back(std::make_shared<TransformComponent>(Vector2D<float>(0.0f, 0.0f), Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT), Vector2D<float>(0, 0)));
 	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
 
 	auto newActor = std::make_shared<GameActor>(components);

@@ -1,14 +1,16 @@
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(Vector2D<float> position, float radius)
+TransformComponent::TransformComponent(Vector2D<float> position, float radius, Vector2D<float> direction)
 	: m_position(position),
-	  m_size(Vector2D<float>(radius, radius))
+	  m_size(Vector2D<float>(radius, radius)),
+      m_direction(direction)
 {
 }
 
-TransformComponent::TransformComponent(Vector2D<float> position, Vector2D<float> size)
+TransformComponent::TransformComponent(Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction)
 	: m_position(position),
-	  m_size(size)
+	  m_size(size),
+      m_direction(direction)
 {
 }
 

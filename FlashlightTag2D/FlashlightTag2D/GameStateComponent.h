@@ -18,6 +18,8 @@ public:
 	EGameRole GetRole() { return m_curRole; }
 	void SetRole(EGameRole role) { m_curRole = role; }
 
+    const std::string GetName() const { return m_actorName; }
+
 	std::shared_ptr<Behavior> GetBehavior() { return m_behavior; }
 
 private:

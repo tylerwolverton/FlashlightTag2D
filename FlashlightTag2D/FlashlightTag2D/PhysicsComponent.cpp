@@ -56,8 +56,13 @@ void PhysicsComponent::MoveActor(float deltaMs)
     ////m_sumOfForces = Vector2D<float>(0, 0);
     //m_sumOfImpulses = Vector2D<float>(0, 0);
     ////m_acceleration = Vector2D<float>(0, 0);
-    
+
     m_pTransformComponent->SetPosition(m_pTransformComponent->GetPosition() + m_velocity);
+
+    if (m_velocity.Length() > 0.1f)
+    {
+        m_pTransformComponent->SetDirection(m_velocity.Normalize());
+    }
 }
 
 const void PhysicsComponent::SetVelocity(Vector2D<float> newVelocity)

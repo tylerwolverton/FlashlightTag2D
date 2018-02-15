@@ -2,6 +2,8 @@
 #include "ActorComponent.h"
 #include "GraphicsComponent.h"
 #include "TransformComponent.h"
+#include "PhysicsComponent.h"
+#include "GameStateComponent.h"
 #include "GameActor.h"
 #include "Vector2D.h"
 #include "Texture2D.h"
@@ -107,6 +109,9 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+    GLfloat light[3] = { 0.0, 0.0, 0.0 };
+    GLfloat lightDir[2] = { 0.0, 0.0 };
+    GLfloat lightPos[2] = { 0.0, 0.0 };
 	for (auto actor : gameActors)
 	{
         auto graphicsComponent = actor->GetGraphicsComponent();
@@ -119,7 +124,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
         if (actorTransformComponent == nullptr)
         {
             continue;
-        }
+        }      
 
         auto actorPos = actorTransformComponent->GetPosition();
 		auto actorSize = actorTransformComponent->GetSize();
@@ -127,7 +132,30 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		// Prepare transformations
 		m_shader.UseProgram();
 		Matrix4<GLfloat> model;
-		model = model.Translate(actorPos - cameraPos - graphicsComponent->GetImageOffset());
+        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+		model = model.Translate(actorLocation);
+
+        // Temporary code to test lighting
+        auto gameStateComponent = actor->GetGameStateComponent();
+        if (gameStateComponent != nullptr
+            && gameStateComponent->GetName() == "Player")
+        {
+            light[0] = actorLocation.x; 
+            light[1] = actorLocation.y;
+            light[2] = 250.0f;
+
+            auto normalizedVelocity = actor->GetPhysicsComponent()->GetVelocity().Normalize();
+            //Vector2D<float> normalizedVelocity(1.0, 0.0); //actor->GetPhysicsComponent()->GetVelocity().Normalize();
+            lightDir[0] = -actorTransformComponent->GetDirection().x;
+            lightDir[1] = -actorTransformComponent->GetDirection().y;
+
+            lightPos[0] = actorLocation.x + actorTransformComponent->GetSize().x / 2;
+            lightPos[1] = actorLocation.y + actorTransformComponent->GetSize().y / 2;
+        }
+        
+        m_shader.SetVec3("lightSrc", light);
+        m_shader.SetVec2("lightDir", lightDir);
+        m_shader.SetVec2("lightPos", lightPos);
 		//model.Print();
 		//m_projMatrix->Print();
 
