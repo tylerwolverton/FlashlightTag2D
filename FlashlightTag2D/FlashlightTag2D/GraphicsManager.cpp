@@ -2,7 +2,6 @@
 #include "ActorComponent.h"
 #include "GraphicsComponent.h"
 #include "TransformComponent.h"
-#include "PhysicsComponent.h"
 #include "GameStateComponent.h"
 #include "GameActor.h"
 #include "Vector2D.h"
@@ -109,9 +108,41 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-    GLfloat light[3] = { 0.0, 0.0, 0.0 };
-    GLfloat lightDir[2] = { 0.0, 0.0 };
-    GLfloat lightPos[2] = { 0.0, 0.0 };
+    // opengl likes flat arrays...
+    std::vector<GLfloat> lightVec;
+    std::vector<GLfloat> lightDirVec;
+    std::vector<GLfloat> lightPosVec;
+    for (auto actor : gameActors)
+    {
+        auto graphicsComponent = actor->GetGraphicsComponent();
+        if (graphicsComponent == nullptr)
+        {
+            continue;
+        }
+
+        auto actorTransformComponent = actor->GetTransformComponent();
+        if (actorTransformComponent == nullptr)
+        {
+            continue;
+        }
+
+        auto actorPos = actorTransformComponent->GetPosition();
+        auto actorSize = actorTransformComponent->GetSize();
+        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+        
+        lightVec.push_back(actorLocation.x); lightVec.push_back(actorLocation.y); lightVec.push_back(250.0f);
+
+        lightDirVec.push_back(actorTransformComponent->GetDirection().x);
+        lightDirVec.push_back(actorTransformComponent->GetDirection().y);
+
+        lightPosVec.push_back(actorLocation.x + actorTransformComponent->GetSize().x / 2);
+        lightPosVec.push_back(actorLocation.y + actorTransformComponent->GetSize().y / 2);
+    }
+
+    m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
+    m_shader.SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
+    m_shader.SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
+
 	for (auto actor : gameActors)
 	{
         auto graphicsComponent = actor->GetGraphicsComponent();
@@ -130,50 +161,16 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		auto actorSize = actorTransformComponent->GetSize();
 
 		// Prepare transformations
-		m_shader.UseProgram();
 		Matrix4<GLfloat> model;
         auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
 		model = model.Translate(actorLocation);
 
-        // Temporary code to test lighting
-        auto gameStateComponent = actor->GetGameStateComponent();
-        if (gameStateComponent != nullptr
-            && gameStateComponent->GetName() == "Player")
-        {
-            light[0] = actorLocation.x; 
-            light[1] = actorLocation.y;
-            light[2] = 250.0f;
-
-            auto normalizedVelocity = actor->GetPhysicsComponent()->GetVelocity().Normalize();
-            //Vector2D<float> normalizedVelocity(1.0, 0.0); //actor->GetPhysicsComponent()->GetVelocity().Normalize();
-            lightDir[0] = -actorTransformComponent->GetDirection().x;
-            lightDir[1] = -actorTransformComponent->GetDirection().y;
-
-            lightPos[0] = actorLocation.x + actorTransformComponent->GetSize().x / 2;
-            lightPos[1] = actorLocation.y + actorTransformComponent->GetSize().y / 2;
-        }
-        
-        m_shader.SetVec3("lightSrc", light);
-        m_shader.SetVec2("lightDir", lightDir);
-        m_shader.SetVec2("lightPos", lightPos);
-		//model.Print();
-		//m_projMatrix->Print();
-
-		//(model * *(m_projMatrix.get())).Print();
-		/*model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-		model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-		*/
-
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
-		
-		//Vector2D<GLfloat> texturePos(1, 1);
 
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
 		m_shader.SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
 		m_shader.SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
-		//this->m_shader.SetVector3f("spriteColor", color);
 		
 		glActiveTexture(GL_TEXTURE0);
 		

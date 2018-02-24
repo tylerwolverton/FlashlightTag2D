@@ -56,7 +56,7 @@ StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole
 	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
 	components.push_back(physicsCompPtr);
 	
-	components.push_back(std::make_shared<GraphicsComponent>("resources/Untitled.png", 300, transformCompPtr));
+	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 300, transformCompPtr));
 
 	components.push_back(std::make_shared<GameStateComponent>("Enemy", role));
 

@@ -194,14 +194,14 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, GL_TRUE, value);
 	}
 
-	void SetVec2(const std::string name, GLfloat* value)
+	void SetVec2(const std::string name, GLfloat* value, int size = 1)
 	{
-		glUniform2fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, value);
+		glUniform2fv(glGetUniformLocation(shaderProgram, name.c_str()), size, value);
 	}
 
-    void SetVec3(const std::string name, GLfloat* value)
+    void SetVec3(const std::string name, GLfloat* value, int size = 1)
     {
-        glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), 1, value);
+        glUniform3fv(glGetUniformLocation(shaderProgram, name.c_str()), size, value);
     }
 
 	void SetInt(const std::string &name, int value) const
