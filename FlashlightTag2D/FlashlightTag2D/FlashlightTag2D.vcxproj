@@ -70,19 +70,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\TinyXML2\include;..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

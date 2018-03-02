@@ -4,6 +4,7 @@
 class Texture2D
 {
 public:
+    Texture2D();
 	Texture2D(std::string texturePath);
 	~Texture2D();
 	

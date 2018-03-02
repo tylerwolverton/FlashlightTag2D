@@ -1,6 +1,5 @@
 #include "World.h"
 
-#include "Vector2D.h"
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
@@ -10,6 +9,10 @@
 #include "ServiceLocator.h"
 #include "GameStateComponent.h"
 #include "GameTypes.h"
+
+// from rapidjson
+#include "document.h"
+#include "filereadstream.h"
 
 World::World(SDL_Window* window)
 	: m_window(window)
@@ -30,11 +33,14 @@ void World::RunGame()
 	auto inputManager = new InputManager();
 	auto physicsManager = new PhysicsManager();
 	auto graphicsManager = new GraphicsManager(m_window);
+    
 
-	auto player = actorFactory->CreatePlayer();
-	actorFactory->CreateEnemy(Vector2D<float>(200.0f, 100.0f), EGameRole::Seeker);
-	actorFactory->CreateEnemy(Vector2D<float>(700.0f, 400.0f), EGameRole::Hider);
-	AddCamera(actorFactory->CreateCamera(player));
+    ChangeLevel("resources/levels/level1.json", graphicsManager, actorFactory);
+
+	//auto player = actorFactory->CreatePlayer();
+	//actorFactory->CreateEnemy(Vector2D<float>(200.0f, 100.0f), EGameRole::Seeker);
+	//actorFactory->CreateEnemy(Vector2D<float>(700.0f, 400.0f), EGameRole::Hider);
+	AddCamera(actorFactory->CreateCamera());
 
 	auto timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
@@ -78,4 +84,28 @@ void World::AddCamera(StrongGameActorPtr camera)
 	}
 
 	m_pCameraList.push_back(camera);
+}
+
+void World::ChangeLevel(std::string levelPath, GraphicsManager* graphicsManager, ActorFactory* actorFactory)
+{
+    FILE* fp;
+    fopen_s(&fp, levelPath.c_str(), "rb");
+
+    char readBuffer[65536];
+    rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+    rapidjson::Document d;
+    d.ParseStream(is);
+
+    fclose(fp);
+
+    // set level height and width
+    m_levelSize = Vector2D<int>(d["level"]["size"]["x"].GetInt(), d["level"]["size"]["y"].GetInt());
+
+    // set graphicsManager::backgroundSprite somehow
+    graphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
+
+    // loop through actors and call their factory methods 
+    // (probably add a generic add actor method to the actor factory that can query for the actor name)
+    actorFactory->CreateActorsFromJSONArray(d["actor_list"]);
 }

@@ -14,10 +14,52 @@
 #include "GameStateComponent.h"
 #include "World.h"
 
-using namespace tinyxml2;
-
 ActorFactory::ActorFactory()
 {
+}
+
+void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList)
+{
+    assert(actorList.IsArray());
+    for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
+    {
+        auto actorName = actorList[i]["name"].GetString();
+
+        ComponentList components = ComponentList();
+
+        auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(actorList[i]["position"]["x"].GetFloat(), 
+                                                                                     actorList[i]["position"]["y"].GetFloat()),
+                                                                     Vector2D<float>(actorList[i]["size"]["x"].GetFloat(),
+                                                                                     actorList[i]["size"]["y"].GetFloat()), 
+                                                                     Vector2D<float>(1, 0));
+        components.push_back(transformCompPtr);
+
+        if (!strcmp(actorName, "Player"))
+        {
+            components.push_back(std::make_shared<InputComponent>());
+        }
+
+        auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 
+                                                                       actorList[i]["max_speed"].GetFloat(), 
+                                                                       actorList[i]["mass"].GetFloat(),
+                                                                       actorList[i]["restitution"].GetFloat());
+        components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
+        components.push_back(physicsCompPtr);
+
+        components.push_back(std::make_shared<GraphicsComponent>(actorList[i]["sprite"].GetString(), 
+                                                                 actorList[i]["animation_speed"].GetInt(), 
+                                                                 transformCompPtr));
+
+        components.push_back(std::make_shared<GameStateComponent>(actorName, EGameRole::Hider));
+
+        auto newActor = std::make_shared<GameActor>(components);
+        m_pEntityList.push_back(newActor);
+
+        if (!strcmp(actorName, "Player"))
+        {
+            m_pCurrentPlayer = newActor;
+        }
+    }
 }
 
 StrongGameActorPtr ActorFactory::CreatePlayer()
@@ -64,6 +106,11 @@ StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole
 	m_pEntityList.push_back(newActor);
 
 	return newActor;
+}
+
+StrongGameActorPtr ActorFactory::CreateCamera()
+{
+    return CreateCamera(m_pCurrentPlayer);
 }
 
 StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)

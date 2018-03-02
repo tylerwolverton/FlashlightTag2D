@@ -107,7 +107,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
-
+    
     // opengl likes flat arrays...
     std::vector<GLfloat> lightVec;
     std::vector<GLfloat> lightDirVec;
@@ -142,6 +142,8 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
     m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
     m_shader.SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
     m_shader.SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
+
+    renderBackground(cameraPos);
 
 	for (auto actor : gameActors)
 	{
@@ -182,6 +184,32 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 	}
 
 	SDL_GL_SwapWindow(m_window);
+}
+
+void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
+{
+    // Render the background
+    if (m_backgroundTexture.GetWidth() != 0)
+    {
+        Vector2D<GLfloat> textureSize((float)m_backgroundTexture.GetWidth(), (float)m_backgroundTexture.GetHeight());
+        Vector2D<GLfloat> texturePos(0, 0);
+
+        Matrix4<GLfloat> backgroundModel;
+        backgroundModel = backgroundModel.Translate(-cameraPos);
+        backgroundModel = backgroundModel.Scale(textureSize);
+
+        m_shader.SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+        m_shader.SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        m_shader.SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+
+        glActiveTexture(GL_TEXTURE0);
+
+        m_backgroundTexture.BindTexture();
+
+        glBindVertexArray(this->m_quadVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+    }
 }
 
 void GraphicsManager::ClearScreen()

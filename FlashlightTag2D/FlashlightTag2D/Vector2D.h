@@ -7,6 +7,10 @@ class Vector2D
 public:
 	T x, y;
 
+    Vector2D()
+        : x(0),
+          y(0) { }
+
 	Vector2D(T p_x, T p_y)
 		: x(p_x),
 		  y(p_y) { }

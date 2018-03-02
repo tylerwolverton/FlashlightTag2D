@@ -1,0 +1,40 @@
+{ 
+	"level":{ 
+		"size":{
+			"x":4000, "y":2000 
+		},
+		"sprite":"resources/space_background.png"	
+	},
+	"actor_list":[
+		{ 
+		"name": "Player", 
+		"size":{"x":100, "y":100},
+		"mass":1.0,
+		"max_speed":10.0,
+		"restitution":0.5,
+		"position":{"x":0, "y":0},
+		"sprite": "resources/background.png",
+		"animation_speed":500 
+		},
+		{ 
+		"name": "Enemy", 
+		"size":{"x":100, "y":100},
+		"mass":1.0,
+		"max_speed":10.0,
+		"restitution":0.5,
+		"position":{"x":300, "y":300},
+		"sprite": "resources/background.png",
+		"animation_speed":300 
+		},
+		{ 
+		"name": "Enemy", 
+		"size":{"x":100, "y":100},
+		"mass":1.0,
+		"max_speed":10.0,
+		"restitution":0.5,
+		"position":{"x":800, "y":600},
+		"sprite": "resources/background.png",
+		"animation_speed":300 
+		}
+	]
+}

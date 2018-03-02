@@ -3,6 +3,10 @@
 #include <glew.h>
 #include <iostream>
 
+Texture2D::Texture2D()
+{
+}
+
 Texture2D::Texture2D(std::string texturePath)
 {
 	loadTexture(texturePath);
