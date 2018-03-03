@@ -28,9 +28,9 @@
 		{ 
 			"name": "Enemy", 
 			"transform_component":{
-				"position":{"x":300, "y":300},
+			"position":{"x":300, "y":300},
 				"size":{"x":100, "y":100}
-			},
+			}
 			"physics_component":{	
 				"mass":1.0,
 				"max_speed":10.0,
@@ -60,6 +60,16 @@
 				"animation_speed":300 
 			},
 			"game_state_component":{}
+		},
+		{
+			"name": "Camera",
+			"transform_component":{
+				"position":{"x":0, "y":0},
+				"size":{"x":1920, "y":1080}
+			},
+			"follow_target_ai_component":{
+				"target_name": "Player"
+			}
 		}
 	]
 }

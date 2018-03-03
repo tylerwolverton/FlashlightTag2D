@@ -26,31 +26,69 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList)
         auto actorName = actorList[i]["name"].GetString();
 
         ComponentList components = ComponentList();
+		if (actorList[i].HasMember("input_component"))
+		{
+			components.push_back(std::make_shared<InputComponent>());
+		}
+		if(actorList[i].HasMember("transform_component"))
+		{ 
+			//rapidjson::Value actorTransform = actorList[i]["transform_component"];
+			auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(actorList[i]["transform_component"]["position"]["x"].GetFloat(),
+																						 actorList[i]["transform_component"]["position"]["y"].GetFloat()),
+																		 Vector2D<float>(actorList[i]["transform_component"]["size"]["x"].GetFloat(),
+																						 actorList[i]["transform_component"]["size"]["y"].GetFloat()),
+																		 Vector2D<float>(1, 0));
+			components.push_back(transformCompPtr);
+		
+			
+			if (actorList[i].HasMember("physics_component"))
+			{
+				auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 
+																			   actorList[i]["physics_component"]["max_speed"].GetFloat(),
+																			   actorList[i]["physics_component"]["mass"].GetFloat(),
+																			   actorList[i]["physics_component"]["restitution"].GetFloat());
+				if (actorList[i].HasMember("base_logic_component"))
+				{
+					components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
+				}
+				components.push_back(physicsCompPtr);
+			}
+			
+			if (actorList[i].HasMember("graphics_component"))
+			{
+				components.push_back(std::make_shared<GraphicsComponent>(actorList[i]["graphics_component"]["sprite"].GetString(),
+																		 actorList[i]["graphics_component"]["animation_speed"].GetInt(),
+																		 transformCompPtr));
+			}
+		}
+		if (actorList[i].HasMember("game_state_component"))
+		{
+			components.push_back(std::make_shared<GameStateComponent>(actorName, EGameRole::Hider));
+		}
 
-        auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(actorList[i]["position"]["x"].GetFloat(), 
-                                                                                     actorList[i]["position"]["y"].GetFloat()),
-                                                                     Vector2D<float>(actorList[i]["size"]["x"].GetFloat(),
-                                                                                     actorList[i]["size"]["y"].GetFloat()), 
-                                                                     Vector2D<float>(1, 0));
-        components.push_back(transformCompPtr);
-
-        if (!strcmp(actorName, "Player"))
-        {
-            components.push_back(std::make_shared<InputComponent>());
-        }
-
-        auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 
-                                                                       actorList[i]["max_speed"].GetFloat(), 
-                                                                       actorList[i]["mass"].GetFloat(),
-                                                                       actorList[i]["restitution"].GetFloat());
-        components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
-        components.push_back(physicsCompPtr);
-
-        components.push_back(std::make_shared<GraphicsComponent>(actorList[i]["sprite"].GetString(), 
-                                                                 actorList[i]["animation_speed"].GetInt(), 
-                                                                 transformCompPtr));
-
-        components.push_back(std::make_shared<GameStateComponent>(actorName, EGameRole::Hider));
+		//if (actorList[i].HasMember("follow_target_ai_component"))
+		//{
+		//	StrongActorPtr target = nullptr;
+		//	auto targetName = actorList[i]["follow_target_ai_component"]["target_name"].GetString();
+		//	for (auto entity : m_pEntityList)
+		//	{
+		//		auto gameStateComp = entity->GetGameStateComponent();
+		//		if (gameStateComp == nullptr)
+		//		{
+		//			continue;
+		//		}
+		//		if (targetName == gameStateComp->GetName())
+		//		{
+		//			// Set to first occurance of target
+		//			target = entity;
+		//			break;
+		//		}
+		//	}
+		//	if (target != nullptr)
+		//	{
+		//		components.push_back(std::make_shared<FollowTargetAIComponent>(target));
+		//	}
+		//}
 
         auto newActor = std::make_shared<GameActor>(components);
         m_pEntityList.push_back(newActor);
