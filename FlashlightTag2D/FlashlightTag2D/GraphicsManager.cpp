@@ -191,12 +191,17 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
     // Render the background
     if (m_backgroundTexture.GetWidth() != 0)
     {
-        Vector2D<GLfloat> textureSize((float)m_backgroundTexture.GetWidth(), (float)m_backgroundTexture.GetHeight());
+
+        // Use the whole texture starting from the top left
+        Vector2D<GLfloat> textureSize(1.0f, 1.0f);
         Vector2D<GLfloat> texturePos(0, 0);
 
         Matrix4<GLfloat> backgroundModel;
         backgroundModel = backgroundModel.Translate(-cameraPos);
-        backgroundModel = backgroundModel.Scale(textureSize);
+        
+        // Scale by the actual size of the sprite
+        Vector2D<GLfloat> spriteSize((float)m_backgroundTexture.GetWidth(), (float)m_backgroundTexture.GetHeight());
+        backgroundModel = backgroundModel.Scale(spriteSize);
 
         m_shader.SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
         m_shader.SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());

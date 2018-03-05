@@ -11,6 +11,7 @@ GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer
 	  m_texture(Texture2D(texturePath)),
 	  m_texturePos(Vector2D<GLfloat>(0, 0))
 {
+    // Initialize to the first sprite of the sprite sheet
 	m_texturePos.y = m_texture.GetHeight() - transformComponent->GetSize().y;
 }
 
@@ -36,6 +37,7 @@ void GraphicsComponent::Update(GameActor& actor, float deltaMs)
 
 		m_texturePos.x = (float)((int)(m_texturePos.x + m_pTransformComponent->GetSize().x) % m_texture.GetWidth());
 		
+        // Move to next row of sprite sheet
 		if (m_texturePos.x == 0)
 		{
 			m_texturePos.y = (float)((int)(m_texturePos.y - m_pTransformComponent->GetSize().y) % m_texture.GetHeight());
@@ -47,6 +49,7 @@ void GraphicsComponent::Update(GameActor& actor, float deltaMs)
 	}
 }
 
+// Get the size of the texture and normalize to value between 0 and 1
 Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
 {
 	auto size = Vector2D<GLfloat>(m_pTransformComponent->GetSize()); 
@@ -56,6 +59,7 @@ Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
 	return size;
 }
 
+// Get the position of the texture in the spritesheet, normalized to between 0 and 1.
 Vector2D<GLfloat> GraphicsComponent::GetTexturePos()
 {
 	auto pos = m_texturePos;

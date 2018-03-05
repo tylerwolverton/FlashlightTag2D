@@ -12,7 +12,7 @@ void main()
 {    
     color = texture(image, texCoords);
 
-	bool illuminated;
+	bool illuminated = false;
 	for(int i = 0; i < 3; i++)
 	{
 		//Distance of the current pixel from the light position
@@ -24,7 +24,6 @@ void main()
 			color = color + vec4(0.0, 0.0, 0.75, 0.0);
 		}
 
-		//color = color * (1.0 - dist / lightSrc[i].z);
 		if(!illuminated)
 		{
 			float dist = distance(gl_FragCoord.xy, lightSrc[i].xy);
