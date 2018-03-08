@@ -1,8 +1,8 @@
 #pragma once
 #include "ActorComponent.h"
-#include "TransformComponent.h"
-#include "PhysicsComponent.h"
-//#include "Behavior.h"
+
+class TransformComponent;
+class PhysicsComponent;
 
 class BaseLogicComponent :
 	public ActorComponent
@@ -25,6 +25,5 @@ public:
 private:
 	std::shared_ptr<TransformComponent> m_pTransformComponent;
 	std::shared_ptr<PhysicsComponent> m_pPhysicsComponent;
-	//std::shared_ptr<Behavior> m_pBehavior;
 };
 

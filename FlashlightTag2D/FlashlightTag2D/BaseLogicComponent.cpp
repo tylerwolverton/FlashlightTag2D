@@ -1,4 +1,6 @@
 #include "BaseLogicComponent.h"
+#include "TransformComponent.h"
+#include "PhysicsComponent.h"
 
 BaseLogicComponent::BaseLogicComponent(std::shared_ptr<TransformComponent> transformComponent)
 	: m_pTransformComponent(transformComponent)

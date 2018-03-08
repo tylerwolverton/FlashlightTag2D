@@ -1,6 +1,7 @@
 #include "SeekBehavior.h"
 #include "ActorFactory.h"
 #include "ServiceLocator.h"
+#include "TransformComponent.h"
 #include "GameStateComponent.h"
 #include "Vector2D.h"
 #include "Command.h"

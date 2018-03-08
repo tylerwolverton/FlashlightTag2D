@@ -1,4 +1,6 @@
 #pragma once
+#include "Types.h"
+
 class ActorFactory;
 
 class ServiceLocator
@@ -7,14 +9,14 @@ public:
 	/*ServiceLocator();
 	~ServiceLocator();*/
 
-	static ActorFactory* GetActorFactory() { return m_actorFactoryService; }
+	static StrongActorFactoryPtr GetActorFactory() { return m_actorFactoryService; }
 
-	static void Provide(ActorFactory* service)
+	static void Provide(StrongActorFactoryPtr service)
 	{
 		m_actorFactoryService = service;
 	}
 
 private:
-	static ActorFactory* m_actorFactoryService;
+	static StrongActorFactoryPtr m_actorFactoryService;
 };
 

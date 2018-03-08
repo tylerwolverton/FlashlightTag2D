@@ -1,6 +1,6 @@
 #include "ServiceLocator.h"
 
-ActorFactory* ServiceLocator::m_actorFactoryService = nullptr;
+StrongActorFactoryPtr ServiceLocator::m_actorFactoryService = nullptr;
 //
 //ServiceLocator::ServiceLocator()
 //{

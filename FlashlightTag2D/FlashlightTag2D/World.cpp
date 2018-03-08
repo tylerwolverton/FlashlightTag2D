@@ -1,5 +1,6 @@
-#include "World.h"
+#include <memory>
 
+#include "World.h"
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
@@ -27,19 +28,16 @@ World::~World()
 void World::RunGame()
 {
 	bool isGameRunning = true;
-	auto actorFactory = new ActorFactory();
+	auto actorFactory = std::make_shared<ActorFactory>();
 	ServiceLocator::Provide(actorFactory);
 
-	auto inputManager = new InputManager();
-	auto physicsManager = new PhysicsManager();
-	auto graphicsManager = new GraphicsManager(m_window);
+	auto inputManager = std::make_shared<InputManager>();
+	auto physicsManager = std::make_shared<PhysicsManager>();
+	auto graphicsManager = std::make_shared<GraphicsManager>(m_window);
     
 
     ChangeLevel("resources/levels/level1.json", graphicsManager, actorFactory);
 
-	//auto player = actorFactory->CreatePlayer();
-	//actorFactory->CreateEnemy(Vector2D<float>(200.0f, 100.0f), EGameRole::Seeker);
-	//actorFactory->CreateEnemy(Vector2D<float>(700.0f, 400.0f), EGameRole::Hider);
 	AddCamera(actorFactory->CreateCamera());
 
 	auto timeStepMs = 1000.0f / 60; //eg. 60fps
@@ -86,7 +84,7 @@ void World::AddCamera(StrongGameActorPtr camera)
 	m_pCameraList.push_back(camera);
 }
 
-void World::ChangeLevel(std::string levelPath, GraphicsManager* graphicsManager, ActorFactory* actorFactory)
+void World::ChangeLevel(std::string levelPath, StrongGraphicsManagerPtr graphicsManager, StrongActorFactoryPtr actorFactory)
 {
     FILE* fp;
     fopen_s(&fp, levelPath.c_str(), "rb");

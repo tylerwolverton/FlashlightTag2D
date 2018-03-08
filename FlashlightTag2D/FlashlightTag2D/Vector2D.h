@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <memory>
 
 template <class T>
 class Vector2D

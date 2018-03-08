@@ -102,5 +102,12 @@
     <ArrayOfString>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Vector2D.h</string>
     </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Texture2D.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Texture2D.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Matrix4.h</string>
+    </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

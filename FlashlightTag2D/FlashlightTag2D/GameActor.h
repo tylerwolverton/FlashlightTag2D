@@ -1,10 +1,6 @@
 #pragma once
-#include <memory>
-#include <cstdint>
 #include "Types.h"
-#include "Vector2D.h"
 
-//struct SDL_Texture;
 class AIComponent;
 class BaseLogicComponent;
 class FollowTargetAIComponent;
@@ -22,30 +18,7 @@ public:
     virtual ~GameActor();
 
     virtual void Update(float delatMs, uint32_t input = 0);
-
-    // TODO: Move to a new base Actor class in engine
-    //template <class T>
-    //std::shared_ptr<T> GameActor::GetComponent(EComponentNames componentName)
-    //{
-    //    StrongActorComponentPtr foundComponent;
-    //    for (auto component : m_components)
-    //    {
-    //        if (component->GetComponentName() == componentName)
-    //        {
-    //            foundComponent = component;
-    //            break;
-    //        }
-    //    }
-
-    //    if (foundComponent == nullptr)
-    //    {
-    //        return nullptr;
-    //    }
-
-    //    return std::dynamic_pointer_cast<T>(foundComponent);
-    //}
-
-    
+        
     StrongAIComponentPtr             GetAIComponent();
     StrongBaseLogicComponentPtr	     GetBaseLogicComponent();
     StrongFollowTargetAIComponentPtr GetFollowTargetAIComponent();

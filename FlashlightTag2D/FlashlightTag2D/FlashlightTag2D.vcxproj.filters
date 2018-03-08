@@ -125,9 +125,6 @@
     <ClInclude Include="FollowTargetAIComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
-    <ClInclude Include="SDLUtils.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Engine</Filter>
     </ClInclude>

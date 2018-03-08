@@ -26,6 +26,7 @@ void FollowTargetAIComponent::Update(GameActor& actor, float deltaMs)
 		return;
 	}
 
+    // Why are we using screen width and height here?
     actorTransformComponent->SetPosition(Vector2D<float>(targetTransformComponent->GetPosition().x - World::SCREEN_WIDTH / 2, targetTransformComponent->GetPosition().y - World::SCREEN_HEIGHT / 2));
 }
 

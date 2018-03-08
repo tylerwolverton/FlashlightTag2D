@@ -1,5 +1,6 @@
 #pragma once
 #include "ActorComponent.h"
+
 class Command;
 
 class InputComponent : public ActorComponent

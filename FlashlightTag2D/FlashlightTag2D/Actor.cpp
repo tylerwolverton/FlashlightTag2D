@@ -9,7 +9,7 @@ Actor::~Actor()
 {
 }
 
-bool Actor::Init(tinyxml2::XMLElement* root)
+bool Actor::Init()
 {
 	return true;
 }

@@ -1,7 +1,5 @@
 #include "InputComponent.h"
-#include "GameActor.h"
 #include "Command.h"
-#include <list>
 
 InputComponent::InputComponent()
 {

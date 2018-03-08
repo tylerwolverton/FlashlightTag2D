@@ -1,4 +1,5 @@
 #include "ActorFactory.h"
+#include "GameTypes.h"
 #include "Vector2D.h"
 #include "Actor.h"
 #include "GameActor.h"
@@ -98,52 +99,6 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList)
             m_pCurrentPlayer = newActor;
         }
     }
-}
-
-StrongGameActorPtr ActorFactory::CreatePlayer()
-{
-	ComponentList components = ComponentList();
-
-	auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(0, 0), 100.0f, Vector2D<float>(1, 0));
-	components.push_back(transformCompPtr);
-
-	components.push_back(std::make_shared<InputComponent>());
-
-	auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 10.0f, 1.0f, .5f);
-	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
-	components.push_back(physicsCompPtr);
-	
-	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 500, transformCompPtr));
-
-	components.push_back(std::make_shared<GameStateComponent>("Player", EGameRole::Hider));
-
-	auto newActor = std::make_shared<GameActor>(components);
-	m_pEntityList.push_back(newActor);
-
-	return newActor;
-}
-
-StrongGameActorPtr ActorFactory::CreateEnemy(Vector2D<float> position, EGameRole role)
-{
-	ComponentList components = ComponentList();
-
-	auto transformCompPtr = std::make_shared<TransformComponent>(position, 100.0f, Vector2D<float>(1, 0));
-	components.push_back(transformCompPtr);
-
-	components.push_back(std::make_shared<AIComponent>());
-
-	auto physicsCompPtr = std::make_shared<PhysicsComponent>(transformCompPtr, 10.0f, 1.0f, .5f);
-	components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
-	components.push_back(physicsCompPtr);
-	
-	components.push_back(std::make_shared<GraphicsComponent>("resources/background.png", 300, transformCompPtr));
-
-	components.push_back(std::make_shared<GameStateComponent>("Enemy", role));
-
-	auto newActor = std::make_shared<GameActor>(components);
-	m_pEntityList.push_back(newActor);
-
-	return newActor;
 }
 
 StrongGameActorPtr ActorFactory::CreateCamera()

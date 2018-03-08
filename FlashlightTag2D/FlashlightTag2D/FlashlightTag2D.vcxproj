@@ -201,7 +201,6 @@
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Types.h" />
-    <ClInclude Include="SDLUtils.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

@@ -1,15 +1,14 @@
 #pragma once
 #include "Types.h"
 
-#include <SDL.h>
 #include <glew.h>
-#include <vector>
 #include "Matrix4.h"
 #include "Shader.h"
 #include "Texture2D.h"
+
 #define GL3_PROTOTYPES 1
 
-struct SDL_Texture;
+struct SDL_Window;
 
 class GraphicsManager
 {
@@ -20,7 +19,7 @@ public:
 	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera);
 	void ClearScreen();
 
-    void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = Texture2D(texturePath); };
+    void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
 
 private:
 	SDL_Window* m_window;
@@ -33,7 +32,7 @@ private:
 	
 	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;
 
-    Texture2D m_backgroundTexture;
+    StrongTexture2DPtr m_backgroundTexture;
 
 	bool setOpenGLAttributes();
 	bool initializeRenderData();

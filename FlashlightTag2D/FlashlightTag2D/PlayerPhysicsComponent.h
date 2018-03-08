@@ -1,5 +1,6 @@
 #pragma once
 #include "PhysicsComponent.h"
+#include "Vector2D.h"
 
 class TransformComponent;
 

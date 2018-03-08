@@ -1,4 +1,3 @@
-#include <SDL.h>
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "TransformComponent.h"

@@ -5,6 +5,7 @@
 #include "ServiceLocator.h"
 #include "ActorFactory.h"
 #include "Command.h"
+
 #include <memory>
 
 AIComponent::AIComponent()

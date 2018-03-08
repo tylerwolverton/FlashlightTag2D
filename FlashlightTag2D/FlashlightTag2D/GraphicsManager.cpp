@@ -5,8 +5,6 @@
 #include "GameStateComponent.h"
 #include "GameActor.h"
 #include "Vector2D.h"
-#include "Texture2D.h"
-//#include "stb_image.h"
 
 GraphicsManager::GraphicsManager(SDL_Window* window)
 	: m_window(window)
@@ -176,7 +174,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		graphicsComponent->GetTexture().BindTexture();
+		graphicsComponent->GetTexture()->BindTexture();
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -189,7 +187,7 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
 {
     // Render the background
-    if (m_backgroundTexture.GetWidth() != 0)
+    if (m_backgroundTexture->GetWidth() != 0)
     {
 
         // Use the whole texture starting from the top left
@@ -200,7 +198,7 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         backgroundModel = backgroundModel.Translate(-cameraPos);
         
         // Scale by the actual size of the sprite
-        Vector2D<GLfloat> spriteSize((float)m_backgroundTexture.GetWidth(), (float)m_backgroundTexture.GetHeight());
+        Vector2D<GLfloat> spriteSize((float)m_backgroundTexture->GetWidth(), (float)m_backgroundTexture->GetHeight());
         backgroundModel = backgroundModel.Scale(spriteSize);
 
         m_shader.SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
@@ -209,7 +207,7 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
 
         glActiveTexture(GL_TEXTURE0);
 
-        m_backgroundTexture.BindTexture();
+        m_backgroundTexture->BindTexture();
 
         glBindVertexArray(this->m_quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
