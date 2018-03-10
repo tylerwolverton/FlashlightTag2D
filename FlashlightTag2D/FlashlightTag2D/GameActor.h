@@ -29,16 +29,16 @@ public:
 	StrongGameStateComponentPtr	     GetGameStateComponent();
 
     uint32_t GetInput() { return m_input; }
-    void SetInput(uint32_t input) { m_input = input; }
+    //void SetInput(uint32_t input) { m_input = input; }
 
-    std::shared_ptr<CommandList> GetCommands() { return m_pCommands; }
-    void SetCommands(std::shared_ptr<CommandList> commands) { m_pCommands = commands; }
+    CommandListPtr GetCommands() { return m_pCommands; }
+    void SetCommands(CommandListPtr commands) { m_pCommands = commands; }
 
 private:
     StrongActorComponentPtr getComponentByName(EComponentNames componentName);
 
     ComponentList m_components;
     uint32_t m_input;
-    std::shared_ptr<CommandList> m_pCommands;
+    CommandListPtr m_pCommands;
 };
 

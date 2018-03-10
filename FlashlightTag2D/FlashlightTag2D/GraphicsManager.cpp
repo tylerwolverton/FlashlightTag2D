@@ -45,6 +45,11 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
+void GraphicsManager::AddGraphicsComponent(GraphicsComponent comp) 
+{ 
+    m_graphicsComponentVec.push_back(comp); 
+};
+
 bool GraphicsManager::setOpenGLAttributes()
 {
 	// Set our OpenGL version.
@@ -93,9 +98,19 @@ bool GraphicsManager::initializeRenderData()
 	return true;
 }
 
-void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera)
+void GraphicsManager::AddCamera(StrongGameActorPtr camera)
 {
-	auto cameraTransformComponent = currentCamera->GetTransformComponent();
+    if (m_pCurrentCamera == nullptr)
+    {
+        m_pCurrentCamera = camera;
+    }
+
+    m_pCameraList.push_back(camera);
+}
+
+void GraphicsManager::Render()
+{
+	auto cameraTransformComponent = m_pCurrentCamera->GetTransformComponent();
 	if (cameraTransformComponent == nullptr)
 	{
 		return;
@@ -110,31 +125,21 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
     std::vector<GLfloat> lightVec;
     std::vector<GLfloat> lightDirVec;
     std::vector<GLfloat> lightPosVec;
-    for (auto actor : gameActors)
+    for (auto graphicsComponent : m_graphicsComponentVec)
     {
-        auto graphicsComponent = actor->GetGraphicsComponent();
-        if (graphicsComponent == nullptr)
-        {
-            continue;
-        }
+        auto actorTransformComponent = *(graphicsComponent.GetTransformComponent());
 
-        auto actorTransformComponent = actor->GetTransformComponent();
-        if (actorTransformComponent == nullptr)
-        {
-            continue;
-        }
-
-        auto actorPos = actorTransformComponent->GetPosition();
-        auto actorSize = actorTransformComponent->GetSize();
-        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+        auto actorPos = actorTransformComponent.GetPosition();
+        auto actorSize = actorTransformComponent.GetSize();
+        auto actorLocation = actorPos - cameraPos - graphicsComponent.GetImageOffset();
         
         lightVec.push_back(actorLocation.x); lightVec.push_back(actorLocation.y); lightVec.push_back(250.0f);
 
-        lightDirVec.push_back(actorTransformComponent->GetDirection().x);
-        lightDirVec.push_back(actorTransformComponent->GetDirection().y);
+        lightDirVec.push_back(actorTransformComponent.GetDirection().x);
+        lightDirVec.push_back(actorTransformComponent.GetDirection().y);
 
-        lightPosVec.push_back(actorLocation.x + actorTransformComponent->GetSize().x / 2);
-        lightPosVec.push_back(actorLocation.y + actorTransformComponent->GetSize().y / 2);
+        lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
+        lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
     }
 
     m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
@@ -143,38 +148,28 @@ void GraphicsManager::Render(StrongGameActorPtrList gameActors, StrongGameActorP
 
     renderBackground(cameraPos);
 
-	for (auto actor : gameActors)
+	for (auto graphicsComponent : m_graphicsComponentVec)
 	{
-        auto graphicsComponent = actor->GetGraphicsComponent();
-        if (graphicsComponent == nullptr)
-        {
-            continue;
-        }
+        auto actorTransformComponent = *(graphicsComponent.GetTransformComponent());   
 
-        auto actorTransformComponent = actor->GetTransformComponent();
-        if (actorTransformComponent == nullptr)
-        {
-            continue;
-        }      
-
-        auto actorPos = actorTransformComponent->GetPosition();
-		auto actorSize = actorTransformComponent->GetSize();
+        auto actorPos = actorTransformComponent.GetPosition();
+		auto actorSize = actorTransformComponent.GetSize();
 
 		// Prepare transformations
 		Matrix4<GLfloat> model;
-        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+        auto actorLocation = actorPos - cameraPos - graphicsComponent.GetImageOffset();
 		model = model.Translate(actorLocation);
 
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader.SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
-		m_shader.SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("textureSize", graphicsComponent.GetTextureSize().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("texturePos", graphicsComponent.GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		graphicsComponent->GetTexture()->BindTexture();
+		graphicsComponent.GetTexture()->BindTexture();
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

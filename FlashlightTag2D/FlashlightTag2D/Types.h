@@ -54,6 +54,7 @@ typedef std::list<std::shared_ptr<GameActor>> StrongGameActorPtrList;
 
 typedef std::list<std::shared_ptr<Behavior>> BehaviorList;
 typedef std::list<std::shared_ptr<Command>> CommandList;
+typedef std::shared_ptr<CommandList> CommandListPtr;
 typedef std::list<StrongActorComponentPtr> ComponentList;
 
 enum EComponentNames

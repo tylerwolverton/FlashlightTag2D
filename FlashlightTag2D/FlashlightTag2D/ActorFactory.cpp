@@ -14,12 +14,13 @@
 #include "FollowTargetAIComponent.h"
 #include "GameStateComponent.h"
 #include "World.h"
+#include "GraphicsManager.h"
 
 ActorFactory::ActorFactory()
 {
 }
 
-void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList)
+void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, GraphicsManager& graphicsMgr)
 {
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
@@ -57,9 +58,13 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList)
 			
 			if (actorList[i].HasMember("graphics_component"))
 			{
-				components.push_back(std::make_shared<GraphicsComponent>(actorList[i]["graphics_component"]["sprite"].GetString(),
-																		 actorList[i]["graphics_component"]["animation_speed"].GetInt(),
-																		 transformCompPtr));
+                auto graphicsComp = GraphicsComponent(actorList[i]["graphics_component"]["sprite"].GetString(),
+                                                      actorList[i]["graphics_component"]["animation_speed"].GetInt(),
+                                                      transformCompPtr);
+
+                graphicsMgr.AddGraphicsComponent(graphicsComp);
+
+				components.push_back(std::make_shared<GraphicsComponent>(graphicsComp));
 			}
 		}
 		if (actorList[i].HasMember("game_state_component"))

@@ -13,13 +13,18 @@ struct SDL_Window;
 class GraphicsManager
 {
 public:
-	GraphicsManager(SDL_Window* window);
-	~GraphicsManager();
+    GraphicsManager(SDL_Window* window);
+    ~GraphicsManager();
 
-	void Render(StrongGameActorPtrList gameActors, StrongGameActorPtr currentCamera);
-	void ClearScreen();
+    void Render();
+    void ClearScreen();
 
     void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
+
+    void AddGraphicsComponent(GraphicsComponent comp);
+    //void RemoveGraphicsComponent();
+
+    void AddCamera(StrongGameActorPtr camera);
 
 private:
 	SDL_Window* m_window;
@@ -37,5 +42,10 @@ private:
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
     void renderBackground(Vector2D<float> cameraPos);
+
+    std::vector<GraphicsComponent> m_graphicsComponentVec;
+
+    StrongGameActorPtrList m_pCameraList;
+    StrongGameActorPtr m_pCurrentCamera;
 };
 

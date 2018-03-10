@@ -16,9 +16,13 @@
 #include "filereadstream.h"
 
 World::World(SDL_Window* window)
-	: m_window(window)
+	: m_window(window),
+      m_pInputManager(std::make_unique<InputManager>()),
+      m_pPhysicsManager(std::make_unique<PhysicsManager>()),
+      m_pGraphicsManager(std::make_unique<GraphicsManager>(m_window)),
+      m_pActorFactory(std::make_shared<ActorFactory>())
 {
-	m_pCurrentCamera = nullptr;
+    ServiceLocator::Provide(m_pActorFactory);
 }
 
 World::~World()
@@ -27,18 +31,11 @@ World::~World()
 
 void World::RunGame()
 {
-	bool isGameRunning = true;
-	auto actorFactory = std::make_shared<ActorFactory>();
-	ServiceLocator::Provide(actorFactory);
+	bool isGameRunning = true;    
 
-	auto inputManager = std::make_shared<InputManager>();
-	auto physicsManager = std::make_shared<PhysicsManager>();
-	auto graphicsManager = std::make_shared<GraphicsManager>(m_window);
-    
+    ChangeLevel("resources/levels/level1.json");
 
-    ChangeLevel("resources/levels/level1.json", graphicsManager, actorFactory);
-
-	AddCamera(actorFactory->CreateCamera());
+    m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera());
 
 	auto timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
@@ -46,7 +43,7 @@ void World::RunGame()
 	float timeAccumulatedMs = 0;
 	while (isGameRunning)
 	{
-		auto input = inputManager->ReadInput();
+		auto input = m_pInputManager->ReadInput();
 		if (input & EInputValues::Esc)
 		{
 			isGameRunning = false;
@@ -60,31 +57,21 @@ void World::RunGame()
 		while (timeAccumulatedMs >= timeStepMs)
 		{
             auto dt = timeAccumulatedMs / 1000;
-			for (auto entity : actorFactory->GetActorList())
+			for (auto entity : m_pActorFactory->GetActorList())
 			{
 				entity->Update(dt, input); // Should this be in this sub loop?
 			}
 
-			physicsManager->Update(actorFactory->GetActorList(), dt);
+            m_pPhysicsManager->Update(m_pActorFactory->GetActorList(), dt);
 
 			timeAccumulatedMs -= timeStepMs;
 		}
 
-		graphicsManager->Render(actorFactory->GetActorList(), GetCurrentCamera());
+        m_pGraphicsManager->Render();
 	}
 }
 
-void World::AddCamera(StrongGameActorPtr camera)
-{
-	if (m_pCurrentCamera == nullptr)
-	{
-		m_pCurrentCamera = camera;
-	}
-
-	m_pCameraList.push_back(camera);
-}
-
-void World::ChangeLevel(std::string levelPath, StrongGraphicsManagerPtr graphicsManager, StrongActorFactoryPtr actorFactory)
+void World::ChangeLevel(std::string levelPath)
 {
     FILE* fp;
     fopen_s(&fp, levelPath.c_str(), "rb");
@@ -101,9 +88,9 @@ void World::ChangeLevel(std::string levelPath, StrongGraphicsManagerPtr graphics
     m_levelSize = Vector2D<int>(d["level"]["size"]["x"].GetInt(), d["level"]["size"]["y"].GetInt());
 
     // set graphicsManager::backgroundSprite somehow
-    graphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
+    m_pGraphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
 
     // loop through actors and call their factory methods 
     // (probably add a generic add actor method to the actor factory that can query for the actor name)
-    actorFactory->CreateActorsFromJSONArray(d["actor_list"]);
+    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pGraphicsManager);
 }

@@ -2,14 +2,15 @@
 #include "Vector2D.h"
 #include "Types.h"
 
+#include <memory>
+
+// Move to graphics manager
 #define MAX_CAMERAS 10
 struct SDL_Window;
 
 class World
 {
 public:
-    Vector2D<int> GetLevelSize() { return m_levelSize; }
-
 	//Screen dimension constants
 	static const int SCREEN_WIDTH = 1920;
 	static const int SCREEN_HEIGHT = 1080;
@@ -19,17 +20,15 @@ public:
 	virtual ~World();
 
 	void RunGame();
-	void AddCamera(StrongGameActorPtr camera);
-
-    void ChangeLevel(std::string levelPath, StrongGraphicsManagerPtr graphicsManager, StrongActorFactoryPtr actorFactory);
-
-	StrongGameActorPtr GetCurrentCamera() { return m_pCurrentCamera; };
+    void ChangeLevel(std::string levelPath);
 
 private:
-	ComponentList m_graphicsComponentList;
-	StrongGameActorPtrList m_pCameraList;
-	StrongGameActorPtr m_pCurrentCamera;
 	SDL_Window* m_window;
     Vector2D<int> m_levelSize;
+
+    std::unique_ptr<InputManager> m_pInputManager;
+    std::unique_ptr<PhysicsManager> m_pPhysicsManager;
+    std::unique_ptr<GraphicsManager> m_pGraphicsManager;
+    std::shared_ptr<ActorFactory> m_pActorFactory;
 };
 
