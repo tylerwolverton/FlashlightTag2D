@@ -15,12 +15,14 @@
 #include "GameStateComponent.h"
 #include "World.h"
 #include "GraphicsManager.h"
+#include "PhysicsManager.h"
 
 ActorFactory::ActorFactory()
+    : m_lastActorId(0)
 {
 }
 
-void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, GraphicsManager& graphicsMgr)
+void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr)
 {
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
@@ -30,12 +32,13 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
         ComponentList components = ComponentList();
 		if (actorList[i].HasMember("input_component"))
 		{
-			components.push_back(std::make_shared<InputComponent>());
+			components.push_back(std::make_shared<InputComponent>(getNextComponentId()));
 		}
 		if(actorList[i].HasMember("transform_component"))
 		{ 
 			//rapidjson::Value actorTransform = actorList[i]["transform_component"];
-			auto transformCompPtr = std::make_shared<TransformComponent>(Vector2D<float>(actorList[i]["transform_component"]["position"]["x"].GetFloat(),
+			auto transformCompPtr = std::make_shared<TransformComponent>(getNextComponentId(),
+                                                                         Vector2D<float>(actorList[i]["transform_component"]["position"]["x"].GetFloat(),
 																						 actorList[i]["transform_component"]["position"]["y"].GetFloat()),
 																		 Vector2D<float>(actorList[i]["transform_component"]["size"]["x"].GetFloat(),
 																						 actorList[i]["transform_component"]["size"]["y"].GetFloat()),
@@ -45,20 +48,28 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 			
 			if (actorList[i].HasMember("physics_component"))
 			{
-				auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(transformCompPtr, 
-																			   actorList[i]["physics_component"]["max_speed"].GetFloat(),
-																			   actorList[i]["physics_component"]["mass"].GetFloat(),
-																			   actorList[i]["physics_component"]["restitution"].GetFloat());
-				if (actorList[i].HasMember("base_logic_component"))
+                auto physicsComp = PlayerPhysicsComponent(getNextComponentId(),
+                                                          transformCompPtr,
+                                                          actorList[i]["physics_component"]["max_speed"].GetFloat(),
+                                                          actorList[i]["physics_component"]["mass"].GetFloat(),
+                                                          actorList[i]["physics_component"]["restitution"].GetFloat());
+
+
+				auto physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsComp);
+				
+                physicsMgr.AddPhysicsComponent(physicsComp);
+                
+                if (actorList[i].HasMember("base_logic_component"))
 				{
-					components.push_back(std::make_shared<BaseLogicComponent>(physicsCompPtr));
+					components.push_back(std::make_shared<BaseLogicComponent>(getNextComponentId(), physicsCompPtr));
 				}
 				components.push_back(physicsCompPtr);
 			}
 			
 			if (actorList[i].HasMember("graphics_component"))
 			{
-                auto graphicsComp = GraphicsComponent(actorList[i]["graphics_component"]["sprite"].GetString(),
+                auto graphicsComp = GraphicsComponent(getNextComponentId(),
+                                                      actorList[i]["graphics_component"]["sprite"].GetString(),
                                                       actorList[i]["graphics_component"]["animation_speed"].GetInt(),
                                                       transformCompPtr);
 
@@ -69,7 +80,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-			components.push_back(std::make_shared<GameStateComponent>(actorName, EGameRole::Hider));
+			components.push_back(std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider));
 		}
 
 		//if (actorList[i].HasMember("follow_target_ai_component"))
@@ -96,7 +107,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		//	}
 		//}
 
-        auto newActor = std::make_shared<GameActor>(components);
+        auto newActor = std::make_shared<GameActor>(getNextActorId(), components);
         m_pEntityList.push_back(newActor);
 
         if (!strcmp(actorName, "Player"))
@@ -114,10 +125,10 @@ StrongGameActorPtr ActorFactory::CreateCamera()
 StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
 {
 	ComponentList components = ComponentList();
-	components.push_back(std::make_shared<TransformComponent>(Vector2D<float>(0.0f, 0.0f), Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT), Vector2D<float>(0, 0)));
-	components.push_back(std::make_shared<FollowTargetAIComponent>(target));
+	components.push_back(std::make_shared<TransformComponent>(getNextComponentId(), Vector2D<float>(0.0f, 0.0f), Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT), Vector2D<float>(0, 0)));
+	components.push_back(std::make_shared<FollowTargetAIComponent>(getNextComponentId(), target));
 
-	auto newActor = std::make_shared<GameActor>(components);
+	auto newActor = std::make_shared<GameActor>(getNextActorId(), components);
 	m_pEntityList.push_back(newActor);
 
 	return newActor;

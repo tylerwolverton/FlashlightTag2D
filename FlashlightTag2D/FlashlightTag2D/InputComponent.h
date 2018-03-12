@@ -6,12 +6,11 @@ class Command;
 class InputComponent : public ActorComponent
 {
 public:
-	InputComponent();
+	InputComponent(ComponentId componentId);
 	virtual ~InputComponent();
 
 	void Update(GameActor& actor, float deltaMs) override;
 
-	ComponentId GetComponentId() const;
 	virtual EComponentNames GetComponentName() const override;
 
 private:

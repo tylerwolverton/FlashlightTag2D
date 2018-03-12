@@ -2,23 +2,20 @@
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 
-BaseLogicComponent::BaseLogicComponent(std::shared_ptr<TransformComponent> transformComponent)
-	: m_pTransformComponent(transformComponent)
+BaseLogicComponent::BaseLogicComponent(ComponentId componentId, std::shared_ptr<TransformComponent> transformComponent)
+	: ActorComponent(componentId),
+      m_pTransformComponent(transformComponent)
 {
 }
 
-BaseLogicComponent::BaseLogicComponent(std::shared_ptr<PhysicsComponent> physicsComponent)
-	: m_pPhysicsComponent(physicsComponent)
+BaseLogicComponent::BaseLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
+	: ActorComponent(componentId),
+      m_pPhysicsComponent(physicsComponent)
 {
 }
 
 BaseLogicComponent::~BaseLogicComponent()
 {
-}
-
-ComponentId BaseLogicComponent::GetComponentId() const
-{
-	return ComponentId();
 }
 
 EComponentNames BaseLogicComponent::GetComponentName() const

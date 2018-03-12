@@ -8,7 +8,8 @@
 
 #include <memory>
 
-AIComponent::AIComponent()
+AIComponent::AIComponent(ComponentId componentId)
+    : ActorComponent(componentId)
 {
 }
 
@@ -37,11 +38,6 @@ void AIComponent::Update(GameActor& actor, float deltaMs)
 	{
 		actor.SetCommands(std::make_shared<CommandList>(behavior->Update(actor)));
 	}
-}
-
-ComponentId AIComponent::GetComponentId() const
-{
-	return ComponentId();
 }
 
 EComponentNames AIComponent::GetComponentName() const

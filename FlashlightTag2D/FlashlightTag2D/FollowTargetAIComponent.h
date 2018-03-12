@@ -6,14 +6,13 @@ class GameActor;
 class FollowTargetAIComponent : public ActorComponent
 {
 public:
-	FollowTargetAIComponent();
-	FollowTargetAIComponent(StrongGameActorPtr target);
+	FollowTargetAIComponent(ComponentId componentId);
+	FollowTargetAIComponent(ComponentId componentId, StrongGameActorPtr target);
 	virtual ~FollowTargetAIComponent();
 
 	void Update(GameActor& actor, float deltaMs) override;
 
-	ComponentId GetComponentId() const;
-	virtual EComponentNames GetComponentName() const override;
+    virtual EComponentNames GetComponentName() const override;
 
 	void SetTargetActor(StrongGameActorPtr actor);
 

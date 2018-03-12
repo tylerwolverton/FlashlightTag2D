@@ -92,5 +92,5 @@ void World::ChangeLevel(std::string levelPath)
 
     // loop through actors and call their factory methods 
     // (probably add a generic add actor method to the actor factory that can query for the actor name)
-    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pGraphicsManager);
+    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager);
 }

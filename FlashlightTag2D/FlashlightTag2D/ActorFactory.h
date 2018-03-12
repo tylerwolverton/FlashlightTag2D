@@ -8,7 +8,7 @@ class ActorFactory
 public:
 	ActorFactory();
 	
-    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, GraphicsManager& graphicsMgr);
+    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr);
 	StrongGameActorPtrList GetActorList() { return m_pEntityList; }
 
     // Move to graphics manager
@@ -17,7 +17,9 @@ public:
 
 private:
 	ActorId m_lastActorId;
-	ActorId get_next_actor_id() { ++m_lastActorId; return m_lastActorId; };
+	ActorId getNextActorId() { ++m_lastActorId; return m_lastActorId; };
+    ComponentId m_lastComponentId;
+    ComponentId getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 	StrongGameActorPtrList m_pEntityList;
 
     // Only needed for camera

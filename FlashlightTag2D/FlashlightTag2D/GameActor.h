@@ -14,7 +14,7 @@ class GameStateComponent;
 class GameActor 
 {
 public:
-    GameActor(ComponentList components);
+    GameActor(ActorId actorId, ComponentList components);
     virtual ~GameActor();
 
     virtual void Update(float delatMs, uint32_t input = 0);
@@ -34,11 +34,14 @@ public:
     CommandListPtr GetCommands() { return m_pCommands; }
     void SetCommands(CommandListPtr commands) { m_pCommands = commands; }
 
+    const ActorId GetActorId() const { return m_actorId; }
+
 private:
     StrongActorComponentPtr getComponentByName(EComponentNames componentName);
 
     ComponentList m_components;
     uint32_t m_input;
     CommandListPtr m_pCommands;
+    ActorId m_actorId;
 };
 

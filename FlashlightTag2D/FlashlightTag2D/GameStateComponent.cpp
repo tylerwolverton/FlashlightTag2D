@@ -2,8 +2,9 @@
 #include "HideBehavior.h"
 #include "SeekBehavior.h"
 
-GameStateComponent::GameStateComponent(std::string actorName, EGameRole role)
-	: m_curRole(role),
+GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role)
+	: ActorComponent(componentId),
+      m_curRole(role),
 	  m_prevRole(role),
 	  m_actorName(actorName)
 {
@@ -42,11 +43,6 @@ void GameStateComponent::updateBehavior()
 		default:
 			break;
 	}
-}
-
-ComponentId GameStateComponent::GetComponentId() const
-{
-	return ComponentId();
 }
 
 EComponentNames GameStateComponent::GetComponentName() const

@@ -19,42 +19,36 @@ void PhysicsManager::Update(StrongGameActorPtrList gameActors, float deltaTime)
 
 void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime)
 {
-	for (const auto& actor : gameActors)
+	for (auto actorPhysicsComponent : m_physicsComponentVec)
 	{
-		auto actorPhysicsComponent = actor->GetPhysicsComponent();
-		if (actorPhysicsComponent == nullptr)
-		{
-			continue;
-		}
+        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent.GetTransformComponent();
 
-		for (const auto& innerActor : gameActors)
+		for (auto innerActorPhysicsComponent : m_physicsComponentVec)
 		{
-			if (actor != innerActor)
+			if (actorPhysicsComponent.GetComponentId() != innerActorPhysicsComponent.GetComponentId())
 			{
-				auto innerActorPhysicsComponent = innerActor->GetPhysicsComponent();
-				if (innerActorPhysicsComponent == nullptr)
-				{
-					continue;
-				}
+                std::shared_ptr<TransformComponent> innerTransformComponent = innerActorPhysicsComponent.GetTransformComponent();
 
-                auto collisionEvent = checkCircleCollision(actor, innerActor);
+                auto collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
 				if (collisionEvent.penetrationDepth < 0)
 				{
-                    resolvePenetration(actor, innerActor, collisionEvent);
+                    resolvePenetration(actorTransformComponent, innerTransformComponent, collisionEvent);
                     resolveCollision(actorPhysicsComponent, innerActorPhysicsComponent, collisionEvent);
-                    actorPhysicsComponent->SignalCollision(*innerActor);
-                    innerActorPhysicsComponent->SignalCollision(*actor);
+                    //actorPhysicsComponent.SignalCollision(*innerActor);
+                    //innerActorPhysicsComponent.SignalCollision(*actor);
 				}
 			}
 		}
 	}
 }
 
-PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor)
+void PhysicsManager::AddPhysicsComponent(PhysicsComponent comp)
 {
-	auto actorTransformComponent = actor->GetTransformComponent();
-    auto innerActorTransformComponent = innerActor->GetTransformComponent();
+    m_physicsComponentVec.push_back(comp);
+}
 
+PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent)
+{
 	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
 	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
 
@@ -63,20 +57,17 @@ PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(StrongGameAc
 	return collisionEvent;
 }
 
-void PhysicsManager::resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, const PhysicsManager::CollisionEvent& collisionEvent)
+void PhysicsManager::resolvePenetration(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent, const PhysicsManager::CollisionEvent& collisionEvent)
 {
-    auto actorTransformComponent = actor->GetTransformComponent();
-    auto innerActorTransformComponent = innerActor->GetTransformComponent();
-
     auto moveDist = abs(collisionEvent.penetrationDepth) / 2;
 
     actorTransformComponent->SetPosition(actorTransformComponent->GetPosition() + collisionEvent.normal * moveDist);
     innerActorTransformComponent->SetPosition(innerActorTransformComponent->GetPosition() - collisionEvent.normal * moveDist);
 }
 
-void PhysicsManager::resolveCollision(StrongPhysicsComponentPtr actorPhysicsComp, StrongPhysicsComponentPtr innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent)
+void PhysicsManager::resolveCollision(PhysicsComponent& actorPhysicsComp, PhysicsComponent& innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent)
 {
-    auto relativeVelocity = innerActorPhysicsComp->GetVelocity() - actorPhysicsComp->GetVelocity();
+    auto relativeVelocity = innerActorPhysicsComp.GetVelocity() - actorPhysicsComp.GetVelocity();
 
     auto velAlongNormal = relativeVelocity.Dot(collisionEvent.normal);
 
@@ -85,14 +76,14 @@ void PhysicsManager::resolveCollision(StrongPhysicsComponentPtr actorPhysicsComp
  //       return;
 
     // Calculate restitution
-    float e = std::min(actorPhysicsComp->GetRestitution(), innerActorPhysicsComp->GetRestitution());
+    float e = std::min(actorPhysicsComp.GetRestitution(), innerActorPhysicsComp.GetRestitution());
 
     // Calculate impulse scalar
     float j = -(1 + e) * velAlongNormal;
-    j /= 1 / actorPhysicsComp->GetMass() + 1 / innerActorPhysicsComp->GetMass();
+    j /= 1 / actorPhysicsComp.GetMass() + 1 / innerActorPhysicsComp.GetMass();
 
     // Apply impulse
     auto impulse = j * collisionEvent.normal;
-    actorPhysicsComp->AddForce(-impulse);
-    innerActorPhysicsComp->AddForce(impulse);
+    actorPhysicsComp.AddForce(-impulse);
+    innerActorPhysicsComp.AddForce(impulse);
 }

@@ -7,12 +7,11 @@ class GameStateComponent :
 	public ActorComponent
 {
 public:
-	GameStateComponent(std::string actorName, EGameRole role);
+	GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role);
 	virtual ~GameStateComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
 
-	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
 	EGameRole GetRole() { return m_curRole; }

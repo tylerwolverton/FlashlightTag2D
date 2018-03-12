@@ -8,8 +8,8 @@ class BaseLogicComponent :
 	public ActorComponent
 {
 public:
-	BaseLogicComponent(std::shared_ptr<TransformComponent> transformComponent);
-	BaseLogicComponent(std::shared_ptr<PhysicsComponent> physicsComponent);
+	BaseLogicComponent(ComponentId componentId, std::shared_ptr<TransformComponent> transformComponent);
+	BaseLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent);
 	virtual ~BaseLogicComponent();
 
 	virtual void MoveUp();
@@ -19,7 +19,6 @@ public:
 
 	virtual void Update(GameActor& actor, float deltaMs) {}
 
-	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
 private:

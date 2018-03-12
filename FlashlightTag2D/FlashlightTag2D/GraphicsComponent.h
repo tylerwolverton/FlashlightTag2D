@@ -13,12 +13,11 @@ class GraphicsComponent :
 	public ActorComponent
 {
 public:
-	GraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
+	GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
 	virtual ~GraphicsComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
 
-	virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
     StrongTexture2DPtr GetTexture() { return m_texture; };

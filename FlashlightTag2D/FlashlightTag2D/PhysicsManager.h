@@ -2,6 +2,7 @@
 #include "Types.h"
 #include "PhysicsComponent.h"
 #include "Vector2D.h"
+#include <vector>
 
 class TransformComponent;
 
@@ -13,6 +14,8 @@ public:
 
 	void Update(StrongGameActorPtrList gameActors, float deltaTime);
 	void ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime);
+
+    void AddPhysicsComponent(PhysicsComponent comp);
 
 private:
     struct CollisionEvent
@@ -27,8 +30,10 @@ private:
         }
     };
 
-    CollisionEvent checkCircleCollision(StrongGameActorPtr actor, StrongGameActorPtr innerActor);
-	void resolvePenetration(StrongGameActorPtr actor, StrongGameActorPtr innerActor, const CollisionEvent& collisionEvent);
-    void resolveCollision(StrongPhysicsComponentPtr actorPhysicsComp, StrongPhysicsComponentPtr innerActorPhysicsComp, const CollisionEvent& collisionEvent);
+    CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
+	void resolvePenetration(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent, const PhysicsManager::CollisionEvent& collisionEvent);
+    void resolveCollision(PhysicsComponent& actorPhysicsComp, PhysicsComponent& innerActorPhysicsComp, const CollisionEvent& collisionEvent);
+    
+    std::vector<PhysicsComponent> m_physicsComponentVec;
 };
 

@@ -10,8 +10,9 @@
 #include "GameStateComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ComponentList components)
-	: m_components(components)
+GameActor::GameActor(ActorId actorId, ComponentList components)
+	: m_actorId(actorId),
+      m_components(components)
 {
 	m_pCommands = std::make_shared<CommandList>();
 }

@@ -1,7 +1,8 @@
 #include "InputComponent.h"
 #include "Command.h"
 
-InputComponent::InputComponent()
+InputComponent::InputComponent(ComponentId componentId)
+    : ActorComponent(componentId)
 {
 	// TODO: If same button could be used for multiple things (a powerup changes an action for example)
 	//       an update method should be added to change command on button.
@@ -42,11 +43,6 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	}
 
 	actor.SetCommands(std::make_shared<CommandList>(commandList));
-}
-
-ComponentId InputComponent::GetComponentId() const
-{
-	return ComponentId();
 }
 
 EComponentNames InputComponent::GetComponentName() const

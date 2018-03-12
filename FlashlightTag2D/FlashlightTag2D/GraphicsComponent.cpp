@@ -6,8 +6,9 @@
 
 #include <memory>
 
-GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
-	: m_animationTimer(animationTimer),
+GraphicsComponent::GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
+	: ActorComponent(componentId),
+      m_animationTimer(animationTimer),
 	  m_curAnimationTime(animationTimer),
 	  m_pTransformComponent(transformComponent),
 	  m_imageOffset(transformComponent->GetSize() / 2),
@@ -20,11 +21,6 @@ GraphicsComponent::GraphicsComponent(std::string texturePath, int animationTimer
 
 GraphicsComponent::~GraphicsComponent()
 {
-}
-
-ComponentId GraphicsComponent::GetComponentId() const
-{
-	return ComponentId();
 }
 
 EComponentNames GraphicsComponent::GetComponentName() const

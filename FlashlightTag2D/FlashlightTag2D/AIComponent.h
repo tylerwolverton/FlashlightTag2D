@@ -7,12 +7,11 @@ class AIComponent :
 	public ActorComponent
 {
 public:
-	AIComponent();
+	AIComponent(ComponentId componentId);
 	virtual ~AIComponent();
 
 	void Update(GameActor& actor, float deltaMs) override;
 
-	ComponentId GetComponentId() const;
 	virtual EComponentNames GetComponentName() const override;
 };
 

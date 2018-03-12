@@ -6,11 +6,11 @@ class TransformComponent :
 	public ActorComponent
 {
 public:
-	TransformComponent(Vector2D<float> position, float radius, Vector2D<float> direction);
-	TransformComponent(Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction);
+	TransformComponent(ComponentId componentId, Vector2D<float> position, float radius, Vector2D<float> direction);
+	TransformComponent(ComponentId componentId, Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction);
 	virtual ~TransformComponent();
 
-	virtual ComponentId GetComponentId() const override;
+	//virtual ComponentId GetComponentId() const override;
 	virtual EComponentNames GetComponentName() const override;
 
 	Vector2D<float> GetPosition() { return m_position; }
