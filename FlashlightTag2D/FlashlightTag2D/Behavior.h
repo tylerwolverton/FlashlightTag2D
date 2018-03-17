@@ -7,6 +7,6 @@ public:
 	Behavior();
 	virtual ~Behavior();
 
-	virtual CommandList Update(GameActor& actor) { return CommandList(); };
+	virtual CommandList Update(const GameActor& actor) { return CommandList(); };
 };
 

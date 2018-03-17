@@ -12,7 +12,7 @@ public:
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
 
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
 	EGameRole GetRole() { return m_curRole; }
 	void SetRole(EGameRole role) { m_curRole = role; }

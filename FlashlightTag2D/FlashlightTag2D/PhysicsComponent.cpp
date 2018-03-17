@@ -113,7 +113,7 @@ void PhysicsComponent::AddVelocity(Vector2D<float> velocity)
     }
 }
 
-EComponentNames PhysicsComponent::GetComponentName() const
+const EComponentNames PhysicsComponent::GetComponentName() const
 {
     return EComponentNames::PhysicsComponentEnum;
 }

@@ -11,7 +11,7 @@ public:
 	virtual ~TransformComponent();
 
 	//virtual ComponentId GetComponentId() const override;
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
 	Vector2D<float> GetPosition() { return m_position; }
 	void SetPosition(Vector2D<float> position) { m_position = position; }

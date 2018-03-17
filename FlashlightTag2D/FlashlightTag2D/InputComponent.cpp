@@ -45,7 +45,7 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	actor.SetCommands(std::make_shared<CommandList>(commandList));
 }
 
-EComponentNames InputComponent::GetComponentName() const
+const EComponentNames InputComponent::GetComponentName() const
 {
 	return EComponentNames::InputComponentEnum;
 }

@@ -12,8 +12,8 @@ public:
 	PhysicsManager();
 	~PhysicsManager();
 
-	void Update(StrongGameActorPtrList gameActors, float deltaTime);
-	void ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime);
+	void Update(float deltaTime);
+	void ResolveCollisions(float deltaTime);
 
     void AddPhysicsComponent(PhysicsComponent comp);
 

@@ -9,7 +9,7 @@ public:
 	SeekBehavior();
 	virtual ~SeekBehavior();
 
-	virtual CommandList Update(GameActor& thisActor) override;
+	virtual CommandList Update(const GameActor& thisActor) override;
 
 private:
     CommandList moveTowardsTarget(StrongTransformComponentPtr thisActorTransformComponent,

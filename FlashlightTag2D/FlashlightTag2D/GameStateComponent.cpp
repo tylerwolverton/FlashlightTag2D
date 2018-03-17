@@ -45,7 +45,7 @@ void GameStateComponent::updateBehavior()
 	}
 }
 
-EComponentNames GameStateComponent::GetComponentName() const
+const EComponentNames GameStateComponent::GetComponentName() const
 {
 	return EComponentNames::GameStateComponentEnum;
 }

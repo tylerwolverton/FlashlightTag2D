@@ -40,7 +40,7 @@ void AIComponent::Update(GameActor& actor, float deltaMs)
 	}
 }
 
-EComponentNames AIComponent::GetComponentName() const
+const EComponentNames AIComponent::GetComponentName() const
 {
 	return EComponentNames::AIComponentEnum;
 }

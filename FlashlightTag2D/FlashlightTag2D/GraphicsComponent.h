@@ -18,7 +18,7 @@ public:
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
 
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
     StrongTexture2DPtr GetTexture() { return m_texture; };
     StrongTransformComponentPtr GetTransformComponent() { return m_pTransformComponent; };

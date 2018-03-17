@@ -6,6 +6,6 @@ public:
 	InputManager();
 	~InputManager();
 
-	uint32_t ReadInput();
+	uint32_t ReadInput() const;
 };
 

@@ -11,7 +11,7 @@ public:
 
 	void Update(GameActor& actor, float deltaMs) override;
 
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
 private:
 	std::shared_ptr<Command> m_pButtonEsc;

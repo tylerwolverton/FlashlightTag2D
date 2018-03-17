@@ -15,7 +15,7 @@ public:
 	virtual void Update(GameActor& actor, float deltaMs) {}
 
     const ComponentId GetComponentId() const { return m_componentId; }
-	virtual EComponentNames GetComponentName() const = 0;
+	virtual const EComponentNames GetComponentName() const = 0;
     
 protected:
 	StrongActorPtr m_pOwner;

@@ -62,7 +62,7 @@ void World::RunGame()
 				entity->Update(dt, input); // Should this be in this sub loop?
 			}
 
-            m_pPhysicsManager->Update(m_pActorFactory->GetActorList(), dt);
+            m_pPhysicsManager->Update(dt);
 
 			timeAccumulatedMs -= timeStepMs;
 		}
@@ -71,7 +71,7 @@ void World::RunGame()
 	}
 }
 
-void World::ChangeLevel(std::string levelPath)
+void World::ChangeLevel(const std::string& levelPath)
 {
     FILE* fp;
     fopen_s(&fp, levelPath.c_str(), "rb");

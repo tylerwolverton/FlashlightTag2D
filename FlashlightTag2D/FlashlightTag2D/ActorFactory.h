@@ -13,7 +13,7 @@ public:
 
     // Move to graphics manager
     StrongGameActorPtr CreateCamera();
-    StrongGameActorPtr CreateCamera(StrongGameActorPtr target);
+    StrongGameActorPtr CreateCamera(const StrongGameActorPtr& target);
 
 private:
 	ActorId m_lastActorId;

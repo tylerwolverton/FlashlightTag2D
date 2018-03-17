@@ -34,6 +34,10 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		{
 			components.push_back(std::make_shared<InputComponent>(getNextComponentId()));
 		}
+        if (actorList[i].HasMember("ai_component"))
+        {
+            components.push_back(std::make_shared<AIComponent>(getNextComponentId()));
+        }
 		if(actorList[i].HasMember("transform_component"))
 		{ 
 			//rapidjson::Value actorTransform = actorList[i]["transform_component"];
@@ -44,8 +48,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 																						 actorList[i]["transform_component"]["size"]["y"].GetFloat()),
 																		 Vector2D<float>(1, 0));
 			components.push_back(transformCompPtr);
-		
-			
+					
 			if (actorList[i].HasMember("physics_component"))
 			{
                 auto physicsComp = PlayerPhysicsComponent(getNextComponentId(),
@@ -80,7 +83,14 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-			components.push_back(std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider));
+            EGameRole role = EGameRole::Hider;
+
+            if (!strcmp(actorName, "Player"))
+            {
+                role = EGameRole::Seeker;
+            }
+
+			components.push_back(std::make_shared<GameStateComponent>(getNextComponentId(), actorName, role));
 		}
 
 		//if (actorList[i].HasMember("follow_target_ai_component"))
@@ -122,7 +132,7 @@ StrongGameActorPtr ActorFactory::CreateCamera()
     return CreateCamera(m_pCurrentPlayer);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(StrongGameActorPtr target)
+StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target)
 {
 	ComponentList components = ComponentList();
 	components.push_back(std::make_shared<TransformComponent>(getNextComponentId(), Vector2D<float>(0.0f, 0.0f), Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT), Vector2D<float>(0, 0)));

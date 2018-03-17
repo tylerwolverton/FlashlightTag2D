@@ -19,7 +19,7 @@ public:
 
 	virtual void Update(GameActor& actor, float deltaMs) {}
 
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
 private:
 	std::shared_ptr<TransformComponent> m_pTransformComponent;

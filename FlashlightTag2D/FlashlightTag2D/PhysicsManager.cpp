@@ -12,12 +12,12 @@ PhysicsManager::~PhysicsManager()
 {
 }
 
-void PhysicsManager::Update(StrongGameActorPtrList gameActors, float deltaTime)
+void PhysicsManager::Update(float deltaTime)
 {
-	ResolveCollisions(gameActors, deltaTime);
+	ResolveCollisions(deltaTime);
 }
 
-void PhysicsManager::ResolveCollisions(StrongGameActorPtrList gameActors, float deltaTime)
+void PhysicsManager::ResolveCollisions(float deltaTime)
 {
 	for (auto actorPhysicsComponent : m_physicsComponentVec)
 	{

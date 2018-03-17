@@ -20,7 +20,7 @@ public:
 	virtual ~World();
 
 	void RunGame();
-    void ChangeLevel(std::string levelPath);
+    void ChangeLevel(const std::string& levelPath);
 
 private:
 	SDL_Window* m_window;

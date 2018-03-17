@@ -1,16 +1,13 @@
-﻿  World.cpp
-  TransformComponent.cpp
-  Texture2D.cpp
-  stb_image.cpp
-  ServiceLocator.cpp
+﻿  ActorFactory.cpp
+  Generating Code...
+  Compiling...
+  InputComponent.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  World.cpp
   SeekBehavior.cpp
   PlayerPhysicsComponent.cpp
-  PlayerLogicComponent.cpp
   PhysicsManager.cpp
-  PhysicsComponent.cpp
-  main.cpp
-  InputManager.cpp
-  InputComponent.cpp
   HideBehavior.cpp
   GraphicsManager.cpp
   GraphicsComponent.cpp
@@ -18,12 +15,6 @@
   GameActor.cpp
   FollowTargetAIComponent.cpp
   Behavior.cpp
-  Generating Code...
-  Compiling...
-  BaseLogicComponent.cpp
   AIComponent.cpp
-  ActorFactory.cpp
-  Actor.cpp
-  Generating Code...
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

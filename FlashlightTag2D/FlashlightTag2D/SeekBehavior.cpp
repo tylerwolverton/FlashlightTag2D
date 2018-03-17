@@ -19,7 +19,7 @@ SeekBehavior::~SeekBehavior()
 {
 }
 
-CommandList SeekBehavior::Update(GameActor& thisActor)
+CommandList SeekBehavior::Update(const GameActor& thisActor)
 {
     // Use the current light cone and sound in surrounding area to see if any actors are close, then if a hider is seen, enter the chase state
     // If already chasing and the hider is lost for long enough, enter the search state

@@ -18,7 +18,7 @@ BaseLogicComponent::~BaseLogicComponent()
 {
 }
 
-EComponentNames BaseLogicComponent::GetComponentName() const
+const EComponentNames BaseLogicComponent::GetComponentName() const
 {
 	return EComponentNames::BaseLogicComponentEnum;
 }

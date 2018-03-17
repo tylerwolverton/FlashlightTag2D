@@ -27,6 +27,7 @@
 		},
 		{ 
 			"name": "Enemy", 
+			"ai_component":{},
 			"transform_component":{
 				"position":{"x":300, "y":300},
 				"size":{"x":100, "y":100}
@@ -45,6 +46,7 @@
 		},
 		{ 
 			"name": "Enemy", 
+			"ai_component":{},
 			"transform_component":{
 				"position":{"x":800, "y":600},
 				"size":{"x":100, "y":100}

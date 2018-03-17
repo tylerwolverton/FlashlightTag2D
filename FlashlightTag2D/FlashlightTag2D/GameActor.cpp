@@ -29,18 +29,18 @@ void GameActor::Update(float deltaMs, uint32_t input)
 	{
 		comp->Update(*this, deltaMs);
 
-		for (auto command : *GetCommands())
+		for (auto command : *m_pCommands)
 		{
 			if (command)
 			{
 				command->Execute(*this);
 			}
 		}
-		GetCommands()->clear();
+        m_pCommands->clear();
 	}
 }
 
-StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentName)
+StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentName) const
 {
 	for (auto component : m_components)
 	{
@@ -53,7 +53,7 @@ StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentN
 	return nullptr;
 }
 
-StrongAIComponentPtr GameActor::GetAIComponent()
+StrongAIComponentPtr GameActor::GetAIComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::AIComponentEnum);
 	if (component == nullptr)
@@ -64,7 +64,7 @@ StrongAIComponentPtr GameActor::GetAIComponent()
 	return std::dynamic_pointer_cast<AIComponent>(component);
 }
 
-StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent()
+StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::BaseLogicComponentEnum);
 	if (component == nullptr)
@@ -75,7 +75,7 @@ StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent()
 	return std::dynamic_pointer_cast<BaseLogicComponent>(component);
 }
 
-StrongFollowTargetAIComponentPtr GameActor::GetFollowTargetAIComponent()
+StrongFollowTargetAIComponentPtr GameActor::GetFollowTargetAIComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::FollowTargetAIComponentEnum);
 	if (component == nullptr)
@@ -86,7 +86,7 @@ StrongFollowTargetAIComponentPtr GameActor::GetFollowTargetAIComponent()
 	return std::dynamic_pointer_cast<FollowTargetAIComponent>(component);
 }
 
-StrongGraphicsComponentPtr GameActor::GetGraphicsComponent()
+StrongGraphicsComponentPtr GameActor::GetGraphicsComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::GraphicsComponentEnum);
 	if (component == nullptr)
@@ -97,7 +97,7 @@ StrongGraphicsComponentPtr GameActor::GetGraphicsComponent()
 	return std::dynamic_pointer_cast<GraphicsComponent>(component);
 }
 
-StrongInputComponentPtr GameActor::GetInputComponent()
+StrongInputComponentPtr GameActor::GetInputComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::InputComponentEnum);
 	if (component == nullptr)
@@ -108,7 +108,7 @@ StrongInputComponentPtr GameActor::GetInputComponent()
 	return std::dynamic_pointer_cast<InputComponent>(component);
 }
 
-StrongPhysicsComponentPtr GameActor::GetPhysicsComponent()
+StrongPhysicsComponentPtr GameActor::GetPhysicsComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::PhysicsComponentEnum);
 	if (component == nullptr)
@@ -119,7 +119,7 @@ StrongPhysicsComponentPtr GameActor::GetPhysicsComponent()
 	return std::dynamic_pointer_cast<PhysicsComponent>(component);
 }
 
-StrongTransformComponentPtr GameActor::GetTransformComponent()
+StrongTransformComponentPtr GameActor::GetTransformComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::TransformComponentEnum);
 	if (component == nullptr)
@@ -130,7 +130,7 @@ StrongTransformComponentPtr GameActor::GetTransformComponent()
 	return std::dynamic_pointer_cast<TransformComponent>(component);
 }
 
-StrongGameStateComponentPtr GameActor::GetGameStateComponent()
+StrongGameStateComponentPtr GameActor::GetGameStateComponent() const
 {
 	StrongActorComponentPtr component = getComponentByName(EComponentNames::GameStateComponentEnum);
 	if (component == nullptr)

@@ -20,7 +20,7 @@ public:
 	void Update(GameActor& actor, float deltaMs) override;
 	virtual void SignalCollision(GameActor& actor) {};
 
-	virtual EComponentNames GetComponentName() const override;
+	virtual const EComponentNames GetComponentName() const override;
 
 	std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; }
 

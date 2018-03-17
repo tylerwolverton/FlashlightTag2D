@@ -23,7 +23,7 @@ GraphicsComponent::~GraphicsComponent()
 {
 }
 
-EComponentNames GraphicsComponent::GetComponentName() const
+const EComponentNames GraphicsComponent::GetComponentName() const
 {
 	return EComponentNames::GraphicsComponentEnum;
 }
