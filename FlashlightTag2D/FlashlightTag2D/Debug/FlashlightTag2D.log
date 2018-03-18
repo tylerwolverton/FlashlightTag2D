@@ -1,20 +1,4 @@
 ﻿  ActorFactory.cpp
-  Generating Code...
-  Compiling...
-  InputComponent.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  World.cpp
-  SeekBehavior.cpp
-  PlayerPhysicsComponent.cpp
-  PhysicsManager.cpp
-  HideBehavior.cpp
-  GraphicsManager.cpp
-  GraphicsComponent.cpp
-  GameStateComponent.cpp
-  GameActor.cpp
-  FollowTargetAIComponent.cpp
-  Behavior.cpp
-  AIComponent.cpp
-  FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
-  FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(140): warning C4018: '<': signed/unsigned mismatch
+  FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
+  FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

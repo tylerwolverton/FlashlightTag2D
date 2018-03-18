@@ -30,5 +30,7 @@ private:
     std::unique_ptr<PhysicsManager> m_pPhysicsManager;
     std::unique_ptr<GraphicsManager> m_pGraphicsManager;
     std::shared_ptr<ActorFactory> m_pActorFactory;
+
+	void changeGameMode();
 };
 

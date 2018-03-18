@@ -32,7 +32,7 @@ void FollowTargetAIComponent::Update(GameActor& actor, float deltaMs)
     actorTransformComponent->SetPosition(Vector2D<float>(targetTransformComponent->GetPosition().x - World::SCREEN_WIDTH / 2, targetTransformComponent->GetPosition().y - World::SCREEN_HEIGHT / 2));
 }
 
-EComponentNames FollowTargetAIComponent::GetComponentName() const
+const EComponentNames FollowTargetAIComponent::GetComponentName() const
 {
 	return EComponentNames::FollowTargetAIComponentEnum;
 }

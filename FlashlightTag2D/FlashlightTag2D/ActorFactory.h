@@ -2,6 +2,7 @@
 #include "document.h"
 
 #include "Types.h"
+#include <vector>
 
 class ActorFactory
 {
@@ -10,6 +11,7 @@ public:
 	
     void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr);
 	StrongGameActorPtrList GetActorList() { return m_pEntityList; }
+	void ChooseSeekers(int seekerCount);
 
     // Move to graphics manager
     StrongGameActorPtr CreateCamera();
@@ -21,6 +23,8 @@ private:
     ComponentId m_lastComponentId;
     ComponentId getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 	StrongGameActorPtrList m_pEntityList;
+
+	std::vector<StrongGameStateComponentPtr> m_gameStateComponentVec;
 
     // Only needed for camera
     StrongGameActorPtr m_pCurrentPlayer;

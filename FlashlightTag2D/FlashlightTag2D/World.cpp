@@ -34,12 +34,13 @@ void World::RunGame()
 	bool isGameRunning = true;    
 
     ChangeLevel("resources/levels/level1.json");
+	changeGameMode();
 
     m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera());
 
 	auto timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
-	float timeCurrentMs = (float)SDL_GetTicks();;
+	float timeCurrentMs = (float)SDL_GetTicks();
 	float timeAccumulatedMs = 0;
 	while (isGameRunning)
 	{
@@ -87,10 +88,12 @@ void World::ChangeLevel(const std::string& levelPath)
     // set level height and width
     m_levelSize = Vector2D<int>(d["level"]["size"]["x"].GetInt(), d["level"]["size"]["y"].GetInt());
 
-    // set graphicsManager::backgroundSprite somehow
     m_pGraphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
 
-    // loop through actors and call their factory methods 
-    // (probably add a generic add actor method to the actor factory that can query for the actor name)
     m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager);
+}
+
+void World::changeGameMode()
+{
+	m_pActorFactory->ChooseSeekers(1);
 }

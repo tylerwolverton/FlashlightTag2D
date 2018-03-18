@@ -15,7 +15,7 @@ public:
 	virtual const EComponentNames GetComponentName() const override;
 
 	EGameRole GetRole() { return m_curRole; }
-	void SetRole(EGameRole role) { m_curRole = role; }
+	void SetRole(EGameRole role) { m_curRole = role; updateBehavior(); }
 
     const std::string GetName() const { return m_actorName; }
 

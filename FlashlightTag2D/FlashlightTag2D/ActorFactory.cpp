@@ -17,6 +17,9 @@
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
 
+#include <random>
+#include <algorithm>
+
 ActorFactory::ActorFactory()
     : m_lastActorId(0)
 {
@@ -83,14 +86,12 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-            EGameRole role = EGameRole::Hider;
+			StrongGameStateComponentPtr gameStateComp = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider);
 
-            if (!strcmp(actorName, "Player"))
-            {
-                role = EGameRole::Seeker;
-            }
+			//m_gameStateComponentVec.emplace_back(getNextComponentId(), actorName, EGameRole::Hider);
+			m_gameStateComponentVec.push_back(gameStateComp);
 
-			components.push_back(std::make_shared<GameStateComponent>(getNextComponentId(), actorName, role));
+			components.push_back(gameStateComp);
 		}
 
 		//if (actorList[i].HasMember("follow_target_ai_component"))
@@ -125,6 +126,21 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
             m_pCurrentPlayer = newActor;
         }
     }
+}
+
+void ActorFactory::ChooseSeekers(int seekerCount)
+{
+	//auto shuffledVector = std::vector<GameStateComponent>(m_gameStateComponentVec);
+
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
+
+	for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
+	{
+		m_gameStateComponentVec[i]->SetRole(EGameRole::Seeker);
+	}
 }
 
 StrongGameActorPtr ActorFactory::CreateCamera()
