@@ -2,112 +2,66 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Types.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameTypes.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\AIComponent.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\AIComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\main.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Behavior.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Behavior.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\World.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameActor.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ActorFactory.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Command.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputManager.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputManager.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Types.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BaseLogicComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BaseLogicComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BaseLogicComponent.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BaseLogicComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Command.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\TransformComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\TransformComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsComponent.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ServiceLocator.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ServiceLocator.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsManager.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsManager.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputManager.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\InputManager.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PlayerPhysicsComponent.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsComponent.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GraphicsManager.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BasicShader.frag</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\BasicShader.vert</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Shader.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\AIComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\AIComponent.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\SeekBehavior.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\HideBehavior.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\GameStateComponent.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ServiceLocator.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\ServiceLocator.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Vector2D.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Texture2D.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Texture2D.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Matrix4.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Behavior.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Behavior.h</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsManager.cpp</string>
+      <string>C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\PhysicsManager.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

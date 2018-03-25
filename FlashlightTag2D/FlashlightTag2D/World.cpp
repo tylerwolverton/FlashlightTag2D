@@ -17,12 +17,15 @@
 
 World::World(SDL_Window* window)
 	: m_window(window),
-      m_pInputManager(std::make_unique<InputManager>()),
-      m_pPhysicsManager(std::make_unique<PhysicsManager>()),
-      m_pGraphicsManager(std::make_unique<GraphicsManager>(m_window)),
+      m_pInputManager(std::make_shared<InputManager>()),
+      m_pPhysicsManager(std::make_shared<PhysicsManager>()),
+      m_pGraphicsManager(std::make_shared<GraphicsManager>(m_window)),
       m_pActorFactory(std::make_shared<ActorFactory>())
 {
     ServiceLocator::Provide(m_pActorFactory);
+	ServiceLocator::Provide(m_pInputManager);
+	ServiceLocator::Provide(m_pPhysicsManager);
+	ServiceLocator::Provide(m_pGraphicsManager);
 }
 
 World::~World()
@@ -64,6 +67,7 @@ void World::RunGame()
 			}
 
             m_pPhysicsManager->Update(dt);
+			m_pGraphicsManager->UpdateComponents();
 
 			timeAccumulatedMs -= timeStepMs;
 		}

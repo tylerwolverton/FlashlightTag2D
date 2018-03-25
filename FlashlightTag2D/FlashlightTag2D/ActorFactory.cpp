@@ -27,15 +27,22 @@ ActorFactory::ActorFactory()
 
 void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr)
 {
+	m_lastActorId = 0;
+	m_entityVec.clear();
+
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
     {
         auto actorName = actorList[i]["name"].GetString();
+		ActorId actorId = getNextActorId();
+		m_entityVec.emplace_back(actorId);
 
         ComponentList components = ComponentList();
 		if (actorList[i].HasMember("input_component"))
 		{
 			components.push_back(std::make_shared<InputComponent>(getNextComponentId()));
+
+			//m_entityVec[actorId].m_componentIndexVec[EComponentTypes::Input] = ;
 		}
         if (actorList[i].HasMember("ai_component"))
         {
@@ -74,14 +81,19 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 			
 			if (actorList[i].HasMember("graphics_component"))
 			{
-                auto graphicsComp = GraphicsComponent(getNextComponentId(),
+                /*auto graphicsComp = GraphicsComponent(getNextComponentId(),
                                                       actorList[i]["graphics_component"]["sprite"].GetString(),
                                                       actorList[i]["graphics_component"]["animation_speed"].GetInt(),
                                                       transformCompPtr);
 
-                graphicsMgr.AddGraphicsComponent(graphicsComp);
+                graphicsMgr.AddGraphicsComponent(graphicsComp);*/
+				
+				m_entityVec.back().m_componentIndexVec[EComponentTypes::Graphics] = 
+									graphicsMgr.AddGraphicsComponent(actorList[i]["graphics_component"]["sprite"].GetString(),
+									actorList[i]["graphics_component"]["animation_speed"].GetInt(),
+									transformCompPtr);
 
-				components.push_back(std::make_shared<GraphicsComponent>(graphicsComp));
+				//components.push_back(std::make_shared<GraphicsComponent>(graphicsComp));
 			}
 		}
 		if (actorList[i].HasMember("game_state_component"))

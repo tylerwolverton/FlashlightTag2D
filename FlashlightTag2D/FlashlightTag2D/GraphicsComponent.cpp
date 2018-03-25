@@ -48,6 +48,26 @@ void GraphicsComponent::Update(GameActor& actor, float deltaMs)
 	}
 }
 
+void GraphicsComponent::Update()
+{
+	if (m_curAnimationTime < 0)
+	{
+		m_curAnimationTime = m_animationTimer;
+
+		m_texturePos.x = (float)((int)(m_texturePos.x + m_pTransformComponent->GetSize().x) % m_texture->GetWidth());
+
+		// Move to next row of sprite sheet
+		if (m_texturePos.x == 0)
+		{
+			m_texturePos.y = (float)((int)(m_texturePos.y - m_pTransformComponent->GetSize().y) % m_texture->GetHeight());
+		}
+	}
+	else
+	{
+		m_curAnimationTime--;
+	}
+}
+
 // Get the size of the texture and normalize to value between 0 and 1
 Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
 {

@@ -26,9 +26,9 @@ private:
 	SDL_Window* m_window;
     Vector2D<int> m_levelSize;
 
-    std::unique_ptr<InputManager> m_pInputManager;
-    std::unique_ptr<PhysicsManager> m_pPhysicsManager;
-    std::unique_ptr<GraphicsManager> m_pGraphicsManager;
+    std::shared_ptr<InputManager> m_pInputManager;
+    std::shared_ptr<PhysicsManager> m_pPhysicsManager;
+    std::shared_ptr<GraphicsManager> m_pGraphicsManager;
     std::shared_ptr<ActorFactory> m_pActorFactory;
 
 	void changeGameMode();

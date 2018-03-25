@@ -17,6 +17,7 @@ public:
 	virtual ~GraphicsComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
+	virtual void Update();
 
 	virtual const EComponentNames GetComponentName() const override;
 

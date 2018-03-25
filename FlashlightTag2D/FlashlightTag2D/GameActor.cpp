@@ -12,9 +12,20 @@
 
 GameActor::GameActor(ActorId actorId, ComponentList components)
 	: m_actorId(actorId),
-      m_components(components)
+	m_components(components)
 {
 	m_pCommands = std::make_shared<CommandList>();
+}
+
+GameActor::GameActor(ActorId actorId)
+	: m_actorId(actorId)
+{
+	m_pCommands = std::make_shared<CommandList>();
+
+	for (int i = 0; i < ComponentTypeCount; i++)
+	{
+		m_componentIndexVec.push_back(-1);
+	}
 }
 
 GameActor::~GameActor()

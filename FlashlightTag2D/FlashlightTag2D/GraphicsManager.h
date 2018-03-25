@@ -22,7 +22,11 @@ public:
     void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
 
     void AddGraphicsComponent(GraphicsComponent comp);
+	int AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
+
+	GraphicsComponent* GetComponentById(int id);
     //void RemoveGraphicsComponent();
+	void UpdateComponents();
 
     void AddCamera(StrongGameActorPtr camera);
 
@@ -47,5 +51,8 @@ private:
 
     StrongGameActorPtrList m_pCameraList;
     StrongGameActorPtr m_pCurrentCamera;
+
+	int m_lastComponentId;
+	int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 };
 

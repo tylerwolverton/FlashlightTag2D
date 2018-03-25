@@ -7,7 +7,8 @@
 #include "Vector2D.h"
 
 GraphicsManager::GraphicsManager(SDL_Window* window)
-	: m_window(window)
+	: m_window(window),
+	  m_lastComponentId(0)
 {
 	setOpenGLAttributes();
 
@@ -49,6 +50,18 @@ void GraphicsManager::AddGraphicsComponent(GraphicsComponent comp)
 { 
     m_graphicsComponentVec.push_back(comp); 
 };
+
+int GraphicsManager::AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
+{
+	int compId = getNextComponentId();
+	m_graphicsComponentVec.emplace_back(compId, texturePath, animationTimer, transformComponent);
+	return compId;
+}
+
+GraphicsComponent* GraphicsManager::GetComponentById(int id)
+{
+	return &m_graphicsComponentVec[id];
+}
 
 bool GraphicsManager::setOpenGLAttributes()
 {
@@ -96,6 +109,14 @@ bool GraphicsManager::initializeRenderData()
 	glBindVertexArray(0);
 
 	return true;
+}
+
+void GraphicsManager::UpdateComponents()
+{
+	for (auto comp : m_graphicsComponentVec)
+	{
+		comp.Update();
+	}
 }
 
 void GraphicsManager::AddCamera(StrongGameActorPtr camera)

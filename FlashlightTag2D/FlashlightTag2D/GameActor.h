@@ -1,6 +1,8 @@
 #pragma once
 #include "Types.h"
 
+#include <vector>
+
 class AIComponent;
 class BaseLogicComponent;
 class FollowTargetAIComponent;
@@ -13,8 +15,11 @@ class GameStateComponent;
 
 class GameActor 
 {
+	friend class ActorFactory;
+
 public:
     GameActor(ActorId actorId, ComponentList components);
+	GameActor(ActorId actorId);
     virtual ~GameActor();
 
     virtual void Update(float delatMs, uint32_t input = 0);
@@ -43,5 +48,6 @@ private:
     uint32_t m_input;
     CommandListPtr m_pCommands;
     ActorId m_actorId;
+	std::vector<int> m_componentIndexVec;
 };
 

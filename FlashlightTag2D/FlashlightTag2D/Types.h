@@ -57,6 +57,19 @@ typedef std::list<std::shared_ptr<Command>> CommandList;
 typedef std::shared_ptr<CommandList> CommandListPtr;
 typedef std::list<StrongActorComponentPtr> ComponentList;
 
+static const int ComponentTypeCount = 7;
+
+enum EComponentTypes
+{
+	AI,
+	BaseLogic,
+	Graphics,
+	Input,
+	Physics,
+	Transform,
+	GameState
+};
+
 enum EComponentNames
 {
 	NoneComponentEnum,
