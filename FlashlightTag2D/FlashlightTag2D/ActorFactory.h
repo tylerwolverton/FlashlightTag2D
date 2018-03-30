@@ -23,7 +23,9 @@ private:
     ComponentId m_lastComponentId;
     ComponentId getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 	StrongGameActorPtrList m_pEntityList;
-	std::vector<GameActor> m_entityVec;
+	
+    // TODO: Cache changes
+    //std::vector<GameActor> m_entityVec;
 
 	std::vector<StrongGameStateComponentPtr> m_gameStateComponentVec;
 

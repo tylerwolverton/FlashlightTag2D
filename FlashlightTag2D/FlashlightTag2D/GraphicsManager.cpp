@@ -46,22 +46,23 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
-void GraphicsManager::AddGraphicsComponent(GraphicsComponent comp) 
-{ 
-    m_graphicsComponentVec.push_back(comp); 
+void GraphicsManager::AddGraphicsComponentPtr(StrongGraphicsComponentPtr comp)
+{
+    m_graphicsComponentPtrVec.push_back(comp);
 };
 
-int GraphicsManager::AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
-{
-	int compId = getNextComponentId();
-	m_graphicsComponentVec.emplace_back(compId, texturePath, animationTimer, transformComponent);
-	return compId;
-}
-
-GraphicsComponent* GraphicsManager::GetComponentById(int id)
-{
-	return &m_graphicsComponentVec[id];
-}
+// TODO: Cache changes
+//void GraphicsManager::AddGraphicsComponent(GraphicsComponent comp) 
+//{ 
+//    m_graphicsComponentVec.push_back(comp); 
+//};
+//
+//int GraphicsManager::AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
+//{
+//	int compId = getNextComponentId();
+//	m_graphicsComponentVec.emplace_back(compId, texturePath, animationTimer, transformComponent);
+//	return compId;
+//}
 
 bool GraphicsManager::setOpenGLAttributes()
 {
@@ -111,13 +112,13 @@ bool GraphicsManager::initializeRenderData()
 	return true;
 }
 
-void GraphicsManager::UpdateComponents()
-{
-	for (auto comp : m_graphicsComponentVec)
-	{
-		comp.Update();
-	}
-}
+//void GraphicsManager::UpdateComponents()
+//{
+//	for (auto& comp : m_graphicsComponentVec)
+//	{
+//		comp->Update();
+//	}
+//}
 
 void GraphicsManager::AddCamera(StrongGameActorPtr camera)
 {
@@ -146,13 +147,13 @@ void GraphicsManager::Render()
     std::vector<GLfloat> lightVec;
     std::vector<GLfloat> lightDirVec;
     std::vector<GLfloat> lightPosVec;
-    for (auto graphicsComponent : m_graphicsComponentVec)
+    for (auto graphicsComponent : m_graphicsComponentPtrVec)
     {
-        auto actorTransformComponent = *(graphicsComponent.GetTransformComponent());
+        auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
 
         auto actorPos = actorTransformComponent.GetPosition();
         auto actorSize = actorTransformComponent.GetSize();
-        auto actorLocation = actorPos - cameraPos - graphicsComponent.GetImageOffset();
+        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
         
         lightVec.push_back(actorLocation.x); lightVec.push_back(actorLocation.y); lightVec.push_back(250.0f);
 
@@ -169,28 +170,28 @@ void GraphicsManager::Render()
 
     renderBackground(cameraPos);
 
-	for (auto graphicsComponent : m_graphicsComponentVec)
+	for (auto graphicsComponent : m_graphicsComponentPtrVec)
 	{
-        auto actorTransformComponent = *(graphicsComponent.GetTransformComponent());   
+        auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());   
 
         auto actorPos = actorTransformComponent.GetPosition();
 		auto actorSize = actorTransformComponent.GetSize();
 
 		// Prepare transformations
 		Matrix4<GLfloat> model;
-        auto actorLocation = actorPos - cameraPos - graphicsComponent.GetImageOffset();
+        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
 		model = model.Translate(actorLocation);
 
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 
 		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader.SetVec2("textureSize", graphicsComponent.GetTextureSize().GetPtrToFlattenedData().get());
-		m_shader.SetVec2("texturePos", graphicsComponent.GetTexturePos().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
+		m_shader.SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		graphicsComponent.GetTexture()->BindTexture();
+		graphicsComponent->GetTexture()->BindTexture();
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

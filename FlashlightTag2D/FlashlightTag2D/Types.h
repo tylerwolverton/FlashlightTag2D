@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include <map>
+#include <unordered_map>
 #include <list>
 
 class Actor;
@@ -82,6 +82,8 @@ enum EComponentNames
 	TransformComponentEnum,
 	GameStateComponentEnum
 };
+
+typedef std::unordered_map <EComponentNames, StrongActorComponentPtr> ComponentMap;
 
 enum EInputValues : uint32_t
 {

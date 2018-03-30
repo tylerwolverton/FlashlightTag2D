@@ -1,16 +1,15 @@
 #include "BaseLogicComponent.h"
-#include "TransformComponent.h"
 #include "PhysicsComponent.h"
-
-BaseLogicComponent::BaseLogicComponent(ComponentId componentId, std::shared_ptr<TransformComponent> transformComponent)
-	: ActorComponent(componentId),
-      m_pTransformComponent(transformComponent)
-{
-}
 
 BaseLogicComponent::BaseLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
 	: ActorComponent(componentId),
       m_pPhysicsComponent(physicsComponent)
+{
+}
+
+BaseLogicComponent::BaseLogicComponent(int actorId, ComponentId componentId)
+    : ActorComponent(componentId),
+      m_actorId(actorId)
 {
 }
 

@@ -14,6 +14,7 @@
 				"size":{"x":100, "y":100}
 			},
 			"physics_component":{	
+				"type": "player_physics_component",
 				"mass":1.0,
 				"max_speed":10.0,
 				"restitution":0.5
@@ -33,6 +34,7 @@
 				"size":{"x":100, "y":100}
 			},
 			"physics_component":{	
+				"type": "player_physics_component",
 				"mass":1.0,
 				"max_speed":10.0,
 				"restitution":0.5
@@ -52,6 +54,7 @@
 				"size":{"x":100, "y":100}
 			},
 			"physics_component":{
+				"type": "player_physics_component",
 				"mass":1.0,
 				"max_speed":10.0,
 				"restitution":0.5

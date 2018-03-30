@@ -67,7 +67,6 @@ void World::RunGame()
 			}
 
             m_pPhysicsManager->Update(dt);
-			m_pGraphicsManager->UpdateComponents();
 
 			timeAccumulatedMs -= timeStepMs;
 		}

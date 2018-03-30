@@ -10,22 +10,24 @@
 #include "GameStateComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ActorId actorId, ComponentList components)
-	: m_actorId(actorId),
-	m_components(components)
+GameActor::GameActor(ActorId actorId, ComponentMap components)
+    : m_actorId(actorId),
+    m_componentMap(components)
 {
-	m_pCommands = std::make_shared<CommandList>();
+    m_pCommands = std::make_shared<CommandList>();
 }
 
+// TODO: Cache changes
 GameActor::GameActor(ActorId actorId)
 	: m_actorId(actorId)
 {
 	m_pCommands = std::make_shared<CommandList>();
 
-	for (int i = 0; i < ComponentTypeCount; i++)
-	{
-		m_componentIndexVec.push_back(-1);
-	}
+    // TODO: Cache changes
+	//for (int i = 0; i < ComponentTypeCount; i++)
+	//{
+	//	m_componentIndexVec.push_back(-1);
+	//}
 }
 
 GameActor::~GameActor()
@@ -34,34 +36,44 @@ GameActor::~GameActor()
 
 void GameActor::Update(float deltaMs, uint32_t input)
 {
-	m_input = input;
+    m_input = input;
+    updateComponent(EComponentNames::InputComponentEnum, deltaMs);
+    updateComponent(EComponentNames::AIComponentEnum, deltaMs);
+    updateComponent(EComponentNames::FollowTargetAIComponentEnum, deltaMs);
 
-	for (auto comp : m_components)
-	{
-		comp->Update(*this, deltaMs);
+    for (auto command : *m_pCommands)
+    {
+        if (command)
+        {
+            command->Execute(*this);
+        }
+    }
+    m_pCommands->clear();
+    
+    updateComponent(EComponentNames::PhysicsComponentEnum, deltaMs);
+    updateComponent(EComponentNames::BaseLogicComponentEnum, deltaMs);
+    updateComponent(EComponentNames::GraphicsComponentEnum, deltaMs);
+    updateComponent(EComponentNames::GameStateComponentEnum, deltaMs);
+}
 
-		for (auto command : *m_pCommands)
-		{
-			if (command)
-			{
-				command->Execute(*this);
-			}
-		}
-        m_pCommands->clear();
-	}
+void GameActor::updateComponent(EComponentNames compName, float deltaMs)
+{
+    auto compIter = m_componentMap.find(compName);
+    if (compIter != m_componentMap.end())
+    {
+        compIter->second->Update(*this, deltaMs);
+    }
 }
 
 StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentName) const
 {
-	for (auto component : m_components)
-	{
-		if (component->GetComponentName() == componentName)
-		{
-			return component;
-		}
-	}
+    auto compIter = m_componentMap.find(componentName);
+    if (compIter != m_componentMap.end())
+    {
+        return compIter->second;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 StrongAIComponentPtr GameActor::GetAIComponent() const

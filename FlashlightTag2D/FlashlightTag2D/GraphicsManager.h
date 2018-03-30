@@ -20,13 +20,15 @@ public:
     void ClearScreen();
 
     void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
+    
+    void AddGraphicsComponentPtr(StrongGraphicsComponentPtr comp);
 
-    void AddGraphicsComponent(GraphicsComponent comp);
-	int AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
+    // TODO: Cache changes
+    //void AddGraphicsComponent(GraphicsComponent comp);
+    //int AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
 
-	GraphicsComponent* GetComponentById(int id);
     //void RemoveGraphicsComponent();
-	void UpdateComponents();
+	//void UpdateComponents();
 
     void AddCamera(StrongGameActorPtr camera);
 
@@ -46,8 +48,10 @@ private:
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
     void renderBackground(Vector2D<float> cameraPos);
-
-    std::vector<GraphicsComponent> m_graphicsComponentVec;
+    
+    // TODO: Cache changes
+    //std::vector<GraphicsComponent> m_graphicsComponentVec;
+    std::vector<StrongGraphicsComponentPtr> m_graphicsComponentPtrVec;
 
     StrongGameActorPtrList m_pCameraList;
     StrongGameActorPtr m_pCurrentCamera;
