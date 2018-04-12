@@ -18,6 +18,8 @@ public:
 
     void AddPhysicsComponentPtr(StrongPhysicsComponentPtr comp);
 
+    void SetLevelSize(Vector2D<int> levelSize) { m_levelSize = levelSize; }
+
     // TODO: Cache changes
     //void AddPhysicsComponent(PhysicsComponent comp);
     /*int AddPlayerPhysicsComponent(std::shared_ptr<TransformComponent> transformComponent,
@@ -43,10 +45,13 @@ private:
     CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
 	void resolvePenetration(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent, const PhysicsManager::CollisionEvent& collisionEvent);
     void resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent);
-    
+    void moveActorsBackIntoLevel();
+
     // TODO: Cache changes
     //std::vector<PhysicsComponent> m_physicsComponentVec;
     std::vector<StrongPhysicsComponentPtr> m_physicsComponentPtrVec;
+
+    Vector2D<int> m_levelSize;
 
     int m_lastComponentId;
     int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };

@@ -6,7 +6,7 @@
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
 #include "AIComponent.h"
-#include "FollowTargetAIComponent.h"
+#include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
 #include "Command.h"
 
@@ -39,7 +39,7 @@ void GameActor::Update(float deltaMs, uint32_t input)
     m_input = input;
     updateComponent(EComponentNames::InputComponentEnum, deltaMs);
     updateComponent(EComponentNames::AIComponentEnum, deltaMs);
-    updateComponent(EComponentNames::FollowTargetAIComponentEnum, deltaMs);
+    updateComponent(EComponentNames::CameraFollowComponentEnum, deltaMs);
 
     for (auto command : *m_pCommands)
     {
@@ -98,15 +98,15 @@ StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent() const
 	return std::dynamic_pointer_cast<BaseLogicComponent>(component);
 }
 
-StrongFollowTargetAIComponentPtr GameActor::GetFollowTargetAIComponent() const
+CameraFollowComponentPtr GameActor::GetCameraFollowComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::FollowTargetAIComponentEnum);
+	StrongActorComponentPtr component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
 	}
 
-	return std::dynamic_pointer_cast<FollowTargetAIComponent>(component);
+	return std::dynamic_pointer_cast<CameraFollowComponent>(component);
 }
 
 StrongGraphicsComponentPtr GameActor::GetGraphicsComponent() const

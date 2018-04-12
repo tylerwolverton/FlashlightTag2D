@@ -4,8 +4,6 @@
 
 #include <memory>
 
-// Move to graphics manager
-#define MAX_CAMERAS 10
 struct SDL_Window;
 
 class World

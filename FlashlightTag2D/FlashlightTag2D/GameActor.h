@@ -5,7 +5,7 @@
 
 class AIComponent;
 class BaseLogicComponent;
-class FollowTargetAIComponent;
+class CameraFollowComponent;
 class GraphicsComponent;
 class InputComponent;
 class PhysicsComponent;
@@ -26,7 +26,7 @@ public:
         
     StrongAIComponentPtr             GetAIComponent() const;
     StrongBaseLogicComponentPtr	     GetBaseLogicComponent() const;
-    StrongFollowTargetAIComponentPtr GetFollowTargetAIComponent() const;
+    CameraFollowComponentPtr         GetCameraFollowComponent() const;
     StrongGraphicsComponentPtr	     GetGraphicsComponent() const;
     StrongInputComponentPtr	         GetInputComponent() const;
     StrongPhysicsComponentPtr	     GetPhysicsComponent() const;

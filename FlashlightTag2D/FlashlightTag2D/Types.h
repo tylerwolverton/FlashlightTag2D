@@ -12,7 +12,7 @@ class Command;
 class World;
 class AIComponent;
 class BaseLogicComponent;
-class FollowTargetAIComponent;
+class CameraFollowComponent;
 class GraphicsComponent;
 class InputComponent;
 class PhysicsComponent;
@@ -34,7 +34,7 @@ typedef std::shared_ptr<ActorFactory>            StrongActorFactoryPtr;
 typedef std::shared_ptr<ActorComponent>          StrongActorComponentPtr;
 typedef std::shared_ptr<AIComponent>             StrongAIComponentPtr;
 typedef std::shared_ptr<BaseLogicComponent>      StrongBaseLogicComponentPtr;
-typedef std::shared_ptr<FollowTargetAIComponent> StrongFollowTargetAIComponentPtr;
+typedef std::shared_ptr<CameraFollowComponent>   CameraFollowComponentPtr;
 typedef std::shared_ptr<GraphicsComponent>       StrongGraphicsComponentPtr;
 typedef std::shared_ptr<InputComponent>          StrongInputComponentPtr;
 typedef std::shared_ptr<PhysicsComponent>        StrongPhysicsComponentPtr;
@@ -75,7 +75,7 @@ enum EComponentNames
 	NoneComponentEnum,
 	AIComponentEnum,
 	BaseLogicComponentEnum,
-	FollowTargetAIComponentEnum,
+	CameraFollowComponentEnum,
 	GraphicsComponentEnum,
 	InputComponentEnum,
 	PhysicsComponentEnum,

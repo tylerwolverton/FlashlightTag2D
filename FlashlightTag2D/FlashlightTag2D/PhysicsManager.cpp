@@ -5,7 +5,8 @@
 #include <algorithm>
 
 PhysicsManager::PhysicsManager()
-    : m_lastComponentId(0)
+    : m_lastComponentId(0),
+      m_levelSize(Vector2D<int>(-1, -1))
 {
 }
 
@@ -16,6 +17,7 @@ PhysicsManager::~PhysicsManager()
 void PhysicsManager::Update(float deltaTime)
 {
 	ResolveCollisions(deltaTime);
+    moveActorsBackIntoLevel();
 }
 
 void PhysicsManager::ResolveCollisions(float deltaTime)
@@ -81,9 +83,9 @@ void PhysicsManager::resolvePenetration(std::shared_ptr<TransformComponent> acto
 
 void PhysicsManager::resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent)
 {
-    auto relativeVelocity = innerActorPhysicsComp->GetVelocity() - actorPhysicsComp->GetVelocity();
+    Vector2D<float> relativeVelocity = innerActorPhysicsComp->GetVelocity() - actorPhysicsComp->GetVelocity();
 
-    auto velAlongNormal = relativeVelocity.Dot(collisionEvent.normal);
+    float velAlongNormal = relativeVelocity.Dot(collisionEvent.normal);
 
     // Do not resolve if velocities are separating
 //    if (velAlongNormal > 0)
@@ -97,7 +99,34 @@ void PhysicsManager::resolveCollision(std::shared_ptr<PhysicsComponent> actorPhy
     j /= 1 / actorPhysicsComp->GetMass() + 1 / innerActorPhysicsComp->GetMass();
 
     // Apply impulse
-    auto impulse = j * collisionEvent.normal;
+    Vector2D<float> impulse = j * collisionEvent.normal;
     actorPhysicsComp->AddForce(-impulse);
     innerActorPhysicsComp->AddForce(impulse);
+}
+
+void PhysicsManager::moveActorsBackIntoLevel()
+{
+    for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
+    {
+        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent->GetTransformComponent();
+        Vector2D<float> newPosition(actorTransformComponent->GetPosition());
+        if (newPosition.x - actorTransformComponent->GetSize().x / 2 < 0)
+        {
+            newPosition.x = actorTransformComponent->GetSize().x / 2;
+        }
+        else if (newPosition.x + actorTransformComponent->GetSize().x / 2 > m_levelSize.x)
+        {
+            newPosition.x = m_levelSize.x - actorTransformComponent->GetSize().x / 2;
+        }
+        if (newPosition.y - actorTransformComponent->GetSize().y / 2 < 0)
+        {
+            newPosition.y = actorTransformComponent->GetSize().y / 2;
+        }
+        else if (newPosition.y + actorTransformComponent->GetSize().y / 2 > m_levelSize.y)
+        {
+            newPosition.y = m_levelSize.y - actorTransformComponent->GetSize().y / 2;
+        }
+
+        actorTransformComponent->SetPosition(newPosition);
+    }
 }

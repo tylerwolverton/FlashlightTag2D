@@ -147,7 +147,7 @@
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="BaseLogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
-    <ClCompile Include="FollowTargetAIComponent.cpp" />
+    <ClCompile Include="CameraFollowComponent.cpp" />
     <ClCompile Include="GameActor.cpp" />
     <ClCompile Include="GameStateComponent.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
@@ -175,7 +175,7 @@
     <ClInclude Include="BaseLogicComponent.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="FollowTargetAIComponent.h" />
+    <ClInclude Include="CameraFollowComponent.h" />
     <ClInclude Include="GameActor.h" />
     <ClInclude Include="GameStateComponent.h" />
     <ClInclude Include="GameTypes.h" />

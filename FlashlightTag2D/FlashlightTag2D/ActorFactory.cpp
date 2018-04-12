@@ -11,7 +11,7 @@
 #include "PhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
 #include "AIComponent.h"
-#include "FollowTargetAIComponent.h"
+#include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
 #include "World.h"
 #include "GraphicsManager.h"
@@ -175,12 +175,12 @@ void ActorFactory::ChooseSeekers(int seekerCount)
 	}
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera()
+StrongGameActorPtr ActorFactory::CreateCamera(const Vector2D<int>& levelSize)
 {
-    return CreateCamera(m_pCurrentPlayer);
+    return CreateCamera(m_pCurrentPlayer, levelSize);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target)
+StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target, const Vector2D<int>& levelSize)
 {
     auto newActor = std::make_shared<GameActor>(getNextActorId());
     
@@ -192,9 +192,9 @@ StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target)
     newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
         (EComponentNames::TransformComponentEnum, transformCompPtr));
 
-    auto followAICompPtr = std::make_shared<FollowTargetAIComponent>(getNextComponentId(), target);
+    auto cameraFollowCompPtr = std::make_shared<CameraFollowComponent>(getNextComponentId(), target, levelSize);
     newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
-        (EComponentNames::FollowTargetAIComponentEnum, followAICompPtr));
+        (EComponentNames::CameraFollowComponentEnum, cameraFollowCompPtr));
 
 	m_pEntityList.push_back(newActor);
 

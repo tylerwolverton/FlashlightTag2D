@@ -2,6 +2,7 @@
 #include "document.h"
 
 #include "Types.h"
+#include "Vector2D.h"
 #include <vector>
 
 class ActorFactory
@@ -14,8 +15,8 @@ public:
 	void ChooseSeekers(int seekerCount);
 
     // Move to graphics manager
-    StrongGameActorPtr CreateCamera();
-    StrongGameActorPtr CreateCamera(const StrongGameActorPtr& target);
+    StrongGameActorPtr CreateCamera(const Vector2D<int>& levelSize);
+    StrongGameActorPtr CreateCamera(const StrongGameActorPtr& target, const Vector2D<int>& levelSize);
 
 private:
 	ActorId m_lastActorId;
