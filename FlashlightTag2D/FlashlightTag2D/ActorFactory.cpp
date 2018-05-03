@@ -25,7 +25,7 @@ ActorFactory::ActorFactory()
 {
 }
 
-void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr)
+void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, const Vector2D<int>& levelSize)
 {
 	m_lastActorId = 0;
 	//m_entityVec.clear();
@@ -118,7 +118,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-			StrongGameStateComponentPtr gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider);
+			StrongGameStateComponentPtr gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider, levelSize);
             
             newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
                 (EComponentNames::GameStateComponentEnum, gameStateCompPtr));

@@ -69,6 +69,7 @@
     <ClCompile Include="CameraFollowComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="RandomNumberGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -157,6 +158,7 @@
     <ClInclude Include="CameraFollowComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="RandomNumberGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

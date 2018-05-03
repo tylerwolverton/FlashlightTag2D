@@ -86,10 +86,6 @@
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Types.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.cpp</string>
-      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\FollowTargetAIComponent.h</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\TransformComponent.cpp</string>
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\TransformComponent.h</string>
     </ArrayOfString>
@@ -97,7 +93,12 @@
       <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\Command.h</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\memory</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\CameraFollowComponent.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\CameraFollowComponent.h</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\RandomNumberGenerator.cpp</string>
+      <string>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\FlashlightTag2D\RandomNumberGenerator.h</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

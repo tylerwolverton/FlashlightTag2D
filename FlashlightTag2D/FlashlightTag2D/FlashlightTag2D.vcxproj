@@ -160,6 +160,7 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerLogicComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
+    <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="stb_image.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PlayerLogicComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
+    <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Shader.h" />

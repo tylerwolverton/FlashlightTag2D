@@ -1,3 +1,7 @@
-﻿  PhysicsManager.cpp
+﻿  SeekBehavior.cpp
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\seekbehavior.cpp(29): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\seekbehavior.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\seekbehavior.cpp(35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\seekbehavior.cpp(38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

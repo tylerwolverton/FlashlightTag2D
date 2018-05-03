@@ -45,7 +45,7 @@ CommandList HideBehavior::Update(const GameActor& thisActor)
             }
 
             auto distToOtherActor = (otherActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
-            if (distToOtherActor < 300.0f)
+            if (distToOtherActor < 120.0f)
             {
                 seekerTransformComponents.push_back(otherActorTransformComponent);
             }

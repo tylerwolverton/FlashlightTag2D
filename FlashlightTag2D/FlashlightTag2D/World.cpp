@@ -10,6 +10,7 @@
 #include "ServiceLocator.h"
 #include "GameStateComponent.h"
 #include "GameTypes.h"
+#include "RandomNumberGenerator.h"
 
 // from rapidjson
 #include "document.h"
@@ -26,6 +27,7 @@ World::World(SDL_Window* window)
 	ServiceLocator::Provide(m_pInputManager);
 	ServiceLocator::Provide(m_pPhysicsManager);
 	ServiceLocator::Provide(m_pGraphicsManager);
+	ServiceLocator::Provide(std::make_shared<RandomNumberGenerator>());
 }
 
 World::~World()
@@ -94,7 +96,7 @@ void World::ChangeLevel(const std::string& levelPath)
 
     m_pGraphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
 
-    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager);
+    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager, m_levelSize);
 }
 
 void World::changeGameMode()

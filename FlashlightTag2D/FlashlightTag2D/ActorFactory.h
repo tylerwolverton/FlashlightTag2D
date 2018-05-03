@@ -10,7 +10,7 @@ class ActorFactory
 public:
 	ActorFactory();
 	
-    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr);
+    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, const Vector2D<int>& levelSize);
 	StrongGameActorPtrList GetActorList() { return m_pEntityList; }
 	void ChooseSeekers(int seekerCount);
 

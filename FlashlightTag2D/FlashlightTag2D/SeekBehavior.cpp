@@ -6,13 +6,38 @@
 #include "Vector2D.h"
 #include "Command.h"
 #include "GameTypes.h"
+#include "RandomNumberGenerator.h"
 
-SeekBehavior::SeekBehavior()
+#include <random>
+#include <algorithm>
+
+SeekBehavior::SeekBehavior(const Vector2D<int>& levelSize)
+  : m_levelSize(levelSize),
+	m_targetActor(nullptr),
+    m_currState(EState::Search),
+    m_maxChaseDistance(151.0f),
+    m_minTagDistance(100.0f),
+	m_currentSearchPos(0),
+	m_ticksSinceLastMove(0)
 {
-    m_targetActor = nullptr;
-    m_currState = EState::Search;
-    m_maxChaseDistance = 150.0f;
-    m_minTagDistance = 50.0f;
+	initSearchPositions();
+}
+
+void SeekBehavior::initSearchPositions()
+{
+	m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.x / 2), 
+										        RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.y / 2)));
+
+	m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - 50),
+											    RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.y / 2)));
+
+	m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.x / 2),
+		                                        RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - 50)));
+
+	m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - 50),
+	                                            RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - 50)));
+
+	m_currentSearchPos = RandomNumberGenerator::GetIntWithinRange(0, m_searchPositions.size() - 1);
 }
 
 SeekBehavior::~SeekBehavior()
@@ -37,7 +62,7 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
 
         // Find closest hider in that list
         // Implicitly set max range, variable-ize this later
-        auto distToClosestActor = 300.0f;
+        auto distToClosestActor = 150.0f;
         for (auto otherActor : actorList)
         {
 			auto gameStateComponent = otherActor->GetGameStateComponent();
@@ -71,7 +96,7 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
         } 
         else
         {
-            return moveInSearchPattern();
+            return moveInSearchPattern(thisActorTransformComponent);
         }
     }
     else if(m_currState == EState::Chase)
@@ -106,34 +131,49 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
 CommandList SeekBehavior::moveTowardsTarget(StrongTransformComponentPtr thisActorTransformComponent, 
                                             StrongTransformComponentPtr targetActorTransformComponent)
 {
-    CommandList commandList;
-
-    auto distBetweenActors = targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition();
-
-    if (distBetweenActors.x < -1.0f)
-    {
-        commandList.push_back(std::make_shared<MoveLeft>());
-    }
-    else if (distBetweenActors.x > 1.0f)
-    {
-        commandList.push_back(std::make_shared<MoveRight>());
-    }
-
-    if (distBetweenActors.y < -1.0f)
-    {
-        commandList.push_back(std::make_shared<MoveDown>());
-    }
-    else if (distBetweenActors.y > 1.0f)
-    {
-        commandList.push_back(std::make_shared<MoveUp>());
-    }
-
-    return commandList;
+	return moveToPosition(thisActorTransformComponent->GetPosition(), targetActorTransformComponent->GetPosition());
 }
 
-CommandList SeekBehavior::moveInSearchPattern()
+CommandList SeekBehavior::moveToPosition(Vector2D<float> currentPos,
+					                     Vector2D<float> targetPos)
 {
+	CommandList commandList;
 
+	auto dist = targetPos - currentPos;
 
-    return CommandList();
+	if (dist.x < -1.0f)
+	{
+		commandList.push_back(std::make_shared<MoveLeft>());
+	}
+	else if (dist.x > 1.0f)
+	{
+		commandList.push_back(std::make_shared<MoveRight>());
+	}
+
+	if (dist.y < -1.0f)
+	{
+		commandList.push_back(std::make_shared<MoveDown>());
+	}
+	else if (dist.y > 1.0f)
+	{
+		commandList.push_back(std::make_shared<MoveUp>());
+	}
+
+	return commandList;
+}
+
+CommandList SeekBehavior::moveInSearchPattern(StrongTransformComponentPtr thisActorTransformComponent)
+{
+	Vector2D<float> startingPos = thisActorTransformComponent->GetPosition();
+	CommandList actions = moveToPosition(startingPos, m_searchPositions[m_currentSearchPos]);
+
+	// Check if the actor didn't move, increment search target
+	if (actions.empty()) 
+		/*|| (startingPos.x - thisActorTransformComponent->GetPosition().x < .1f 
+			&& startingPos.y - thisActorTransformComponent->GetPosition().y < .1f))*/
+	{
+		m_currentSearchPos = RandomNumberGenerator::GetIntWithinRange(0, m_searchPositions.size() - 1);
+	}
+
+    return actions;
 }
