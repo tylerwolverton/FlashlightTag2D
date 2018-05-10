@@ -1,6 +1,5 @@
 #pragma once
 #include "Behavior.h"
-#include "Types.h"
 #include "Vector2D.h"
 
 class SeekBehavior :
@@ -10,19 +9,19 @@ public:
 	SeekBehavior(const Vector2D<int>& levelSize);
 	virtual ~SeekBehavior();
 
-	virtual CommandList Update(const GameActor& thisActor) override;
+	virtual std::vector<std::shared_ptr<Command>> Update(const GameActor& thisActor) override;
 
 private:
-    CommandList moveTowardsTarget(StrongTransformComponentPtr thisActorTransformComponent,
-                                  StrongTransformComponentPtr targetActorTransformComponent);
-    CommandList moveInSearchPattern(StrongTransformComponentPtr thisActorTransformComponent);
+    std::vector<std::shared_ptr<Command>> moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformComponent,
+                                  std::shared_ptr<TransformComponent> targetActorTransformComponent);
+    std::vector<std::shared_ptr<Command>> moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent);
 
-	CommandList SeekBehavior::moveToPosition(Vector2D<float> currentPos,
+	std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<float> currentPos,
 											 Vector2D<float> targetPos);
 
 	void initSearchPositions();
 
-    StrongGameActorPtr m_targetActor;
+    std::shared_ptr<GameActor> m_targetActor;
 
     enum EState
     {

@@ -1,61 +1,11 @@
 #pragma once
 #include <memory>
 #include <unordered_map>
-#include <list>
 
-class Actor;
-class ActorFactory;
 class ActorComponent;
-class Behavior;
-class GameActor;
-class Command;
-class World;
-class AIComponent;
-class BaseLogicComponent;
-class CameraFollowComponent;
-class GraphicsComponent;
-class InputComponent;
-class PhysicsComponent;
-class AIComponent;
-class TransformComponent;
-class GameStateComponent;
-
-class InputManager;
-class PhysicsManager;
-class GraphicsManager;
-
-class Texture2D;
 
 typedef unsigned long ActorId;
 typedef unsigned long ComponentId;
-
-typedef std::shared_ptr<Actor>                   StrongActorPtr;
-typedef std::shared_ptr<ActorFactory>            StrongActorFactoryPtr;
-typedef std::shared_ptr<ActorComponent>          StrongActorComponentPtr;
-typedef std::shared_ptr<AIComponent>             StrongAIComponentPtr;
-typedef std::shared_ptr<BaseLogicComponent>      StrongBaseLogicComponentPtr;
-typedef std::shared_ptr<CameraFollowComponent>   CameraFollowComponentPtr;
-typedef std::shared_ptr<GraphicsComponent>       StrongGraphicsComponentPtr;
-typedef std::shared_ptr<InputComponent>          StrongInputComponentPtr;
-typedef std::shared_ptr<PhysicsComponent>        StrongPhysicsComponentPtr;
-typedef std::shared_ptr<TransformComponent>      StrongTransformComponentPtr;
-typedef std::shared_ptr<GameStateComponent>      StrongGameStateComponentPtr;
-
-typedef std::shared_ptr<InputManager>            StrongInputManagerPtr;
-typedef std::shared_ptr<PhysicsManager>          StrongPhysicsManagerPtr;
-typedef std::shared_ptr<GraphicsManager>         StrongGraphicsManagerPtr;
-
-typedef std::shared_ptr<Texture2D>               StrongTexture2DPtr;
-
-typedef std::shared_ptr<GameActor> StrongGameActorPtr;
-typedef std::shared_ptr<World> StrongWorldPtr;
-
-typedef std::list<std::shared_ptr<GameActor>> StrongGameActorPtrList;
-
-typedef std::list<std::shared_ptr<Behavior>> BehaviorList;
-typedef std::list<std::shared_ptr<Command>> CommandList;
-typedef std::shared_ptr<CommandList> CommandListPtr;
-typedef std::list<StrongActorComponentPtr> ComponentList;
 
 static const int ComponentTypeCount = 7;
 
@@ -83,7 +33,7 @@ enum EComponentNames
 	GameStateComponentEnum
 };
 
-typedef std::unordered_map <EComponentNames, StrongActorComponentPtr> ComponentMap;
+typedef std::unordered_map<EComponentNames, std::shared_ptr<ActorComponent>> ComponentMap;
 
 enum EInputValues : uint32_t
 {

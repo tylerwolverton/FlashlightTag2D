@@ -14,14 +14,14 @@ GameActor::GameActor(ActorId actorId, ComponentMap components)
     : m_actorId(actorId),
     m_componentMap(components)
 {
-    m_pCommands = std::make_shared<CommandList>();
+    m_pCommands = std::make_shared<std::vector<std::shared_ptr<Command>>>();
 }
 
 // TODO: Cache changes
 GameActor::GameActor(ActorId actorId)
 	: m_actorId(actorId)
 {
-	m_pCommands = std::make_shared<CommandList>();
+	m_pCommands = std::make_shared<std::vector<std::shared_ptr<Command>>>();
 
     // TODO: Cache changes
 	//for (int i = 0; i < ComponentTypeCount; i++)
@@ -65,7 +65,7 @@ void GameActor::updateComponent(EComponentNames compName, float deltaMs)
     }
 }
 
-StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentName) const
+std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames componentName) const
 {
     auto compIter = m_componentMap.find(componentName);
     if (compIter != m_componentMap.end())
@@ -76,9 +76,9 @@ StrongActorComponentPtr GameActor::getComponentByName(EComponentNames componentN
     return nullptr;
 }
 
-StrongAIComponentPtr GameActor::GetAIComponent() const
+std::shared_ptr<AIComponent> GameActor::GetAIComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::AIComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::AIComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -87,9 +87,9 @@ StrongAIComponentPtr GameActor::GetAIComponent() const
 	return std::dynamic_pointer_cast<AIComponent>(component);
 }
 
-StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent() const
+std::shared_ptr<BaseLogicComponent> GameActor::GetBaseLogicComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::BaseLogicComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::BaseLogicComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -98,9 +98,9 @@ StrongBaseLogicComponentPtr GameActor::GetBaseLogicComponent() const
 	return std::dynamic_pointer_cast<BaseLogicComponent>(component);
 }
 
-CameraFollowComponentPtr GameActor::GetCameraFollowComponent() const
+std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -109,9 +109,9 @@ CameraFollowComponentPtr GameActor::GetCameraFollowComponent() const
 	return std::dynamic_pointer_cast<CameraFollowComponent>(component);
 }
 
-StrongGraphicsComponentPtr GameActor::GetGraphicsComponent() const
+std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::GraphicsComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -120,9 +120,9 @@ StrongGraphicsComponentPtr GameActor::GetGraphicsComponent() const
 	return std::dynamic_pointer_cast<GraphicsComponent>(component);
 }
 
-StrongInputComponentPtr GameActor::GetInputComponent() const
+std::shared_ptr<InputComponent> GameActor::GetInputComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::InputComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::InputComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -131,9 +131,9 @@ StrongInputComponentPtr GameActor::GetInputComponent() const
 	return std::dynamic_pointer_cast<InputComponent>(component);
 }
 
-StrongPhysicsComponentPtr GameActor::GetPhysicsComponent() const
+std::shared_ptr<PhysicsComponent> GameActor::GetPhysicsComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::PhysicsComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::PhysicsComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -142,9 +142,9 @@ StrongPhysicsComponentPtr GameActor::GetPhysicsComponent() const
 	return std::dynamic_pointer_cast<PhysicsComponent>(component);
 }
 
-StrongTransformComponentPtr GameActor::GetTransformComponent() const
+std::shared_ptr<TransformComponent> GameActor::GetTransformComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::TransformComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::TransformComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
@@ -153,9 +153,9 @@ StrongTransformComponentPtr GameActor::GetTransformComponent() const
 	return std::dynamic_pointer_cast<TransformComponent>(component);
 }
 
-StrongGameStateComponentPtr GameActor::GetGameStateComponent() const
+std::shared_ptr<GameStateComponent> GameActor::GetGameStateComponent() const
 {
-	StrongActorComponentPtr component = getComponentByName(EComponentNames::GameStateComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GameStateComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;

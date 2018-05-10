@@ -1,15 +1,17 @@
 #pragma once
+#include "Types.h"
+
 #include <map>
 #include <memory>
 
-#include "Types.h"
+class ActorComponent;
 
 class Actor
 {
 	friend class ActorFactory;
 
 public:
-	typedef std::map<ComponentId, StrongActorComponentPtr> ActorComponentMap;
+	typedef std::map<ComponentId, std::shared_ptr<ActorComponent>> ActorComponentMap;
 
 public:
 	Actor(ActorId id);
@@ -23,9 +25,9 @@ public:
 	ActorId GetId() const { return m_id; }
 
 private:
-	void add_component(StrongActorComponentPtr pComponent);
+	void add_component(std::shared_ptr<ActorComponent> pComponent);
 
 	ActorId m_id;
-	ActorComponentMap m_componentMap;
+	//ActorComponentMap m_componentMap;
 };
 

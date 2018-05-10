@@ -1,8 +1,14 @@
 #pragma once
 #include "Vector2D.h"
-#include "Types.h"
+//#include "Types.h"
 
 #include <memory>
+#include <string>
+
+class InputManager;
+class PhysicsManager;
+class GraphicsManager;
+class ActorFactory;
 
 struct SDL_Window;
 
@@ -28,7 +34,7 @@ private:
     std::shared_ptr<PhysicsManager> m_pPhysicsManager;
     std::shared_ptr<GraphicsManager> m_pGraphicsManager;
     std::shared_ptr<ActorFactory> m_pActorFactory;
-
+	
 	void changeGameMode();
 };
 

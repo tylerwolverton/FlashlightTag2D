@@ -9,7 +9,7 @@ CameraFollowComponent::CameraFollowComponent(ComponentId componentId)
 	m_pTarget = nullptr;
 }
 
-CameraFollowComponent::CameraFollowComponent(ComponentId componentId, StrongGameActorPtr target, Vector2D<int> levelSize)
+CameraFollowComponent::CameraFollowComponent(ComponentId componentId, std::shared_ptr<GameActor> target, Vector2D<int> levelSize)
     : ActorComponent(componentId),
 	  m_pTarget(target),
       m_levelSize(levelSize)
@@ -22,8 +22,8 @@ CameraFollowComponent::~CameraFollowComponent()
 
 void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
 {
-	StrongTransformComponentPtr actorTransformComponent = actor.GetTransformComponent();
-    StrongTransformComponentPtr targetTransformComponent = m_pTarget->GetTransformComponent();
+	std::shared_ptr<TransformComponent> actorTransformComponent = actor.GetTransformComponent();
+    std::shared_ptr<TransformComponent> targetTransformComponent = m_pTarget->GetTransformComponent();
 	if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)
 	{
 		return;
@@ -59,7 +59,7 @@ const EComponentNames CameraFollowComponent::GetComponentName() const
 	return EComponentNames::CameraFollowComponentEnum;
 }
 
-void CameraFollowComponent::SetTargetActor(StrongGameActorPtr actor)
+void CameraFollowComponent::SetTargetActor(std::shared_ptr<GameActor> actor)
 {
 	m_pTarget = actor;
 }

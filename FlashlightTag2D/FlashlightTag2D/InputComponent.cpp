@@ -19,7 +19,7 @@ InputComponent::~InputComponent()
 
 void InputComponent::Update(GameActor& actor, float deltaMs)
 {
-	CommandList commandList;
+	std::vector<std::shared_ptr<Command>> commandList;
 
 	if (actor.GetInput() & EInputValues::W)
 	{
@@ -42,7 +42,7 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 		commandList.push_back(m_pButtonEsc);
 	}
 
-	actor.SetCommands(std::make_shared<CommandList>(commandList));
+	actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandList));
 }
 
 const EComponentNames InputComponent::GetComponentName() const

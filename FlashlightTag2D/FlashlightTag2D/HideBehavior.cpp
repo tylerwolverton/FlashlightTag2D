@@ -15,19 +15,19 @@ HideBehavior::~HideBehavior()
 {
 }
 
-CommandList HideBehavior::Update(const GameActor& thisActor)
+std::vector<std::shared_ptr<Command>> HideBehavior::Update(const GameActor& thisActor)
 {
     //  Look for seeker in light cone
     // Get list of nearby actors
     auto thisActorTransformComponent = thisActor.GetTransformComponent();
     if (thisActorTransformComponent == nullptr)
     {
-        return CommandList();
+        return std::vector<std::shared_ptr<Command>>();
     }
 
     auto actorList = ServiceLocator::GetActorFactory()->GetActorList();
 
-    std::vector<StrongTransformComponentPtr> seekerTransformComponents;
+    std::vector<std::shared_ptr<TransformComponent>> seekerTransformComponents;
     for (auto otherActor : actorList)
     {
         auto gameStateComponent = otherActor->GetGameStateComponent();
@@ -59,12 +59,12 @@ CommandList HideBehavior::Update(const GameActor& thisActor)
     }
 
     //   Seeker not found - stay or change hiding space
-    //actor.SetCommands(std::make_shared<CommandList>(Hide()));
+    //actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(Hide()));
 
-	return CommandList();
+	return std::vector<std::shared_ptr<Command>>();
 }
 
-CommandList HideBehavior::RunFromSeekers(const StrongTransformComponentPtr thisActorTransformComponent, const std::vector<StrongTransformComponentPtr>& seekerTransformComponents)
+std::vector<std::shared_ptr<Command>> HideBehavior::RunFromSeekers(const std::shared_ptr<TransformComponent> thisActorTransformComponent, const std::vector<std::shared_ptr<TransformComponent>>& seekerTransformComponents)
 {
     Vector2D<float> totalDistance(0, 0);
     for (auto comp : seekerTransformComponents)
@@ -72,7 +72,7 @@ CommandList HideBehavior::RunFromSeekers(const StrongTransformComponentPtr thisA
         totalDistance -= comp->GetPosition() - thisActorTransformComponent->GetPosition();
     }
 
-    CommandList commandList;
+    std::vector<std::shared_ptr<Command>> commandList;
     
     if (totalDistance.x < -1.0f)
     {

@@ -44,7 +44,7 @@ SeekBehavior::~SeekBehavior()
 {
 }
 
-CommandList SeekBehavior::Update(const GameActor& thisActor)
+std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& thisActor)
 {
     // Use the current light cone and sound in surrounding area to see if any actors are close, then if a hider is seen, enter the chase state
     // If already chasing and the hider is lost for long enough, enter the search state
@@ -52,7 +52,7 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
     auto thisActorTransformComponent = thisActor.GetTransformComponent();
     if (thisActorTransformComponent == nullptr)
     {
-        return CommandList();
+        return std::vector<std::shared_ptr<Command>>();
     }
 
     if(m_currState == EState::Search)
@@ -104,7 +104,7 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
         auto targetActorTransformComponent = m_targetActor->GetTransformComponent();
         if (targetActorTransformComponent == nullptr)
         {
-            return CommandList();
+            return std::vector<std::shared_ptr<Command>>();
         }
 
         auto distToTargetActor = (targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
@@ -125,19 +125,19 @@ CommandList SeekBehavior::Update(const GameActor& thisActor)
     }
 
     // No actions taken
-    return CommandList();
+    return std::vector<std::shared_ptr<Command>>();
 }
 
-CommandList SeekBehavior::moveTowardsTarget(StrongTransformComponentPtr thisActorTransformComponent, 
-                                            StrongTransformComponentPtr targetActorTransformComponent)
+std::vector<std::shared_ptr<Command>> SeekBehavior::moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformComponent, 
+                                            std::shared_ptr<TransformComponent> targetActorTransformComponent)
 {
 	return moveToPosition(thisActorTransformComponent->GetPosition(), targetActorTransformComponent->GetPosition());
 }
 
-CommandList SeekBehavior::moveToPosition(Vector2D<float> currentPos,
+std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<float> currentPos,
 					                     Vector2D<float> targetPos)
 {
-	CommandList commandList;
+	std::vector<std::shared_ptr<Command>> commandList;
 
 	auto dist = targetPos - currentPos;
 
@@ -162,10 +162,10 @@ CommandList SeekBehavior::moveToPosition(Vector2D<float> currentPos,
 	return commandList;
 }
 
-CommandList SeekBehavior::moveInSearchPattern(StrongTransformComponentPtr thisActorTransformComponent)
+std::vector<std::shared_ptr<Command>> SeekBehavior::moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent)
 {
 	Vector2D<float> startingPos = thisActorTransformComponent->GetPosition();
-	CommandList actions = moveToPosition(startingPos, m_searchPositions[m_currentSearchPos]);
+	std::vector<std::shared_ptr<Command>> actions = moveToPosition(startingPos, m_searchPositions[m_currentSearchPos]);
 
 	// Check if the actor didn't move, increment search target
 	if (actions.empty()) 

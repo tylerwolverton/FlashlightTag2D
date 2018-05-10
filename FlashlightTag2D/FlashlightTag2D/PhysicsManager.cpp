@@ -45,7 +45,7 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 	}
 }
 
-void PhysicsManager::AddPhysicsComponentPtr(StrongPhysicsComponentPtr comp)
+void PhysicsManager::AddPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> comp)
 {
     m_physicsComponentPtrVec.push_back(comp);
 }

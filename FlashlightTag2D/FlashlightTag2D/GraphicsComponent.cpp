@@ -4,9 +4,7 @@
 #include "World.h"
 #include "Texture2D.h"
 
-#include <memory>
-
-GraphicsComponent::GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
+GraphicsComponent::GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: ActorComponent(componentId),
       m_animationTimer(animationTimer),
 	  m_curAnimationTime(animationTimer),

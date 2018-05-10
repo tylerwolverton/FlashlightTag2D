@@ -29,7 +29,7 @@ void Actor::Update(int delatMs)
 
 }
 
-void Actor::add_component(StrongActorComponentPtr pComponent)
+void Actor::add_component(std::shared_ptr<ActorComponent> pComponent)
 {
 
 }

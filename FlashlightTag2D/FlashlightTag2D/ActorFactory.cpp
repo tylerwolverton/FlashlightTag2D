@@ -39,15 +39,15 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
         //m_entityVec.emplace_back(actorId);
         auto newActor = std::make_shared<GameActor>(actorId);
 
-        ComponentList components = ComponentList();
+		std::vector<std::shared_ptr<ActorComponent>>  components = std::vector<std::shared_ptr<ActorComponent>>();
 		if (actorList[i].HasMember("input_component"))
 		{
-            newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+            newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::InputComponentEnum, std::make_shared<InputComponent>(getNextComponentId())));
 		}
         if (actorList[i].HasMember("ai_component"))
         {
-            newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+            newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId())));
         }
 		if(actorList[i].HasMember("transform_component"))
@@ -60,7 +60,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 																						 actorList[i]["transform_component"]["size"]["y"].GetFloat()),
 																		 Vector2D<float>(1, 0));
 	
-            newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+            newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::TransformComponentEnum, transformCompPtr));
 
 			if (actorList[i].HasMember("physics_component"))
@@ -87,26 +87,26 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 
                 physicsMgr.AddPhysicsComponentPtr(physicsCompPtr);
 
-                newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+                newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                     (EComponentNames::PhysicsComponentEnum, physicsCompPtr));
 
                 if (actorList[i].HasMember("base_logic_component"))
 				{
-                    newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+                    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                         (EComponentNames::BaseLogicComponentEnum, std::make_shared<BaseLogicComponent>(getNextComponentId(), physicsCompPtr)));
 				}
 			}
 			
 			if (actorList[i].HasMember("graphics_component"))
 			{
-                StrongGraphicsComponentPtr graphicsCompPtr = std::make_shared<GraphicsComponent>(getNextComponentId(),
+                std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(getNextComponentId(),
                                                       actorList[i]["graphics_component"]["sprite"].GetString(),
                                                       actorList[i]["graphics_component"]["animation_speed"].GetInt(),
                                                       transformCompPtr);
 
                 graphicsMgr.AddGraphicsComponentPtr(graphicsCompPtr);
 
-                newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+                newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                     (EComponentNames::GraphicsComponentEnum, graphicsCompPtr));
 
                 // TODO: Cache changes
@@ -118,9 +118,9 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-			StrongGameStateComponentPtr gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider, levelSize);
+			std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider, levelSize);
             
-            newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+            newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::GameStateComponentEnum, gameStateCompPtr));
             
             // TODO: Cache changes
@@ -153,7 +153,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		//	}
 		//}
 
-        m_pEntityList.push_back(newActor);
+        m_pEntityVec.push_back(newActor);
 
         if (!strcmp(actorName, "Player"))
         {
@@ -175,12 +175,12 @@ void ActorFactory::ChooseSeekers(int seekerCount)
 	}
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(const Vector2D<int>& levelSize)
+std::shared_ptr<GameActor> ActorFactory::CreateCamera(const Vector2D<int>& levelSize)
 {
     return CreateCamera(m_pCurrentPlayer, levelSize);
 }
 
-StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target, const Vector2D<int>& levelSize)
+std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<GameActor>& target, const Vector2D<int>& levelSize)
 {
     auto newActor = std::make_shared<GameActor>(getNextActorId());
     
@@ -189,14 +189,14 @@ StrongGameActorPtr ActorFactory::CreateCamera(const StrongGameActorPtr& target, 
                                                                  Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT),
                                                                  Vector2D<float>(0, 0));
     
-    newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>  >
         (EComponentNames::TransformComponentEnum, transformCompPtr));
 
     auto cameraFollowCompPtr = std::make_shared<CameraFollowComponent>(getNextComponentId(), target, levelSize);
-    newActor->m_componentMap.insert(std::make_pair<EComponentNames, StrongActorComponentPtr>
+    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>  >
         (EComponentNames::CameraFollowComponentEnum, cameraFollowCompPtr));
 
-	m_pEntityList.push_back(newActor);
+	m_pEntityVec.push_back(newActor);
 
 	return newActor;
 }

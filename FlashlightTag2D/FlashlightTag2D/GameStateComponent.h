@@ -3,6 +3,11 @@
 #include "GameTypes.h"
 #include "Vector2D.h"
 
+#include <string>
+#include <memory>
+
+class Behavior;
+
 // This is a class that would be good for actor type, health, status effects, game role, etc.
 class GameStateComponent :
 	public ActorComponent

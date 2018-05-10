@@ -1,5 +1,4 @@
 #pragma once
-#include "Types.h"
 #include "PhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
 #include "Vector2D.h"
@@ -16,7 +15,7 @@ public:
 	void Update(float deltaTime);
 	void ResolveCollisions(float deltaTime);
 
-    void AddPhysicsComponentPtr(StrongPhysicsComponentPtr comp);
+    void AddPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> comp);
 
     void SetLevelSize(Vector2D<int> levelSize) { m_levelSize = levelSize; }
 
@@ -49,7 +48,7 @@ private:
 
     // TODO: Cache changes
     //std::vector<PhysicsComponent> m_physicsComponentVec;
-    std::vector<StrongPhysicsComponentPtr> m_physicsComponentPtrVec;
+    std::vector<std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrVec;
 
     Vector2D<int> m_levelSize;
 

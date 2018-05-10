@@ -46,7 +46,7 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
-void GraphicsManager::AddGraphicsComponentPtr(StrongGraphicsComponentPtr comp)
+void GraphicsManager::AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp)
 {
     m_graphicsComponentPtrVec.push_back(comp);
 };
@@ -120,14 +120,14 @@ bool GraphicsManager::initializeRenderData()
 //	}
 //}
 
-void GraphicsManager::AddCamera(StrongGameActorPtr camera)
+void GraphicsManager::AddCamera(std::shared_ptr<GameActor> camera)
 {
     if (m_pCurrentCamera == nullptr)
     {
         m_pCurrentCamera = camera;
     }
 
-    m_pCameraList.push_back(camera);
+    m_pCameraVec.push_back(camera);
 }
 
 void GraphicsManager::Render()

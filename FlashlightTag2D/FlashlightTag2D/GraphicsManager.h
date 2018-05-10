@@ -1,12 +1,14 @@
 #pragma once
-#include "Types.h"
-
 #include <glew.h>
+#include <memory>
 #include "Matrix4.h"
 #include "Shader.h"
 #include "Texture2D.h"
 
 #define GL3_PROTOTYPES 1
+
+class GraphicsComponent;
+class GameActor;
 
 struct SDL_Window;
 
@@ -21,7 +23,7 @@ public:
 
     void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
     
-    void AddGraphicsComponentPtr(StrongGraphicsComponentPtr comp);
+    void AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp);
 
     // TODO: Cache changes
     //void AddGraphicsComponent(GraphicsComponent comp);
@@ -30,7 +32,7 @@ public:
     //void RemoveGraphicsComponent();
 	//void UpdateComponents();
 
-    void AddCamera(StrongGameActorPtr camera);
+    void AddCamera(std::shared_ptr<GameActor> camera);
 
 private:
 	SDL_Window* m_window;
@@ -43,7 +45,7 @@ private:
 	
 	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;
 
-    StrongTexture2DPtr m_backgroundTexture;
+    std::shared_ptr<Texture2D> m_backgroundTexture;
 
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
@@ -51,10 +53,10 @@ private:
     
     // TODO: Cache changes
     //std::vector<GraphicsComponent> m_graphicsComponentVec;
-    std::vector<StrongGraphicsComponentPtr> m_graphicsComponentPtrVec;
+    std::vector<std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrVec;
 
-    StrongGameActorPtrList m_pCameraList;
-    StrongGameActorPtr m_pCurrentCamera;
+    std::vector<std::shared_ptr<GameActor>> m_pCameraVec;
+    std::shared_ptr<GameActor> m_pCurrentCamera;
 
 	int m_lastComponentId;
 	int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };

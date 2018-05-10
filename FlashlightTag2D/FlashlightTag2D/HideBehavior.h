@@ -1,6 +1,5 @@
 #pragma once
 #include "Behavior.h"
-#include "Types.h"
 
 #include <vector>
 
@@ -11,9 +10,9 @@ public:
 	HideBehavior();
 	virtual ~HideBehavior();
 
-	virtual CommandList Update(const GameActor& thisActor) override;
+	virtual std::vector<std::shared_ptr<Command>> Update(const GameActor& thisActor) override;
 
 private:
-    CommandList RunFromSeekers(const StrongTransformComponentPtr thisActorTransformComponent, const std::vector<StrongTransformComponentPtr>& seekers);
+    std::vector<std::shared_ptr<Command>> RunFromSeekers(const std::shared_ptr<TransformComponent> thisActorTransformComponent, const std::vector<std::shared_ptr<TransformComponent>>& seekers);
 };
 

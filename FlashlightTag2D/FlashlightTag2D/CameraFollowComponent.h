@@ -8,17 +8,17 @@ class CameraFollowComponent : public ActorComponent
 {
 public:
 	CameraFollowComponent(ComponentId componentId);
-	CameraFollowComponent(ComponentId componentId, StrongGameActorPtr target, Vector2D<int> levelSize);
+	CameraFollowComponent(ComponentId componentId, std::shared_ptr<GameActor> target, Vector2D<int> levelSize);
 	virtual ~CameraFollowComponent();
 
 	void Update(GameActor& actor, float deltaMs) override;
 
     virtual const EComponentNames GetComponentName() const override;
 
-	void SetTargetActor(StrongGameActorPtr actor);
+	void SetTargetActor(std::shared_ptr<GameActor> actor);
 
 private:
-	StrongGameActorPtr m_pTarget;
+	std::shared_ptr<GameActor> m_pTarget;
     Vector2D<int> m_levelSize;
 };
 

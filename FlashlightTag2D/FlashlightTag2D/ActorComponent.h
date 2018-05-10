@@ -1,6 +1,9 @@
 #pragma once
 #include "Types.h"
 
+#include <memory>
+
+class Actor;
 class GameActor;
 
 class ActorComponent
@@ -18,10 +21,10 @@ public:
 	virtual const EComponentNames GetComponentName() const = 0;
     
 protected:
-	StrongActorPtr m_pOwner;
+	std::shared_ptr<Actor> m_pOwner;
 
 private:
-	void setOwner(StrongActorPtr pOwner) { m_pOwner = pOwner; }
+	void setOwner(std::shared_ptr<Actor> pOwner) { m_pOwner = pOwner; }
 
     ComponentId m_componentId;
 };
