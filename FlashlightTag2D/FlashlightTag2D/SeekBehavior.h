@@ -35,7 +35,10 @@ private:
 
 	std::vector<Vector2D<float>> m_searchPositions;
 	int m_currentSearchPos;
+	Vector2D<float> m_lastSearchActorPos;
 	int m_ticksSinceLastMove;
+	int m_maxTicksSinceLastMove;
 	Vector2D<int> m_levelSize;
+
 };
 

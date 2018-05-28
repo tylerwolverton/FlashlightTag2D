@@ -25,7 +25,7 @@ std::vector<std::shared_ptr<Command>> HideBehavior::Update(const GameActor& this
         return std::vector<std::shared_ptr<Command>>();
     }
 
-    auto actorList = ServiceLocator::GetActorFactory()->GetActorList();
+	std::vector<std::shared_ptr<GameActor>> actorList = ServiceLocator::GetActorFactory()->GetActorList();
 
     std::vector<std::shared_ptr<TransformComponent>> seekerTransformComponents;
     for (auto otherActor : actorList)
@@ -72,25 +72,25 @@ std::vector<std::shared_ptr<Command>> HideBehavior::RunFromSeekers(const std::sh
         totalDistance -= comp->GetPosition() - thisActorTransformComponent->GetPosition();
     }
 
-    std::vector<std::shared_ptr<Command>> commandList;
+    std::vector<std::shared_ptr<Command>> commands;
     
     if (totalDistance.x < -1.0f)
     {
-        commandList.push_back(std::make_shared<MoveLeft>());
+        commands.push_back(std::make_shared<MoveLeft>());
     }
     else if (totalDistance.x > 1.0f)
     {
-        commandList.push_back(std::make_shared<MoveRight>());
+        commands.push_back(std::make_shared<MoveRight>());
     }
 
     if (totalDistance.y < -1.0f)
     {
-        commandList.push_back(std::make_shared<MoveDown>());
+        commands.push_back(std::make_shared<MoveDown>());
     }
     else if (totalDistance.y > 1.0f)
     {
-        commandList.push_back(std::make_shared<MoveUp>());
+        commands.push_back(std::make_shared<MoveUp>());
     }
 
-    return commandList;
+    return commands;
 }

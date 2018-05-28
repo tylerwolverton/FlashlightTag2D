@@ -24,20 +24,20 @@ const EComponentNames BaseLogicComponent::GetComponentName() const
 
 void BaseLogicComponent::MoveUp()
 { 
-	m_pPhysicsComponent->AddForce(Vector2D<float>(0, 2));
+	m_pPhysicsComponent->AddForce(Vector2D<float>(0, m_pPhysicsComponent->GetCurSpeed()));
 }
 
 void BaseLogicComponent::MoveDown() 
 { 
-	m_pPhysicsComponent->AddForce(Vector2D<float>(0, -2));
+	m_pPhysicsComponent->AddForce(Vector2D<float>(0, -m_pPhysicsComponent->GetCurSpeed()));
 }
 
 void BaseLogicComponent::MoveRight() 
 { 
-	m_pPhysicsComponent->AddForce(Vector2D<float>(2, 0));
+	m_pPhysicsComponent->AddForce(Vector2D<float>(m_pPhysicsComponent->GetCurSpeed(), 0));
 }
 
 void BaseLogicComponent::MoveLeft() 
 { 
-	m_pPhysicsComponent->AddForce(Vector2D<float>(-2, 0));
+	m_pPhysicsComponent->AddForce(Vector2D<float>(-m_pPhysicsComponent->GetCurSpeed(), 0));
 }

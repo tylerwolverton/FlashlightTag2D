@@ -28,6 +28,6 @@ private:
 	void add_component(std::shared_ptr<ActorComponent> pComponent);
 
 	ActorId m_id;
-	//ActorComponentMap m_componentMap;
+	ActorComponentMap m_componentMap;
 };
 

@@ -33,13 +33,13 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
     {
-        auto actorName = actorList[i]["name"].GetString();
+        const char* actorName = actorList[i]["name"].GetString();
 		ActorId actorId = getNextActorId();
         // TODO: Cache changes
         //m_entityVec.emplace_back(actorId);
         auto newActor = std::make_shared<GameActor>(actorId);
 
-		std::vector<std::shared_ptr<ActorComponent>>  components = std::vector<std::shared_ptr<ActorComponent>>();
+		auto components = std::vector<std::shared_ptr<ActorComponent>>();
 		if (actorList[i].HasMember("input_component"))
 		{
             newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
@@ -189,11 +189,11 @@ std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<Game
                                                                  Vector2D<float>((float)World::SCREEN_WIDTH, (float)World::SCREEN_HEIGHT),
                                                                  Vector2D<float>(0, 0));
     
-    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>  >
+    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
         (EComponentNames::TransformComponentEnum, transformCompPtr));
 
     auto cameraFollowCompPtr = std::make_shared<CameraFollowComponent>(getNextComponentId(), target, levelSize);
-    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>  >
+    newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
         (EComponentNames::CameraFollowComponentEnum, cameraFollowCompPtr));
 
 	m_pEntityVec.push_back(newActor);

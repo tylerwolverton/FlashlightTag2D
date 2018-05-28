@@ -29,6 +29,9 @@ public:
 	const void SetVelocityToMax();
     void AddVelocity(Vector2D<float> velocity);
 
+	const float GetCurSpeed() const { return m_curSpeed; }
+	const void SetCurSpeed(float curSpeed) { m_curSpeed = curSpeed; }
+
 	const float GetMass() { return m_mass; }
 	const Vector2D<float> GetMomentum() { return m_velocity * m_mass; }
     const float GetRestitution() { return m_restitution; }
@@ -45,6 +48,7 @@ protected:
 	Vector2D<float> m_acceleration;
     Vector2D<float> m_sumOfForces;
     Vector2D<float> m_sumOfImpulses;
+	float m_curSpeed;
 	float m_maxSpeed;
 	float m_mass;
     float m_restitution;

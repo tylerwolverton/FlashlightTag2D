@@ -43,13 +43,13 @@ void World::RunGame()
 
     m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera(m_levelSize));
 
-	auto timeStepMs = 1000.0f / 60; //eg. 60fps
+	float timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
 	float timeCurrentMs = (float)SDL_GetTicks();
 	float timeAccumulatedMs = 0;
 	while (isGameRunning)
 	{
-		auto input = m_pInputManager->ReadInput();
+		uint32_t input = m_pInputManager->ReadInput();
 		if (input & EInputValues::Esc)
 		{
 			isGameRunning = false;
@@ -58,12 +58,12 @@ void World::RunGame()
 
 		timeLastMs = timeCurrentMs;
 		timeCurrentMs = (float)SDL_GetTicks();
-		auto timeDeltaMs = timeCurrentMs - timeLastMs;
+		float timeDeltaMs = timeCurrentMs - timeLastMs;
 		timeAccumulatedMs += timeDeltaMs;
 		while (timeAccumulatedMs >= timeStepMs)
 		{
             auto dt = timeAccumulatedMs / 1000;
-			for (auto entity : m_pActorFactory->GetActorList())
+			for (std::shared_ptr<GameActor> entity : m_pActorFactory->GetActorList())
 			{
 				entity->Update(dt, input); // Should this be in this sub loop?
 			}
