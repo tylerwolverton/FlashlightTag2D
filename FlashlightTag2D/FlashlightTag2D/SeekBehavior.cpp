@@ -2,6 +2,7 @@
 #include "ActorFactory.h"
 #include "ServiceLocator.h"
 #include "TransformComponent.h"
+#include "PhysicsComponent.h"
 #include "GameStateComponent.h"
 #include "Vector2D.h"
 #include "Command.h"
@@ -19,34 +20,33 @@ SeekBehavior::SeekBehavior(const Vector2D<int>& levelSize)
     m_minTagDistance(100.0f),
 	m_currentSearchPos(0),
 	m_ticksSinceLastMove(0),
-	m_maxTicksSinceLastMove(60),
+	m_maxTicksSinceLastMove(20),
 	m_lastSearchActorPos(Vector2D<float>(-50.0f, -50.0f))
 {
-	initSearchPositions();
 }
 
-void SeekBehavior::initSearchPositions()
+void SeekBehavior::initSearchPositions(std::shared_ptr<TransformComponent> transformComp)
 {
 	// Add corners
-	m_searchPositions.push_back(Vector2D<float>(50, 50));
-	m_searchPositions.push_back(Vector2D<float>(m_levelSize.x - 50, 50));
-	m_searchPositions.push_back(Vector2D<float>(50, m_levelSize.y - 50));
-	m_searchPositions.push_back(Vector2D<float>(m_levelSize.x - 50, m_levelSize.y - 50));
+	m_searchPositions.push_back(Vector2D<float>(transformComp->GetSize().x, transformComp->GetSize().y));
+	m_searchPositions.push_back(Vector2D<float>(m_levelSize.x - transformComp->GetSize().x, transformComp->GetSize().y));
+	m_searchPositions.push_back(Vector2D<float>(transformComp->GetSize().x, m_levelSize.y - transformComp->GetSize().y));
+	m_searchPositions.push_back(Vector2D<float>(m_levelSize.x - transformComp->GetSize().x, m_levelSize.y - transformComp->GetSize().y));
 
 	// Add some random nodes in each quadrant
 	for (int i = 0; i < 3; i++)
 	{
-		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.x / 2), 
-													RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.y / 2)));
+		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(transformComp->GetSize().x, m_levelSize.x / 2),
+													RandomNumberGenerator::GetIntWithinRange(transformComp->GetSize().x, m_levelSize.y / 2)));
 
-		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - 50),
-													RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.y / 2)));
+		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - transformComp->GetSize().y),
+													RandomNumberGenerator::GetIntWithinRange(transformComp->GetSize().x, m_levelSize.y / 2)));
 
-		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(50, m_levelSize.x / 2),
-													RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - 50)));
+		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(transformComp->GetSize().x, m_levelSize.x / 2),
+													RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - transformComp->GetSize().y)));
 
-		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - 50),
-													RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - 50)));
+		m_searchPositions.push_back(Vector2D<float>(RandomNumberGenerator::GetIntWithinRange(m_levelSize.x / 2, m_levelSize.x - transformComp->GetSize().y),
+													RandomNumberGenerator::GetIntWithinRange(m_levelSize.y / 2, m_levelSize.y - transformComp->GetSize().y)));
 	}
 
 	m_currentSearchPos = RandomNumberGenerator::GetIntWithinRange(0, m_searchPositions.size() - 1);
@@ -66,6 +66,11 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& this
     {
         return std::vector<std::shared_ptr<Command>>();
     }
+
+	if (m_searchPositions.size() == 0)
+	{
+		initSearchPositions(thisActorTransformComponent);
+	}
 
     if(m_currState == EState::Search)
     {
@@ -108,7 +113,13 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& this
 		}
 		else
 		{
-			return moveInSearchPattern(thisActorTransformComponent);
+			float speed = 1.0;
+			auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
+			if (thisActorPhysicsComponent != nullptr)
+			{
+				speed = thisActorPhysicsComponent->GetCurSpeed();
+			}
+			return moveInSearchPattern(thisActorTransformComponent, speed);
 		}
 	}
 	else if (m_currState == EState::Chase)
@@ -128,7 +139,13 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& this
 		}
 		else if (distToTargetActor < m_maxChaseDistance)
 		{
-			return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent);
+			float speed = 1.0;
+			auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
+			if (thisActorPhysicsComponent != nullptr)
+			{
+				speed = thisActorPhysicsComponent->GetCurSpeed();
+			}
+			return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent, speed);
 		}
 
 		// If we tagged the target or they are too far away, return to search state
@@ -141,32 +158,34 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& this
 }
 
 std::vector<std::shared_ptr<Command>> SeekBehavior::moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformComponent,
-																	  std::shared_ptr<TransformComponent> targetActorTransformComponent)
+																	  std::shared_ptr<TransformComponent> targetActorTransformComponent, 
+																	  float speed)
 {
-	return moveToPosition(thisActorTransformComponent->GetPosition(), targetActorTransformComponent->GetPosition());
+	return moveToPosition(thisActorTransformComponent->GetPosition(), targetActorTransformComponent->GetPosition(), speed);
 }
 
 std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<float> currentPos,
-																   Vector2D<float> targetPos)
+																   Vector2D<float> targetPos, 
+																   float speed)
 {
 	std::vector<std::shared_ptr<Command>> commands;
 
 	Vector2D<float> dist = targetPos - currentPos;
 
-	if (dist.x < -1.0f)
+	if (dist.x < -speed)
 	{
 		commands.push_back(std::make_shared<MoveLeft>());
 	}
-	else if (dist.x > 1.0f)
+	else if (dist.x > speed)
 	{
 		commands.push_back(std::make_shared<MoveRight>());
 	}
 
-	if (dist.y < -1.0f)
+	if (dist.y < -speed)
 	{
 		commands.push_back(std::make_shared<MoveDown>());
 	}
-	else if (dist.y > 1.0f)
+	else if (dist.y > speed)
 	{
 		commands.push_back(std::make_shared<MoveUp>());
 	}
@@ -174,9 +193,9 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<floa
 	return commands;
 }
 
-std::vector<std::shared_ptr<Command>> SeekBehavior::moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent)
+std::vector<std::shared_ptr<Command>> SeekBehavior::moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent, float speed)
 {
-	std::vector<std::shared_ptr<Command>> actions = moveToPosition(thisActorTransformComponent->GetPosition(), m_searchPositions[m_currentSearchPos]);
+	std::vector<std::shared_ptr<Command>> actions = moveToPosition(thisActorTransformComponent->GetPosition(), m_searchPositions[m_currentSearchPos], speed);
 
 	// Check if the actor didn't move, increment search target
 	if ((m_lastSearchActorPos.x - thisActorTransformComponent->GetPosition().x < .1f)

@@ -13,13 +13,15 @@ public:
 
 private:
     std::vector<std::shared_ptr<Command>> moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformComponent,
-                                  std::shared_ptr<TransformComponent> targetActorTransformComponent);
-    std::vector<std::shared_ptr<Command>> moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent);
+															std::shared_ptr<TransformComponent> targetActorTransformComponent,
+														    float speed);
+    std::vector<std::shared_ptr<Command>> moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent, float speed);
 
 	std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<float> currentPos,
-											 Vector2D<float> targetPos);
+																	   Vector2D<float> targetPos,
+																	   float speed);
 
-	void initSearchPositions();
+	void initSearchPositions(std::shared_ptr<TransformComponent> transformComp);
 
     std::shared_ptr<GameActor> m_targetActor;
 

@@ -6,6 +6,8 @@
 #include "GameActor.h"
 #include "Vector2D.h"
 
+#define MAX_NUM_LIGHTS 10
+
 GraphicsManager::GraphicsManager(SDL_Window* window)
 	: m_window(window),
 	  m_lastComponentId(0)
@@ -144,25 +146,33 @@ void GraphicsManager::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
     
     // opengl likes flat arrays...
+	int lightCount = 0;
     std::vector<GLfloat> lightVec;
     std::vector<GLfloat> lightDirVec;
     std::vector<GLfloat> lightPosVec;
-    for (auto graphicsComponent : m_graphicsComponentPtrVec)
-    {
+	for (auto graphicsComponent : m_graphicsComponentPtrVec)
+	{
+		if (lightCount >= MAX_NUM_LIGHTS)
+		{
+			break;
+		}
+
         auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
 
         auto actorPos = actorTransformComponent.GetPosition();
         auto actorSize = actorTransformComponent.GetSize();
         auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
         
-        lightVec.push_back(actorLocation.x); lightVec.push_back(actorLocation.y); lightVec.push_back(250.0f);
+        lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
 
         lightDirVec.push_back(actorTransformComponent.GetDirection().x);
         lightDirVec.push_back(actorTransformComponent.GetDirection().y);
 
         lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
         lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
-    }
+    
+		lightCount++;
+	}
 
     m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
     m_shader.SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
