@@ -18,6 +18,14 @@ void main()
 	bool illuminated = false;
 	for(int i = 0; i < MAX_NUM_LIGHTS; i++)
 	{
+		// Check if this is the special last light
+		if(lightSrc[i].x == -901.0f 
+			&& lightSrc[i].y == -901.0f 
+			&& lightSrc[i].z == -901.0f)
+		{
+			break;
+		}
+
 		//Distance of the current pixel from the light position
 		float distSpot = distance(gl_FragCoord.xy, lightPos[i].xy);
     

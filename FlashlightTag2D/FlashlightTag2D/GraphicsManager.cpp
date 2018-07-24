@@ -135,12 +135,9 @@ void GraphicsManager::AddCamera(std::shared_ptr<GameActor> camera)
 void GraphicsManager::Render()
 {
 	auto cameraTransformComponent = m_pCurrentCamera->GetTransformComponent();
-	if (cameraTransformComponent == nullptr)
-	{
-		return;
-	}
+	if (cameraTransformComponent == nullptr) { return; }
 
-	auto cameraPos = cameraTransformComponent->GetPosition();
+	Vector2D<float> cameraPos = cameraTransformComponent->GetPosition();
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -152,16 +149,13 @@ void GraphicsManager::Render()
     std::vector<GLfloat> lightPosVec;
 	for (auto graphicsComponent : m_graphicsComponentPtrVec)
 	{
-		if (lightCount >= MAX_NUM_LIGHTS)
-		{
-			break;
-		}
+		if (lightCount >= MAX_NUM_LIGHTS) {	break; }
 
         auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
 
-        auto actorPos = actorTransformComponent.GetPosition();
-        auto actorSize = actorTransformComponent.GetSize();
-        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
+		Vector2D<float> actorSize = actorTransformComponent.GetSize();
+		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
         
         lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
 
@@ -174,6 +168,12 @@ void GraphicsManager::Render()
 		lightCount++;
 	}
 
+	// Use a special vector to tell the shader there are no more lights
+	if (lightCount < MAX_NUM_LIGHTS)
+	{
+		lightVec.push_back(-901.0f); lightVec.push_back(-901.0f); lightVec.push_back(-901.0f);
+	}
+
     m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
     m_shader.SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
     m_shader.SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
@@ -184,12 +184,12 @@ void GraphicsManager::Render()
 	{
         auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());   
 
-        auto actorPos = actorTransformComponent.GetPosition();
-		auto actorSize = actorTransformComponent.GetSize();
+		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
+		Vector2D<float> actorSize = actorTransformComponent.GetSize();
 
 		// Prepare transformations
 		Matrix4<GLfloat> model;
-        auto actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
 		model = model.Translate(actorLocation);
 
         // TODO: find a better scaling method
@@ -216,7 +216,6 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
     // Render the background
     if (m_backgroundTexture->GetWidth() != 0)
     {
-
         // Use the whole texture starting from the top left
         Vector2D<GLfloat> textureSize(1.0f, 1.0f);
         Vector2D<GLfloat> texturePos(0, 0);

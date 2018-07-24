@@ -60,8 +60,8 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	auto world = new World(gWindow);
-	world->RunGame();
+	World world(gWindow);
+	world.RunGame();
 
 	close();
 	return 0;
