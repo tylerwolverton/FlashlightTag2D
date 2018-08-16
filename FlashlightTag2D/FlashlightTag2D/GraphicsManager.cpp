@@ -5,6 +5,7 @@
 #include "GameStateComponent.h"
 #include "GameActor.h"
 #include "Vector2D.h"
+#include "Level.h"
 
 #define MAX_NUM_LIGHTS 10
 
@@ -23,19 +24,8 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	// Init GLEW
 	glewExperimental = GL_TRUE;
 	glewInit();
-
-	if (m_shader.Init())
-	{
-		m_shader.UseProgram();
-	}
 	
 	initializeRenderData();
-
-	int windowWidth, windowHeight;
-	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
-	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
-	m_shader.SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
-	m_shader.SetInt("image", 0);
 }
 
 GraphicsManager::~GraphicsManager()
@@ -46,6 +36,23 @@ GraphicsManager::~GraphicsManager()
 
 	// Delete our OpengL context
 	SDL_GL_DeleteContext(m_mainContext);
+}
+
+void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
+{
+	m_backgroundTexture = std::make_shared<Texture2D>(level->GetSpritePath());
+
+	m_shader = level->GetShader();
+	if (m_shader->Init())
+	{
+		m_shader->UseProgram();
+	}
+
+	int windowWidth, windowHeight;
+	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
+	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
+	m_shader->SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
+	m_shader->SetInt("image", 0);
 }
 
 void GraphicsManager::AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp)
@@ -174,9 +181,9 @@ void GraphicsManager::Render()
 		lightVec.push_back(-901.0f); lightVec.push_back(-901.0f); lightVec.push_back(-901.0f);
 	}
 
-    m_shader.SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
-    m_shader.SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
-    m_shader.SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
+    m_shader->SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
+    m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
+    m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
 
     renderBackground(cameraPos);
 
@@ -195,9 +202,9 @@ void GraphicsManager::Render()
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 
-		m_shader.SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader.SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
-		m_shader.SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
+		m_shader->SetMatrix4("model", model.GetPtrToFlattenedData().get());
+		m_shader->SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
+		m_shader->SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
 		
@@ -227,9 +234,9 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         Vector2D<GLfloat> spriteSize((float)m_backgroundTexture->GetWidth(), (float)m_backgroundTexture->GetHeight());
         backgroundModel = backgroundModel.Scale(spriteSize);
 
-        m_shader.SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
-        m_shader.SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-        m_shader.SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+        m_shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+        m_shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        m_shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
 
         glActiveTexture(GL_TEXTURE0);
 

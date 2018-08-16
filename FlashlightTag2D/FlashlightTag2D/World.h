@@ -9,6 +9,7 @@ class InputManager;
 class PhysicsManager;
 class GraphicsManager;
 class ActorFactory;
+class Level;
 
 struct SDL_Window;
 
@@ -28,7 +29,7 @@ public:
 
 private:
 	SDL_Window* m_window;
-    Vector2D<int> m_levelSize;
+	std::shared_ptr<Level> m_curLevel;
 
     std::shared_ptr<InputManager> m_pInputManager;
     std::shared_ptr<PhysicsManager> m_pPhysicsManager;

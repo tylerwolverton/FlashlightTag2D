@@ -9,6 +9,7 @@
 
 class GraphicsComponent;
 class GameActor;
+class Level;
 
 struct SDL_Window;
 
@@ -21,7 +22,8 @@ public:
     void Render();
     void ClearScreen();
 
-    void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
+	void LoadNewLevel(std::shared_ptr<Level> level);
+    //void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
     
     void AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp);
 
@@ -40,7 +42,7 @@ private:
 	// Our opengl context handle
 	SDL_GLContext m_mainContext;
 	
-	Shader m_shader;
+	std::shared_ptr<Shader> m_shader;
 	GLuint VBO, m_quadVAO;
 	
 	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;

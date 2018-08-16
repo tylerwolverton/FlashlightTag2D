@@ -3,7 +3,9 @@
 		"size":{
 			"x":4000, "y":2000 
 		},
-		"sprite":"resources/space_background.png"	
+		"sprite":"resources/space_background.png",
+		"vert_shader":"BasicShader.vert",
+		"frag_shader":"BasicShader.frag"
 	},
 	"actor_list":[
 		{

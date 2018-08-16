@@ -1,6 +1,7 @@
 #include <memory>
 
 #include "World.h"
+#include "Level.h"
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
@@ -38,10 +39,11 @@ void World::RunGame()
 {
 	bool isGameRunning = true;    
 
-    ChangeLevel("resources/levels/level1.json");
+    //ChangeLevel("resources/levels/main_menu.json");
+	ChangeLevel("resources/levels/level1.json");
 	changeGameMode();
 
-    m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera(m_levelSize));
+    m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera(m_curLevel->GetLevelSize()));
 
 	float timeStepMs = 1000.0f / 60; //eg. 60fps
 	float timeLastMs = 0;
@@ -91,12 +93,19 @@ void World::ChangeLevel(const std::string& levelPath)
     fclose(fp);
 
     // set level height and width
-    m_levelSize = Vector2D<int>(d["level"]["size"]["x"].GetInt(), d["level"]["size"]["y"].GetInt());
-    m_pPhysicsManager->SetLevelSize(m_levelSize);
+	int levelWidth = d["level"]["size"]["x"].GetInt();
+	int levelHeight = d["level"]["size"]["y"].GetInt();
+	std::string sprite = d["level"]["sprite"].GetString();
+	std::string vertShader = d["level"]["vert_shader"].GetString();
+	std::string fragShader = d["level"]["frag_shader"].GetString();
 
-    m_pGraphicsManager->SetBackgroundTexture(d["level"]["sprite"].GetString());
+	m_curLevel = std::make_shared<Level>(levelWidth, levelHeight, sprite, vertShader, fragShader);
 
-    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager, m_levelSize);
+    m_pPhysicsManager->SetLevelSize(m_curLevel->GetLevelSize());
+
+    m_pGraphicsManager->LoadNewLevel(m_curLevel);
+
+    m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager, m_curLevel);
 }
 
 void World::changeGameMode()

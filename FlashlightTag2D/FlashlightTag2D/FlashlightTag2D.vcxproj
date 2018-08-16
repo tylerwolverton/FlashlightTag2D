@@ -155,6 +155,7 @@
     <ClCompile Include="HideBehavior.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
@@ -190,6 +192,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
@@ -209,6 +212,10 @@
   <ItemGroup>
     <None Include="BasicShader.frag" />
     <None Include="BasicShader.vert" />
+    <None Include="DarkenMapShader.frag" />
+    <None Include="DarkenMapShader.vert" />
+    <None Include="FlashlightShader.frag" />
+    <None Include="FlashlightShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

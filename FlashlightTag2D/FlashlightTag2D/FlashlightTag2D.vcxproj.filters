@@ -52,8 +52,6 @@
     <ClCompile Include="World.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="SeekBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
@@ -69,7 +67,21 @@
     <ClCompile Include="CameraFollowComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
-    <ClCompile Include="RandomNumberGenerator.cpp" />
+    <ClCompile Include="RandomNumberGenerator.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -135,11 +147,9 @@
     <ClInclude Include="Shader.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Matrix4.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="SeekBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
@@ -158,7 +168,18 @@
     <ClInclude Include="CameraFollowComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
-    <ClInclude Include="RandomNumberGenerator.h" />
+    <ClInclude Include="RandomNumberGenerator.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -179,13 +200,28 @@
     <Filter Include="Game\Behaviors">
       <UniqueIdentifier>{802c2fe3-f3b8-49b5-ad2f-cbe2243229ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Shaders">
+      <UniqueIdentifier>{a2a6730b-7c98-4318-a434-1a991454739b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="BasicShader.vert">
-      <Filter>Game</Filter>
+      <Filter>Game\Shaders</Filter>
     </None>
     <None Include="BasicShader.frag">
-      <Filter>Game</Filter>
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="DarkenMapShader.frag">
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="DarkenMapShader.vert">
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="FlashlightShader.frag">
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="FlashlightShader.vert">
+      <Filter>Game\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

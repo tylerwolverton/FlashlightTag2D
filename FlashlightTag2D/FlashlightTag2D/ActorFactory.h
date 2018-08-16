@@ -10,13 +10,14 @@ class GameActor;
 class GameStateComponent;
 class PhysicsManager;
 class GraphicsManager;
+class Level;
 
 class ActorFactory
 {
 public:
 	ActorFactory();
 	
-    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, const Vector2D<int>& levelSize);
+    void CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, std::shared_ptr<Level> level);
 	std::vector<std::shared_ptr<GameActor>> GetActorList() { return m_pEntityVec; }
 	void ChooseSeekers(int seekerCount);
 

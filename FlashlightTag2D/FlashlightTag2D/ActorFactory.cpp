@@ -16,6 +16,7 @@
 #include "World.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
+#include "Level.h"
 
 #include <random>
 #include <algorithm>
@@ -25,7 +26,7 @@ ActorFactory::ActorFactory()
 {
 }
 
-void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, const Vector2D<int>& levelSize)
+void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, PhysicsManager& physicsMgr, GraphicsManager& graphicsMgr, std::shared_ptr<Level> level)
 {
 	m_lastActorId = 0;
 	//m_entityVec.clear();
@@ -118,7 +119,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
-			std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider, levelSize);
+			std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider, level->GetLevelSize());
             
             newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::GameStateComponentEnum, gameStateCompPtr));
