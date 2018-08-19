@@ -1,11 +1,12 @@
 { 
 	"level":{ 
+		"name":"Level1",
 		"size":{
 			"x":4000, "y":2000 
 		},
 		"sprite":"resources/space_background.png",
-		"vert_shader":"BasicShader.vert",
-		"frag_shader":"BasicShader.frag"
+		"vert_shader":"LevelWithLighting.vert",
+		"frag_shader":"LevelWithLighting.frag"
 	},
 	"actor_list":[
 		{

@@ -12,6 +12,8 @@ public:
 	PhysicsManager();
 	~PhysicsManager();
 
+	void ClearPhysicsComponents();
+
 	void Update(float deltaTime);
 	void ResolveCollisions(float deltaTime);
 

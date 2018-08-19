@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector2D.h"
+#include "document.h"
 //#include "Types.h"
 
 #include <memory>
@@ -37,5 +38,6 @@ private:
     std::shared_ptr<ActorFactory> m_pActorFactory;
 	
 	void changeGameMode();
+	std::shared_ptr<Level> createLevelFromJson(const rapidjson::Value& level);
 };
 

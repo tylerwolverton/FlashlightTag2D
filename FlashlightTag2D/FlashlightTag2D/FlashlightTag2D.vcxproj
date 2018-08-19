@@ -156,7 +156,9 @@
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Level1.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PlayerLogicComponent.cpp" />
@@ -193,6 +195,8 @@
     </ClInclude>
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Level1.h" />
+    <ClInclude Include="MainMenuLevel.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
@@ -210,12 +214,10 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicShader.frag" />
-    <None Include="BasicShader.vert" />
-    <None Include="DarkenMapShader.frag" />
-    <None Include="DarkenMapShader.vert" />
-    <None Include="FlashlightShader.frag" />
-    <None Include="FlashlightShader.vert" />
+    <None Include="Basic.frag" />
+    <None Include="Basic.vert" />
+    <None Include="LevelWithLighting.frag" />
+    <None Include="LevelWithLighting.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

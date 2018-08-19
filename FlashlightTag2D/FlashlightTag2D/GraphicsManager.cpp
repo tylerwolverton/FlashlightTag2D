@@ -7,8 +7,6 @@
 #include "Vector2D.h"
 #include "Level.h"
 
-#define MAX_NUM_LIGHTS 10
-
 GraphicsManager::GraphicsManager(SDL_Window* window)
 	: m_window(window),
 	  m_lastComponentId(0)
@@ -38,21 +36,28 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
+void GraphicsManager::ClearGraphicsComponents()
+{
+	m_graphicsComponentPtrVec.clear();
+}
+
 void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
 {
-	m_backgroundTexture = std::make_shared<Texture2D>(level->GetSpritePath());
+	m_curLevel = level;
 
-	m_shader = level->GetShader();
-	if (m_shader->Init())
+	m_backgroundTexture = std::make_shared<Texture2D>(m_curLevel->GetSpritePath());
+
+	std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+	if (shader->Init())
 	{
-		m_shader->UseProgram();
+		shader->UseProgram();
 	}
 
 	int windowWidth, windowHeight;
 	SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
 	m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
-	m_shader->SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
-	m_shader->SetInt("image", 0);
+	shader->SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
+	shader->SetInt("image", 0);
 }
 
 void GraphicsManager::AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp)
@@ -148,44 +153,49 @@ void GraphicsManager::Render()
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
-    
-    // opengl likes flat arrays...
-	int lightCount = 0;
-    std::vector<GLfloat> lightVec;
-    std::vector<GLfloat> lightDirVec;
-    std::vector<GLfloat> lightPosVec;
-	for (auto graphicsComponent : m_graphicsComponentPtrVec)
-	{
-		if (lightCount >= MAX_NUM_LIGHTS) {	break; }
 
-        auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
+	std::shared_ptr<Shader> shader = m_curLevel->GetShader();
 
-		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-		Vector2D<float> actorSize = actorTransformComponent.GetSize();
-		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
-        
-        lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
+ //   // opengl likes flat arrays...
+	//int lightCount = 0;
+ //   std::vector<GLfloat> lightVec;
+ //   std::vector<GLfloat> lightDirVec;
+ //   std::vector<GLfloat> lightPosVec;
+	//for (auto graphicsComponent : m_graphicsComponentPtrVec)
+	//{
+	//	if (lightCount >= 10) {	break; }
 
-        lightDirVec.push_back(actorTransformComponent.GetDirection().x);
-        lightDirVec.push_back(actorTransformComponent.GetDirection().y);
+ //       auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
 
-        lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
-        lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
-    
-		lightCount++;
-	}
+	//	Vector2D<float> actorPos = actorTransformComponent.GetPosition();
+	//	Vector2D<float> actorSize = actorTransformComponent.GetSize();
+	//	Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+ //       
+ //       lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
 
-	// Use a special vector to tell the shader there are no more lights
-	if (lightCount < MAX_NUM_LIGHTS)
-	{
-		lightVec.push_back(-901.0f); lightVec.push_back(-901.0f); lightVec.push_back(-901.0f);
-	}
+ //       lightDirVec.push_back(actorTransformComponent.GetDirection().x);
+ //       lightDirVec.push_back(actorTransformComponent.GetDirection().y);
 
-    m_shader->SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
-    m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
-    m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
+ //       lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
+ //       lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
+ //   
+	//	lightCount++;
+	//}
+
+	//// Use a special vector to tell the shader there are no more lights
+	//if (lightCount < 10)
+	//{
+	//	lightVec.push_back(-901.0f); lightVec.push_back(-901.0f); lightVec.push_back(-901.0f);
+	//}
+
+ //   shader->SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
+ //   shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
+ //   shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
 
     renderBackground(cameraPos);
+
+	m_curLevel->PrepShaders(m_graphicsComponentPtrVec, cameraPos);
+
 
 	for (auto graphicsComponent : m_graphicsComponentPtrVec)
 	{
@@ -202,9 +212,9 @@ void GraphicsManager::Render()
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 
-		m_shader->SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		m_shader->SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
-		m_shader->SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
+		shader->SetMatrix4("model", model.GetPtrToFlattenedData().get());
+		shader->SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
+		shader->SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
 		
@@ -223,6 +233,8 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
     // Render the background
     if (m_backgroundTexture->GetWidth() != 0)
     {
+		std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+
         // Use the whole texture starting from the top left
         Vector2D<GLfloat> textureSize(1.0f, 1.0f);
         Vector2D<GLfloat> texturePos(0, 0);
@@ -234,13 +246,13 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         Vector2D<GLfloat> spriteSize((float)m_backgroundTexture->GetWidth(), (float)m_backgroundTexture->GetHeight());
         backgroundModel = backgroundModel.Scale(spriteSize);
 
-        m_shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
-        m_shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-        m_shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
-
+        shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+        shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+		
         glActiveTexture(GL_TEXTURE0);
 
-        m_backgroundTexture->BindTexture();
+		m_backgroundTexture->BindTexture();
 
         glBindVertexArray(this->m_quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);

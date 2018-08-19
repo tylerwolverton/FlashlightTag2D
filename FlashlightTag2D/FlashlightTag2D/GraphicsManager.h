@@ -19,6 +19,8 @@ public:
     GraphicsManager(SDL_Window* window);
     ~GraphicsManager();
 
+	void ClearGraphicsComponents();
+
     void Render();
     void ClearScreen();
 
@@ -41,8 +43,9 @@ private:
 
 	// Our opengl context handle
 	SDL_GLContext m_mainContext;
-	
-	std::shared_ptr<Shader> m_shader;
+
+	std::shared_ptr<Level> m_curLevel;
+	//std::shared_ptr<Shader> m_shader;
 	GLuint VBO, m_quadVAO;
 	
 	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;

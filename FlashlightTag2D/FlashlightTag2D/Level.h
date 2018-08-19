@@ -2,7 +2,10 @@
 #include "Vector2D.h"
 
 #include <string>
+#include <vector>
+#include <memory>
 
+class GraphicsComponent;
 class Shader;
 
 class Level
@@ -15,9 +18,9 @@ public:
 	std::shared_ptr<Shader> GetShader() { return m_shader; }
 	std::string GetSpritePath() { return m_spritePath; }
 	
-	void RunShaders();
+	virtual void PrepShaders(std::vector<std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos) = 0;
 
-private:
+protected:
 	Vector2D<int> m_levelSize;
 	std::shared_ptr<Shader> m_shader;
 	std::string m_spritePath;

@@ -2,6 +2,7 @@
 
 #include "World.h"
 #include "Level.h"
+#include "Level1.h"
 #include "InputManager.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
@@ -14,7 +15,6 @@
 #include "RandomNumberGenerator.h"
 
 // from rapidjson
-#include "document.h"
 #include "filereadstream.h"
 
 World::World(SDL_Window* window)
@@ -39,8 +39,8 @@ void World::RunGame()
 {
 	bool isGameRunning = true;    
 
-    //ChangeLevel("resources/levels/main_menu.json");
-	ChangeLevel("resources/levels/level1.json");
+    ChangeLevel("resources/levels/main_menu.json");
+	//ChangeLevel("resources/levels/level1.json");
 	changeGameMode();
 
     m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera(m_curLevel->GetLevelSize()));
@@ -54,8 +54,9 @@ void World::RunGame()
 		uint32_t input = m_pInputManager->ReadInput();
 		if (input & EInputValues::Esc)
 		{
-			isGameRunning = false;
-			break;
+			ChangeLevel("resources/levels/level1.json");
+			//isGameRunning = false;
+			//break;
 		}
 
 		timeLastMs = timeCurrentMs;
@@ -89,26 +90,42 @@ void World::ChangeLevel(const std::string& levelPath)
 
     rapidjson::Document d;
     d.ParseStream(is);
-
     fclose(fp);
 
-    // set level height and width
-	int levelWidth = d["level"]["size"]["x"].GetInt();
-	int levelHeight = d["level"]["size"]["y"].GetInt();
-	std::string sprite = d["level"]["sprite"].GetString();
-	std::string vertShader = d["level"]["vert_shader"].GetString();
-	std::string fragShader = d["level"]["frag_shader"].GetString();
+	m_curLevel = createLevelFromJson(d["level"]);
 
-	m_curLevel = std::make_shared<Level>(levelWidth, levelHeight, sprite, vertShader, fragShader);
-
+	m_pPhysicsManager->ClearPhysicsComponents();
     m_pPhysicsManager->SetLevelSize(m_curLevel->GetLevelSize());
 
+	m_pGraphicsManager->ClearGraphicsComponents();
     m_pGraphicsManager->LoadNewLevel(m_curLevel);
 
+	m_pActorFactory->ClearActors();
     m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager, m_curLevel);
 }
 
 void World::changeGameMode()
 {
 	m_pActorFactory->ChooseSeekers(1);
+}
+
+std::shared_ptr<Level> World::createLevelFromJson(const rapidjson::Value& level)
+{
+	int levelWidth = level["size"]["x"].GetInt();
+	int levelHeight = level["size"]["y"].GetInt();
+	std::string sprite = level["sprite"].GetString();
+	std::string vertShader = level["vert_shader"].GetString();
+	std::string fragShader = level["frag_shader"].GetString();
+
+	std::string levelName = level["name"].GetString();
+	if (levelName == "Level1")
+	{
+		return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+	}
+	else if (levelName == "MainMenu")
+	{
+		return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+	}
+
+	return nullptr;
 }

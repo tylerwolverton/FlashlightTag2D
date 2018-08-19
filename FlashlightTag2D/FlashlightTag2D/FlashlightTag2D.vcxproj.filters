@@ -82,6 +82,12 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Level1.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuLevel.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -180,6 +186,12 @@
     <ClInclude Include="stb_image.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Level1.h">
+      <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuLevel.h">
+      <Filter>Game\Levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -203,24 +215,21 @@
     <Filter Include="Game\Shaders">
       <UniqueIdentifier>{a2a6730b-7c98-4318-a434-1a991454739b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Levels">
+      <UniqueIdentifier>{10fec384-f64d-4b93-ac8d-ac9ebc58db92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicShader.vert">
+    <None Include="LevelWithLighting.frag">
       <Filter>Game\Shaders</Filter>
     </None>
-    <None Include="BasicShader.frag">
+    <None Include="LevelWithLighting.vert">
       <Filter>Game\Shaders</Filter>
     </None>
-    <None Include="DarkenMapShader.frag">
+    <None Include="Basic.frag">
       <Filter>Game\Shaders</Filter>
     </None>
-    <None Include="DarkenMapShader.vert">
-      <Filter>Game\Shaders</Filter>
-    </None>
-    <None Include="FlashlightShader.frag">
-      <Filter>Game\Shaders</Filter>
-    </None>
-    <None Include="FlashlightShader.vert">
+    <None Include="Basic.vert">
       <Filter>Game\Shaders</Filter>
     </None>
   </ItemGroup>

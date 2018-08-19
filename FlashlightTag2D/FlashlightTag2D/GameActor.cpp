@@ -32,6 +32,8 @@ GameActor::GameActor(ActorId actorId)
 
 GameActor::~GameActor()
 {
+	m_componentMap.clear();
+	m_pCommands.reset();
 }
 
 void GameActor::Update(float deltaMs, uint32_t input)

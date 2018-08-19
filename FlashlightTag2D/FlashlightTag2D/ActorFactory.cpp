@@ -163,6 +163,11 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
     }
 }
 
+void ActorFactory::ClearActors()
+{
+	m_pEntityVec.clear();
+}
+
 void ActorFactory::ChooseSeekers(int seekerCount)
 {
 	std::random_device rd;

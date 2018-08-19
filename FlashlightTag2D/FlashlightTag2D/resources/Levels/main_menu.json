@@ -1,9 +1,12 @@
 { 
 	"level":{ 
+		"name":"MainMenu",
 		"size":{
 			"x":4000, "y":2000 
 		},
-		"sprite":"resources/space_background.png"	
+		"sprite":"resources/space_background.png",
+		"vert_shader":"Basic.vert",
+		"frag_shader":"Basic.frag"	
 	},
 	"actor_list":[
 		{

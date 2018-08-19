@@ -22,6 +22,11 @@ CameraFollowComponent::~CameraFollowComponent()
 
 void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
 {
+	if (m_pTarget == nullptr)
+	{
+		return;
+	}
+
 	std::shared_ptr<TransformComponent> actorTransformComponent = actor.GetTransformComponent();
     std::shared_ptr<TransformComponent> targetTransformComponent = m_pTarget->GetTransformComponent();
 	if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)

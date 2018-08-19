@@ -11,8 +11,3 @@ Level::Level(int levelWidth, int levelHeight, std::string spritePath, std::strin
 Level::~Level()
 {
 }
-
-void Level::RunShaders()
-{
-
-}

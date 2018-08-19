@@ -14,6 +14,11 @@ PhysicsManager::~PhysicsManager()
 {
 }
 
+void PhysicsManager::ClearPhysicsComponents()
+{
+	m_physicsComponentPtrVec.clear();
+}
+
 void PhysicsManager::Update(float deltaTime)
 {
 	ResolveCollisions(deltaTime);
