@@ -1,6 +1,6 @@
 #pragma once
 #include "GameActor.h"
-#include "BaseLogicComponent.h"
+#include "LogicComponent.h"
 
 class Command
 {
@@ -15,7 +15,7 @@ public:
 	virtual ~MoveUp() {}
 	virtual void Execute(GameActor& actor)
 	{
-		auto behaviorComponent = actor.GetBaseLogicComponent();
+		auto behaviorComponent = actor.GetLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
 			behaviorComponent->MoveUp();
@@ -29,7 +29,7 @@ public:
 	virtual ~MoveDown() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetBaseLogicComponent();
+        auto behaviorComponent = actor.GetLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
 			behaviorComponent->MoveDown();
@@ -43,7 +43,7 @@ public:
 	virtual ~MoveRight() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetBaseLogicComponent();
+        auto behaviorComponent = actor.GetLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
 			behaviorComponent->MoveRight();
@@ -57,10 +57,24 @@ public:
 	virtual ~MoveLeft() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetBaseLogicComponent();
+        auto behaviorComponent = actor.GetLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
 			behaviorComponent->MoveLeft();
+		}
+	};
+};
+
+class StartGame : public Command
+{
+public:
+	virtual ~StartGame() {}
+	virtual void Execute(GameActor& actor)
+	{
+		auto behaviorComponent = actor.GetLogicComponent();
+		if (behaviorComponent != nullptr)
+		{
+			behaviorComponent->StartGame();
 		}
 	};
 };

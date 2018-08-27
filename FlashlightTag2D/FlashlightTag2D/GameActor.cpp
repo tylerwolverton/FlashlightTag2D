@@ -1,7 +1,7 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "TransformComponent.h"
-#include "BaseLogicComponent.h"
+#include "LogicComponent.h"
 #include "InputComponent.h"
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
@@ -53,7 +53,7 @@ void GameActor::Update(float deltaMs, uint32_t input)
     m_pCommands->clear();
     
     updateComponent(EComponentNames::PhysicsComponentEnum, deltaMs);
-    updateComponent(EComponentNames::BaseLogicComponentEnum, deltaMs);
+    updateComponent(EComponentNames::LogicComponentEnum, deltaMs);
     updateComponent(EComponentNames::GraphicsComponentEnum, deltaMs);
     updateComponent(EComponentNames::GameStateComponentEnum, deltaMs);
 }
@@ -89,15 +89,15 @@ std::shared_ptr<AIComponent> GameActor::GetAIComponent() const
 	return std::dynamic_pointer_cast<AIComponent>(component);
 }
 
-std::shared_ptr<BaseLogicComponent> GameActor::GetBaseLogicComponent() const
+std::shared_ptr<LogicComponent> GameActor::GetLogicComponent() const
 {
-	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::BaseLogicComponentEnum);
+	std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LogicComponentEnum);
 	if (component == nullptr)
 	{
 		return nullptr;
 	}
 
-	return std::dynamic_pointer_cast<BaseLogicComponent>(component);
+	return std::dynamic_pointer_cast<LogicComponent>(component);
 }
 
 std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowComponent() const

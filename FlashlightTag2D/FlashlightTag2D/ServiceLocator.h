@@ -2,6 +2,7 @@
 #include <memory>
 
 class ActorFactory;
+class LevelFactory;
 class InputManager;
 class PhysicsManager;
 class GraphicsManager;
@@ -11,6 +12,7 @@ class ServiceLocator
 {
 public:
 	static std::shared_ptr<ActorFactory> GetActorFactory() { return m_actorFactoryService; }
+	static std::shared_ptr<LevelFactory> GetLevelFactory() { return m_levelFactoryService; }
 	static std::shared_ptr<InputManager> GetInputManager() { return m_inputManagerService; }
 	static std::shared_ptr<PhysicsManager> GetPhysicsManager() { return m_physicsManagerService; }
 	static std::shared_ptr<GraphicsManager> GetGraphicsManager() { return m_graphicsManagerService; }
@@ -19,6 +21,10 @@ public:
 	static void Provide(std::shared_ptr<ActorFactory> service)
 	{
 		m_actorFactoryService = service;
+	}
+	static void Provide(std::shared_ptr<LevelFactory> service)
+	{
+		m_levelFactoryService = service;
 	}
 	static void Provide(std::shared_ptr<InputManager> service)
 	{
@@ -39,6 +45,7 @@ public:
 
 private:
 	static std::shared_ptr<ActorFactory> m_actorFactoryService;
+	static std::shared_ptr<LevelFactory> m_levelFactoryService;
 	static std::shared_ptr<InputManager> m_inputManagerService;
 	static std::shared_ptr<PhysicsManager> m_physicsManagerService;
 	static std::shared_ptr<GraphicsManager> m_graphicsManagerService;

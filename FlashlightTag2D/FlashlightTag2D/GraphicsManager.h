@@ -19,7 +19,7 @@ public:
     GraphicsManager(SDL_Window* window);
     ~GraphicsManager();
 
-	void ClearGraphicsComponents();
+	void Reset();
 
     void Render();
     void ClearScreen();

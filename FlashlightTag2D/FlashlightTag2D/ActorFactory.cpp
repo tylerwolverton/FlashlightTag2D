@@ -5,8 +5,10 @@
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "TransformComponent.h"
-#include "BaseLogicComponent.h"
+#include "CharacterLogicComponent.h"
+#include "MainMenuLogicComponent.h"
 #include "InputComponent.h"
+#include "MainMenuInputComponent.h"
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
@@ -45,6 +47,11 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		{
             newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                 (EComponentNames::InputComponentEnum, std::make_shared<InputComponent>(getNextComponentId())));
+		}
+		if (actorList[i].HasMember("main_menu_input_component"))
+		{
+			newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
+				(EComponentNames::InputComponentEnum, std::make_shared<MainMenuInputComponent>(getNextComponentId())));
 		}
         if (actorList[i].HasMember("ai_component"))
         {
@@ -91,13 +98,19 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
                 newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
                     (EComponentNames::PhysicsComponentEnum, physicsCompPtr));
 
-                if (actorList[i].HasMember("base_logic_component"))
+                if (actorList[i].HasMember("character_logic_component"))
 				{
                     newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
-                        (EComponentNames::BaseLogicComponentEnum, std::make_shared<BaseLogicComponent>(getNextComponentId(), physicsCompPtr)));
+                        (EComponentNames::LogicComponentEnum, std::make_shared<CharacterLogicComponent>(getNextComponentId(), physicsCompPtr)));
 				}
 			}
-			
+
+			if (actorList[i].HasMember("main_menu_logic_component"))
+			{
+				newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
+					(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId())));
+			}
+
 			if (actorList[i].HasMember("graphics_component"))
 			{
                 std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(getNextComponentId(),

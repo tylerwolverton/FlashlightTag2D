@@ -32,6 +32,14 @@ uint32_t InputManager::ReadInput() const
 	{
 		input |= EInputValues::D;
 	}
+	if (keys[SDL_SCANCODE_SPACE])
+	{
+		input |= EInputValues::Space;
+	}
+	if (keys[SDL_SCANCODE_RETURN])
+	{
+		input |= EInputValues::Return;
+	}
 
 	//Handle events on queue
 	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present

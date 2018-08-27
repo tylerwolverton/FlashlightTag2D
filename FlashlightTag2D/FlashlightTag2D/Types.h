@@ -24,7 +24,7 @@ enum EComponentNames
 {
 	NoneComponentEnum,
 	AIComponentEnum,
-	BaseLogicComponentEnum,
+	LogicComponentEnum,
 	CameraFollowComponentEnum,
 	GraphicsComponentEnum,
 	InputComponentEnum,
@@ -42,7 +42,9 @@ enum EInputValues : uint32_t
 	W = 1 << 1,
 	A = 1 << 2,
 	S = 1 << 3,
-	D = 1 << 4
+	D = 1 << 4,
+	Space = 1 << 5,
+	Return = 1 << 6
 };
 
 // ----------------------------------- templates ----------------------------------------------------------------------

@@ -11,6 +11,9 @@ InputComponent::InputComponent(ComponentId componentId)
 	m_pButtonS = std::make_shared<MoveDown>();
 	m_pButtonD = std::make_shared<MoveRight>();
 	m_pButtonA = std::make_shared<MoveLeft>();
+	m_pButtonEsc = std::make_shared<MoveLeft>();
+	m_pButtonSpace = std::make_shared<MoveLeft>();
+	m_pButtonReturn = std::make_shared<MoveLeft>();
 }
 
 InputComponent::~InputComponent()
@@ -40,6 +43,14 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	if (actor.GetInput() & EInputValues::Esc)
 	{
 		commandList.push_back(m_pButtonEsc);
+	}
+	if (actor.GetInput() & EInputValues::Space)
+	{
+		commandList.push_back(m_pButtonSpace);
+	}
+	if (actor.GetInput() & EInputValues::Return)
+	{
+		commandList.push_back(m_pButtonReturn);
 	}
 
 	actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandList));

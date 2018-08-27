@@ -11,10 +11,12 @@
 	"actor_list":[
 		{
 			"name": "Play", 
+			"main_menu_input_component":{},
 			"transform_component":{
-				"position":{"x":500, "y":500},
-				"size":{"x":800, "y":500}
+				"position":{"x":550, "y":700},
+				"size":{"x":400, "y":200}
 			},
+			"main_menu_logic_component":{},
 			"graphics_component":{
 				"sprite": "resources/MainMenu/play.png",
 				"animation_speed":500 
@@ -23,8 +25,8 @@
 		{
 			"name": "Exit", 
 			"transform_component":{
-				"position":{"x":500, "y":1500},
-				"size":{"x":800, "y":500}
+				"position":{"x":550, "y":350},
+				"size":{"x":400, "y":200}
 			},
 			"graphics_component":{
 				"sprite": "resources/MainMenu/exit.png",

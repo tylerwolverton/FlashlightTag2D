@@ -36,9 +36,11 @@ GraphicsManager::~GraphicsManager()
 	SDL_GL_DeleteContext(m_mainContext);
 }
 
-void GraphicsManager::ClearGraphicsComponents()
+void GraphicsManager::Reset()
 {
 	m_graphicsComponentPtrVec.clear();
+	m_pCameraVec.clear();
+	m_pCurrentCamera = nullptr;
 }
 
 void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)

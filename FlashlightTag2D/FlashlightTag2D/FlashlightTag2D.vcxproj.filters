@@ -10,9 +10,6 @@
     <ClCompile Include="AIComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="BaseLogicComponent.cpp">
-      <Filter>Engine\Components</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicsComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
@@ -42,9 +39,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerLogicComponent.cpp">
-      <Filter>Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerPhysicsComponent.cpp">
       <Filter>Game\Components</Filter>
@@ -88,6 +82,21 @@
     <ClCompile Include="MainMenuLevel.cpp">
       <Filter>Game\Levels</Filter>
     </ClCompile>
+    <ClCompile Include="LevelFactory.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuInputComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterLogicComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuLogicComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -103,9 +112,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="AIComponent.h">
-      <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseLogicComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsComponent.h">
@@ -136,9 +142,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="PlayerPhysicsComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerLogicComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="Types.h">
@@ -191,6 +194,21 @@
     </ClInclude>
     <ClInclude Include="MainMenuLevel.h">
       <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelFactory.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuInputComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterLogicComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicComponent.h">
+      <Filter>Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuLogicComponent.h">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

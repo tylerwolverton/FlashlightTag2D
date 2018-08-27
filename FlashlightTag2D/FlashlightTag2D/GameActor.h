@@ -7,7 +7,7 @@
 class Command;
 class ActorComponent;
 class AIComponent;
-class BaseLogicComponent;
+class LogicComponent;
 class CameraFollowComponent;
 class GraphicsComponent;
 class InputComponent;
@@ -28,7 +28,7 @@ public:
     virtual void Update(float delatMs, uint32_t input = 0);
         
     std::shared_ptr<AIComponent>             GetAIComponent() const;
-    std::shared_ptr<BaseLogicComponent>	     GetBaseLogicComponent() const;
+    std::shared_ptr<LogicComponent>	     GetLogicComponent() const;
     std::shared_ptr<CameraFollowComponent>   GetCameraFollowComponent() const;
     std::shared_ptr<GraphicsComponent>	     GetGraphicsComponent() const;
     std::shared_ptr<InputComponent>	         GetInputComponent() const;
