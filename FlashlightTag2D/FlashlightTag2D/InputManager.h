@@ -6,6 +6,9 @@ public:
 	InputManager();
 	~InputManager();
 
-	uint32_t ReadInput() const;
+	const uint32_t ReadInput() const;
+
+private:
+	uint32_t lastTickCount;
 };
 

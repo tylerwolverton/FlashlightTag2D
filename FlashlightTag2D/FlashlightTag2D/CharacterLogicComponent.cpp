@@ -2,7 +2,8 @@
 #include "PhysicsComponent.h"
 
 CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
-	: LogicComponent(componentId, physicsComponent)
+	: LogicComponent(componentId),
+	  m_pPhysicsComponent(physicsComponent)
 {
 }
 

@@ -40,7 +40,7 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 		ActorId actorId = getNextActorId();
         // TODO: Cache changes
         //m_entityVec.emplace_back(actorId);
-        auto newActor = std::make_shared<GameActor>(actorId);
+        auto newActor = std::make_shared<GameActor>(actorId, actorName);
 
 		auto components = std::vector<std::shared_ptr<ActorComponent>>();
 		if (actorList[i].HasMember("input_component"))
@@ -105,12 +105,6 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 				}
 			}
 
-			if (actorList[i].HasMember("main_menu_logic_component"))
-			{
-				newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
-					(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId())));
-			}
-
 			if (actorList[i].HasMember("graphics_component"))
 			{
                 std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(getNextComponentId(),
@@ -129,6 +123,34 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 									                                 actorList[i]["graphics_component"]["animation_speed"].GetInt(),
 									                                 transformCompPtr);*/
 			}
+		}
+		if (actorList[i].HasMember("main_menu_logic_component"))
+		{
+			auto buttonGraphicsCompsMapPtr = std::make_shared<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>>();
+			const rapidjson::Value& buttons = actorList[i]["main_menu_logic_component"]["buttons"];
+			for (rapidjson::SizeType i = 0; i < buttons.Size(); i++)
+			{
+				// TODO: Optimize this
+				for (auto actor : m_pEntityVec)
+				{
+					if (actor->GetActorName() != buttons[i]["name"].GetString())
+					{
+						continue;
+					}
+
+					std::shared_ptr<GraphicsComponent> graphicsComp = actor->GetGraphicsComponent();
+					if (graphicsComp == nullptr)
+					{
+						continue;
+					}
+
+					buttonGraphicsCompsMapPtr->emplace(actor->GetActorName(), graphicsComp);
+					break;
+				}
+			}
+
+			newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
+				(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonGraphicsCompsMapPtr)));
 		}
 		if (actorList[i].HasMember("game_state_component"))
 		{
@@ -201,7 +223,7 @@ std::shared_ptr<GameActor> ActorFactory::CreateCamera(const Vector2D<int>& level
 
 std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<GameActor>& target, const Vector2D<int>& levelSize)
 {
-    auto newActor = std::make_shared<GameActor>(getNextActorId());
+    auto newActor = std::make_shared<GameActor>(getNextActorId(), "Camera");
     
     auto transformCompPtr = std::make_shared<TransformComponent>(getNextComponentId(),
                                                                  Vector2D<float>(0.0f, 0.0f),

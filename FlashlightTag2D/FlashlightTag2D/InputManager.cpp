@@ -4,6 +4,7 @@
 #include "Types.h"
 
 InputManager::InputManager()
+	: lastTickCount(0)
 {
 }
 
@@ -11,7 +12,7 @@ InputManager::~InputManager()
 {
 }
 
-uint32_t InputManager::ReadInput() const
+const uint32_t InputManager::ReadInput() const
 {
 	uint32_t input = 0;
 

@@ -11,26 +11,46 @@
 	"actor_list":[
 		{
 			"name": "Play", 
-			"main_menu_input_component":{},
 			"transform_component":{
-				"position":{"x":550, "y":700},
-				"size":{"x":400, "y":200}
+				"position":{"x":960, "y":340},
+				"size":{"x":200, "y":100}
 			},
-			"main_menu_logic_component":{},
 			"graphics_component":{
-				"sprite": "resources/MainMenu/play.png",
+				"sprite": "resources/MainMenu/playSelected.png",
+				"animation_speed":500 
+			}
+		},
+		{
+			"name": "Controls", 
+			"transform_component":{
+				"position":{"x":960, "y":220},
+				"size":{"x":200, "y":100}
+			},
+			"graphics_component":{
+				"sprite": "resources/MainMenu/controls.png",
 				"animation_speed":500 
 			}
 		},
 		{
 			"name": "Exit", 
 			"transform_component":{
-				"position":{"x":550, "y":350},
-				"size":{"x":400, "y":200}
+				"position":{"x":960, "y":100},
+				"size":{"x":200, "y":100}
 			},
 			"graphics_component":{
 				"sprite": "resources/MainMenu/exit.png",
 				"animation_speed":500 
+			}
+		},
+		{
+			"name": "Controller", 
+			"main_menu_input_component":{},
+			"main_menu_logic_component":{
+				"buttons":[
+					{"name": "Play"},
+					{"name": "Controls"},
+					{"name": "Exit"}
+				]
 			}
 		}
 	]

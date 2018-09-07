@@ -1,6 +1,7 @@
 #pragma once
 #include "ActorComponent.h"
 #include "Vector2D.h"
+#include "Texture2D.h"
 
 #include <string>
 #include <memory>
@@ -8,7 +9,7 @@
 
 class GameActor;
 class TransformComponent;
-class Texture2D;
+//class Texture2D;
 struct SDL_Texture;
 
 class GraphicsComponent :
@@ -24,6 +25,7 @@ public:
 	virtual const EComponentNames GetComponentName() const override;
 
     std::shared_ptr<Texture2D> GetTexture() { return m_texture; };
+	void SetTexture(std::string texturePath) { m_texture = std::make_shared<Texture2D>(texturePath); };
     std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; };
 	Vector2D<float> GetImageOffset() { return m_imageOffset; };
 	Vector2D<GLfloat> GetTexturePos();

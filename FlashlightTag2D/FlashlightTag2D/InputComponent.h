@@ -9,7 +9,7 @@ public:
 	InputComponent(ComponentId componentId);
 	virtual ~InputComponent();
 
-	void Update(GameActor& actor, float deltaMs) override;
+	virtual void Update(GameActor& actor, float deltaMs) override;
 
 	virtual const EComponentNames GetComponentName() const override;
 

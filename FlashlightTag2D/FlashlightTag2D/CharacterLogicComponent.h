@@ -12,5 +12,7 @@ public:
 	void MoveDown() override;
 	void MoveRight() override;
 	void MoveLeft() override;
-};
 
+private:
+	std::shared_ptr<PhysicsComponent> m_pPhysicsComponent;
+};

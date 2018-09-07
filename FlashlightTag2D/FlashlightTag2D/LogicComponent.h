@@ -7,7 +7,7 @@ class LogicComponent :
 	public ActorComponent
 {
 public:
-    LogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent);
+	LogicComponent(ComponentId componentId);// , std::shared_ptr<PhysicsComponent> physicsComponent);
     LogicComponent(int actorId, ComponentId componentId);
     virtual ~LogicComponent();
 
@@ -22,7 +22,7 @@ public:
 	virtual const EComponentNames GetComponentName() const override;
 
 protected:
-	std::shared_ptr<PhysicsComponent> m_pPhysicsComponent;
+	//std::shared_ptr<PhysicsComponent> m_pPhysicsComponent;
 
 private:
     int m_actorId;

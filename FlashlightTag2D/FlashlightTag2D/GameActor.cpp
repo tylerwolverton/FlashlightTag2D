@@ -10,16 +10,18 @@
 #include "GameStateComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ActorId actorId, ComponentMap components)
+GameActor::GameActor(ActorId actorId, std::string actorName, ComponentMap components)
     : m_actorId(actorId),
-    m_componentMap(components)
+	  m_actorName(actorName),
+	  m_componentMap(components)
 {
     m_pCommands = std::make_shared<std::vector<std::shared_ptr<Command>>>();
 }
 
 // TODO: Cache changes
-GameActor::GameActor(ActorId actorId)
-	: m_actorId(actorId)
+GameActor::GameActor(ActorId actorId, std::string actorName)
+	: m_actorId(actorId),
+	  m_actorName(actorName)
 {
 	m_pCommands = std::make_shared<std::vector<std::shared_ptr<Command>>>();
 

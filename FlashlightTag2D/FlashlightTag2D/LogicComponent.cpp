@@ -1,9 +1,9 @@
 #include "LogicComponent.h"
 #include "PhysicsComponent.h"
 
-LogicComponent::LogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
-	: ActorComponent(componentId),
-      m_pPhysicsComponent(physicsComponent)
+LogicComponent::LogicComponent(ComponentId componentId)//, std::shared_ptr<PhysicsComponent> physicsComponent)
+	: ActorComponent(componentId)
+      //m_pPhysicsComponent(physicsComponent)
 {
 }
 
