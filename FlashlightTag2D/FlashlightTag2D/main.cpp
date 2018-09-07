@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "World.h"
+#include "ServiceLocator.h"
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -60,8 +61,10 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	World world(gWindow);
-	world.RunGame();
+	std::shared_ptr<World> world = std::make_shared<World>(gWindow);
+
+	ServiceLocator::Provide(world);
+	world->RunGame();
 
 	close();
 	return 0;

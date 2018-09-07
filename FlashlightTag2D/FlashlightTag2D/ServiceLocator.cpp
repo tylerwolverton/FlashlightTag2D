@@ -1,5 +1,6 @@
 #include "ServiceLocator.h"
 
+std::shared_ptr<World> ServiceLocator::m_worldService = nullptr;
 std::shared_ptr<ActorFactory> ServiceLocator::m_actorFactoryService = nullptr;
 std::shared_ptr<LevelFactory> ServiceLocator::m_levelFactoryService = nullptr;
 std::shared_ptr<InputManager> ServiceLocator::m_inputManagerService = nullptr;

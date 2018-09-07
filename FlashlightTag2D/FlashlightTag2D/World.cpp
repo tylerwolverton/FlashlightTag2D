@@ -36,7 +36,7 @@ World::~World()
 
 void World::RunGame()
 {
-	bool isGameRunning = true;    
+	m_isGameRunning = true;    
 
 	m_pLevelFactory->ChangeLevel(LevelFactory::LevelPaths::MainMenu);
 	changeGameMode();
@@ -45,12 +45,12 @@ void World::RunGame()
 	float timeLastMs = 0;
 	float timeCurrentMs = (float)SDL_GetTicks();
 	float timeAccumulatedMs = 0;
-	while (isGameRunning)
+	while (m_isGameRunning)
 	{
 		uint32_t input = m_pInputManager->ReadInput();
 		if (input & EInputValues::Esc)
 		{
-			isGameRunning = false;
+			m_isGameRunning = false;
 			break;
 		}
 
@@ -73,6 +73,11 @@ void World::RunGame()
 
         m_pGraphicsManager->Render();
 	}
+}
+
+void World::QuitGame()
+{
+	m_isGameRunning = false;
 }
 
 void World::changeGameMode()

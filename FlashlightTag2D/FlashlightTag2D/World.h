@@ -26,9 +26,11 @@ public:
 	virtual ~World();
 
 	void RunGame();
+	void QuitGame();
 
 private:
 	SDL_Window* m_window;
+	bool m_isGameRunning;
 
     std::shared_ptr<InputManager> m_pInputManager;
     std::shared_ptr<PhysicsManager> m_pPhysicsManager;

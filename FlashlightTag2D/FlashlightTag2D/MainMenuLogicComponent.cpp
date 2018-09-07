@@ -3,6 +3,7 @@
 #include "MainMenuLogicComponent.h"
 #include "GraphicsComponent.h"
 #include "ServiceLocator.h"
+#include "World.h"
 #include "LevelFactory.h"
 
 MainMenuLogicComponent::MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>> buttonGraphicsCompMapPtr)
@@ -110,5 +111,11 @@ void MainMenuLogicComponent::StartGame()
 	else
 	{
 		// TODO: Exit Game
+		std::shared_ptr<World> world = ServiceLocator::GetWorld();
+
+		if (world != nullptr)
+		{
+			world->QuitGame();
+		}
 	}
 }
