@@ -42,6 +42,21 @@ const uint32_t InputManager::ReadInput() const
 		input |= EInputValues::Return;
 	}
 
+	int x, y;
+	const Uint8 mouseState = SDL_GetMouseState(&x, &y);
+	if (mouseState & SDL_BUTTON_LEFT)
+	{
+		input |= EInputValues::MouseLeft;
+	}
+	if (mouseState & SDL_BUTTON_RIGHT)
+	{
+		input |= EInputValues::MouseRight;
+	}
+	if (mouseState & SDL_BUTTON_MIDDLE)
+	{
+		input |= EInputValues::MouseMiddle;
+	}
+
 	//Handle events on queue
 	// SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
 	SDL_Event e;

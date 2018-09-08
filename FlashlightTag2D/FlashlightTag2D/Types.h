@@ -44,7 +44,10 @@ enum EInputValues : uint32_t
 	S = 1 << 3,
 	D = 1 << 4,
 	Space = 1 << 5,
-	Return = 1 << 6
+	Return = 1 << 6,
+	MouseLeft = 1 << 7,
+	MouseRight = 1 << 8,
+	MouseMiddle = 1 << 9
 };
 
 // ----------------------------------- templates ----------------------------------------------------------------------
