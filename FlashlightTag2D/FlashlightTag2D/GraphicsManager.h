@@ -37,6 +37,7 @@ public:
 	//void UpdateComponents();
 
     void AddCamera(std::shared_ptr<GameActor> camera);
+	std::shared_ptr<GameActor> GetCurrentCamera() { return m_pCurrentCamera; }
 
 private:
 	SDL_Window* m_window;

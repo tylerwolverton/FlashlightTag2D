@@ -75,6 +75,7 @@
 				"position":{"x":800, "y":600},
 				"size":{"x":24, "y":24}
 			},
+			"input_component":{},
 			"mouse_logic_component":{},
 			"graphics_component":{
 				"sprite": "resources/GUI/black_cursor.png",

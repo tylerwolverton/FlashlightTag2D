@@ -127,10 +127,8 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 
 			if (actorList[i].HasMember("mouse_logic_component"))
 			{
-				std::shared_ptr<MouseLogicComponent> mouseLogicCompPtr = std::make_shared<MouseLogicComponent>(getNextComponentId(), transformCompPtr);
-
 				newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
-					(EComponentNames::LogicComponentEnum, mouseLogicCompPtr));
+					(EComponentNames::LogicComponentEnum, std::make_shared<MouseLogicComponent>(getNextComponentId(), transformCompPtr)));
 			}
 		}
 

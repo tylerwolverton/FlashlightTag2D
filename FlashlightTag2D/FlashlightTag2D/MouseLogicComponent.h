@@ -14,5 +14,6 @@ public:
 
 private:
 	std::shared_ptr<TransformComponent> m_transformComp;
+	std::shared_ptr<TransformComponent> m_cameraTransformComp;
 };
 
