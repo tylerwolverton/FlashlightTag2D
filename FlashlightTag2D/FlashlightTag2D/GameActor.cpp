@@ -38,7 +38,7 @@ GameActor::~GameActor()
 	m_pCommands.reset();
 }
 
-void GameActor::Update(float deltaMs, uint32_t input)
+void GameActor::Update(float deltaMs, InputData input)
 {
     m_input = input;
     updateComponent(EComponentNames::InputComponentEnum, deltaMs);

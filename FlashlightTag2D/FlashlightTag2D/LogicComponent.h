@@ -15,7 +15,8 @@ public:
 	virtual void MoveDown() {}
 	virtual void MoveRight() {}
 	virtual void MoveLeft() {}
-	virtual void StartGame() {}
+	virtual void Select() {}
+	virtual void UpdateMousePosition(Vector2D<int> mousePos) {}
 
 	virtual void Update(GameActor& actor, float deltaMs) {}
 

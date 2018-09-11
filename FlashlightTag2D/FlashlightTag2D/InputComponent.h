@@ -1,7 +1,9 @@
 #pragma once
 #include "ActorComponent.h"
+#include "Vector2D.h"
 
 class Command;
+class UpdateMousePosition;
 
 class InputComponent : public ActorComponent
 {
@@ -21,5 +23,12 @@ protected:
 	std::shared_ptr<Command> m_pButtonEsc;
 	std::shared_ptr<Command> m_pButtonSpace;
 	std::shared_ptr<Command> m_pButtonReturn;
+	std::shared_ptr<Command> m_pMouseButtonRight;
+	std::shared_ptr<Command> m_pMouseButtonLeft;
+	std::shared_ptr<Command> m_pMouseButtonMiddle;
+	std::shared_ptr<UpdateMousePosition> m_pMousePositionMoved;
+
+private:
+	Vector2D<int> m_oldMousePos;
 };
 

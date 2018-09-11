@@ -93,7 +93,7 @@ void MainMenuLogicComponent::MoveDown()
 	}
 }
 
-void MainMenuLogicComponent::StartGame()
+void MainMenuLogicComponent::Select()
 {
 	if (buttons[selectedButtonIdx] == EMenuButtons::Play)
 	{

@@ -1,7 +1,6 @@
 #include <SDL.h>
 
 #include "InputManager.h"
-#include "Types.h"
 
 InputManager::InputManager()
 	: lastTickCount(0)
@@ -12,49 +11,51 @@ InputManager::~InputManager()
 {
 }
 
-const uint32_t InputManager::ReadInput() const
+const InputData InputManager::ReadInput() const
 {
-	uint32_t input = 0;
+	InputData input;
+	input.buttonsPressed = 0;
 
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	if (keys[SDL_SCANCODE_W])
 	{
-		input |= EInputValues::W;
+		input.buttonsPressed |= EInputValues::W;
 	}
 	if (keys[SDL_SCANCODE_A])
 	{
-		input |= EInputValues::A;
+		input.buttonsPressed |= EInputValues::A;
 	}
 	if (keys[SDL_SCANCODE_S])
 	{
-		input |= EInputValues::S;
+		input.buttonsPressed |= EInputValues::S;
 	}
 	if (keys[SDL_SCANCODE_D])
 	{
-		input |= EInputValues::D;
+		input.buttonsPressed |= EInputValues::D;
 	}
 	if (keys[SDL_SCANCODE_SPACE])
 	{
-		input |= EInputValues::Space;
+		input.buttonsPressed |= EInputValues::Space;
 	}
 	if (keys[SDL_SCANCODE_RETURN])
 	{
-		input |= EInputValues::Return;
+		input.buttonsPressed |= EInputValues::Return;
 	}
 
 	int x, y;
 	const Uint8 mouseState = SDL_GetMouseState(&x, &y);
+	input.mousePos = Vector2D<int>(x, y);
 	if (mouseState & SDL_BUTTON_LEFT)
 	{
-		input |= EInputValues::MouseLeft;
+		input.buttonsPressed |= EInputValues::MouseLeft;
 	}
 	if (mouseState & SDL_BUTTON_RIGHT)
 	{
-		input |= EInputValues::MouseRight;
+		input.buttonsPressed |= EInputValues::MouseRight;
 	}
 	if (mouseState & SDL_BUTTON_MIDDLE)
 	{
-		input |= EInputValues::MouseMiddle;
+		input.buttonsPressed |= EInputValues::MouseMiddle;
 	}
 
 	//Handle events on queue
@@ -65,7 +66,7 @@ const uint32_t InputManager::ReadInput() const
 		//User requests quit
 		if (e.type == SDL_QUIT || keys[SDL_SCANCODE_ESCAPE])
 		{
-			input |= EInputValues::Esc;
+			input.buttonsPressed |= EInputValues::Esc;
 		}
 	}
 

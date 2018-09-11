@@ -7,6 +7,7 @@
 #include "TransformComponent.h"
 #include "CharacterLogicComponent.h"
 #include "MainMenuLogicComponent.h"
+#include "MouseLogicComponent.h"
 #include "InputComponent.h"
 #include "MainMenuInputComponent.h"
 #include "GraphicsComponent.h"
@@ -123,7 +124,16 @@ void ActorFactory::CreateActorsFromJSONArray(const rapidjson::Value& actorList, 
 									                                 actorList[i]["graphics_component"]["animation_speed"].GetInt(),
 									                                 transformCompPtr);*/
 			}
+
+			if (actorList[i].HasMember("mouse_logic_component"))
+			{
+				std::shared_ptr<MouseLogicComponent> mouseLogicCompPtr = std::make_shared<MouseLogicComponent>(getNextComponentId(), transformCompPtr);
+
+				newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
+					(EComponentNames::LogicComponentEnum, mouseLogicCompPtr));
+			}
 		}
+
 		if (actorList[i].HasMember("main_menu_logic_component"))
 		{
 			auto buttonGraphicsCompsMapPtr = std::make_shared<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>>();

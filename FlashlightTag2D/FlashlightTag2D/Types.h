@@ -2,6 +2,8 @@
 #include <memory>
 #include <unordered_map>
 
+#include "Vector2D.h"
+
 class ActorComponent;
 
 typedef unsigned long ActorId;
@@ -48,6 +50,13 @@ enum EInputValues : uint32_t
 	MouseLeft = 1 << 7,
 	MouseRight = 1 << 8,
 	MouseMiddle = 1 << 9
+};
+
+class InputData
+{
+public:
+	uint32_t buttonsPressed;
+	Vector2D<int> mousePos;
 };
 
 // ----------------------------------- templates ----------------------------------------------------------------------

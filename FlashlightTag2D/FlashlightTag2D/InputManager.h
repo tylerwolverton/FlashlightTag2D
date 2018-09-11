@@ -1,12 +1,14 @@
 #pragma once
 #include <cstdint>
+#include "Types.h"
+
 class InputManager
 {
 public:
 	InputManager();
 	~InputManager();
 
-	const uint32_t ReadInput() const;
+	const InputData ReadInput() const;
 
 private:
 	uint32_t lastTickCount;

@@ -14,7 +14,7 @@ public:
 
 	void MoveUp() override;
 	void MoveDown() override;
-	void StartGame() override;
+	void Select() override;
 
 private:
 	enum EMenuButtons

@@ -25,7 +25,7 @@ public:
     GameActor(ActorId actorId, std::string actorName);
     virtual ~GameActor();
 
-    virtual void Update(float delatMs, uint32_t input = 0);
+    virtual void Update(float delatMs, InputData input);
         
     std::shared_ptr<AIComponent>             GetAIComponent() const;
     std::shared_ptr<LogicComponent>	         GetLogicComponent() const;
@@ -36,7 +36,7 @@ public:
     std::shared_ptr<TransformComponent>	     GetTransformComponent() const;
 	std::shared_ptr<GameStateComponent>	     GetGameStateComponent() const;
 
-    const uint32_t GetInput() const { return m_input; }
+    const InputData GetInput() const { return m_input; }
 
     void SetCommands(std::shared_ptr<std::vector<std::shared_ptr<Command>>> commands) { m_pCommands = commands; }
 
@@ -48,7 +48,7 @@ private:
     void updateComponent(EComponentNames compName, float deltaMs);
 
     ComponentMap m_componentMap;
-    uint32_t m_input;
+    InputData m_input;
     std::shared_ptr<std::vector<std::shared_ptr<Command>>> m_pCommands;
     ActorId m_actorId;
 	std::string m_actorName;

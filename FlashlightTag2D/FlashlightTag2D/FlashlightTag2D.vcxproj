@@ -162,6 +162,7 @@
     <ClCompile Include="MainMenuInputComponent.cpp" />
     <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="MainMenuLogicComponent.cpp" />
+    <ClCompile Include="MouseLogicComponent.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="MainMenuLevel.h" />
     <ClInclude Include="MainMenuLogicComponent.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="MouseLogicComponent.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />

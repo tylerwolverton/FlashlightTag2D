@@ -47,8 +47,8 @@ void World::RunGame()
 	float timeAccumulatedMs = 0;
 	while (m_isGameRunning)
 	{
-		uint32_t input = m_pInputManager->ReadInput();
-		if (input & EInputValues::Esc)
+		InputData input = m_pInputManager->ReadInput();
+		if (input.buttonsPressed & EInputValues::Esc)
 		{
 			m_isGameRunning = false;
 			break;

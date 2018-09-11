@@ -1,6 +1,7 @@
 #pragma once
 #include "GameActor.h"
 #include "LogicComponent.h"
+#include "Vector2D.h"
 
 class Command
 {
@@ -65,16 +66,34 @@ public:
 	};
 };
 
-class StartGame : public Command
+class Select : public Command
 {
 public:
-	virtual ~StartGame() {}
+	virtual ~Select() {}
 	virtual void Execute(GameActor& actor)
 	{
 		auto behaviorComponent = actor.GetLogicComponent();
 		if (behaviorComponent != nullptr)
 		{
-			behaviorComponent->StartGame();
+			behaviorComponent->Select();
 		}
 	};
+};
+
+class UpdateMousePosition : public Command
+{
+public:
+	virtual ~UpdateMousePosition() {}
+	void SetMousePosition(Vector2D<int> mousePos) { m_mousePos = mousePos; }
+	virtual void Execute(GameActor& actor)
+	{
+		auto behaviorComponent = actor.GetLogicComponent();
+		if (behaviorComponent != nullptr)
+		{
+			behaviorComponent->UpdateMousePosition(m_mousePos);
+		}
+	};
+
+private:
+	Vector2D<int> m_mousePos;
 };

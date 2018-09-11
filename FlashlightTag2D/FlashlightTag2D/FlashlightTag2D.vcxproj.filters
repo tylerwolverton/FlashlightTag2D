@@ -97,6 +97,9 @@
     <ClCompile Include="MainMenuLogicComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="MouseLogicComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -208,6 +211,9 @@
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuLogicComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseLogicComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
