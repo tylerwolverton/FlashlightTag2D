@@ -9,7 +9,7 @@ class ActorComponent;
 typedef unsigned long ActorId;
 typedef unsigned long ComponentId;
 
-static const int ComponentTypeCount = 7;
+static const int ComponentTypeCount = 8;
 
 enum EComponentTypes
 {
@@ -19,7 +19,8 @@ enum EComponentTypes
 	Input,
 	Physics,
 	Transform,
-	GameState
+	GameState,
+    Life
 };
 
 enum EComponentNames
@@ -32,7 +33,8 @@ enum EComponentNames
 	InputComponentEnum,
 	PhysicsComponentEnum,
 	TransformComponentEnum,
-	GameStateComponentEnum
+	GameStateComponentEnum,
+    LifeComponentEnum
 };
 
 typedef std::unordered_map<EComponentNames, std::shared_ptr<ActorComponent>> ComponentMap;

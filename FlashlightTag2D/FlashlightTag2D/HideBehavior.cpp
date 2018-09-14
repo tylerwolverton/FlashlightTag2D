@@ -25,38 +25,38 @@ std::vector<std::shared_ptr<Command>> HideBehavior::Update(const GameActor& this
         return std::vector<std::shared_ptr<Command>>();
     }
 
-	std::vector<std::shared_ptr<GameActor>> actorList = ServiceLocator::GetActorFactory()->GetActorList();
+	//std::vector<std::shared_ptr<GameActor>> actorList = ServiceLocator::GetActorFactory()->GetActorList();
 
-    std::vector<std::shared_ptr<TransformComponent>> seekerTransformComponents;
-    for (auto otherActor : actorList)
-    {
-        auto gameStateComponent = otherActor->GetGameStateComponent();
-        if (gameStateComponent == nullptr)
-        {
-            continue;
-        }
+ //   std::vector<std::shared_ptr<TransformComponent>> seekerTransformComponents;
+ //   for (auto otherActor : actorList)
+ //   {
+ //       auto gameStateComponent = otherActor->GetGameStateComponent();
+ //       if (gameStateComponent == nullptr)
+ //       {
+ //           continue;
+ //       }
 
-        if (gameStateComponent->GetRole() == EGameRole::Seeker)
-        {
-            auto otherActorTransformComponent = otherActor->GetTransformComponent();
-            if (otherActorTransformComponent == nullptr)
-            {
-                continue;
-            }
+ //       if (gameStateComponent->GetRole() == EGameRole::Seeker)
+ //       {
+ //           auto otherActorTransformComponent = otherActor->GetTransformComponent();
+ //           if (otherActorTransformComponent == nullptr)
+ //           {
+ //               continue;
+ //           }
 
-            auto distToOtherActor = (otherActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
-            if (distToOtherActor < 120.0f)
-            {
-                seekerTransformComponents.push_back(otherActorTransformComponent);
-            }
-        }
-    }
+ //           auto distToOtherActor = (otherActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
+ //           if (distToOtherActor < 120.0f)
+ //           {
+ //               seekerTransformComponents.push_back(otherActorTransformComponent);
+ //           }
+ //       }
+ //   }
 
-    //   Seeker found - run away
-    if (seekerTransformComponents.size() != 0)
-    {
-        return RunFromSeekers(thisActorTransformComponent, seekerTransformComponents);
-    }
+ //   //   Seeker found - run away
+ //   if (seekerTransformComponents.size() != 0)
+ //   {
+ //       return RunFromSeekers(thisActorTransformComponent, seekerTransformComponents);
+ //   }
 
     //   Seeker not found - stay or change hiding space
     //actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(Hide()));

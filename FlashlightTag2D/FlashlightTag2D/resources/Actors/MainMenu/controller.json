@@ -1,0 +1,11 @@
+{
+	"name": "Controller", 
+	"main_menu_input_component":{},
+	"main_menu_logic_component":{
+		"buttons":[
+			{"name": "Play"},
+			{"name": "Controls"},
+			{"name": "Exit"}
+		]
+	}
+}

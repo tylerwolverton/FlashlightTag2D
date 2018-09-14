@@ -3,7 +3,6 @@
 
 #include <memory>
 
-class Actor;
 class GameActor;
 
 class ActorComponent
@@ -21,10 +20,10 @@ public:
 	virtual const EComponentNames GetComponentName() const = 0;
     
 protected:
-	std::shared_ptr<Actor> m_pOwner;
+	std::shared_ptr<GameActor> m_pOwner;
 
 private:
-	void setOwner(std::shared_ptr<Actor> pOwner) { m_pOwner = pOwner; }
+	void setOwner(std::shared_ptr<GameActor> pOwner) { m_pOwner = pOwner; }
 
     ComponentId m_componentId;
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include <glew.h>
 #include <memory>
+#include <map>
+#include "Types.h"
 #include "Matrix4.h"
 #include "Shader.h"
 #include "Texture2D.h"
@@ -27,7 +29,8 @@ public:
 	void LoadNewLevel(std::shared_ptr<Level> level);
     //void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
     
-    void AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp);
+    void AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp);
+    void RemoveGraphicsComponentPtr(ComponentId compId);
 
     // TODO: Cache changes
     //void AddGraphicsComponent(GraphicsComponent comp);
@@ -59,7 +62,8 @@ private:
     
     // TODO: Cache changes
     //std::vector<GraphicsComponent> m_graphicsComponentVec;
-    std::vector<std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrVec;
+    //std::vector<std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrVec;
+    std::map<ComponentId, std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrMap;
 
     std::vector<std::shared_ptr<GameActor>> m_pCameraVec;
     std::shared_ptr<GameActor> m_pCurrentCamera;

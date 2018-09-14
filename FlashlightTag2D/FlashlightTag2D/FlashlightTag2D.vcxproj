@@ -145,6 +145,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="CameraFollowComponent.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
+    <ClCompile Include="ProjectilePhysicsComponent.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Command.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
+    <ClInclude Include="ProjectilePhysicsComponent.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="ServiceLocator.h" />

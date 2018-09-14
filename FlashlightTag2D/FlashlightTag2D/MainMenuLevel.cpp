@@ -9,6 +9,6 @@ MainMenuLevel::~MainMenuLevel()
 {
 }
 
-void MainMenuLevel::PrepShaders(std::vector<std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
+void MainMenuLevel::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrMap, Vector2D<float> cameraPos)
 {
 }

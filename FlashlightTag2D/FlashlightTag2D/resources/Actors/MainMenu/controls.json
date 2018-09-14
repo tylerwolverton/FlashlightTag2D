@@ -1,0 +1,11 @@
+{
+	"name": "Controls", 
+	"transform_component":{
+		"position":{"x":960, "y":220},
+		"size":{"x":200, "y":100}
+	},
+	"graphics_component":{
+		"sprite": "resources/MainMenu/controls.png",
+		"animation_speed":500 
+	}
+}

@@ -8,6 +8,7 @@
 #include "AIComponent.h"
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
+#include "LifeComponent.h"
 #include "Command.h"
 
 GameActor::GameActor(ActorId actorId, std::string actorName, ComponentMap components)
@@ -166,4 +167,15 @@ std::shared_ptr<GameStateComponent> GameActor::GetGameStateComponent() const
 	}
 
 	return std::dynamic_pointer_cast<GameStateComponent>(component);
+}
+
+std::shared_ptr<LifeComponent> GameActor::GetLifeComponent() const
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LifeComponentEnum);
+    if (component == nullptr)
+    {
+        return nullptr;
+    }
+
+    return std::dynamic_pointer_cast<LifeComponent>(component);
 }

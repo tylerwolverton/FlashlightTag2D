@@ -3,6 +3,7 @@
 #include "PlayerPhysicsComponent.h"
 #include "Vector2D.h"
 #include <vector>
+#include <map>
 
 class TransformComponent;
 
@@ -17,7 +18,8 @@ public:
 	void Update(float deltaTime);
 	void ResolveCollisions(float deltaTime);
 
-    void AddPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> comp);
+    void AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> comp);
+    void RemovePhysicsComponentPtr(ComponentId compId);
 
     void SetLevelSize(Vector2D<int> levelSize) { m_levelSize = levelSize; }
 
@@ -50,7 +52,8 @@ private:
 
     // TODO: Cache changes
     //std::vector<PhysicsComponent> m_physicsComponentVec;
-    std::vector<std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrVec;
+    //std::vector<std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrVec;
+    std::map<ComponentId, std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrMap;
 
     Vector2D<int> m_levelSize;
 

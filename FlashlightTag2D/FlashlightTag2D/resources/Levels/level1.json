@@ -9,79 +9,8 @@
 		"frag_shader":"LevelWithLighting.frag"
 	},
 	"actor_list":[
-		{
-			"name": "Player", 
-			"input_component":{},
-			"transform_component":{
-				"position":{"x":0, "y":0},
-				"size":{"x":100, "y":100}
-			},
-			"physics_component":{	
-				"type": "player_physics_component",
-				"mass":1.0,
-				"max_speed":10.0,
-				"restitution":0.5
-			},
-			"character_logic_component":{},
-			"graphics_component":{
-				"sprite": "resources/background.png",
-				"animation_speed":500 
-			},
-			"game_state_component":{}
-		},
-		{ 
-			"name": "Enemy", 
-			"ai_component":{},
-			"transform_component":{
-				"position":{"x":300, "y":300},
-				"size":{"x":100, "y":100}
-			},
-			"physics_component":{	
-				"type": "player_physics_component",
-				"mass":1.0,
-				"max_speed":10.0,
-				"restitution":0.5
-			},
-			"character_logic_component":{},
-			"graphics_component":{
-				"sprite": "resources/Untitled.png",
-				"animation_speed":300 
-			},
-			"game_state_component":{}
-		},
-		{ 
-			"name": "Enemy", 
-			"ai_component":{},
-			"transform_component":{
-				"position":{"x":800, "y":600},
-				"size":{"x":100, "y":100}
-			},
-			"physics_component":{
-				"type": "player_physics_component",
-				"mass":1.0,
-				"max_speed":10.0,
-				"restitution":0.5
-			},
-			"character_logic_component":{},
-			"graphics_component":{
-				"sprite": "resources/background.png",
-				"animation_speed":300 
-			},
-			"game_state_component":{}
-		},
-		{ 
-			"name": "Cursor", 
-			"transform_component":{
-				"position":{"x":800, "y":600},
-				"size":{"x":24, "y":24}
-			},
-			"input_component":{},
-			"mouse_logic_component":{},
-			"graphics_component":{
-				"sprite": "resources/GUI/black_cursor.png",
-				"animation_speed":300 
-			},
-			"game_state_component":{}
-		}
+		"resources/Actors/player.json",
+		"resources/Actors/enemy.json",
+		"resources/Actors/cursor.json"
 	]
 }

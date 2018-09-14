@@ -1,4 +1,6 @@
-﻿  MouseLogicComponent.cpp
+﻿  World.cpp
+  MouseLogicComponent.cpp
 c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\mouselogiccomponent.cpp(26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

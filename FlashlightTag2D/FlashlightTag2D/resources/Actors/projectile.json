@@ -1,0 +1,18 @@
+{ 
+	"name": "Projectile", 
+	"transform_component":{
+		"position":{"x":0, "y":0},
+		"size":{"x":24, "y":24}
+	},
+	"physics_component":{	
+		"type": "projectile_physics_component",
+		"mass":.2,
+		"max_speed":20.0,
+		"restitution":0.5
+	},
+	"graphics_component":{
+		"sprite": "resources/GUI/black_cursor.png",
+		"animation_speed":300 
+	},
+	"game_state_component":{}
+}

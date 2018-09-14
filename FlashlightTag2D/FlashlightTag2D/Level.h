@@ -1,8 +1,9 @@
 #pragma once
 #include "Vector2D.h"
+#include "Types.h"
 
 #include <string>
-#include <vector>
+#include <map>
 #include <memory>
 
 class GraphicsComponent;
@@ -18,7 +19,7 @@ public:
 	std::shared_ptr<Shader> GetShader() { return m_shader; }
 	std::string GetSpritePath() { return m_spritePath; }
 	
-	virtual void PrepShaders(std::vector<std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos) = 0;
+	virtual void PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrMap, Vector2D<float> cameraPos) = 0;
 
 protected:
 	Vector2D<int> m_levelSize;

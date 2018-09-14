@@ -100,6 +100,12 @@
     <ClCompile Include="MouseLogicComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectilePhysicsComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeComponent.cpp">
+      <Filter>Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -215,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="MouseLogicComponent.h">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectilePhysicsComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeComponent.h">
+      <Filter>Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

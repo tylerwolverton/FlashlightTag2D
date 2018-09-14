@@ -16,7 +16,8 @@ PhysicsManager::~PhysicsManager()
 
 void PhysicsManager::ClearPhysicsComponents()
 {
-	m_physicsComponentPtrVec.clear();
+    //m_physicsComponentPtrVec.clear();
+    m_physicsComponentPtrMap.clear();
 }
 
 void PhysicsManager::Update(float deltaTime)
@@ -27,21 +28,22 @@ void PhysicsManager::Update(float deltaTime)
 
 void PhysicsManager::ResolveCollisions(float deltaTime)
 {
-	for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
-	{
-        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent->GetTransformComponent();
+    //for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
+    for (auto actorPhysicsComponent : m_physicsComponentPtrMap)
+    {
+        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent.second->GetTransformComponent();
 
-		for (auto innerActorPhysicsComponent : m_physicsComponentPtrVec)
+		for (auto innerActorPhysicsComponent : m_physicsComponentPtrMap)
 		{
-			if (actorPhysicsComponent->GetComponentId() != innerActorPhysicsComponent->GetComponentId())
+			if (actorPhysicsComponent.second->GetComponentId() != innerActorPhysicsComponent.second->GetComponentId())
 			{
-                std::shared_ptr<TransformComponent> innerTransformComponent = innerActorPhysicsComponent->GetTransformComponent();
+                std::shared_ptr<TransformComponent> innerTransformComponent = innerActorPhysicsComponent.second->GetTransformComponent();
 
                 auto collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
 				if (collisionEvent.penetrationDepth < 0)
 				{
                     resolvePenetration(actorTransformComponent, innerTransformComponent, collisionEvent);
-                    resolveCollision(actorPhysicsComponent, innerActorPhysicsComponent, collisionEvent);
+                    resolveCollision(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
                     //actorPhysicsComponent.SignalCollision(*innerActor);
                     //innerActorPhysicsComponent.SignalCollision(*actor);
 				}
@@ -50,9 +52,15 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 	}
 }
 
-void PhysicsManager::AddPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> comp)
+void PhysicsManager::AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> comp)
 {
-    m_physicsComponentPtrVec.push_back(comp);
+    //m_physicsComponentPtrVec.push_back(comp);
+    m_physicsComponentPtrMap.insert(std::make_pair(compId, comp));
+}
+
+void PhysicsManager::RemovePhysicsComponentPtr(ComponentId compId)
+{
+    m_physicsComponentPtrMap.erase(compId);
 }
 
 // TODO: Cache changes
@@ -111,9 +119,9 @@ void PhysicsManager::resolveCollision(std::shared_ptr<PhysicsComponent> actorPhy
 
 void PhysicsManager::moveActorsBackIntoLevel()
 {
-    for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
+    for (auto actorPhysicsComponent : m_physicsComponentPtrMap)
     {
-        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent->GetTransformComponent();
+        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent.second->GetTransformComponent();
         Vector2D<float> newPosition(actorTransformComponent->GetPosition());
         if (newPosition.x - actorTransformComponent->GetSize().x / 2 < 0)
         {

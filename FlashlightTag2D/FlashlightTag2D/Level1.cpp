@@ -14,7 +14,7 @@ Level1::~Level1()
 {
 }
 
-void Level1::PrepShaders(std::vector<std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
+void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
 {
 	// opengl likes flat arrays...
 	int lightCount = 0;
@@ -25,11 +25,11 @@ void Level1::PrepShaders(std::vector<std::shared_ptr<GraphicsComponent>> graphic
 	{
 		if (lightCount >= MAX_NUM_LIGHTS) { break; }
 
-		auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
+		auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());
 
 		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
 		Vector2D<float> actorSize = actorTransformComponent.GetSize();
-		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
 
 		lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
 

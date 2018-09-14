@@ -13,7 +13,7 @@ class GameStateComponent :
 	public ActorComponent
 {
 public:
-	GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role, const Vector2D<int>& levelSize);
+    GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role);// , const Vector2D<int>& levelSize);
 	virtual ~GameStateComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
@@ -34,5 +34,5 @@ private:
 	EGameRole m_prevRole;
 	std::string m_actorName;
 	std::shared_ptr<Behavior> m_behavior;
-	Vector2D<int> m_levelSize;
+	//Vector2D<int> m_levelSize;
 };

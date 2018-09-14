@@ -9,49 +9,9 @@
 		"frag_shader":"Basic.frag"	
 	},
 	"actor_list":[
-		{
-			"name": "Play", 
-			"transform_component":{
-				"position":{"x":960, "y":340},
-				"size":{"x":200, "y":100}
-			},
-			"graphics_component":{
-				"sprite": "resources/MainMenu/playSelected.png",
-				"animation_speed":500 
-			}
-		},
-		{
-			"name": "Controls", 
-			"transform_component":{
-				"position":{"x":960, "y":220},
-				"size":{"x":200, "y":100}
-			},
-			"graphics_component":{
-				"sprite": "resources/MainMenu/controls.png",
-				"animation_speed":500 
-			}
-		},
-		{
-			"name": "Exit", 
-			"transform_component":{
-				"position":{"x":960, "y":100},
-				"size":{"x":200, "y":100}
-			},
-			"graphics_component":{
-				"sprite": "resources/MainMenu/exit.png",
-				"animation_speed":500 
-			}
-		},
-		{
-			"name": "Controller", 
-			"main_menu_input_component":{},
-			"main_menu_logic_component":{
-				"buttons":[
-					{"name": "Play"},
-					{"name": "Controls"},
-					{"name": "Exit"}
-				]
-			}
-		}
+		"resources/Actors/MainMenu/play.json",
+		"resources/Actors/MainMenu/controls.json",
+		"resources/Actors/MainMenu/exit.json",
+		"resources/Actors/MainMenu/controller.json"
 	]
 }

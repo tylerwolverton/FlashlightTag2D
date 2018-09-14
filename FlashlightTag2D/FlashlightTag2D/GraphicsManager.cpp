@@ -38,7 +38,7 @@ GraphicsManager::~GraphicsManager()
 
 void GraphicsManager::Reset()
 {
-	m_graphicsComponentPtrVec.clear();
+	m_graphicsComponentPtrMap.clear();
 	m_pCameraVec.clear();
 	m_pCurrentCamera = nullptr;
 }
@@ -62,10 +62,15 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
 	shader->SetInt("image", 0);
 }
 
-void GraphicsManager::AddGraphicsComponentPtr(std::shared_ptr<GraphicsComponent> comp)
+void GraphicsManager::AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp)
 {
-    m_graphicsComponentPtrVec.push_back(comp);
-};
+    m_graphicsComponentPtrMap.insert(std::make_pair(compId, comp));
+}
+
+void GraphicsManager::RemoveGraphicsComponentPtr(ComponentId compId)
+{
+    m_graphicsComponentPtrMap.erase(compId);
+}
 
 // TODO: Cache changes
 //void GraphicsManager::AddGraphicsComponent(GraphicsComponent comp) 
@@ -196,31 +201,31 @@ void GraphicsManager::Render()
 
     renderBackground(cameraPos);
 
-	m_curLevel->PrepShaders(m_graphicsComponentPtrVec, cameraPos);
+	m_curLevel->PrepShaders(m_graphicsComponentPtrMap, cameraPos);
 
 
-	for (auto graphicsComponent : m_graphicsComponentPtrVec)
+	for (auto graphicsComponent : m_graphicsComponentPtrMap)
 	{
-        auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());   
+        auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());   
 
 		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
 		Vector2D<float> actorSize = actorTransformComponent.GetSize();
 
 		// Prepare transformations
 		Matrix4<GLfloat> model;
-		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
+		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
 		model = model.Translate(actorLocation);
 
         // TODO: find a better scaling method
 		model = model.Scale(actorSize);
 
 		shader->SetMatrix4("model", model.GetPtrToFlattenedData().get());
-		shader->SetVec2("textureSize", graphicsComponent->GetTextureSize().GetPtrToFlattenedData().get());
-		shader->SetVec2("texturePos", graphicsComponent->GetTexturePos().GetPtrToFlattenedData().get());
+		shader->SetVec2("textureSize", graphicsComponent.second->GetTextureSize().GetPtrToFlattenedData().get());
+		shader->SetVec2("texturePos", graphicsComponent.second->GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
 		
-		graphicsComponent->GetTexture()->BindTexture();
+		graphicsComponent.second->GetTexture()->BindTexture();
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

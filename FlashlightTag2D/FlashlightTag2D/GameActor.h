@@ -15,6 +15,7 @@ class PhysicsComponent;
 class AIComponent;
 class TransformComponent;
 class GameStateComponent;
+class LifeComponent;
 
 class GameActor 
 {
@@ -35,6 +36,7 @@ public:
     std::shared_ptr<PhysicsComponent>	     GetPhysicsComponent() const;
     std::shared_ptr<TransformComponent>	     GetTransformComponent() const;
 	std::shared_ptr<GameStateComponent>	     GetGameStateComponent() const;
+    std::shared_ptr<LifeComponent>	         GetLifeComponent() const;
 
     const InputData GetInput() const { return m_input; }
 

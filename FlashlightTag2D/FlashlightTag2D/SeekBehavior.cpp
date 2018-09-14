@@ -72,86 +72,86 @@ std::vector<std::shared_ptr<Command>> SeekBehavior::Update(const GameActor& this
 		initSearchPositions(thisActorTransformComponent);
 	}
 
-    if(m_currState == EState::Search)
-    {
-        // Get list of nearby actors
-        std::vector<std::shared_ptr<GameActor>> actors = ServiceLocator::GetActorFactory()->GetActorList();
+ //   if(m_currState == EState::Search)
+ //   {
+ //       // Get list of nearby actors
+ //       std::vector<std::shared_ptr<GameActor>> actors = ServiceLocator::GetActorFactory()->GetActorList();
 
-        // Find closest hider in that list
-        // Implicitly set max range, variable-ize this later
-        float distToClosestActor = 200.0f;
-        for (auto otherActor : actors)
-        {
-			auto gameStateComponent = otherActor->GetGameStateComponent();
-			if (gameStateComponent == nullptr)
-			{
-				continue;
-			}
+ //       // Find closest hider in that list
+ //       // Implicitly set max range, variable-ize this later
+ //       float distToClosestActor = 200.0f;
+ //       for (auto otherActor : actors)
+ //       {
+	//		auto gameStateComponent = otherActor->GetGameStateComponent();
+	//		if (gameStateComponent == nullptr)
+	//		{
+	//			continue;
+	//		}
 
-			if (//*otherActor != thisActor && 
-				gameStateComponent->GetRole() == EGameRole::Hider)
-			{
-				auto otherActorTransformComponent = otherActor->GetTransformComponent();
-				if (otherActorTransformComponent == nullptr)
-				{
-					continue;
-				}
+	//		if (//*otherActor != thisActor && 
+	//			gameStateComponent->GetRole() == EGameRole::Hider)
+	//		{
+	//			auto otherActorTransformComponent = otherActor->GetTransformComponent();
+	//			if (otherActorTransformComponent == nullptr)
+	//			{
+	//				continue;
+	//			}
 
-				float distToOtherActor = (otherActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
-				if (distToOtherActor > 5.0f
-					&& distToOtherActor < distToClosestActor)
-				{
-					m_targetActor = otherActor;
-					distToClosestActor = distToOtherActor;
-				}
-			}
-		}
+	//			float distToOtherActor = (otherActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
+	//			if (distToOtherActor > 5.0f
+	//				&& distToOtherActor < distToClosestActor)
+	//			{
+	//				m_targetActor = otherActor;
+	//				distToClosestActor = distToOtherActor;
+	//			}
+	//		}
+	//	}
 
-		if (m_targetActor != nullptr)
-		{
-			m_currState = EState::Chase;
-		}
-		else
-		{
-			float speed = 1.0;
-			auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
-			if (thisActorPhysicsComponent != nullptr)
-			{
-				speed = thisActorPhysicsComponent->GetCurSpeed();
-			}
-			return moveInSearchPattern(thisActorTransformComponent, speed);
-		}
-	}
-	else if (m_currState == EState::Chase)
-	{
-		auto targetActorTransformComponent = m_targetActor->GetTransformComponent();
-		if (targetActorTransformComponent == nullptr)
-		{
-			return std::vector<std::shared_ptr<Command>>();
-		}
+	//	if (m_targetActor != nullptr)
+	//	{
+	//		m_currState = EState::Chase;
+	//	}
+	//	else
+	//	{
+	//		float speed = 1.0;
+	//		auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
+	//		if (thisActorPhysicsComponent != nullptr)
+	//		{
+	//			speed = thisActorPhysicsComponent->GetCurSpeed();
+	//		}
+	//		return moveInSearchPattern(thisActorTransformComponent, speed);
+	//	}
+	//}
+	//else if (m_currState == EState::Chase)
+	//{
+	//	auto targetActorTransformComponent = m_targetActor->GetTransformComponent();
+	//	if (targetActorTransformComponent == nullptr)
+	//	{
+	//		return std::vector<std::shared_ptr<Command>>();
+	//	}
 
-		float distToTargetActor = (targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
-		if (distToTargetActor < m_minTagDistance)
-		{
-			// Tag target
-			// Set to either seeker or out depending on the game mode
-			m_targetActor->GetGameStateComponent()->SetRole(EGameRole::Seeker);
-		}
-		else if (distToTargetActor < m_maxChaseDistance)
-		{
-			float speed = 1.0;
-			auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
-			if (thisActorPhysicsComponent != nullptr)
-			{
-				speed = thisActorPhysicsComponent->GetCurSpeed();
-			}
-			return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent, speed);
-		}
+	//	float distToTargetActor = (targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length();
+	//	if (distToTargetActor < m_minTagDistance)
+	//	{
+	//		// Tag target
+	//		// Set to either seeker or out depending on the game mode
+	//		m_targetActor->GetGameStateComponent()->SetRole(EGameRole::Seeker);
+	//	}
+	//	else if (distToTargetActor < m_maxChaseDistance)
+	//	{
+	//		float speed = 1.0;
+	//		auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
+	//		if (thisActorPhysicsComponent != nullptr)
+	//		{
+	//			speed = thisActorPhysicsComponent->GetCurSpeed();
+	//		}
+	//		return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent, speed);
+	//	}
 
-		// If we tagged the target or they are too far away, return to search state
-		m_targetActor = nullptr;
-		m_currState = EState::Search;
-	}
+	//	// If we tagged the target or they are too far away, return to search state
+	//	m_targetActor = nullptr;
+	//	m_currState = EState::Search;
+	//}
 
 	// No actions taken
 	return std::vector<std::shared_ptr<Command>>();

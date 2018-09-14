@@ -1,0 +1,20 @@
+{ 
+	"name": "Enemy", 
+	"ai_component":{},
+	"transform_component":{
+		"position":{"x":300, "y":300},
+		"size":{"x":100, "y":100}
+	},
+	"physics_component":{	
+		"type": "player_physics_component",
+		"mass":1.0,
+		"max_speed":10.0,
+		"restitution":0.5
+	},
+	"character_logic_component":{},
+	"graphics_component":{
+		"sprite": "resources/Untitled.png",
+		"animation_speed":300 
+	},
+	"game_state_component":{}
+}

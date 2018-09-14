@@ -1,6 +1,4 @@
 #include "LevelFactory.h"
-#include "GraphicsManager.h"
-#include "PhysicsManager.h"
 #include "ActorFactory.h"
 #include "Level.h"
 #include "Level1.h"
@@ -15,10 +13,8 @@ const std::string LevelFactory::LevelNames::Level1 = "Level1";
 const std::string LevelFactory::LevelPaths::MainMenu = "resources/levels/main_menu.json";
 const std::string LevelFactory::LevelPaths::Level1 = "resources/levels/level1.json";
 
-LevelFactory::LevelFactory(std::shared_ptr<PhysicsManager> physicsManager, std::shared_ptr<GraphicsManager> graphicsManager, std::shared_ptr<ActorFactory> actorFactory)
-	: m_pPhysicsManager(physicsManager),
-	  m_pGraphicsManager(graphicsManager),
-	  m_pActorFactory(actorFactory)
+LevelFactory::LevelFactory(std::shared_ptr<ActorFactory> actorFactory)
+	: m_pActorFactory(actorFactory)
 {
 }
 
@@ -39,17 +35,7 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
 	fclose(fp);
 
 	auto newLevel = createLevelFromJson(d["level"]);
-
-	m_pPhysicsManager->ClearPhysicsComponents();
-	m_pPhysicsManager->SetLevelSize(newLevel->GetLevelSize());
-
-	m_pGraphicsManager->Reset();
-	m_pGraphicsManager->LoadNewLevel(newLevel);
-
-	m_pActorFactory->ClearActors();
-	m_pActorFactory->CreateActorsFromJSONArray(d["actor_list"], *m_pPhysicsManager, *m_pGraphicsManager, newLevel);
-
-	m_pGraphicsManager->AddCamera(m_pActorFactory->CreateCamera(newLevel->GetLevelSize()));
+    m_pActorFactory->InitLevelActors(d["actor_list"], newLevel);
 }
 
 std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value& level)
