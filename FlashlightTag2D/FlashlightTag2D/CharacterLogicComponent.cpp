@@ -1,5 +1,7 @@
 #include "CharacterLogicComponent.h"
+#include "ActorFactory.h"
 #include "PhysicsComponent.h"
+#include "ServiceLocator.h"
 
 CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
 	: LogicComponent(componentId),
@@ -29,4 +31,10 @@ void CharacterLogicComponent::MoveRight()
 void CharacterLogicComponent::MoveLeft()
 {
 	m_pPhysicsComponent->AddForce(Vector2D<float>(-m_pPhysicsComponent->GetCurSpeed(), 0));
+}
+
+void CharacterLogicComponent::Shoot()
+{
+	auto actorFactory = ServiceLocator::GetActorFactory();
+
 }

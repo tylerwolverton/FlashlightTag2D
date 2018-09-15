@@ -8,14 +8,14 @@ class UpdateMousePosition;
 class InputComponent : public ActorComponent
 {
 public:
-	InputComponent(ComponentId componentId);
 	virtual ~InputComponent();
-
 	virtual void Update(GameActor& actor, float deltaMs) override;
 
 	virtual const EComponentNames GetComponentName() const override;
 
 protected:
+	InputComponent(ComponentId componentId);
+
 	std::shared_ptr<Command> m_pButtonW;
 	std::shared_ptr<Command> m_pButtonA;
 	std::shared_ptr<Command> m_pButtonS;

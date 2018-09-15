@@ -10,6 +10,7 @@ MainMenuInputComponent::MainMenuInputComponent(ComponentId componentId)
 	m_pButtonS = std::make_shared<MoveDown>();
 	m_pButtonSpace = std::make_shared<Select>();
 	m_pButtonReturn = std::make_shared<Select>();
+	m_pMousePositionMoved = std::make_shared<UpdateMousePosition>();
 }
 
 MainMenuInputComponent::~MainMenuInputComponent()

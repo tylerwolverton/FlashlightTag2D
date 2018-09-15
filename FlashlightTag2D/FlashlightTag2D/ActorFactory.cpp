@@ -9,6 +9,7 @@
 #include "MainMenuLogicComponent.h"
 #include "MouseLogicComponent.h"
 #include "InputComponent.h"
+#include "CharacterInputComponent.h"
 #include "MainMenuInputComponent.h"
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
@@ -49,13 +50,14 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
     {
-        CreateActor(actorList[i].GetString());
+        std::shared_ptr<GameActor> actor = createActor(actorList[i].GetString());
+		m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
     }
     
     m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
 }
 
-void ActorFactory::CreateActor(const char* const actorPath)
+std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath)
 {
     FILE* fp;
     fopen_s(&fp, actorPath, "rb");
@@ -77,7 +79,7 @@ void ActorFactory::CreateActor(const char* const actorPath)
     if (actor.HasMember("input_component"))
     {
         newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
-            (EComponentNames::InputComponentEnum, std::make_shared<InputComponent>(getNextComponentId())));
+            (EComponentNames::InputComponentEnum, std::make_shared<CharacterInputComponent>(getNextComponentId())));
     }
     if (actor.HasMember("main_menu_input_component"))
     {
@@ -123,6 +125,14 @@ void ActorFactory::CreateActor(const char* const actorPath)
                 actorList[i]["physics_component"]["restitution"].GetFloat());*/
 
                 //physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsComp);
+            }
+            if (actor["physics_component"]["type"] == "projectile_physics_component")
+            {
+                physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsCompId,
+                                                                          transformCompPtr,
+                                                                          actor["physics_component"]["max_speed"].GetFloat(),
+                                                                          actor["physics_component"]["mass"].GetFloat(),
+                                                                          actor["physics_component"]["restitution"].GetFloat());
             }
 
             m_physicsMgr->AddPhysicsComponentPtr(physicsCompId, physicsCompPtr);
@@ -192,6 +202,7 @@ void ActorFactory::CreateActor(const char* const actorPath)
         newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
             (EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonGraphicsCompsMapPtr)));
     }
+
     if (actor.HasMember("game_state_component"))
     {
         std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider);
@@ -229,27 +240,68 @@ void ActorFactory::CreateActor(const char* const actorPath)
     //	}
     //}
 
-    m_pEntityMap.insert(std::make_pair(actorId, newActor));
     //m_pEntityVec.push_back(newActor);
 
     if (!strcmp(actorName, "Player"))
     {
         m_pCurrentPlayer = newActor;
     }
+
+	return newActor;
 }
 
+void ActorFactory::RemoveDeadActors()
+{
+	for (auto id : m_deadActorVec)
+	{
+		auto actorIter = m_pEntityMap.find(id);
+		if (actorIter == m_pEntityMap.end())
+		{
+			// Actor already removed
+			continue;
+		}
+
+		std::shared_ptr<PhysicsComponent> actorPhysComp = actorIter->second->GetPhysicsComponent();
+		if (actorPhysComp != nullptr)
+		{
+			m_physicsMgr->RemovePhysicsComponentPtr(actorPhysComp->GetComponentId());
+		}
+
+		std::shared_ptr<GraphicsComponent> actorGraphicsComp = actorIter->second->GetGraphicsComponent();
+		if (actorPhysComp != nullptr)
+		{
+			m_graphicsMgr->RemoveGraphicsComponentPtr(actorGraphicsComp->GetComponentId());
+		}
+
+		m_pEntityMap.erase(id);
+	}
+
+	m_deadActorVec.clear();
+}
 
 void ActorFactory::ChooseSeekers(int seekerCount)
 {
-	std::random_device rd;
-	std::mt19937 g(rd());
+    std::random_device rd;
+    std::mt19937 g(rd());
 
-	std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
+    std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
 
-	for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
-	{
-		m_gameStateComponentVec[i]->SetRole(EGameRole::Seeker);
-	}
+    for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
+    {
+        m_gameStateComponentVec[i]->SetRole(EGameRole::Seeker);
+    }
+}
+
+std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> position, Vector2D<float> velocity)
+{
+	std::shared_ptr<GameActor> actor = createActor("resources/actors/projectile.json");
+	actor->GetTransformComponent()->SetPosition(position);
+	actor->GetTransformComponent()->SetDirection(velocity.Normalize());
+	actor->GetPhysicsComponent()->SetVelocity(velocity);
+
+	m_pEntityMap.insert(std::make_pair(getNextActorId(), actor));
+
+	return actor;
 }
 
 std::shared_ptr<GameActor> ActorFactory::CreateCamera(const Vector2D<int>& levelSize)
@@ -259,7 +311,8 @@ std::shared_ptr<GameActor> ActorFactory::CreateCamera(const Vector2D<int>& level
 
 std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<GameActor>& target, const Vector2D<int>& levelSize)
 {
-    auto newActor = std::make_shared<GameActor>(getNextActorId(), "Camera");
+    ActorId actorId = getNextActorId();
+    auto newActor = std::make_shared<GameActor>(actorId, "Camera");
     
     auto transformCompPtr = std::make_shared<TransformComponent>(getNextComponentId(),
                                                                  Vector2D<float>(0.0f, 0.0f),
@@ -273,36 +326,10 @@ std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<Game
     newActor->m_componentMap.insert(std::make_pair<EComponentNames, std::shared_ptr<ActorComponent>>
         (EComponentNames::CameraFollowComponentEnum, cameraFollowCompPtr));
 
-	m_pEntityVec.push_back(newActor);
+    //m_pEntityVec.push_back(newActor);
+    m_pEntityMap.insert(std::make_pair(actorId, newActor));
 
-	return newActor;
+    return newActor;
 }
 
-void ActorFactory::RemoveDeadActors()
-{
-    for (auto id : m_deadActorVec)
-    {
-        auto actorIter = m_pEntityMap.find(id);
-        if (actorIter == m_pEntityMap.end())
-        {
-            // Actor already removed
-            continue;
-        }
 
-        std::shared_ptr<PhysicsComponent> actorPhysComp = actorIter->second->GetPhysicsComponent();
-        if (actorPhysComp != nullptr)
-        {
-            m_physicsMgr->RemovePhysicsComponentPtr(actorPhysComp->GetComponentId());
-        }
-
-        std::shared_ptr<GraphicsComponent> actorGraphicsComp = actorIter->second->GetGraphicsComponent();
-        if (actorPhysComp != nullptr)
-        {
-            m_graphicsMgr->RemoveGraphicsComponentPtr(actorGraphicsComp->GetComponentId());
-        }
-
-        m_pEntityMap.erase(id);
-    }
-
-    m_deadActorVec.clear();
-}

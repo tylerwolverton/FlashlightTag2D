@@ -80,6 +80,20 @@ public:
 	};
 };
 
+class Shoot : public Command
+{
+public:
+	virtual ~Shoot() {}
+	virtual void Execute(GameActor& actor)
+	{
+		auto behaviorComponent = actor.GetLogicComponent();
+		if (behaviorComponent != nullptr)
+		{
+			behaviorComponent->Shoot();
+		}
+	};
+};
+
 class UpdateMousePosition : public Command
 {
 public:

@@ -3,22 +3,19 @@
 
 InputComponent::InputComponent(ComponentId componentId)
     : ActorComponent(componentId),
-	  m_oldMousePos(Vector2D<int>(0, 0))
+	  m_oldMousePos(Vector2D<int>(0, 0)),
+	  m_pButtonW(nullptr),
+	  m_pButtonS(nullptr),
+	  m_pButtonD(nullptr),
+	  m_pButtonA(nullptr),
+	  m_pButtonEsc(nullptr),
+	  m_pButtonSpace(nullptr),
+	  m_pButtonReturn(nullptr),
+	  m_pMouseButtonRight(nullptr),
+	  m_pMouseButtonLeft(nullptr),
+	  m_pMouseButtonMiddle(nullptr),
+	  m_pMousePositionMoved(nullptr)
 {
-	// TODO: If same button could be used for multiple things (a powerup changes an action for example)
-	//       an update method should be added to change command on button.
-	//       Could also handle in base logic instead by having the same command do multiple things
-	m_pButtonW = std::make_shared<MoveUp>();
-	m_pButtonS = std::make_shared<MoveDown>();
-	m_pButtonD = std::make_shared<MoveRight>();
-	m_pButtonA = std::make_shared<MoveLeft>();
-	m_pButtonEsc = nullptr;
-	m_pButtonSpace = nullptr;
-	m_pButtonReturn = nullptr;
-	m_pMouseButtonRight = nullptr;
-	m_pMouseButtonLeft = nullptr;
-	m_pMouseButtonMiddle = nullptr;
-	m_pMousePositionMoved = std::make_shared<UpdateMousePosition>();
 }
 
 InputComponent::~InputComponent()
