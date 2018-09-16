@@ -7,6 +7,8 @@ public:
     LifeComponent(ComponentId componentId, ActorId parentId, int health);
     virtual ~LifeComponent();
 
+	virtual const EComponentNames GetComponentName() const override;
+
     void Die();
     void TakeDamage(int damage);
 

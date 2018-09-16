@@ -70,15 +70,21 @@ void GameActor::updateComponent(EComponentNames compName, float deltaMs)
     }
 }
 
-std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames componentName) const
+std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames compName) const
 {
-    auto compIter = m_componentMap.find(componentName);
+    auto compIter = m_componentMap.find(compName);
     if (compIter != m_componentMap.end())
     {
         return compIter->second;
     }
 
     return nullptr;
+}
+
+void GameActor::InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
+{
+	comp->SetOwner(std::make_shared<GameActor>(*this));
+	m_componentMap.insert(std::make_pair(compName, comp));
 }
 
 std::shared_ptr<AIComponent> GameActor::GetAIComponent() const
@@ -178,4 +184,18 @@ std::shared_ptr<LifeComponent> GameActor::GetLifeComponent() const
     }
 
     return std::dynamic_pointer_cast<LifeComponent>(component);
+}
+
+Vector2D<float> GameActor::GetMousePosition()
+{
+	Vector2D<float> pos(0, 0);
+
+	auto inputComp = GetInputComponent();
+	if (inputComp != nullptr)
+	{
+		pos = Vector2D<float>(inputComp->GetOldMousePos().x, inputComp->GetOldMousePos().y);
+		//pos = Vector2D<float>(m_input.mousePos.x, m_input.mousePos.y);
+	}
+
+	return pos;
 }

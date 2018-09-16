@@ -16,5 +16,8 @@
 		"sprite": "resources/Untitled.png",
 		"animation_speed":300 
 	},
-	"game_state_component":{}
+	"game_state_component":{},
+	"life_component":{
+		"health":10
+	}
 }

@@ -1,6 +1,8 @@
 {
 	"name": "Controller", 
-	"main_menu_input_component":{},
+	"input_component":{
+		"type": "main_menu_input"
+	},
 	"main_menu_logic_component":{
 		"buttons":[
 			{"name": "Play"},

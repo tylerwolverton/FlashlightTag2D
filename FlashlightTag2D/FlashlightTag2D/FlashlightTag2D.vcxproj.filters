@@ -106,7 +106,12 @@
     <ClCompile Include="LifeComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterInputComponent.cpp" />
+    <ClCompile Include="CharacterInputComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CursorInputComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -229,7 +234,12 @@
     <ClInclude Include="LifeComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterInputComponent.h" />
+    <ClInclude Include="CursorInputComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterInputComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

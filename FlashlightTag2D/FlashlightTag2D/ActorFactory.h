@@ -21,6 +21,8 @@ public:
     //void CreateActorsFromJSONArray(const rapidjson::Value& actorList, std::shared_ptr<Level> level);
     //std::vector<std::shared_ptr<GameActor>> GetActorList() { return m_pEntityVec; }
     std::map<ActorId, std::shared_ptr<GameActor>> GetActorMap() { return m_pEntityMap; }
+	std::shared_ptr<GameActor> GetCurrentCamera() { return m_pCurrentCamera; }
+
     void InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel);
     void ChooseSeekers(int seekerCount);
     void AddDeadActor(ActorId id) { m_deadActorVec.push_back(id); }
@@ -39,7 +41,8 @@ private:
     ComponentId getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
 	std::shared_ptr<GameActor> createActor(const char* const actorPath);
-    
+	void addComponentsToManagers(std::shared_ptr<GameActor> actor);
+
     std::map<ActorId, std::shared_ptr<GameActor>> m_pEntityMap;
 	std::vector<std::shared_ptr<GameActor>> m_pEntityVec;
     std::vector<ActorId> m_deadActorVec;
@@ -54,5 +57,6 @@ private:
 
     // Only needed for camera
     std::shared_ptr<GameActor> m_pCurrentPlayer;
+	std::shared_ptr<GameActor> m_pCurrentCamera;
 };
 

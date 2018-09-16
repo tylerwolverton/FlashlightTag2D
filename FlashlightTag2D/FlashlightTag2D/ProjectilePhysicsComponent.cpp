@@ -18,6 +18,11 @@ ProjectilePhysicsComponent::~ProjectilePhysicsComponent()
 {
 }
 
+void ProjectilePhysicsComponent::Update(GameActor& actor, float deltaMs)
+{
+	MoveActor(deltaMs);
+}
+
 void ProjectilePhysicsComponent::SignalCollision(GameActor& actor)
 {
     auto actorLifeComponent = actor.GetLifeComponent();

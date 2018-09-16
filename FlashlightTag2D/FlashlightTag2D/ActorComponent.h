@@ -7,8 +7,6 @@ class GameActor;
 
 class ActorComponent
 {
-	friend class ActorFactory;
-
 public:
     ActorComponent(ComponentId componentId) 
         : m_componentId(componentId) {}
@@ -18,13 +16,13 @@ public:
 
     const ComponentId GetComponentId() const { return m_componentId; }
 	virtual const EComponentNames GetComponentName() const = 0;
+
+	void SetOwner(std::shared_ptr<GameActor> pOwner) { m_pOwner = pOwner; }
     
 protected:
 	std::shared_ptr<GameActor> m_pOwner;
 
 private:
-	void setOwner(std::shared_ptr<GameActor> pOwner) { m_pOwner = pOwner; }
-
     ComponentId m_componentId;
 };
 

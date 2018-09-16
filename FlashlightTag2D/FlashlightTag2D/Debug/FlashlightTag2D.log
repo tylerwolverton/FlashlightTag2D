@@ -1,12 +1,9 @@
-﻿  ActorFactory.cpp
-c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(289): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  MainMenuInputComponent.cpp
-  InputComponent.cpp
-  CharacterInputComponent.cpp
+﻿  LifeComponent.cpp
+  ActorFactory.cpp
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\actorfactory.cpp(307): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Skipping... (no relevant changes detected)
+  ProjectilePhysicsComponent.cpp
   GameActor.cpp
   FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

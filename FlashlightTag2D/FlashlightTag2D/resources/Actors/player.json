@@ -1,6 +1,8 @@
 {
 	"name": "Player", 
-	"input_component":{},
+	"input_component":{
+		"type": "character_input"
+	},
 	"transform_component":{
 		"position":{"x":0, "y":0},
 		"size":{"x":100, "y":100}
@@ -16,5 +18,8 @@
 		"sprite": "resources/background.png",
 		"animation_speed":500 
 	},
-	"game_state_component":{}
+	"game_state_component":{},
+	"life_component":{
+		"health":10
+	}
 }

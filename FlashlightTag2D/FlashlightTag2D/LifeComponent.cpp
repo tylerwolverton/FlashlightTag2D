@@ -13,6 +13,11 @@ LifeComponent::~LifeComponent()
 {
 }
 
+const EComponentNames LifeComponent::GetComponentName() const
+{
+	return EComponentNames::LifeComponentEnum;
+}
+
 void LifeComponent::Die()
 {
     auto actorFactory = ServiceLocator::GetActorFactory();

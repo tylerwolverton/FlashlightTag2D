@@ -13,6 +13,8 @@ public:
 							   Vector2D<float> acceleration = Vector2D<float>(0, 0));
 	virtual ~ProjectilePhysicsComponent();
 
+	void virtual Update(GameActor& actor, float deltaMs) override;
+
 	virtual void SignalCollision(GameActor& actor) override;
 };
 

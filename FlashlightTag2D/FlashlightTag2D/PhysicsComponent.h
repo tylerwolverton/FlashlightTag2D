@@ -17,7 +17,7 @@ public:
 					 Vector2D<float> acceleration = Vector2D<float>(0, 0));
 	virtual ~PhysicsComponent();
 
-	void Update(GameActor& actor, float deltaMs) override;
+	void virtual Update(GameActor& actor, float deltaMs) override;
 	virtual void SignalCollision(GameActor& actor) {};
 
 	virtual const EComponentNames GetComponentName() const override;

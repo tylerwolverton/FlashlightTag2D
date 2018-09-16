@@ -27,7 +27,9 @@ public:
     virtual ~GameActor();
 
     virtual void Update(float delatMs, InputData input);
-        
+    
+	void InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp);
+
     std::shared_ptr<AIComponent>             GetAIComponent() const;
     std::shared_ptr<LogicComponent>	         GetLogicComponent() const;
     std::shared_ptr<CameraFollowComponent>   GetCameraFollowComponent() const;
@@ -45,8 +47,11 @@ public:
     const ActorId GetActorId() const { return m_actorId; }
 	const std::string GetActorName() const { return m_actorName; }
 
+	// Component communication methods
+	Vector2D<float> GetMousePosition();
+
 private:
-    std::shared_ptr<ActorComponent> getComponentByName(EComponentNames componentName) const;
+    std::shared_ptr<ActorComponent> getComponentByName(EComponentNames compName) const;
     void updateComponent(EComponentNames compName, float deltaMs);
 
     ComponentMap m_componentMap;

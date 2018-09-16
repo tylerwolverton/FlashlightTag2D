@@ -146,6 +146,7 @@
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="CharacterInputComponent.cpp" />
+    <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="AIComponent.h" />
     <ClInclude Include="CharacterInputComponent.h" />
+    <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />
     <ClInclude Include="Behavior.h" />
