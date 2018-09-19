@@ -83,8 +83,8 @@ std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames co
 
 void GameActor::InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
 {
-	comp->SetOwner(std::make_shared<GameActor>(*this));
 	m_componentMap.insert(std::make_pair(compName, comp));
+    comp->SetParentActorId(m_actorId);
 }
 
 std::shared_ptr<AIComponent> GameActor::GetAIComponent() const

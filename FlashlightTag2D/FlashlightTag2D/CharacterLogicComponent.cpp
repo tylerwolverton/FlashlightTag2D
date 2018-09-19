@@ -50,12 +50,19 @@ void CharacterLogicComponent::Shoot()
 			return;
 		}
 
-		Vector2D<float> relMousePos = m_pOwner->GetMousePosition() + actorFactory->GetCurrentCamera()->GetTransformComponent()->GetPosition();
-		relMousePos.y = World::SCREEN_HEIGHT - relMousePos.y;
+        std::shared_ptr<GameActor> actor = actorFactory->GetActor(m_parentActorId);
+        if (actor == nullptr)
+        {
+            return;
+        }
+
+        // Need to add camera position to mouse position, since mouse pos will always be within screen bounds
+        Vector2D<float> cameraPos = actorFactory->GetCurrentCamera()->GetTransformComponent()->GetPosition();
+        Vector2D<float> relMousePos = Vector2D<float>(actor->GetMousePosition().x + cameraPos.x, actor->GetMousePosition().y - cameraPos.y);
+        relMousePos.y = World::SCREEN_HEIGHT - relMousePos.y;
 
 		auto actorPos = m_pPhysicsComponent->GetTransformComponent()->GetPosition();
 		Vector2D<float> dirVec = (relMousePos - actorPos).Normalize();
-		//Vector2D<float> spawnPos = dirVec * 50;
 		actorFactory->CreateProjectile(actorPos + (dirVec * 70), dirVec * 75.0f);
 	}
 }

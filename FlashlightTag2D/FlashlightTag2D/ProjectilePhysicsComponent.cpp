@@ -2,6 +2,8 @@
 #include "TransformComponent.h"
 #include "LifeComponent.h"
 #include "GameActor.h"
+#include "ActorFactory.h"
+#include "ServiceLocator.h"
 
 ProjectilePhysicsComponent::ProjectilePhysicsComponent(ComponentId componentId,
                                                        std::shared_ptr<TransformComponent> transformComponent,
@@ -23,15 +25,25 @@ void ProjectilePhysicsComponent::Update(GameActor& actor, float deltaMs)
 	MoveActor(deltaMs);
 }
 
-void ProjectilePhysicsComponent::SignalCollision(GameActor& actor)
+void ProjectilePhysicsComponent::SignalCollision(ActorId actorId)
 {
-    auto actorLifeComponent = actor.GetLifeComponent();
+    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actor == nullptr)
+    {
+        return;
+    }
+    auto actorLifeComponent = actor->GetLifeComponent();
     if (actorLifeComponent != nullptr)
     {
         actorLifeComponent->TakeDamage(1);
     }
 
-    auto thisLifeComponent = this->m_pOwner->GetLifeComponent();
+    std::shared_ptr<GameActor> thisActor = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
+    if (thisActor == nullptr)
+    {
+        return;
+    }
+    auto thisLifeComponent = thisActor->GetLifeComponent();
     if (thisLifeComponent != nullptr)
     {
         thisLifeComponent->Die();

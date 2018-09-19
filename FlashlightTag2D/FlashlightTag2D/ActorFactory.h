@@ -21,6 +21,7 @@ public:
     //void CreateActorsFromJSONArray(const rapidjson::Value& actorList, std::shared_ptr<Level> level);
     //std::vector<std::shared_ptr<GameActor>> GetActorList() { return m_pEntityVec; }
     std::map<ActorId, std::shared_ptr<GameActor>> GetActorMap() { return m_pEntityMap; }
+    std::shared_ptr<GameActor> GetActor(ActorId actorId);
 	std::shared_ptr<GameActor> GetCurrentCamera() { return m_pCurrentCamera; }
 
     void InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel);

@@ -72,6 +72,8 @@ void World::RunGame()
 		}
 
         m_pGraphicsManager->Render();
+
+        m_pActorFactory->RemoveDeadActors();
 	}
 }
 

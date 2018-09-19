@@ -1,6 +1,6 @@
 #include "PhysicsManager.h"
 #include "TransformComponent.h"
-#include "GameActor.h"
+//#include "GameActor.h"
 #include <stdlib.h>
 #include <algorithm>
 
@@ -44,8 +44,8 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 				{
                     resolvePenetration(actorTransformComponent, innerTransformComponent, collisionEvent);
                     resolveCollision(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
-                    //actorPhysicsComponent.SignalCollision(*innerActor);
-                    //innerActorPhysicsComponent.SignalCollision(*actor);
+                    actorPhysicsComponent.second->SignalCollision(innerActorPhysicsComponent.second->GetParentActorId());
+                    innerActorPhysicsComponent.second->SignalCollision(actorPhysicsComponent.second->GetParentActorId());
 				}
 			}
 		}

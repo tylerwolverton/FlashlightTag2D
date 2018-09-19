@@ -15,6 +15,7 @@
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
+#include "ProjectilePhysicsComponent.h"
 #include "AIComponent.h"
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
@@ -58,6 +59,17 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     }
     
     m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
+}
+
+std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId) 
+{ 
+    auto actorIter = m_pEntityMap.find(actorId);
+    if (actorIter != m_pEntityMap.end())
+    {
+        return actorIter->second;
+    }
+
+    return nullptr; 
 }
 
 void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actor)
@@ -148,7 +160,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
             }
             else if (actor["physics_component"]["type"] == "projectile_physics_component")
             {
-                physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsCompId,
+                physicsCompPtr = std::make_shared<ProjectilePhysicsComponent>(physicsCompId,
                                                                           transformCompPtr,
                                                                           actor["physics_component"]["max_speed"].GetFloat(),
                                                                           actor["physics_component"]["mass"].GetFloat(),
@@ -317,7 +329,7 @@ std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> positi
 	actor->GetTransformComponent()->SetDirection(velocity.Normalize());
 	actor->GetPhysicsComponent()->SetVelocity(velocity);
 
-	m_pEntityMap.insert(std::make_pair(getNextActorId(), actor));
+	m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
 
 	addComponentsToManagers(actor);
 
