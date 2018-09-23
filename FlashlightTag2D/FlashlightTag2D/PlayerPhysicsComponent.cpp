@@ -1,6 +1,8 @@
 #include "PlayerPhysicsComponent.h"
-#include "TransformComponent.h"
 #include "GameActor.h"
+#include "TransformComponent.h"
+#include "GameStateComponent.h"
+#include "PortalLogicComponent.h"
 #include "ActorFactory.h"
 #include "ServiceLocator.h"
 
@@ -19,20 +21,28 @@ PlayerPhysicsComponent::~PlayerPhysicsComponent()
 {
 }
 
-void PlayerPhysicsComponent::SignalCollision(ActorId actorId)
+bool PlayerPhysicsComponent::SignalCollision(ActorId actorId)
 {
+    bool stopResolvingCollisions = false;
     std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
     if (actor == nullptr)
     {
-        return;
+        return stopResolvingCollisions;
     }
-
-	auto actorTransformComponent = actor->GetTransformComponent();
-    if (actorTransformComponent == nullptr)
+    
+    auto gameStateComponent = actor->GetGameStateComponent();
+    if (gameStateComponent != nullptr)
     {
-        return;
+        if (gameStateComponent->GetName() == "Portal")
+        {
+            auto logicComponent = actor->GetLogicComponent();
+            if (logicComponent != nullptr)
+            {
+                std::dynamic_pointer_cast<PortalLogicComponent>(logicComponent)->ChangeLevel();
+                stopResolvingCollisions = true;
+            }
+        }
     }
 
-	//Vector2D<float> dist = actorTransformComponent->GetPosition() - m_pTransformComponent->GetPosition();
-	//m_pTransformComponent->SetPosition(m_pTransformComponent->GetPosition() + (dist.Normalize() * -5));
+    return stopResolvingCollisions;
 }

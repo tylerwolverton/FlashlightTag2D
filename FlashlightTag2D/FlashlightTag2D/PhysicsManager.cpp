@@ -44,8 +44,14 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 				{
                     resolvePenetration(actorTransformComponent, innerTransformComponent, collisionEvent);
                     resolveCollision(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
-                    actorPhysicsComponent.second->SignalCollision(innerActorPhysicsComponent.second->GetParentActorId());
-                    innerActorPhysicsComponent.second->SignalCollision(actorPhysicsComponent.second->GetParentActorId());
+                    if (actorPhysicsComponent.second->SignalCollision(innerActorPhysicsComponent.second->GetParentActorId()))
+                    {
+                        return;
+                    }
+                    if(innerActorPhysicsComponent.second->SignalCollision(actorPhysicsComponent.second->GetParentActorId()))
+                    {
+                        return;
+                    }
 				}
 			}
 		}

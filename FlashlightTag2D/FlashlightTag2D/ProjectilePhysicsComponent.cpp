@@ -25,12 +25,14 @@ void ProjectilePhysicsComponent::Update(GameActor& actor, float deltaMs)
 	MoveActor(deltaMs);
 }
 
-void ProjectilePhysicsComponent::SignalCollision(ActorId actorId)
+bool ProjectilePhysicsComponent::SignalCollision(ActorId actorId)
 {
+    bool stopResolvingCollisions = false;
+
     std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
     if (actor == nullptr)
     {
-        return;
+        return stopResolvingCollisions;
     }
     auto actorLifeComponent = actor->GetLifeComponent();
     if (actorLifeComponent != nullptr)
@@ -41,11 +43,13 @@ void ProjectilePhysicsComponent::SignalCollision(ActorId actorId)
     std::shared_ptr<GameActor> thisActor = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
     if (thisActor == nullptr)
     {
-        return;
+        return stopResolvingCollisions;
     }
     auto thisLifeComponent = thisActor->GetLifeComponent();
     if (thisLifeComponent != nullptr)
     {
         thisLifeComponent->Die();
     }
+
+    return stopResolvingCollisions;
 }

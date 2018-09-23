@@ -1,0 +1,16 @@
+{ 
+	"level":{ 
+		"name":"Overworld1",
+		"size":{
+			"x":4000, "y":2000 
+		},
+		"sprite":"resources/background_grass.png",
+		"vert_shader":"Basic.vert",
+		"frag_shader":"Basic.frag"
+	},
+	"actor_list":[
+		"resources/Actors/player.json",
+		"resources/Actors/portal_to_level1.json",
+		"resources/Actors/cursor.json"
+	]
+}

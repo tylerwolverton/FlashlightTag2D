@@ -17,6 +17,6 @@ public:
 		                   Vector2D<float> acceleration = Vector2D<float>(0, 0));
 	virtual ~PlayerPhysicsComponent();
 
-	virtual void SignalCollision(ActorId actorId) override;
+	virtual bool SignalCollision(ActorId actorId) override;
 };
 

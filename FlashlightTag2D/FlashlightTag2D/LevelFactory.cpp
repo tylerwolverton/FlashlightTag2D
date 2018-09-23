@@ -2,6 +2,7 @@
 #include "ActorFactory.h"
 #include "Level.h"
 #include "Level1.h"
+#include "OutsideLevelDay.h"
 #include "MainMenuLevel.h"
 
 // from rapidjson
@@ -9,9 +10,11 @@
 
 const std::string LevelFactory::LevelNames::MainMenu = "MainMenu";
 const std::string LevelFactory::LevelNames::Level1 = "Level1";
+const std::string LevelFactory::LevelNames::Overworld1 = "Overworld1";
 
 const std::string LevelFactory::LevelPaths::MainMenu = "resources/levels/main_menu.json";
 const std::string LevelFactory::LevelPaths::Level1 = "resources/levels/level1.json";
+const std::string LevelFactory::LevelPaths::Overworld1 = "resources/levels/overworld1.json";
 
 LevelFactory::LevelFactory(std::shared_ptr<ActorFactory> actorFactory)
 	: m_pActorFactory(actorFactory)
@@ -51,9 +54,13 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
 	{
 		return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
 	}
+    if (levelName == LevelNames::Overworld1)
+    {
+        return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+    }
 	else if (levelName == LevelNames::MainMenu)
 	{
-		return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+		return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, sprite, vertShader, fragShader);
 	}
 
 	return nullptr;

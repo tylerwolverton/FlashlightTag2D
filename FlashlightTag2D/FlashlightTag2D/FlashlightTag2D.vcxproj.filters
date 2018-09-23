@@ -31,15 +31,6 @@
     <ClCompile Include="PhysicsManager.cpp">
       <Filter>Engine\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="ActorFactory.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameActor.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerPhysicsComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
@@ -82,9 +73,6 @@
     <ClCompile Include="MainMenuLevel.cpp">
       <Filter>Game\Levels</Filter>
     </ClCompile>
-    <ClCompile Include="LevelFactory.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="MainMenuInputComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
@@ -110,6 +98,30 @@
       <Filter>Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="CursorInputComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="OutsideLevelDay.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorFactory.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameActor.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelFactory.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalLogicComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultPhysicsComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterPhysicsComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,12 +162,6 @@
     <ClInclude Include="PhysicsManager.h">
       <Filter>Engine\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ActorFactory.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameActor.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerPhysicsComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
@@ -186,9 +192,6 @@
     <ClInclude Include="HideBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="GameTypes.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="CameraFollowComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
@@ -209,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="MainMenuLevel.h">
       <Filter>Game\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelFactory.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuInputComponent.h">
       <Filter>Game\Components</Filter>
@@ -238,6 +238,30 @@
       <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="CharacterInputComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="OutsideLevelDay.h">
+      <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorFactory.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameActor.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTypes.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelFactory.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalLogicComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultPhysicsComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterPhysicsComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>

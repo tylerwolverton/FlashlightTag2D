@@ -14,6 +14,7 @@ public:
 	public:
 		static const std::string MainMenu;
 		static const std::string Level1;
+        static const std::string Overworld1;
 	}; 
 
 	const class LevelPaths
@@ -21,6 +22,7 @@ public:
 	public:
 		static const std::string MainMenu;
 		static const std::string Level1;
+        static const std::string Overworld1;
 	};
 
 	LevelFactory(std::shared_ptr<ActorFactory> actorFactory);

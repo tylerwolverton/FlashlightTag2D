@@ -101,7 +101,7 @@ void MainMenuLogicComponent::Select()
 
 		if (levelFactory != nullptr)
 		{
-			levelFactory->ChangeLevel(LevelFactory::LevelPaths::Level1);
+			levelFactory->ChangeLevel(LevelFactory::LevelPaths::Overworld1);
 		}
 	}
 	else if (buttons[selectedButtonIdx] == EMenuButtons::Controls)
@@ -110,7 +110,6 @@ void MainMenuLogicComponent::Select()
 	}
 	else
 	{
-		// TODO: Exit Game
 		std::shared_ptr<World> world = ServiceLocator::GetWorld();
 
 		if (world != nullptr)

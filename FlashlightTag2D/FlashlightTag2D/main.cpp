@@ -36,7 +36,9 @@ bool init()
 
 	// Create our opengl context and attach it to our window
 	mainContext = SDL_GL_CreateContext(gWindow);
-			
+
+    SDL_ShowCursor(SDL_DISABLE);
+
 	return true;
 }
 

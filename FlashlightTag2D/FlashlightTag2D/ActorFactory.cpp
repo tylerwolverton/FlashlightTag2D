@@ -7,6 +7,7 @@
 #include "TransformComponent.h"
 #include "CharacterLogicComponent.h"
 #include "MainMenuLogicComponent.h"
+#include "PortalLogicComponent.h"
 #include "MouseLogicComponent.h"
 #include "InputComponent.h"
 #include "CharacterInputComponent.h"
@@ -14,6 +15,8 @@
 #include "MainMenuInputComponent.h"
 #include "GraphicsComponent.h"
 #include "PhysicsComponent.h"
+#include "DefaultPhysicsComponent.h"
+#include "CharacterPhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
 #include "ProjectilePhysicsComponent.h"
 #include "AIComponent.h"
@@ -141,7 +144,24 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
             ComponentId physicsCompId = getNextComponentId();
             std::shared_ptr<PhysicsComponent> physicsCompPtr;
 
-            if (actor["physics_component"]["type"] == "player_physics_component")
+            if (actor["physics_component"]["type"] == "default_physics_component")
+            {
+                physicsCompPtr = std::make_shared<DefaultPhysicsComponent>(physicsCompId,
+                                                                           transformCompPtr,
+                                                                           actor["physics_component"]["max_speed"].GetFloat(),
+                                                                           actor["physics_component"]["mass"].GetFloat(),
+                                                                           actor["physics_component"]["restitution"].GetFloat());
+            }
+            else if (actor["physics_component"]["type"] == "character_physics_component")
+            {
+                physicsCompPtr = std::make_shared<CharacterPhysicsComponent>(physicsCompId,
+                                                                             transformCompPtr,
+                                                                             actor["physics_component"]["max_speed"].GetFloat(),
+                                                                             actor["physics_component"]["mass"].GetFloat(),
+                                                                             actor["physics_component"]["restitution"].GetFloat());
+
+            }
+            else if (actor["physics_component"]["type"] == "player_physics_component")
             {
                 physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsCompId,
                                                                           transformCompPtr,
@@ -226,6 +246,12 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
         }
 
 		newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonGraphicsCompsMapPtr));
+    }
+    if (actor.HasMember("portal_logic_component"))
+    {
+        std::string level = actor["portal_logic_component"]["destination"].GetString();
+        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<PortalLogicComponent>(getNextComponentId(), level));
+
     }
     if (actor.HasMember("game_state_component"))
     {

@@ -66,12 +66,12 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	{
 		commandList.push_back(m_pMouseButtonMiddle);
 	}
-	if (input.mousePos != m_oldMousePos)
-	{
+	//if (input.mousePos != m_oldMousePos)
+	//{
 		m_oldMousePos = input.mousePos;
 		m_pMousePositionMoved->SetMousePosition(input.mousePos);
 		commandList.push_back(m_pMousePositionMoved);
-	}
+	//}
 
 	actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandList));
 }

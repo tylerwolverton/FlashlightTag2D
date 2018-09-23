@@ -18,7 +18,7 @@ public:
 	virtual ~PhysicsComponent();
 
 	void virtual Update(GameActor& actor, float deltaMs) override;
-	virtual void SignalCollision(ActorId actorId) {};
+    virtual bool SignalCollision(ActorId actorId) { return false; };
 
 	virtual const EComponentNames GetComponentName() const override;
 

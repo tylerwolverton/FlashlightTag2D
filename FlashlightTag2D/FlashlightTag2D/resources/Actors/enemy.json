@@ -6,15 +6,15 @@
 		"size":{"x":100, "y":100}
 	},
 	"physics_component":{	
-		"type": "player_physics_component",
+		"type": "character_physics_component",
 		"mass":1.0,
 		"max_speed":10.0,
 		"restitution":0.5
 	},
 	"character_logic_component":{},
 	"graphics_component":{
-		"sprite": "resources/Untitled.png",
-		"animation_speed":300 
+		"sprite": "resources/enemy_spritesheet.png",
+		"animation_speed":30
 	},
 	"game_state_component":{},
 	"life_component":{

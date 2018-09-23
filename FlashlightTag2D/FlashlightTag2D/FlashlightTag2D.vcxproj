@@ -146,6 +146,7 @@
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="CharacterInputComponent.cpp" />
+    <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
@@ -166,10 +167,13 @@
     <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="MainMenuLogicComponent.cpp" />
     <ClCompile Include="MouseLogicComponent.cpp" />
+    <ClCompile Include="OutsideLevelDay.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
+    <ClCompile Include="PortalLogicComponent.cpp" />
+    <ClCompile Include="DefaultPhysicsComponent.cpp" />
     <ClCompile Include="ProjectilePhysicsComponent.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
@@ -186,6 +190,7 @@
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="AIComponent.h" />
     <ClInclude Include="CharacterInputComponent.h" />
+    <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />
@@ -213,10 +218,13 @@
     <ClInclude Include="MainMenuLogicComponent.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MouseLogicComponent.h" />
+    <ClInclude Include="OutsideLevelDay.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
+    <ClInclude Include="PortalLogicComponent.h" />
+    <ClInclude Include="DefaultPhysicsComponent.h" />
     <ClInclude Include="ProjectilePhysicsComponent.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="SeekBehavior.h" />

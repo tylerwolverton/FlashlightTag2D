@@ -15,6 +15,6 @@ public:
 
 	void virtual Update(GameActor& actor, float deltaMs) override;
 
-	virtual void SignalCollision(ActorId actorId) override;
+	virtual bool SignalCollision(ActorId actorId) override;
 };
 

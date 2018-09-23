@@ -130,6 +130,12 @@ bool GraphicsManager::initializeRenderData()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+
+    // Enable blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	return true;
 }
 
@@ -158,47 +164,10 @@ void GraphicsManager::Render()
 
 	Vector2D<float> cameraPos = cameraTransformComponent->GetPosition();
 
-	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	std::shared_ptr<Shader> shader = m_curLevel->GetShader();
-
- //   // opengl likes flat arrays...
-	//int lightCount = 0;
- //   std::vector<GLfloat> lightVec;
- //   std::vector<GLfloat> lightDirVec;
- //   std::vector<GLfloat> lightPosVec;
-	//for (auto graphicsComponent : m_graphicsComponentPtrVec)
-	//{
-	//	if (lightCount >= 10) {	break; }
-
- //       auto actorTransformComponent = *(graphicsComponent->GetTransformComponent());
-
-	//	Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-	//	Vector2D<float> actorSize = actorTransformComponent.GetSize();
-	//	Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent->GetImageOffset();
- //       
- //       lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
-
- //       lightDirVec.push_back(actorTransformComponent.GetDirection().x);
- //       lightDirVec.push_back(actorTransformComponent.GetDirection().y);
-
- //       lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
- //       lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
- //   
-	//	lightCount++;
-	//}
-
-	//// Use a special vector to tell the shader there are no more lights
-	//if (lightCount < 10)
-	//{
-	//	lightVec.push_back(-901.0f); lightVec.push_back(-901.0f); lightVec.push_back(-901.0f);
-	//}
-
- //   shader->SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
- //   shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
- //   shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
-
+    
     renderBackground(cameraPos);
 
 	m_curLevel->PrepShaders(m_graphicsComponentPtrMap, cameraPos);
@@ -224,8 +193,9 @@ void GraphicsManager::Render()
 		shader->SetVec2("texturePos", graphicsComponent.second->GetTexturePos().GetPtrToFlattenedData().get());
 		
 		glActiveTexture(GL_TEXTURE0);
-		
+        		
 		graphicsComponent.second->GetTexture()->BindTexture();
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 		glBindVertexArray(this->m_quadVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

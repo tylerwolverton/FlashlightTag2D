@@ -2,7 +2,7 @@
 	"name": "Projectile", 
 	"transform_component":{
 		"position":{"x":0, "y":0},
-		"size":{"x":24, "y":24}
+		"size":{"x":16, "y":16}
 	},
 	"physics_component":{	
 		"type": "projectile_physics_component",
@@ -11,7 +11,7 @@
 		"restitution":0.5
 	},
 	"graphics_component":{
-		"sprite": "resources/GUI/black_cursor.png",
+		"sprite": "resources/projectile.png",
 		"animation_speed":300 
 	},
 	"game_state_component":{},
