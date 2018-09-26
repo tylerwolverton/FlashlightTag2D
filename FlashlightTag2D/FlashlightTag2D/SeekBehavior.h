@@ -17,9 +17,9 @@ private:
 														    float speed);
     std::vector<std::shared_ptr<Command>> moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformComponent, float speed);
 
-	std::vector<std::shared_ptr<Command>> SeekBehavior::moveToPosition(Vector2D<float> currentPos,
-																	   Vector2D<float> targetPos,
-																	   float speed);
+	std::vector<std::shared_ptr<Command>> moveToPosition(Vector2D<float> currentPos,
+														 Vector2D<float> targetPos,
+														 float speed);
 
 	void initSearchPositions(std::shared_ptr<TransformComponent> transformComp);
 

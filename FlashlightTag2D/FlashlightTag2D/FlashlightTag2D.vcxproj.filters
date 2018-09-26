@@ -124,6 +124,10 @@
     <ClCompile Include="CharacterPhysicsComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="RushBehavior.cpp">
+      <Filter>Game\Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -264,6 +268,10 @@
     <ClInclude Include="CharacterPhysicsComponent.h">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="RushBehavior.h">
+      <Filter>Game\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">

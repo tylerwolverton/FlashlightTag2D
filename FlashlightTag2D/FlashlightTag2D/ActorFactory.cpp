@@ -18,6 +18,7 @@
 #include "DefaultPhysicsComponent.h"
 #include "CharacterPhysicsComponent.h"
 #include "PlayerPhysicsComponent.h"
+#include "EnemyTouchDamagePhysicsComponent.h"
 #include "ProjectilePhysicsComponent.h"
 #include "AIComponent.h"
 #include "CameraFollowComponent.h"
@@ -73,6 +74,25 @@ std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId)
     }
 
     return nullptr; 
+}
+
+std::shared_ptr<GameActor> ActorFactory::GetPlayer()
+{
+    for (auto actorIter : m_pEntityMap)
+    {
+        auto gameStateComp = actorIter.second->GetGameStateComponent();
+        if (gameStateComp == nullptr)
+        {
+            continue;
+        }
+
+        if (gameStateComp->GetName() == "Player")
+        {
+            return actorIter.second;
+        }
+    }
+
+    return nullptr;
 }
 
 void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actor)
@@ -178,6 +198,14 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
                 //physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsComp);
             }
+            else if (actor["physics_component"]["type"] == "enemy_touch_damage_physics_component")
+            {
+                physicsCompPtr = std::make_shared<EnemyTouchDamagePhysicsComponent>(physicsCompId,
+                                                                                    transformCompPtr,
+                                                                                    actor["physics_component"]["max_speed"].GetFloat(),
+                                                                                    actor["physics_component"]["mass"].GetFloat(),
+                                                                                    actor["physics_component"]["restitution"].GetFloat());
+            }
             else if (actor["physics_component"]["type"] == "projectile_physics_component")
             {
                 physicsCompPtr = std::make_shared<ProjectilePhysicsComponent>(physicsCompId,
@@ -255,12 +283,25 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     }
     if (actor.HasMember("game_state_component"))
     {
-        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, EGameRole::Hider);
+        EGameRole role = EGameRole::Nothing;
+        if (actor["game_state_component"].HasMember("behavior"))
+        {
+            std::string behavior = actor["game_state_component"]["behavior"].GetString();
+            if (behavior == "seek")
+            {
+                role = EGameRole::Seeker;
+            }
+            else if (behavior == "rush")
+            {
+                role = EGameRole::Rusher;
+            }
+        }
+        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, role);
 
 		newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
 
         // TODO: Cache changes
-        //m_gameStateComponentVec.emplace_back(getNextComponentId(), actorName, EGameRole::Hider);
+        //m_gameStateComponentVec.emplace_back(getNextComponentId(), actorName, role);
         m_gameStateComponentVec.push_back(gameStateCompPtr);
     }
 	if (actor.HasMember("life_component"))

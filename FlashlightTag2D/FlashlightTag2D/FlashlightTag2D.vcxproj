@@ -148,6 +148,7 @@
     <ClCompile Include="CharacterInputComponent.cpp" />
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
+    <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="DefaultPhysicsComponent.cpp" />
     <ClCompile Include="ProjectilePhysicsComponent.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
+    <ClCompile Include="RushBehavior.cpp" />
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -192,6 +194,7 @@
     <ClInclude Include="CharacterInputComponent.h" />
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
+    <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />
     <ClInclude Include="Behavior.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="DefaultPhysicsComponent.h" />
     <ClInclude Include="ProjectilePhysicsComponent.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
+    <ClInclude Include="RushBehavior.h" />
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Shader.h" />

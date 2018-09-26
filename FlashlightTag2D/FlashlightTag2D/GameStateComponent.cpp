@@ -1,12 +1,12 @@
 #include "GameStateComponent.h"
 #include "HideBehavior.h"
 #include "SeekBehavior.h"
+#include "RushBehavior.h"
 
-GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role)//, const Vector2D<int>& levelSize)
+GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role)
 	: ActorComponent(componentId),
       m_curRole(role),
 	  m_prevRole(role),
-	//  m_levelSize(levelSize),
 	  m_actorName(actorName)
 {
 	updateBehavior();
@@ -33,12 +33,15 @@ void GameStateComponent::updateBehavior()
 {
 	switch (m_curRole)
 	{
-		case EGameRole::Hider:
+		/*case EGameRole::Hider:
 			m_behavior = std::make_shared<HideBehavior>();
-			break;
+			break;*/
 		case EGameRole::Seeker:
 			//m_behavior = std::make_shared<SeekBehavior>(m_levelSize);
 			break;
+        case EGameRole::Rusher:
+            m_behavior = std::make_shared<RushBehavior>();
+            break;
 		case EGameRole::Out:
 			break;
 		default:

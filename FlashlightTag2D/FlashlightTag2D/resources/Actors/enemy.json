@@ -2,13 +2,13 @@
 	"name": "Enemy", 
 	"ai_component":{},
 	"transform_component":{
-		"position":{"x":300, "y":300},
+		"position":{"x":1200, "y":700},
 		"size":{"x":100, "y":100}
 	},
 	"physics_component":{	
-		"type": "character_physics_component",
+		"type": "enemy_touch_damage_physics_component",
 		"mass":1.0,
-		"max_speed":10.0,
+		"max_speed":6.0,
 		"restitution":0.5
 	},
 	"character_logic_component":{},
@@ -16,7 +16,9 @@
 		"sprite": "resources/enemy_spritesheet.png",
 		"animation_speed":30
 	},
-	"game_state_component":{},
+	"game_state_component":{
+		"behavior":"rush"
+	},
 	"life_component":{
 		"health":10
 	}
