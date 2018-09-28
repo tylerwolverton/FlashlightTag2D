@@ -2,8 +2,9 @@
 #include "HideBehavior.h"
 #include "SeekBehavior.h"
 #include "RushBehavior.h"
+#include "SpawnBehavior.h"
 
-GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, EGameRole role)
+GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, EGameBehavior role)
 	: ActorComponent(componentId),
       m_curRole(role),
 	  m_prevRole(role),
@@ -36,14 +37,15 @@ void GameStateComponent::updateBehavior()
 		/*case EGameRole::Hider:
 			m_behavior = std::make_shared<HideBehavior>();
 			break;*/
-		case EGameRole::Seeker:
+		case EGameBehavior::Seek:
 			//m_behavior = std::make_shared<SeekBehavior>(m_levelSize);
 			break;
-        case EGameRole::Rusher:
+        case EGameBehavior::Rush:
             m_behavior = std::make_shared<RushBehavior>();
             break;
-		case EGameRole::Out:
-			break;
+        case EGameBehavior::Spawn:
+            //m_behavior = std::make_shared<SpawnBehavior>();
+            break;
 		default:
 			break;
 	}

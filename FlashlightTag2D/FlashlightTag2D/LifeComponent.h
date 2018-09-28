@@ -9,10 +9,10 @@ public:
 
 	virtual const EComponentNames GetComponentName() const override;
 
-    void Die();
-    void TakeDamage(int damage);
+    virtual void Die();
+    virtual void TakeDamage(int damage);
 
-private:
+protected:
     ActorId m_parentId;
     int m_health;
 };

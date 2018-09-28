@@ -18,15 +18,7 @@ AIComponent::~AIComponent()
 }
 
 void AIComponent::Update(GameActor& actor, float deltaMs)
-{
-	// If hiding
-	//  Look for seeker in light cone
-	/*auto actorList = ServiceLocator::GetActorFactory()->GetActorList();*/
-	//   Seeker found - run away
-	//actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(RunFromTarget()));
-	//   Seeker not found - stay or change hiding space
-	//actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(Hide()));
-	
+{	
 	auto gameStateComponent = actor.GetGameStateComponent();
 	if (gameStateComponent == nullptr)
 	{

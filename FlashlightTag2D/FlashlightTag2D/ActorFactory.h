@@ -31,6 +31,7 @@ public:
     void RemoveDeadActors();
 
 	// Actor creation methods
+    std::shared_ptr<GameActor> CreateEnemy(Vector2D<float> position);
 	std::shared_ptr<GameActor> CreateProjectile(Vector2D<float> position, Vector2D<float> velocity);
 	// Move to graphics manager
 	std::shared_ptr<GameActor> CreateCamera(const Vector2D<int>& levelSize);

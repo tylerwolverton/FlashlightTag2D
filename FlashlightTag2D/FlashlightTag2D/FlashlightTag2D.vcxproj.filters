@@ -31,9 +31,6 @@
     <ClCompile Include="PhysicsManager.cpp">
       <Filter>Engine\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerPhysicsComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -73,32 +70,11 @@
     <ClCompile Include="MainMenuLevel.cpp">
       <Filter>Game\Levels</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenuInputComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterLogicComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="LogicComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenuLogicComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseLogicComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjectilePhysicsComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="LifeComponent.cpp">
       <Filter>Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterInputComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CursorInputComponent.cpp">
-      <Filter>Game\Components</Filter>
     </ClCompile>
     <ClCompile Include="OutsideLevelDay.cpp">
       <Filter>Game\Levels</Filter>
@@ -115,19 +91,51 @@
     <ClCompile Include="main.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="PortalLogicComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultPhysicsComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterPhysicsComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="RushBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
+    <ClCompile Include="ProjectilePhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultPhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterPhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterLogicComponent.cpp">
+      <Filter>Game\Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuLogicComponent.cpp">
+      <Filter>Game\Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseLogicComponent.cpp">
+      <Filter>Game\Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalLogicComponent.cpp">
+      <Filter>Game\Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLifeComponent.cpp">
+      <Filter>Game\Components\Life</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterInputComponent.cpp">
+      <Filter>Game\Components\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="CursorInputComponent.cpp">
+      <Filter>Game\Components\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuInputComponent.cpp">
+      <Filter>Game\Components\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnBehavior.cpp">
+      <Filter>Game\Behaviors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -165,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="PhysicsManager.h">
       <Filter>Engine\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerPhysicsComponent.h">
-      <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Engine</Filter>
@@ -217,32 +222,11 @@
     <ClInclude Include="MainMenuLevel.h">
       <Filter>Game\Levels</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuInputComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterLogicComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="LogicComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuLogicComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseLogicComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectilePhysicsComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="LifeComponent.h">
       <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CursorInputComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterInputComponent.h">
-      <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="OutsideLevelDay.h">
       <Filter>Game\Levels</Filter>
@@ -259,19 +243,51 @@
     <ClInclude Include="LevelFactory.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="PortalLogicComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultPhysicsComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterPhysicsComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="RushBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
+    <ClInclude Include="ProjectilePhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultPhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterPhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterLogicComponent.h">
+      <Filter>Game\Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuLogicComponent.h">
+      <Filter>Game\Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseLogicComponent.h">
+      <Filter>Game\Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalLogicComponent.h">
+      <Filter>Game\Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLifeComponent.h">
+      <Filter>Game\Components\Life</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterInputComponent.h">
+      <Filter>Game\Components\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="CursorInputComponent.h">
+      <Filter>Game\Components\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuInputComponent.h">
+      <Filter>Game\Components\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyTouchDamagePhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnBehavior.h">
+      <Filter>Game\Behaviors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -297,6 +313,18 @@
     </Filter>
     <Filter Include="Game\Levels">
       <UniqueIdentifier>{10fec384-f64d-4b93-ac8d-ac9ebc58db92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\Physics">
+      <UniqueIdentifier>{0cf35e9f-5660-4091-aea5-a7fce387eb60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\Logic">
+      <UniqueIdentifier>{142be3ed-2a13-40ce-99ed-e17bba51f8ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\Life">
+      <UniqueIdentifier>{52cb6712-0e99-4507-bc65-2c7ec0a7556b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\Input">
+      <UniqueIdentifier>{adbd8c55-e496-489a-91e2-677b1f8860be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

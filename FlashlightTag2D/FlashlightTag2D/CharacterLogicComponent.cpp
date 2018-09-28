@@ -41,7 +41,7 @@ void CharacterLogicComponent::MoveLeft()
 void CharacterLogicComponent::Shoot()
 {
 	uint32_t curTicks = SDL_GetTicks();
-	if (curTicks - lastTickVal > 500)
+	if (curTicks - lastTickVal > 400)
 	{
 		lastTickVal = curTicks;
 		auto actorFactory = ServiceLocator::GetActorFactory();

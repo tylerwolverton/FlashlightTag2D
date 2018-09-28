@@ -1,5 +1,3 @@
-#include <SDL.h>
-
 #include "EnemyTouchDamagePhysicsComponent.h"
 #include "GameActor.h"
 #include "LifeComponent.h"
@@ -26,25 +24,21 @@ bool EnemyTouchDamagePhysicsComponent::SignalCollision(ActorId actorId)
 {
     bool stopResolvingCollisions = false;
 
-    uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - lastTickVal > 200)
+    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actor == nullptr)
     {
-        std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
-        if (actor == nullptr)
-        {
-            return stopResolvingCollisions;
-        }
+        return stopResolvingCollisions;
+    }
 
-        auto gameStateComponent = actor->GetGameStateComponent();
-        if (gameStateComponent != nullptr)
+    auto gameStateComponent = actor->GetGameStateComponent();
+    if (gameStateComponent != nullptr)
+    {
+        if (gameStateComponent->GetName() == "Player")
         {
-            if (gameStateComponent->GetName() == "Player")
+            auto lifeComponent = actor->GetLifeComponent();
+            if (lifeComponent != nullptr)
             {
-                auto lifeComponent = actor->GetLifeComponent();
-                if (lifeComponent != nullptr)
-                {
-                    lifeComponent->TakeDamage(1);
-                }
+                lifeComponent->TakeDamage(1);
             }
         }
     }

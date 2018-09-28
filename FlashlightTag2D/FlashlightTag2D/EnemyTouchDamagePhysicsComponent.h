@@ -15,8 +15,5 @@ public:
     virtual ~EnemyTouchDamagePhysicsComponent();
 
     virtual bool SignalCollision(ActorId actorId) override;
-
-private:
-    uint32_t lastTickVal;
 };
 

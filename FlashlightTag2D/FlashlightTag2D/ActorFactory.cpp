@@ -24,9 +24,11 @@
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
 #include "LifeComponent.h"
+#include "PlayerLifeComponent.h"
 #include "World.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
+#include "LevelFactory.h"
 #include "Level.h"
 #include "ServiceLocator.h"
 
@@ -45,7 +47,6 @@ ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgr, std::shar
 
 void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel)
 {
-
     m_physicsMgr->ClearPhysicsComponents();
     m_physicsMgr->SetLevelSize(newLevel->GetLevelSize());
 
@@ -53,6 +54,7 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     m_graphicsMgr->LoadNewLevel(newLevel);
 
     m_pEntityMap.clear();
+    m_lastActorId = 0;
 
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
@@ -283,17 +285,17 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     }
     if (actor.HasMember("game_state_component"))
     {
-        EGameRole role = EGameRole::Nothing;
+        EGameBehavior role = EGameBehavior::Nothing;
         if (actor["game_state_component"].HasMember("behavior"))
         {
             std::string behavior = actor["game_state_component"]["behavior"].GetString();
             if (behavior == "seek")
             {
-                role = EGameRole::Seeker;
+                role = EGameBehavior::Seek;
             }
             else if (behavior == "rush")
             {
-                role = EGameRole::Rusher;
+                role = EGameBehavior::Rush;
             }
         }
         std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, role);
@@ -312,7 +314,14 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
 		newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
 	}
+    if (actor.HasMember("player_life_component"))
+    {
+        std::shared_ptr<PlayerLifeComponent> lifeCompPtr = std::make_shared<PlayerLifeComponent>(getNextComponentId(),
+                                                                                                 actorId,
+                                                                                                 actor["player_life_component"]["health"].GetInt());
 
+        newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
+    }
     //if (actorList[i].HasMember("follow_target_ai_component"))
     //{
     //	StrongActorPtr target = nullptr;
@@ -349,6 +358,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
 void ActorFactory::RemoveDeadActors()
 {
+    bool playerIsDead = false;
 	for (auto id : m_deadActorVec)
 	{
 		auto actorIter = m_pEntityMap.find(id);
@@ -370,10 +380,26 @@ void ActorFactory::RemoveDeadActors()
 			m_graphicsMgr->RemoveGraphicsComponentPtr(actorGraphicsComp->GetComponentId());
 		}
 
+        std::shared_ptr<GameStateComponent> actorGameStateComp = actorIter->second->GetGameStateComponent();
+        if (actorPhysComp != nullptr
+            && actorGameStateComp->GetName() == "Player")
+        {
+            playerIsDead = true;
+        }
+
 		m_pEntityMap.erase(id);
 	}
 
 	m_deadActorVec.clear();
+
+    if (playerIsDead)
+    {
+        auto levelFactory = ServiceLocator::GetLevelFactory();
+        if (levelFactory != nullptr)
+        {
+            levelFactory->ChangeLevel(LevelFactory::LevelPaths::MainMenu);
+        }
+    }
 }
 
 void ActorFactory::ChooseSeekers(int seekerCount)
@@ -385,8 +411,20 @@ void ActorFactory::ChooseSeekers(int seekerCount)
 
     for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
     {
-        m_gameStateComponentVec[i]->SetRole(EGameRole::Seeker);
+        m_gameStateComponentVec[i]->SetRole(EGameBehavior::Seek);
     }
+}
+
+std::shared_ptr<GameActor> ActorFactory::CreateEnemy(Vector2D<float> position)
+{
+    std::shared_ptr<GameActor> actor = createActor("resources/actors/enemy.json");
+    actor->GetTransformComponent()->SetPosition(position);
+
+    m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
+
+    addComponentsToManagers(actor);
+
+    return actor;
 }
 
 std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> position, Vector2D<float> velocity)

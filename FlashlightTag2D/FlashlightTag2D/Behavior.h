@@ -9,6 +9,6 @@ public:
 	Behavior();
 	virtual ~Behavior();
 
-	virtual std::vector<std::shared_ptr<Command>>  Update(const GameActor& actor) { return std::vector<std::shared_ptr<Command>>(); };
+	virtual std::vector<std::shared_ptr<Command>> Update(const GameActor& actor) { return std::vector<std::shared_ptr<Command>>(); };
 };
 

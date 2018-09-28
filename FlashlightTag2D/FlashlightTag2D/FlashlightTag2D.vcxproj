@@ -172,6 +172,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
+    <ClCompile Include="PlayerLifeComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
     <ClCompile Include="PortalLogicComponent.cpp" />
     <ClCompile Include="DefaultPhysicsComponent.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="SeekBehavior.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SpawnBehavior.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
@@ -225,6 +227,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />
+    <ClInclude Include="PlayerLifeComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
     <ClInclude Include="PortalLogicComponent.h" />
     <ClInclude Include="DefaultPhysicsComponent.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SpawnBehavior.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TransformComponent.h" />

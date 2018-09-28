@@ -1,10 +1,10 @@
 #pragma once
 
-enum EGameRole
+enum EGameBehavior
 {
     Nothing,
-	Hider,
-	Seeker,
-    Rusher,
-	Out
+	Hide,
+	Seek,
+    Rush,
+    Spawn
 };
