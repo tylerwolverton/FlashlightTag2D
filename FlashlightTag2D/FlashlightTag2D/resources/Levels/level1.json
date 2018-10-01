@@ -12,6 +12,7 @@
 		"resources/Actors/player.json",
 		"resources/Actors/enemy.json",
 		"resources/Actors/portal_to_overworld1.json",
-		"resources/Actors/cursor.json"
+		"resources/Actors/cursor.json",
+		"resources/Actors/rush_enemy_spawner.json"
 	]
 }

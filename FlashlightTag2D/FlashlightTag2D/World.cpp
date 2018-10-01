@@ -84,5 +84,4 @@ void World::QuitGame()
 
 void World::changeGameMode()
 {
-	m_pActorFactory->ChooseSeekers(1);
 }

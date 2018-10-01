@@ -1,14 +1,15 @@
 #include "SpawnBehavior.h"
 #include "TransformComponent.h"
 #include "ServiceLocator.h"
+#include "ActorFactory.h"
 #include "RandomNumberGenerator.h"
 
 #include <SDL.h>
 
-SpawnBehavior::SpawnBehavior(std::vector<int> spawnDelayVec, std::function<void(Vector2D<float> pos)> spawnFunc)
+SpawnBehavior::SpawnBehavior(std::vector<int> spawnDelayVec, std::string targetName)
     : m_spawnVecPos(0),
       m_spawnDelayVec(spawnDelayVec),
-      m_spawnFunc(spawnFunc)
+      m_targetName(targetName)
 {
 }
 
@@ -30,7 +31,8 @@ std::vector<std::shared_ptr<Command>> SpawnBehavior::Update(const GameActor& thi
             auto rndNumGen = ServiceLocator::GetRandomNumberGenerator();
             if (rndNumGen != nullptr)
             {
-                m_spawnFunc(getNextSpawnPos(transformComp->GetPosition()));
+				auto actorFactory = ServiceLocator::GetActorFactory();
+				actorFactory->CreateActorFromName(m_targetName, getNextSpawnPos(transformComp->GetPosition()));
             }
         }
     }

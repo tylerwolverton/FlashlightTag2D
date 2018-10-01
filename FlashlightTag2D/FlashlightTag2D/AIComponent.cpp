@@ -8,8 +8,9 @@
 
 #include <memory>
 
-AIComponent::AIComponent(ComponentId componentId)
-    : ActorComponent(componentId)
+AIComponent::AIComponent(ComponentId componentId, std::shared_ptr<Behavior> behavior)
+    : ActorComponent(componentId),
+	  m_behavior(behavior)
 {
 }
 
@@ -19,16 +20,16 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, float deltaMs)
 {	
-	auto gameStateComponent = actor.GetGameStateComponent();
+	/*auto gameStateComponent = actor.GetGameStateComponent();
 	if (gameStateComponent == nullptr)
 	{
 		return;
 	}
 
-	auto behavior = gameStateComponent->GetBehavior();
-	if (behavior != nullptr)
+	auto behavior = gameStateComponent->GetBehavior();*/
+	if (m_behavior != nullptr)
 	{
-		actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(behavior->Update(actor)));
+		actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(m_behavior->Update(actor)));
 	}
 }
 

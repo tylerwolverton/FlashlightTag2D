@@ -2,7 +2,7 @@
 	"level":{ 
 		"name":"MainMenu",
 		"size":{
-			"x":4000, "y":2000 
+			"x":1920, "y":1080 
 		},
 		"sprite":"resources/space_background.png",
 		"vert_shader":"Basic.vert",

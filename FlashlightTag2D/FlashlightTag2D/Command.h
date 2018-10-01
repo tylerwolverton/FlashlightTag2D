@@ -16,10 +16,10 @@ public:
 	virtual ~MoveUp() {}
 	virtual void Execute(GameActor& actor)
 	{
-		auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+		auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->MoveUp();
+			logicComponent->MoveUp();
 		}
 	};
 };
@@ -30,10 +30,10 @@ public:
 	virtual ~MoveDown() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+        auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->MoveDown();
+			logicComponent->MoveDown();
 		}
 	};
 };
@@ -44,10 +44,10 @@ public:
 	virtual ~MoveRight() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+        auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->MoveRight();
+			logicComponent->MoveRight();
 		}
 	};
 };
@@ -58,10 +58,10 @@ public:
 	virtual ~MoveLeft() {}
 	virtual void Execute(GameActor& actor)
 	{
-        auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+        auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->MoveLeft();
+			logicComponent->MoveLeft();
 		}
 	};
 };
@@ -72,10 +72,10 @@ public:
 	virtual ~Select() {}
 	virtual void Execute(GameActor& actor)
 	{
-		auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+		auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->Select();
+			logicComponent->Select();
 		}
 	};
 };
@@ -86,12 +86,29 @@ public:
 	virtual ~Shoot() {}
 	virtual void Execute(GameActor& actor)
 	{
-		auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+		auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->Shoot();
+			logicComponent->Shoot();
 		}
 	};
+};
+
+class Spawn : public Command
+{
+public:
+	virtual ~Spawn() {}
+	void SetSpawnLocation(Vector2D<float> location) { m_location = location; }
+	virtual void Execute(GameActor& actor)
+	{
+		auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
+		{
+			logicComponent->Spawn();
+		}
+	};
+private:
+	Vector2D<float> m_location;
 };
 
 class UpdateMousePosition : public Command
@@ -101,10 +118,10 @@ public:
 	void SetMousePosition(Vector2D<int> mousePos) { m_mousePos = mousePos; }
 	virtual void Execute(GameActor& actor)
 	{
-		auto behaviorComponent = actor.GetLogicComponent();
-		if (behaviorComponent != nullptr)
+		auto logicComponent = actor.GetLogicComponent();
+		if (logicComponent != nullptr)
 		{
-			behaviorComponent->UpdateMousePosition(m_mousePos);
+			logicComponent->UpdateMousePosition(m_mousePos);
 		}
 	};
 

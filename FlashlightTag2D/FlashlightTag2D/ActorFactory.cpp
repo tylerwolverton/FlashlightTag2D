@@ -21,6 +21,9 @@
 #include "EnemyTouchDamagePhysicsComponent.h"
 #include "ProjectilePhysicsComponent.h"
 #include "AIComponent.h"
+#include "SeekBehavior.h"
+#include "RushBehavior.h"
+#include "SpawnBehavior.h"
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
 #include "LifeComponent.h"
@@ -34,6 +37,7 @@
 
 #include <random>
 #include <algorithm>
+#include <functional>
 
 // from rapidjson
 #include "filereadstream.h"
@@ -132,23 +136,38 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     auto components = std::vector<std::shared_ptr<ActorComponent>>();
 	if (actor.HasMember("input_component"))
 	{
-		if (actor["input_component"]["type"] == "character_input") 
-		{
-			newActor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CharacterInputComponent>(getNextComponentId()));
-		}
-		else if (actor["input_component"]["type"] == "main_menu_input")
-		{
-			newActor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<MainMenuInputComponent>(getNextComponentId()));
-		}
-		else if (actor["input_component"]["type"] == "cursor_input")
-		{
-			newActor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CursorInputComponent>(getNextComponentId()));
-		}
+		addInputComponent(actor["input_component"]["type"].GetString(), newActor);
 	}
+
     if (actor.HasMember("ai_component"))
     {
-		newActor->InsertComponent(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId()));
+		std::shared_ptr<Behavior> behavior;
+		if (actor["ai_component"].HasMember("behavior"))
+		{
+			if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "spawn"))
+			{
+				//std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
+				auto delayTimes = actor["ai_component"]["behavior"]["delay_times"].GetArray();
+				std::vector<int> delayTimeVec;
+				for (rapidjson::SizeType i = 0; i < delayTimes.Size(); i++)
+				{
+					delayTimeVec.push_back(delayTimes[i].GetInt());
+				}
+				behavior = std::make_shared<SpawnBehavior>(delayTimeVec, actor["ai_component"]["behavior"]["target"].GetString());
+			}
+			else if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "seek"))
+			{
+
+			}
+			else if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "rush"))
+			{
+				behavior = std::make_shared<RushBehavior>();
+			}
+		}
+
+		newActor->InsertComponent(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId(), behavior));
     }
+
     if (actor.HasMember("transform_component"))
     {
         //rapidjson::Value actorTransform = actorList[i]["transform_component"];
@@ -163,63 +182,12 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
         if (actor.HasMember("physics_component"))
         {
-            ComponentId physicsCompId = getNextComponentId();
-            std::shared_ptr<PhysicsComponent> physicsCompPtr;
-
-            if (actor["physics_component"]["type"] == "default_physics_component")
-            {
-                physicsCompPtr = std::make_shared<DefaultPhysicsComponent>(physicsCompId,
-                                                                           transformCompPtr,
-                                                                           actor["physics_component"]["max_speed"].GetFloat(),
-                                                                           actor["physics_component"]["mass"].GetFloat(),
-                                                                           actor["physics_component"]["restitution"].GetFloat());
-            }
-            else if (actor["physics_component"]["type"] == "character_physics_component")
-            {
-                physicsCompPtr = std::make_shared<CharacterPhysicsComponent>(physicsCompId,
-                                                                             transformCompPtr,
-                                                                             actor["physics_component"]["max_speed"].GetFloat(),
-                                                                             actor["physics_component"]["mass"].GetFloat(),
-                                                                             actor["physics_component"]["restitution"].GetFloat());
-
-            }
-            else if (actor["physics_component"]["type"] == "player_physics_component")
-            {
-                physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsCompId,
-                                                                          transformCompPtr,
-                                                                          actor["physics_component"]["max_speed"].GetFloat(),
-                                                                          actor["physics_component"]["mass"].GetFloat(),
-                                                                          actor["physics_component"]["restitution"].GetFloat());
-
-                // TODO: Cache changes
-                /*m_entityVec.back().m_componentIndexVec[EComponentTypes::Physics] =
-                physicsMgr.AddPlayerPhysicsComponent(transformCompPtr,
-                actorList[i]["physics_component"]["max_speed"].GetFloat(),
-                actorList[i]["physics_component"]["mass"].GetFloat(),
-                actorList[i]["physics_component"]["restitution"].GetFloat());*/
-
-                //physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsComp);
-            }
-            else if (actor["physics_component"]["type"] == "enemy_touch_damage_physics_component")
-            {
-                physicsCompPtr = std::make_shared<EnemyTouchDamagePhysicsComponent>(physicsCompId,
-                                                                                    transformCompPtr,
-                                                                                    actor["physics_component"]["max_speed"].GetFloat(),
-                                                                                    actor["physics_component"]["mass"].GetFloat(),
-                                                                                    actor["physics_component"]["restitution"].GetFloat());
-            }
-            else if (actor["physics_component"]["type"] == "projectile_physics_component")
-            {
-                physicsCompPtr = std::make_shared<ProjectilePhysicsComponent>(physicsCompId,
-                                                                          transformCompPtr,
-                                                                          actor["physics_component"]["max_speed"].GetFloat(),
-                                                                          actor["physics_component"]["mass"].GetFloat(),
-                                                                          actor["physics_component"]["restitution"].GetFloat());
-            }
-
-            //m_physicsMgr->AddPhysicsComponentPtr(physicsCompId, physicsCompPtr);
-
-			newActor->InsertComponent(EComponentNames::PhysicsComponentEnum, physicsCompPtr);
+			auto physicsCompPtr = addPhysicsComponent(actor["physics_component"]["type"].GetString(), 
+													  newActor,
+													  transformCompPtr,
+													  actor["physics_component"]["max_speed"].GetFloat(),
+													  actor["physics_component"]["mass"].GetFloat(),
+													  actor["physics_component"]["restitution"].GetFloat());
 
             if (actor.HasMember("character_logic_component"))
             {
@@ -285,20 +253,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     }
     if (actor.HasMember("game_state_component"))
     {
-        EGameBehavior role = EGameBehavior::Nothing;
-        if (actor["game_state_component"].HasMember("behavior"))
-        {
-            std::string behavior = actor["game_state_component"]["behavior"].GetString();
-            if (behavior == "seek")
-            {
-                role = EGameBehavior::Seek;
-            }
-            else if (behavior == "rush")
-            {
-                role = EGameBehavior::Rush;
-            }
-        }
-        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, role);
+        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName);
 
 		newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
 
@@ -356,6 +311,86 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 	return newActor;
 }
 
+void ActorFactory::addInputComponent(const char* const type, std::shared_ptr<GameActor> actor)
+{
+	if (!strcmp(type, "character_input"))
+	{
+		actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CharacterInputComponent>(getNextComponentId()));
+	}
+	else if (!strcmp(type, "main_menu_input"))
+	{
+		actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<MainMenuInputComponent>(getNextComponentId()));
+	}
+	else if (!strcmp(type, "cursor_input"))
+	{
+		actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CursorInputComponent>(getNextComponentId()));
+	}
+}
+
+std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* const type,
+																	std::shared_ptr<GameActor> actor, 
+																	std::shared_ptr<TransformComponent> transformCompPtr,
+																	float maxSpeed,
+																	float mass,
+																	float restitution)
+{
+    std::shared_ptr<PhysicsComponent> physicsCompPtr;
+
+    if (!strcmp(type, "default_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<DefaultPhysicsComponent>(getNextComponentId(),
+                                                                   transformCompPtr,
+                                                                   maxSpeed,
+                                                                   mass,
+                                                                   restitution);
+    }
+    else if (!strcmp(type, "character_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<CharacterPhysicsComponent>(getNextComponentId(),
+                                                                     transformCompPtr,
+                                                                     maxSpeed,
+                                                                     mass,
+                                                                     restitution);
+
+    }
+    else if (!strcmp(type, "player_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(getNextComponentId(),
+                                                                  transformCompPtr,
+                                                                  maxSpeed,
+                                                                  mass,
+                                                                  restitution);
+
+        // TODO: Cache changes
+        /*m_entityVec.back().m_componentIndexVec[EComponentTypes::Physics] =
+        physicsMgr.AddPlayerPhysicsComponent(transformCompPtr,
+        actorList[i]["physics_component"]["max_speed"].GetFloat(),
+        actorList[i]["physics_component"]["mass"].GetFloat(),
+        actorList[i]["physics_component"]["restitution"].GetFloat());*/
+
+        //physicsCompPtr = std::make_shared<PlayerPhysicsComponent>(physicsComp);
+    }
+    else if (!strcmp(type, "enemy_touch_damage_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<EnemyTouchDamagePhysicsComponent>(getNextComponentId(),
+                                                                            transformCompPtr,
+                                                                            maxSpeed,
+                                                                            mass,
+                                                                            restitution);
+    }
+    else if (!strcmp(type, "projectile_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<ProjectilePhysicsComponent>(getNextComponentId(),
+                                                                      transformCompPtr,
+                                                                      maxSpeed,
+                                                                      mass,
+                                                                      restitution);
+    }
+
+	actor->InsertComponent(EComponentNames::PhysicsComponentEnum, physicsCompPtr);
+	return physicsCompPtr;
+}
+
 void ActorFactory::RemoveDeadActors()
 {
     bool playerIsDead = false;
@@ -381,7 +416,7 @@ void ActorFactory::RemoveDeadActors()
 		}
 
         std::shared_ptr<GameStateComponent> actorGameStateComp = actorIter->second->GetGameStateComponent();
-        if (actorPhysComp != nullptr
+        if (actorGameStateComp != nullptr
             && actorGameStateComp->GetName() == "Player")
         {
             playerIsDead = true;
@@ -402,23 +437,26 @@ void ActorFactory::RemoveDeadActors()
     }
 }
 
-void ActorFactory::ChooseSeekers(int seekerCount)
+//void ActorFactory::ChooseSeekers(int seekerCount)
+//{
+//    std::random_device rd;
+//    std::mt19937 g(rd());
+//
+//    std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
+//
+//    for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
+//    {
+//        m_gameStateComponentVec[i]->SetRole(EGameBehavior::Seek);
+//    }
+//}
+
+std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, Vector2D<float> position, Vector2D<float> velocity)
 {
-    std::random_device rd;
-    std::mt19937 g(rd());
-
-    std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
-
-    for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
-    {
-        m_gameStateComponentVec[i]->SetRole(EGameBehavior::Seek);
-    }
-}
-
-std::shared_ptr<GameActor> ActorFactory::CreateEnemy(Vector2D<float> position)
-{
-    std::shared_ptr<GameActor> actor = createActor("resources/actors/enemy.json");
-    actor->GetTransformComponent()->SetPosition(position);
+	std::string actorPath = "resources/actors/" + name + ".json";
+    std::shared_ptr<GameActor> actor = createActor(actorPath.c_str());
+	actor->GetTransformComponent()->SetPosition(position);
+	actor->GetTransformComponent()->SetDirection(velocity.Normalize());
+	actor->GetPhysicsComponent()->SetVelocity(velocity);
 
     m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
 

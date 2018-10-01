@@ -1,6 +1,10 @@
 { 
 	"name": "Enemy", 
-	"ai_component":{},
+	"ai_component":{
+		"behavior":{
+			"type":"rush"
+		}
+	},
 	"transform_component":{
 		"position":{"x":1200, "y":700},
 		"size":{"x":100, "y":100}
@@ -16,9 +20,7 @@
 		"sprite": "resources/enemy_spritesheet.png",
 		"animation_speed":30
 	},
-	"game_state_component":{
-		"behavior":"rush"
-	},
+	"game_state_component":{},
 	"life_component":{
 		"health":10
 	}
