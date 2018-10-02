@@ -49,7 +49,7 @@ std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& this
     }
     else
     {
-        if((targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length() < 200)
+        if((targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length() < 500)
         {
             m_chaseActor = true;
         }

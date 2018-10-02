@@ -1,9 +1,11 @@
 #include "Level1.h"
 #include "Shader.h"
+#include "GameActor.h"
 #include "TransformComponent.h"
 #include "GraphicsComponent.h"
+#include "GameStateComponent.h"
 
-#define MAX_NUM_LIGHTS 10
+#define MAX_NUM_LIGHTS 20
 
 Level1::Level1(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
 	: Level(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
@@ -27,19 +29,34 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 
 		auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());
 
-		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-		Vector2D<float> actorSize = actorTransformComponent.GetSize();
-		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
+        std::shared_ptr<GameActor> parent = graphicsComponent.second->GetParent();
+        if (parent == nullptr)
+        {
+            continue;
+        }
 
-		lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
+        std::shared_ptr<GameStateComponent> gameStateComp = parent->GetGameStateComponent();
+        if (gameStateComp == nullptr)
+        {
+            continue;
+        }
 
-		lightDirVec.push_back(actorTransformComponent.GetDirection().x);
-		lightDirVec.push_back(actorTransformComponent.GetDirection().y);
+        if(gameStateComp->GetName() == "Player")
+        {
+            Vector2D<float> actorPos = actorTransformComponent.GetPosition();
+            Vector2D<float> actorSize = actorTransformComponent.GetSize();
+            Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
 
-		lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
-		lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
+            lightVec.push_back(actorLocation.x + actorSize.x / 2); lightVec.push_back(actorLocation.y + actorSize.y / 2); lightVec.push_back(100.0f);
 
-		lightCount++;
+            lightDirVec.push_back(actorTransformComponent.GetDirection().x);
+            lightDirVec.push_back(actorTransformComponent.GetDirection().y);
+
+            lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
+            lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
+
+            lightCount++;
+        }
 	}
 
 	// Use a special vector to tell the shader there are no more lights

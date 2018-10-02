@@ -147,13 +147,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 			if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "spawn"))
 			{
 				//std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
-				auto delayTimes = actor["ai_component"]["behavior"]["delay_times"].GetArray();
-				std::vector<int> delayTimeVec;
-				for (rapidjson::SizeType i = 0; i < delayTimes.Size(); i++)
-				{
-					delayTimeVec.push_back(delayTimes[i].GetInt());
-				}
-				behavior = std::make_shared<SpawnBehavior>(delayTimeVec, actor["ai_component"]["behavior"]["target"].GetString());
+				behavior = std::make_shared<SpawnBehavior>(actor["ai_component"]["behavior"]["delay_time"].GetInt(), actor["ai_component"]["behavior"]["target"].GetString());
 			}
 			else if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "seek"))
 			{

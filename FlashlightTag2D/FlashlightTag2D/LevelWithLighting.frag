@@ -2,7 +2,7 @@
 in vec2 texCoords;
 out vec4 color;
 
-#define MAX_NUM_LIGHTS 10
+#define MAX_NUM_LIGHTS 20
 
 //uniform int numLights;
 uniform sampler2D image;
@@ -30,7 +30,7 @@ void main()
 		float distSpot = distance(gl_FragCoord.xy, lightPos[i].xy);
     
 		float angleDiff = degrees(acos(dot(normalize(gl_FragCoord.xy - lightPos[i].xy), lightDir[i].xy)));
-		if(distSpot < 150.0 && angleDiff < 30 && angleDiff > -30)
+		if(distSpot < 250.0 && angleDiff < 30 && angleDiff > -30)
 		{
 			color = color + vec4(0.75, 0.75, 0.75, 0.0);
 			illuminated = true;
@@ -47,6 +47,6 @@ void main()
 
 	if(!illuminated)
 	{
-		color = color * vec4(0.1, 0.1, 0.1, 0.0);
+		color = color - vec4(0.5, 0.5, 0.5, 0.0);
 	}
 }

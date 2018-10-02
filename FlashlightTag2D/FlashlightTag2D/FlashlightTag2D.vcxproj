@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="CharacterInputComponent.cpp" />

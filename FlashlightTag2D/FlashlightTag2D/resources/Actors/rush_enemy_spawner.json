@@ -4,9 +4,7 @@
 		"behavior":{
 			"type":"spawn",
 			"target":"enemy",
-			"delay_times":[
-				500
-			]
+			"delay_time":5000
 		}
 	},
 	"transform_component":{
