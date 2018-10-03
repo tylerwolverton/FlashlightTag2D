@@ -9,8 +9,8 @@
 		"frag_shader":"Basic.frag"
 	},
 	"actor_list":[
-		"resources/Actors/player.json",
-		"resources/Actors/portal_to_level1.json",
-		"resources/Actors/cursor.json"
+		{"actor_path":"resources/Actors/player.json"},
+		{"actor_path":"resources/Actors/portal_to_level1.json"},
+		{"actor_path":"resources/Actors/cursor.json"}
 	]
 }

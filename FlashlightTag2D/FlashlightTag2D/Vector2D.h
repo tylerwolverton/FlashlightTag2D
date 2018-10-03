@@ -83,6 +83,11 @@ public:
 		this->y = rhs.y;
 	}
 
+    bool operator==(const Vector2D& rhs)
+    {
+        return (this->x == rhs.x && this->y == rhs.y);
+    }
+
 	bool operator!=(const Vector2D& rhs)
 	{
 		return !(this->x == rhs.x && this->y == rhs.y);

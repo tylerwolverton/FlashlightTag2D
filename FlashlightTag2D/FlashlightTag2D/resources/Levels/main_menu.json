@@ -9,9 +9,9 @@
 		"frag_shader":"Basic.frag"	
 	},
 	"actor_list":[
-		"resources/Actors/MainMenu/play.json",
-		"resources/Actors/MainMenu/controls.json",
-		"resources/Actors/MainMenu/exit.json",
-		"resources/Actors/MainMenu/controller.json"
+		{"actor_path":"resources/Actors/MainMenu/play.json"},
+		{"actor_path":"resources/Actors/MainMenu/controls.json"},
+		{"actor_path":"resources/Actors/MainMenu/exit.json"},
+		{"actor_path":"resources/Actors/MainMenu/controller.json"}
 	]
 }

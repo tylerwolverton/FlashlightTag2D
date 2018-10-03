@@ -2,6 +2,7 @@
 #include <glew.h>
 #include <memory>
 #include <map>
+#include <string>
 #include "Types.h"
 #include "Matrix4.h"
 #include "Shader.h"
@@ -55,9 +56,11 @@ private:
 	std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;
 
     std::shared_ptr<Texture2D> m_backgroundTexture;
+    std::vector<std::vector<std::shared_ptr<Texture2D>>> m_backgroundTileVec;
 
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
+    void initializeTilePaths();
     void renderBackground(Vector2D<float> cameraPos);
     
     // TODO: Cache changes
@@ -70,5 +73,7 @@ private:
 
 	int m_lastComponentId;
 	int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
+
+    std::vector<std::string> m_tilePaths;
 };
 

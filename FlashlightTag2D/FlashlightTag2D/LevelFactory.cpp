@@ -43,25 +43,57 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
 
 std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value& level)
 {
+    std::string levelName = level["name"].GetString();
 	int levelWidth = level["size"]["x"].GetInt();
 	int levelHeight = level["size"]["y"].GetInt();
-	std::string sprite = level["sprite"].GetString();
 	std::string vertShader = level["vert_shader"].GetString();
 	std::string fragShader = level["frag_shader"].GetString();
 
-	std::string levelName = level["name"].GetString();
-	if (levelName == LevelNames::Level1)
-	{
-		return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
-	}
-    if (levelName == LevelNames::Overworld1)
+    if (level.HasMember("sprite"))
     {
-        return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, sprite, vertShader, fragShader);
-    }
-	else if (levelName == LevelNames::MainMenu)
-	{
-		return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, sprite, vertShader, fragShader);
-	}
+        std::string sprite = level["sprite"].GetString();
 
+        if (levelName == LevelNames::Level1)
+        {
+            return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+        }
+        if (levelName == LevelNames::Overworld1)
+        {
+            return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::MainMenu)
+        {
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+        }
+    }
+
+    if (level.HasMember("tiles"))
+    {
+        int tileVecArrayIdx = 0;
+        std::vector<std::vector<int>> tileVec;
+        const rapidjson::Value& tiles = level["tiles"];
+        for (rapidjson::SizeType i = 0; i < tiles.Size(); i++)
+        {
+            tileVec.push_back(std::vector<int>());
+            for (rapidjson::SizeType j = 0; j < tiles[i].Size(); j++)
+            {
+                tileVec[tileVecArrayIdx].push_back(tiles[i][j].GetInt());
+            }
+            tileVecArrayIdx++;
+        }
+
+        if (levelName == LevelNames::Level1)
+        {
+            return std::make_shared<Level1>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+        if (levelName == LevelNames::Overworld1)
+        {
+            return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::MainMenu)
+        {
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+    }
 	return nullptr;
 }

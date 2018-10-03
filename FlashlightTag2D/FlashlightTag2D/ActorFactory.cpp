@@ -63,7 +63,17 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     assert(actorList.IsArray());
     for (rapidjson::SizeType i = 0; i < actorList.Size(); i++)
     {
-        std::shared_ptr<GameActor> actor = createActor(actorList[i].GetString());
+        std::shared_ptr<GameActor> actor;
+        if (actorList[i].HasMember("position"))
+        {
+            actor = createActor(actorList[i]["actor_path"].GetString(), Vector2D<float>(actorList[i]["position"]["x"].GetFloat(),
+                                                                                        actorList[i]["position"]["y"].GetFloat()));
+        }
+        else
+        {
+            actor = createActor(actorList[i]["actor_path"].GetString());
+        }
+
 		m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
 		addComponentsToManagers(actor);
     }
@@ -115,7 +125,7 @@ void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actor)
 	}
 }
 
-std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath)
+std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath, Vector2D<float> position)
 {
     FILE* fp;
     fopen_s(&fp, actorPath, "rb");
@@ -165,9 +175,19 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     if (actor.HasMember("transform_component"))
     {
         //rapidjson::Value actorTransform = actorList[i]["transform_component"];
+        Vector2D<float> actorPos;
+        if (position == Vector2D<float>(-1.0f, -1.0f))
+        {
+            actorPos = Vector2D<float>(actor["transform_component"]["position"]["x"].GetFloat(),
+                                       actor["transform_component"]["position"]["y"].GetFloat());
+        }
+        else
+        {
+            actorPos = position;
+        }
+
         auto transformCompPtr = std::make_shared<TransformComponent>(getNextComponentId(),
-                                                                     Vector2D<float>(actor["transform_component"]["position"]["x"].GetFloat(),
-                                                                                     actor["transform_component"]["position"]["y"].GetFloat()),
+                                                                     actorPos,
                                                                      Vector2D<float>(actor["transform_component"]["size"]["x"].GetFloat(),
                                                                                      actor["transform_component"]["size"]["y"].GetFloat()),
                                                                      Vector2D<float>(1, 0));

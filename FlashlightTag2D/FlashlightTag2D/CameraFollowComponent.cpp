@@ -22,7 +22,7 @@ CameraFollowComponent::~CameraFollowComponent()
 
 void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
 {
-	if (m_pTarget == nullptr)
+    if (m_pTarget == nullptr)
 	{
 		return;
 	}
@@ -39,21 +39,36 @@ void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
 
 
     // if outside bounds of the level, move back in
-    if (newPosition.x < 0)
+    if (World::SCREEN_WIDTH > m_levelSize.x)
     {
-        newPosition.x = 0;
+        newPosition.x = -(World::SCREEN_WIDTH - m_levelSize.x) / 2;
     }
-    else if (newPosition.x + World::SCREEN_WIDTH > m_levelSize.x)
+    else
     {
-        newPosition.x = m_levelSize.x - World::SCREEN_WIDTH;
+        if (newPosition.x < 0)
+        {
+            newPosition.x = 0;
+        }
+        else if (newPosition.x + World::SCREEN_WIDTH > m_levelSize.x)
+        {
+            newPosition.x = m_levelSize.x - World::SCREEN_WIDTH;
+        }
     }
-    if (newPosition.y < 0)
+
+    if (World::SCREEN_HEIGHT > m_levelSize.y)
     {
-        newPosition.y = 0;
+        newPosition.y = -(World::SCREEN_HEIGHT - m_levelSize.y) / 2;
     }
-    else if (newPosition.y + World::SCREEN_HEIGHT > m_levelSize.y)
+    else
     {
-        newPosition.y = m_levelSize.y - World::SCREEN_HEIGHT;
+        if (newPosition.y < 0)
+        {
+            newPosition.y = 0;
+        }
+        else if (newPosition.y + World::SCREEN_HEIGHT > m_levelSize.y)
+        {
+            newPosition.y = m_levelSize.y - World::SCREEN_HEIGHT;
+        }
     }
 
     actorTransformComponent->SetPosition(newPosition);

@@ -12,6 +12,11 @@ Level1::Level1(int levelWidth, int levelHeight, std::string spritePath, std::str
 {
 }
 
+Level1::Level1(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+    : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+{
+}
+
 Level1::~Level1()
 {
 }
@@ -66,6 +71,6 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 	}
 
 	m_shader->SetVec3("lightSrc", &lightVec.front(), lightVec.size() / 3);
-	m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
-	m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
+//	m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
+//	m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
 }

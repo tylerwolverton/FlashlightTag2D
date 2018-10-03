@@ -5,6 +5,11 @@ MainMenuLevel::MainMenuLevel(int levelWidth, int levelHeight, std::string sprite
 {
 }
 
+MainMenuLevel::MainMenuLevel(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+    : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+{
+}
+
 MainMenuLevel::~MainMenuLevel()
 {
 }

@@ -8,6 +8,11 @@ OutsideLevelDay::OutsideLevelDay(int levelWidth, int levelHeight, std::string sp
 {
 }
 
+OutsideLevelDay::OutsideLevelDay(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+    : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+{
+}
+
 OutsideLevelDay::~OutsideLevelDay()
 {
 }

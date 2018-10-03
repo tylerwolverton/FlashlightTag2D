@@ -46,7 +46,7 @@ private:
     ComponentId m_lastComponentId;
     ComponentId getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
-	std::shared_ptr<GameActor> createActor(const char* const actorPath);
+	std::shared_ptr<GameActor> createActor(const char* const actorPath, Vector2D<float> position = Vector2D<float>(-1.0f, -1.0f));
 	void addInputComponent(const char* const type, std::shared_ptr<GameActor> actor);
 	std::shared_ptr<PhysicsComponent> addPhysicsComponent(const char* const type,
 														  std::shared_ptr<GameActor> actor,

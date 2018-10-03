@@ -24,6 +24,8 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	glewInit();
 	
 	initializeRenderData();
+
+    initializeTilePaths();
 }
 
 GraphicsManager::~GraphicsManager()
@@ -41,13 +43,35 @@ void GraphicsManager::Reset()
 	m_graphicsComponentPtrMap.clear();
 	m_pCameraVec.clear();
 	m_pCurrentCamera = nullptr;
+    m_backgroundTexture = nullptr;
+
+    for (auto vec : m_backgroundTileVec)
+    {
+        vec.clear();
+    }
+    m_backgroundTileVec.clear();
 }
 
 void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
 {
 	m_curLevel = level;
 
-	m_backgroundTexture = std::make_shared<Texture2D>(m_curLevel->GetSpritePath());
+    if (m_curLevel->GetSpritePath() != "")
+    {
+        m_backgroundTexture = std::make_shared<Texture2D>(m_curLevel->GetSpritePath());
+    }
+    
+    int textureVecIdx = 0;
+    auto tileVec = m_curLevel->GetTileVec();
+    for (int i = tileVec.size() - 1; i >= 0; i--)
+    {
+        m_backgroundTileVec.push_back(std::vector <std::shared_ptr<Texture2D>>());
+        for (int idx : tileVec[i])
+        {
+            m_backgroundTileVec[textureVecIdx].push_back(std::make_shared<Texture2D>(m_tilePaths[idx]));
+        }
+        textureVecIdx++;
+    }
 
 	std::shared_ptr<Shader> shader = m_curLevel->GetShader();
 	if (shader->Init())
@@ -139,6 +163,13 @@ bool GraphicsManager::initializeRenderData()
 	return true;
 }
 
+void GraphicsManager::initializeTilePaths()
+{
+    m_tilePaths.push_back("resources/Tiles/Tile00.png");
+    m_tilePaths.push_back("resources/Tiles/Tile01.png");
+    m_tilePaths.push_back("resources/Tiles/Tile02.png");
+}
+
 //void GraphicsManager::UpdateComponents()
 //{
 //	for (auto& comp : m_graphicsComponentVec)
@@ -208,7 +239,7 @@ void GraphicsManager::Render()
 void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
 {
     // Render the background
-    if (m_backgroundTexture->GetWidth() != 0)
+    if (m_backgroundTexture != nullptr && m_backgroundTexture->GetWidth() != 0)
     {
 		std::shared_ptr<Shader> shader = m_curLevel->GetShader();
 
@@ -234,6 +265,45 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         glBindVertexArray(this->m_quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
+    }
+    else
+    {
+        int textureVecIdx = 0;
+        for (auto vec : m_backgroundTileVec)
+        {
+            int texX = 0;
+            for (auto tile : vec)
+            {
+                std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+
+                // Use the whole texture starting from the top left
+                Vector2D<GLfloat> textureSize(1.0f, 1.0f);
+                Vector2D<GLfloat> texturePos(0, 0);
+
+                Matrix4<GLfloat> backgroundModel;
+                auto position = Vector2D<float>(tile->GetWidth() * texX, tile->GetHeight() * textureVecIdx) - cameraPos;
+                backgroundModel = backgroundModel.Translate(position);
+
+                // Scale by the actual size of the sprite
+                Vector2D<GLfloat> spriteSize((float)tile->GetWidth(), (float)tile->GetHeight());
+                backgroundModel = backgroundModel.Scale(spriteSize);
+
+                shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+                shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+                shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+
+                glActiveTexture(GL_TEXTURE0);
+
+                tile->BindTexture();
+
+                glBindVertexArray(this->m_quadVAO);
+                glDrawArrays(GL_TRIANGLES, 0, 6);
+                glBindVertexArray(0);
+
+                texX++;
+            }
+            textureVecIdx++;
+        }
     }
 }
 
