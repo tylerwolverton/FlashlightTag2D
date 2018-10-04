@@ -36,8 +36,8 @@ std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& this
 		return std::vector<std::shared_ptr<Command>>();
 	}
 
-    if (m_chaseActor)
-    {
+    /*if (m_chaseActor)
+    {*/
         float speed = 1.0;
         auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
         if (thisActorPhysicsComponent != nullptr)
@@ -46,14 +46,14 @@ std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& this
         }
 
         return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent, speed);
-    }
+   /* }
     else
     {
         if((targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length() < 500)
         {
             m_chaseActor = true;
         }
-    }
+    }*/
 
     return std::vector<std::shared_ptr<Command>>();
 }
