@@ -4,8 +4,8 @@
 		"size":{
 			"x":1600, "y":640 
 		},
-		"vert_shader":"LevelWithLighting.vert",
-		"frag_shader":"LevelWithLighting.frag",
+		"vert_shader":"Basic.vert",
+		"frag_shader":"LevelWithLightingDark.frag",
 		"tiles":[
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -33,6 +33,7 @@
 		{"actor_path":"resources/Actors/player.json", "position":{"x":300, "y":100}},
 		{"actor_path":"resources/Actors/portal_to_overworld1.json", "position":{"x":120, "y":120}},
 		{"actor_path":"resources/Actors/cursor.json"},
-		{"actor_path":"resources/Actors/rush_enemy_spawner.json", "position":{"x":1400, "y":200}}
+		{"actor_path":"resources/Actors/rush_enemy_spawner.json", "position":{"x":1400, "y":200}},
+		{"actor_path":"resources/Actors/enemy_shooter.json", "position":{"x":1200, "y":200}}
 	]
 }

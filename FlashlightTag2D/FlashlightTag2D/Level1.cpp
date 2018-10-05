@@ -5,6 +5,8 @@
 #include "GraphicsComponent.h"
 #include "GameStateComponent.h"
 
+#include <SDL.h>
+
 #define MAX_NUM_LIGHTS 10
 
 Level1::Level1(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
@@ -105,6 +107,7 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 		flashingLightSrcVec.push_back(-901.0f);
 	}
 
+    m_shader->SetInt("timeElapsed", SDL_GetTicks()/50);
 	m_shader->SetVec3("lightSrc", &lightSrcVec.front(), lightSrcVec.size() / 3);
 	if (flashingLightCount > 0)
 	{

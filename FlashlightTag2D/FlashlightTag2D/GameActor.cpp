@@ -83,7 +83,16 @@ std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames co
 
 void GameActor::InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
 {
-	m_componentMap.insert(std::make_pair(compName, comp));
+    if (m_componentMap.find(compName) != m_componentMap.end())
+    {
+        m_componentMap[compName] = comp;
+    }
+    else
+    {
+        auto compPair = std::make_pair(compName, comp);
+        m_componentMap.insert(compPair);
+    }
+
     comp->SetParentActorId(m_actorId);
 }
 

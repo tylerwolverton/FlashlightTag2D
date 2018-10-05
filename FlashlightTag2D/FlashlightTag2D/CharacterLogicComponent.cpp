@@ -41,9 +41,9 @@ void CharacterLogicComponent::MoveLeft()
 void CharacterLogicComponent::Shoot()
 {
 	uint32_t curTicks = SDL_GetTicks();
-	if (curTicks - lastTickVal > 400)
+	if (curTicks - m_lastTickVal > 400)
 	{
-		lastTickVal = curTicks;
+		m_lastTickVal = curTicks;
 		auto actorFactory = ServiceLocator::GetActorFactory();
 		if (actorFactory == nullptr)
 		{
@@ -63,6 +63,6 @@ void CharacterLogicComponent::Shoot()
 
 		auto actorPos = m_pPhysicsComponent->GetTransformComponent()->GetPosition();
 		Vector2D<float> dirVec = (relMousePos - actorPos).Normalize();
-		actorFactory->CreateProjectile(actorPos + (dirVec * 70), dirVec * 75.0f);
+		actorFactory->CreateProjectile(actorPos + (dirVec * 70), dirVec * 15.0f);
 	}
 }

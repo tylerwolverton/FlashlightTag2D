@@ -139,6 +139,12 @@
     <ClCompile Include="ActorComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ShootAtTargetBehavior.cpp">
+      <Filter>Game\Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGameStateComponent.cpp">
+      <Filter>Game\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -291,6 +297,12 @@
     <ClInclude Include="SpawnBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
+    <ClInclude Include="ShootAtTargetBehavior.h">
+      <Filter>Game\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGameStateComponent.h">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game">
@@ -331,16 +343,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LevelWithLighting.frag">
-      <Filter>Game\Shaders</Filter>
-    </None>
-    <None Include="LevelWithLighting.vert">
-      <Filter>Game\Shaders</Filter>
-    </None>
     <None Include="Basic.frag">
       <Filter>Game\Shaders</Filter>
     </None>
     <None Include="Basic.vert">
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="LevelWithLightingDark.frag">
+      <Filter>Game\Shaders</Filter>
+    </None>
+    <None Include="LevelWithLightingLight.frag">
       <Filter>Game\Shaders</Filter>
     </None>
   </ItemGroup>

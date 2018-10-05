@@ -1,8 +1,9 @@
 { 
-	"name": "Enemy", 
+	"name": "EnemyShooter", 
 	"ai_component":{
 		"behaviors":[
-			{"type":"rush"}
+			{"type":"rush"},
+			{"type":"shoot_at_target"}
 		]
 	},
 	"transform_component":{

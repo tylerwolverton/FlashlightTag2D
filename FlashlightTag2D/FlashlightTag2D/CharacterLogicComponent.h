@@ -17,5 +17,5 @@ public:
 private:
 	std::shared_ptr<PhysicsComponent> m_pPhysicsComponent; 
 
-	uint32_t lastTickVal;
+	uint32_t m_lastTickVal;
 };

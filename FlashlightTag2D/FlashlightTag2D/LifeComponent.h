@@ -12,6 +12,8 @@ public:
     virtual void Die();
     virtual void TakeDamage(int damage);
 
+    void SetHealth(int health) { m_health = health; }
+
 protected:
     ActorId m_parentId;
     int m_health;

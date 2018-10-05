@@ -8,9 +8,9 @@
 
 #include <memory>
 
-AIComponent::AIComponent(ComponentId componentId, std::shared_ptr<Behavior> behavior)
+AIComponent::AIComponent(ComponentId componentId, std::vector<std::shared_ptr<Behavior>> behaviorVec)
     : ActorComponent(componentId),
-	  m_behavior(behavior)
+	  m_behaviorVec(behaviorVec)
 {
 }
 
@@ -27,10 +27,17 @@ void AIComponent::Update(GameActor& actor, float deltaMs)
 	}
 
 	auto behavior = gameStateComponent->GetBehavior();*/
-	if (m_behavior != nullptr)
-	{
-		actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(m_behavior->Update(actor)));
-	}
+    if (!m_behaviorVec.empty())
+    {
+        std::shared_ptr<std::vector<std::shared_ptr<Command>>> commandsVec(std::make_shared<std::vector<std::shared_ptr<Command>>>());
+        for (auto behavior : m_behaviorVec)
+        {
+            auto cmds = behavior->Update(actor);
+            commandsVec->insert(commandsVec->end(), cmds.begin(), cmds.end());
+        }
+
+        actor.SetCommands(commandsVec);
+    }
 }
 
 const EComponentNames AIComponent::GetComponentName() const

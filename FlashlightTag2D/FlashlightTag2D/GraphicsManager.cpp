@@ -194,6 +194,7 @@ void GraphicsManager::Render()
 	if (cameraTransformComponent == nullptr) { return; }
 
 	Vector2D<float> cameraPos = cameraTransformComponent->GetPosition();
+    Vector2D<float> cameraSize = cameraTransformComponent->GetSize();
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -210,6 +211,12 @@ void GraphicsManager::Render()
 
 		Vector2D<float> actorPos = actorTransformComponent.GetPosition();
 		Vector2D<float> actorSize = actorTransformComponent.GetSize();
+
+        if (actorPos.x < cameraPos.x || actorPos.x > cameraPos.x + cameraSize.x
+            || actorPos.y < cameraPos.y || actorPos.y > cameraPos.y + cameraSize.y)
+        {
+            continue;
+        }
 
 		// Prepare transformations
 		Matrix4<GLfloat> model;

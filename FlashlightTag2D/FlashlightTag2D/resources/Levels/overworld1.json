@@ -6,7 +6,7 @@
 		},
 		"sprite":"resources/background_grass.png",
 		"vert_shader":"Basic.vert",
-		"frag_shader":"Basic.frag"
+		"frag_shader":"LevelWithLightingLight.frag"
 	},
 	"actor_list":[
 		{"actor_path":"resources/Actors/player.json"},

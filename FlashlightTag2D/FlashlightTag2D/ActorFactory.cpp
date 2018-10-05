@@ -24,8 +24,10 @@
 #include "SeekBehavior.h"
 #include "RushBehavior.h"
 #include "SpawnBehavior.h"
+#include "ShootAtTargetBehavior.h"
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
+#include "PlayerGameStateComponent.h"
 #include "LifeComponent.h"
 #include "PlayerLifeComponent.h"
 #include "World.h"
@@ -45,12 +47,20 @@
 ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgr, std::shared_ptr<GraphicsManager> graphicsMgr)
     : m_lastActorId(0),
       m_physicsMgr(physicsMgr),
-      m_graphicsMgr(graphicsMgr)
+      m_graphicsMgr(graphicsMgr),
+      m_persistedPlayerGameStateComp(nullptr),
+      m_persistedPlayerLifeComp(nullptr)
 {
 }
 
 void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel)
 {
+    if (m_pCurrentPlayer != nullptr)
+    {
+        m_persistedPlayerGameStateComp = m_pCurrentPlayer->GetGameStateComponent();
+        m_persistedPlayerLifeComp = m_pCurrentPlayer->GetLifeComponent();
+    }
+
     m_physicsMgr->ClearPhysicsComponents();
     m_physicsMgr->SetLevelSize(newLevel->GetLevelSize());
 
@@ -79,6 +89,14 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     }
     
     m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
+
+    if (m_pCurrentPlayer != nullptr
+        && m_persistedPlayerGameStateComp != nullptr
+        && m_persistedPlayerLifeComp != nullptr)
+    {
+        m_pCurrentPlayer->InsertComponent(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateComp);
+        m_pCurrentPlayer->InsertComponent(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeComp);
+    }
 }
 
 std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId) 
@@ -151,25 +169,34 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
     if (actor.HasMember("ai_component"))
     {
-		std::shared_ptr<Behavior> behavior;
-		if (actor["ai_component"].HasMember("behavior"))
+		std::vector<std::shared_ptr<Behavior>> behaviorVec;
+		if (actor["ai_component"].HasMember("behaviors"))
 		{
-			if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "spawn"))
-			{
-				//std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
-				behavior = std::make_shared<SpawnBehavior>(actor["ai_component"]["behavior"]["delay_time"].GetInt(), actor["ai_component"]["behavior"]["target"].GetString());
-			}
-			else if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "seek"))
-			{
+            for (rapidjson::SizeType i = 0; i < actor["ai_component"]["behaviors"].Size(); i++)
+            {
+                std::string type = actor["ai_component"]["behaviors"][i]["type"].GetString();
+                if (!strcmp(type.c_str(), "spawn"))
+                {
+                    //std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
+                    behaviorVec.push_back(std::make_shared<SpawnBehavior>(actor["ai_component"]["behavior"]["delay_time"].GetInt(), actor["ai_component"]["behavior"]["target"].GetString()));
+                }
+                else if (!strcmp(type.c_str(), "seek"))
+                {
 
-			}
-			else if (!strcmp(actor["ai_component"]["behavior"]["type"].GetString(), "rush"))
-			{
-				behavior = std::make_shared<RushBehavior>();
-			}
+                }
+                else if (!strcmp(type.c_str(), "rush"))
+                {
+                    behaviorVec.push_back(std::make_shared<RushBehavior>());
+                }
+                else if (!strcmp(type.c_str(), "shoot_at_target"))
+                {
+                    // TODO: make this more flexible
+                    behaviorVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_pCurrentPlayer));
+                }
+            }
 		}
 
-		newActor->InsertComponent(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId(), behavior));
+		newActor->InsertComponent(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId(), behaviorVec));
     }
 
     if (actor.HasMember("transform_component"))
@@ -424,7 +451,7 @@ void ActorFactory::RemoveDeadActors()
 		}
 
 		std::shared_ptr<GraphicsComponent> actorGraphicsComp = actorIter->second->GetGraphicsComponent();
-		if (actorPhysComp != nullptr)
+		if (actorGraphicsComp != nullptr)
 		{
 			m_graphicsMgr->RemoveGraphicsComponentPtr(actorGraphicsComp->GetComponentId());
 		}
@@ -446,7 +473,8 @@ void ActorFactory::RemoveDeadActors()
         auto levelFactory = ServiceLocator::GetLevelFactory();
         if (levelFactory != nullptr)
         {
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::MainMenu);
+            m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
+            levelFactory->ChangeLevel(LevelFactory::LevelPaths::Overworld1);
         }
     }
 }

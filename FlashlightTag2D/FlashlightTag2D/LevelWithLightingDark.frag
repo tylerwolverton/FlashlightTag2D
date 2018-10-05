@@ -6,6 +6,7 @@ out vec4 color;
 
 //uniform int numLights;
 uniform sampler2D image;
+uniform int timeElapsed;
 //uniform vec3 spriteColor;
 uniform vec3[MAX_NUM_LIGHTS] lightSrc;
 uniform vec2[MAX_NUM_LIGHTS] lightDir;
@@ -60,7 +61,7 @@ void main()
 		float dist = distance(gl_FragCoord.xy, flashingLightSrc[i].xy);
 		if(dist < flashingLightSrc[i].z)
 		{
-			color.xyz = color.xyz * flashingLightColor[i];
+			color.xyz = clamp(sin(timeElapsed), 0.5, 1) * color.xyz * flashingLightColor[i];
 			illuminated = true;
 		}
 	}

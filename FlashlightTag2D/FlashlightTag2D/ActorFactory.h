@@ -14,6 +14,7 @@ class GraphicsManager;
 class Level;
 class TransformComponent;
 class PhysicsComponent;
+class LifeComponent;
 
 class ActorFactory
 {
@@ -72,5 +73,9 @@ private:
     // Only needed for camera
     std::shared_ptr<GameActor> m_pCurrentPlayer;
 	std::shared_ptr<GameActor> m_pCurrentCamera;
+
+    // Persistence variables
+    std::shared_ptr<GameStateComponent> m_persistedPlayerGameStateComp;
+    std::shared_ptr<LifeComponent> m_persistedPlayerLifeComp;
 };
 
