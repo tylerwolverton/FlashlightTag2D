@@ -39,10 +39,30 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 			{
                 std::shared_ptr<TransformComponent> innerTransformComponent = innerActorPhysicsComponent.second->GetTransformComponent();
 
-                auto collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
+				CollisionEvent collisionEvent;
+				/*if (actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
+					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
+				{*/
+					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
+				/*}
+				else if (actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
+					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
+				{
+					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
+				}
+				else if(actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
+					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
+				{
+					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
+				}
+				else
+				{
+
+				}*/
+
 				if (collisionEvent.penetrationDepth < 0)
 				{
-                    resolvePenetration(actorTransformComponent, innerTransformComponent, collisionEvent);
+                    resolvePenetration(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
                     resolveCollision(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
                     if (actorPhysicsComponent.second->SignalCollision(innerActorPhysicsComponent.second->GetParentActorId()))
                     {
@@ -92,12 +112,53 @@ PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(std::shared_
 	return collisionEvent;
 }
 
-void PhysicsManager::resolvePenetration(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent, const PhysicsManager::CollisionEvent& collisionEvent)
+PhysicsManager::CollisionEvent PhysicsManager::checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent)
 {
-    auto moveDist = abs(collisionEvent.penetrationDepth) / 2;
+	Vector2D<float> boxPos = boxActorTransformComponent->GetPosition();
+	Vector2D<float> boxSize = boxActorTransformComponent->GetSize();
+	/*Vector2D<float> boxTopLeft = boxPos + Vector2D<float>(-boxSize.x, -boxSize.y);
+	Vector2D<float> boxTopRight = boxPos + Vector2D<float>(boxSize.x, -boxSize.y);
+	Vector2D<float> boxBotLeft = boxPos + Vector2D<float>(-boxSize.x, boxSize.y);
+	Vector2D<float> boxBotRight = boxPos + Vector2D<float>(boxSize.x, boxSize.y);*/
 
-    actorTransformComponent->SetPosition(actorTransformComponent->GetPosition() + collisionEvent.normal * moveDist);
-    innerActorTransformComponent->SetPosition(innerActorTransformComponent->GetPosition() - collisionEvent.normal * moveDist);
+	float xMin = boxPos.x - boxSize.x;
+	float xMax = boxPos.x + boxSize.x;
+	float yMin = boxPos.y + boxSize.y;
+	float yMax = boxPos.y - boxSize.y;
+
+	Vector2D<float> circlePos = circleActorTransformComponent->GetPosition();
+	float circleRadius = circleActorTransformComponent->GetRadius();
+	if (circlePos.x + circleRadius < xMin 
+		|| circlePos.x - circleRadius > xMax
+		|| circlePos.y - circleRadius < yMin
+		|| circlePos.y + circleRadius > yMax)
+	{
+		return CollisionEvent(-1, Vector2D<float>(0,0));
+	}
+
+	Vector2D<float> dist = boxActorTransformComponent->GetPosition() - circleActorTransformComponent->GetPosition();
+	auto collisionEvent = CollisionEvent{ dist.Length(), dist.Normalize() };
+
+	return collisionEvent;
+}
+
+PhysicsManager::CollisionEvent PhysicsManager::checkBoxCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent)
+{
+	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
+	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
+
+	auto collisionEvent = CollisionEvent{ dist.Length() - sizeSum, dist.Normalize() };
+
+	return collisionEvent;
+}
+
+void PhysicsManager::resolvePenetration(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent)
+{
+	float combinedMass = actorPhysicsComp->GetMass() + innerActorPhysicsComp->GetMass();
+    float totalMoveDist = abs(collisionEvent.penetrationDepth) / combinedMass;
+	
+	actorPhysicsComp->GetTransformComponent()->SetPosition(actorPhysicsComp->GetTransformComponent()->GetPosition() + collisionEvent.normal * totalMoveDist * innerActorPhysicsComp->GetMass());
+	innerActorPhysicsComp->GetTransformComponent()->SetPosition(innerActorPhysicsComp->GetTransformComponent()->GetPosition() - collisionEvent.normal * totalMoveDist * actorPhysicsComp->GetMass());
 }
 
 void PhysicsManager::resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent)
@@ -146,6 +207,17 @@ void PhysicsManager::moveActorsBackIntoLevel()
             newPosition.y = m_levelSize.y - actorTransformComponent->GetSize().y / 2;
         }
 
+		Vector2D<float> newVelocity(actorPhysicsComponent.second->GetVelocity());
+		if (actorTransformComponent->GetPosition().x != newPosition.x)
+		{
+			newVelocity.x = 0;
+		}
+		if (actorTransformComponent->GetPosition().y != newPosition.y)
+		{
+			newVelocity.y = 0;
+		}
+
         actorTransformComponent->SetPosition(newPosition);
+		actorPhysicsComponent.second->SetVelocity(newVelocity);
     }
 }

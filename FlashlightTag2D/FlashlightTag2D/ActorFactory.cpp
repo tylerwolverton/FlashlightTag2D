@@ -178,7 +178,8 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
                 if (!strcmp(type.c_str(), "spawn"))
                 {
                     //std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
-                    behaviorVec.push_back(std::make_shared<SpawnBehavior>(actor["ai_component"]["behavior"]["delay_time"].GetInt(), actor["ai_component"]["behavior"]["target"].GetString()));
+                    behaviorVec.push_back(std::make_shared<SpawnBehavior>(actor["ai_component"]["behaviors"][i]["delay_time"].GetInt(), 
+																		  actor["ai_component"]["behaviors"][i]["target"].GetString()));
                 }
                 else if (!strcmp(type.c_str(), "seek"))
                 {
@@ -300,8 +301,13 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
         // TODO: Cache changes
         //m_gameStateComponentVec.emplace_back(getNextComponentId(), actorName, role);
-        m_gameStateComponentVec.push_back(gameStateCompPtr);
     }
+	if (actor.HasMember("player_game_state_component"))
+	{
+		std::shared_ptr<PlayerGameStateComponent> gameStateCompPtr = std::make_shared<PlayerGameStateComponent>(getNextComponentId(), actorName);
+
+		newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
+	}
 	if (actor.HasMember("life_component"))
 	{
 		std::shared_ptr<LifeComponent> lifeCompPtr = std::make_shared<LifeComponent>(getNextComponentId(), 

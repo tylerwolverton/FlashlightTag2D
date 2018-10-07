@@ -25,7 +25,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 	
 	initializeRenderData();
 
-    initializeTilePaths();
+    initializeTiles();
 }
 
 GraphicsManager::~GraphicsManager()
@@ -68,7 +68,7 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
         m_backgroundTileVec.push_back(std::vector <std::shared_ptr<Texture2D>>());
         for (int idx : tileVec[i])
         {
-            m_backgroundTileVec[textureVecIdx].push_back(std::make_shared<Texture2D>(m_tilePaths[idx]));
+            m_backgroundTileVec[textureVecIdx].push_back(m_tileVec[idx]);
         }
         textureVecIdx++;
     }
@@ -163,11 +163,11 @@ bool GraphicsManager::initializeRenderData()
 	return true;
 }
 
-void GraphicsManager::initializeTilePaths()
+void GraphicsManager::initializeTiles()
 {
-    m_tilePaths.push_back("resources/Tiles/Tile00.png");
-    m_tilePaths.push_back("resources/Tiles/Tile01.png");
-    m_tilePaths.push_back("resources/Tiles/Tile02.png");
+	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile00.png"));
+	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile01.png"));
+	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile02.png"));
 }
 
 //void GraphicsManager::UpdateComponents()

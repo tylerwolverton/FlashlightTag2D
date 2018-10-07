@@ -18,8 +18,8 @@ class World
 {
 public:
 	//Screen dimension constants
-	static const int SCREEN_WIDTH = 1920;
-	static const int SCREEN_HEIGHT = 1080;
+	static const int SCREEN_WIDTH = 800;
+	static const int SCREEN_HEIGHT = 600;
 
 	World(SDL_Window* window);
 
@@ -27,10 +27,13 @@ public:
 
 	void RunGame();
 	void QuitGame();
+	void PauseGame() { m_isGamePaused = true; }
+	void ResumeGame() { m_isGamePaused = false; }
 
 private:
 	SDL_Window* m_window;
 	bool m_isGameRunning;
+	bool m_isGamePaused;
 
     std::shared_ptr<InputManager> m_pInputManager;
     std::shared_ptr<PhysicsManager> m_pPhysicsManager;

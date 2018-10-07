@@ -22,7 +22,13 @@ ProjectilePhysicsComponent::~ProjectilePhysicsComponent()
 
 void ProjectilePhysicsComponent::Update(GameActor& actor, float deltaMs)
 {
+	auto prevDir = actor.GetTransformComponent()->GetDirection();
 	MoveActor(deltaMs);
+
+	if (prevDir != actor.GetTransformComponent()->GetDirection())
+	{
+		actor.GetLifeComponent()->Die();
+	}
 }
 
 bool ProjectilePhysicsComponent::SignalCollision(ActorId actorId)

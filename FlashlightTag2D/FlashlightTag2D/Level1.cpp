@@ -67,9 +67,6 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
             lightDirVec.push_back(actorTransformComponent.GetDirection().x);
             lightDirVec.push_back(actorTransformComponent.GetDirection().y);
 
-            //lightPosVec.push_back(actorLocation.x + actorTransformComponent.GetSize().x / 2);
-            //lightPosVec.push_back(actorLocation.y + actorTransformComponent.GetSize().y / 2);
-
             lightCount++;
         }
 		// Flashing lights
@@ -109,11 +106,9 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 
     m_shader->SetInt("timeElapsed", SDL_GetTicks()/50);
 	m_shader->SetVec3("lightSrc", &lightSrcVec.front(), lightSrcVec.size() / 3);
+	m_shader->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
 	if (flashingLightCount > 0)
 	{
-		m_shader->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
 		m_shader->SetVec3("flashingLightColor", &flashingLightColorVec.front(), flashingLightColorVec.size() / 3);
 	}
-//	m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
-//	m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
 }

@@ -16,6 +16,7 @@
 
 World::World(SDL_Window* window)
 	: m_window(window),
+	  m_isGamePaused(false),
       m_pInputManager(std::make_shared<InputManager>()),
       m_pPhysicsManager(std::make_shared<PhysicsManager>()),
       m_pGraphicsManager(std::make_shared<GraphicsManager>(m_window)),
@@ -47,33 +48,36 @@ void World::RunGame()
 	float timeAccumulatedMs = 0;
 	while (m_isGameRunning)
 	{
-		InputData input = m_pInputManager->ReadInput();
-		if (input.buttonsPressed & EInputValues::Esc)
+		if (!m_isGamePaused)
 		{
-			m_isGameRunning = false;
-			break;
-		}
-
-		timeLastMs = timeCurrentMs;
-		timeCurrentMs = (float)SDL_GetTicks();
-		float timeDeltaMs = timeCurrentMs - timeLastMs;
-		timeAccumulatedMs += timeDeltaMs;
-		while (timeAccumulatedMs >= timeStepMs)
-		{
-            auto dt = timeAccumulatedMs / 1000;
-			for (auto entity : m_pActorFactory->GetActorMap())
+			InputData input = m_pInputManager->ReadInput();
+			if (input.buttonsPressed & EInputValues::Esc)
 			{
-				entity.second->Update(dt, input); // Should this be in this sub loop?
+				m_isGameRunning = false;
+				break;
 			}
 
-            m_pPhysicsManager->Update(dt);
+			timeLastMs = timeCurrentMs;
+			timeCurrentMs = (float)SDL_GetTicks();
+			float timeDeltaMs = timeCurrentMs - timeLastMs;
+			timeAccumulatedMs += timeDeltaMs;
+			while (timeAccumulatedMs >= timeStepMs)
+			{
+				auto dt = timeAccumulatedMs / 1000;
+				for (auto entity : m_pActorFactory->GetActorMap())
+				{
+					entity.second->Update(dt, input); // Should this be in this sub loop?
+				}
 
-			timeAccumulatedMs -= timeStepMs;
+				m_pPhysicsManager->Update(dt);
+
+				timeAccumulatedMs -= timeStepMs;
+			}
+
+			m_pGraphicsManager->Render();
+
+			m_pActorFactory->RemoveDeadActors();
 		}
-
-        m_pGraphicsManager->Render();
-
-        m_pActorFactory->RemoveDeadActors();
 	}
 }
 

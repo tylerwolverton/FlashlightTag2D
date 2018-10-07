@@ -38,6 +38,12 @@ private:
         float penetrationDepth;
         Vector2D<float> normal;
 
+		CollisionEvent()
+			: penetrationDepth(0),
+			  normal(Vector2D<float>(0,0))
+		{
+		}
+
         CollisionEvent(float p_penetrationDepth, Vector2D<float> p_normal)
             : penetrationDepth(p_penetrationDepth),
               normal(p_normal)
@@ -46,7 +52,9 @@ private:
     };
 
     CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
-	void resolvePenetration(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent, const PhysicsManager::CollisionEvent& collisionEvent);
+	CollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent);
+	CollisionEvent checkBoxCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
+	void resolvePenetration(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent);
     void resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent);
     void moveActorsBackIntoLevel();
 

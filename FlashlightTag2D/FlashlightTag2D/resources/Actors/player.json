@@ -18,7 +18,7 @@
 		"sprite": "resources/spritesheet.png",
 		"animation_speed":50 
 	},
-	"game_state_component":{},
+	"player_game_state_component":{},
 	"player_life_component":{
 		"health":10
 	}

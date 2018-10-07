@@ -1,5 +1,10 @@
 #pragma once
 #include "GameStateComponent.h"
+
+#include <map>
+
+class GameActor;
+
 class PlayerGameStateComponent :
     public GameStateComponent
 {
@@ -13,6 +18,7 @@ public:
 
 private:    
     // TODO: Create inventory
+	std::map<ActorId, std::shared_ptr<GameActor>> m_inventory;
     bool m_hasKey;
 };
 

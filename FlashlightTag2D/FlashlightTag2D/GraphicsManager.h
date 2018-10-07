@@ -60,7 +60,7 @@ private:
 
 	bool setOpenGLAttributes();
 	bool initializeRenderData();
-    void initializeTilePaths();
+    void initializeTiles();
     void renderBackground(Vector2D<float> cameraPos);
     
     // TODO: Cache changes
@@ -74,6 +74,6 @@ private:
 	int m_lastComponentId;
 	int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
-    std::vector<std::string> m_tilePaths;
+    std::vector<std::shared_ptr<Texture2D>> m_tileVec;
 };
 

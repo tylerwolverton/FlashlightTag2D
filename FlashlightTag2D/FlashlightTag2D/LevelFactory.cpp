@@ -5,6 +5,9 @@
 #include "OutsideLevelDay.h"
 #include "MainMenuLevel.h"
 
+#include "ServiceLocator.h"
+#include "World.h"
+
 // from rapidjson
 #include "filereadstream.h"
 
@@ -27,6 +30,8 @@ LevelFactory::~LevelFactory()
 
 void LevelFactory::ChangeLevel(const std::string& levelPath)
 {
+	//ServiceLocator::GetWorld()->PauseGame();
+
 	FILE* fp;
 	fopen_s(&fp, levelPath.c_str(), "rb");
 
@@ -39,6 +44,8 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
 
 	auto newLevel = createLevelFromJson(d["level"]);
     m_pActorFactory->InitLevelActors(d["actor_list"], newLevel);
+
+	//ServiceLocator::GetWorld()->ResumeGame();
 }
 
 std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value& level)

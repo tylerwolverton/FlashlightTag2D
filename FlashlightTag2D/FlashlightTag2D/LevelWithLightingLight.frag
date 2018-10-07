@@ -16,9 +16,9 @@ void main()
 	for(int i = 0; i < MAX_NUM_LIGHTS; i++)
 	{
 		// Check if this is the special last light
-		if(flashingLightSrc[i].x == -901 
-			&& flashingLightSrc[i].y == -901 
-			&& flashingLightSrc[i].z == -901)
+		if(flashingLightSrc[i].x == -901.0
+			&& flashingLightSrc[i].y == -901.0 
+			&& flashingLightSrc[i].z == -901.0)
 		{
 			break;
 		}

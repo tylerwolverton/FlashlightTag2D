@@ -66,20 +66,18 @@ void OutsideLevelDay::PrepShaders(std::map<ComponentId, std::shared_ptr<Graphics
         }
     }
 
-    // Use a special vector to tell the shader there are no more lights
-    if (flashingLightCount < MAX_NUM_LIGHTS)
-    {
-        flashingLightSrcVec.push_back(-901.0f);
-        flashingLightSrcVec.push_back(-901.0f);
-        flashingLightSrcVec.push_back(-901.0f);
-    }
+	// Use a special vector to tell the shader there are no more lights
+	if (flashingLightCount < MAX_NUM_LIGHTS)
+	{
+		flashingLightSrcVec.push_back(-901.0f);
+		flashingLightSrcVec.push_back(-901.0f);
+		flashingLightSrcVec.push_back(-901.0f);
+	}
 
     m_shader->SetInt("timeElapsed", SDL_GetTicks() / 50);
-    if (flashingLightCount > 0)
-    {
-        m_shader->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
+    m_shader->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
+	if (flashingLightCount > 0)
+	{
         m_shader->SetVec3("flashingLightColor", &flashingLightColorVec.front(), flashingLightColorVec.size() / 3);
     }
-    //	m_shader->SetVec2("lightDir", &lightDirVec.front(), lightDirVec.size() / 2);
-    //	m_shader->SetVec2("lightPos", &lightPosVec.front(), lightPosVec.size() / 2);
 }
