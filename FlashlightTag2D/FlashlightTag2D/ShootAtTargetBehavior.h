@@ -7,7 +7,7 @@ class ShootAtTargetBehavior :
     public Behavior
 {
 public:
-    ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActor = nullptr);
+    ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActor = nullptr, int cooldown = 4);
     virtual ~ShootAtTargetBehavior();
 
     std::vector<std::shared_ptr<Command>> Update(const GameActor& actor) override;
@@ -17,5 +17,6 @@ public:
 private:
     std::shared_ptr<GameActor> m_targetActor;
     uint32_t m_lastTickVal;
+    int m_cooldown;
 };
 

@@ -3,7 +3,10 @@
 	"ai_component":{
 		"behaviors":[
 			{"type":"rush"},
-			{"type":"shoot_at_target"}
+			{
+			 "type":"shoot_at_target", 
+			 "cooldown":2
+			}
 		]
 	},
 	"transform_component":{
@@ -23,6 +26,6 @@
 	},
 	"game_state_component":{},
 	"life_component":{
-		"health":10
+		"health":2
 	}
 }

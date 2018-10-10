@@ -5,8 +5,9 @@
 
 #include <SDL.h>
 
-ShootAtTargetBehavior::ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActor)
-    : m_targetActor(targetActor)
+ShootAtTargetBehavior::ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActor, int cooldown)
+    : m_targetActor(targetActor),
+      m_cooldown(cooldown)
 {
 }
 
@@ -17,7 +18,7 @@ ShootAtTargetBehavior::~ShootAtTargetBehavior()
 std::vector<std::shared_ptr<Command>> ShootAtTargetBehavior::Update(const GameActor& actor)
 {
     uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - m_lastTickVal > 400)
+    if (curTicks - m_lastTickVal > m_cooldown * 1000)
     {
         m_lastTickVal = curTicks;
         auto actorFactory = ServiceLocator::GetActorFactory();

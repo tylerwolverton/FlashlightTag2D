@@ -1,11 +1,11 @@
 { 
-	"name": "RushEnemySpawner", 
+	"name": "ShooterEnemySpawner", 
 	"ai_component":{
 		"behaviors":[
 			{
 				"type":"spawn",
-				"target":"enemy",
-				"delay_time":4000
+				"target":"enemy_shooter",
+				"delay_time":5000
 			}
 		]
 	},

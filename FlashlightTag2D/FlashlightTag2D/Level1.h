@@ -10,5 +10,6 @@ public:
 	virtual ~Level1();
 
 	void PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrMap, Vector2D<float> cameraPos) override;
+    virtual void SetupLevel() override;
 };
 

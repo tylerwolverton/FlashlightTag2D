@@ -29,12 +29,12 @@ public:
 	std::shared_ptr<GameActor> GetCurrentCamera() { return m_pCurrentCamera; }
 
     void InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel);
-    //void ChooseSeekers(int seekerCount);
+
+    void KillAllActorsByName(std::string name);
     void AddDeadActor(ActorId id) { m_deadActorVec.push_back(id); }
     void RemoveDeadActors();
 
 	// Actor creation methods
-    std::shared_ptr<GameActor> CreateEnemy(Vector2D<float> position);
 	std::shared_ptr<GameActor> CreateProjectile(Vector2D<float> position, Vector2D<float> velocity);
 	std::shared_ptr<GameActor> CreateActorFromName(std::string name, Vector2D<float> position, Vector2D<float> velocity = Vector2D<float>(0.0, 0.0));
 	// Move to graphics manager

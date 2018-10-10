@@ -4,6 +4,9 @@
 #include "TransformComponent.h"
 #include "GraphicsComponent.h"
 #include "GameStateComponent.h"
+#include "PlayerGameStateComponent.h"
+#include "ServiceLocator.h"
+#include "ActorFactory.h"
 
 #include <SDL.h>
 
@@ -111,4 +114,24 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 	{
 		m_shader->SetVec3("flashingLightColor", &flashingLightColorVec.front(), flashingLightColorVec.size() / 3);
 	}
+}
+
+void Level1::SetupLevel() 
+{
+    std::shared_ptr<ActorFactory> actorFactory = ServiceLocator::GetActorFactory();
+    if (actorFactory == nullptr)
+    {
+        return;
+    }
+
+    std::shared_ptr<GameActor> player = actorFactory->GetPlayer();
+    if (player == nullptr)
+    {
+        return;
+    }
+
+    if(std::dynamic_pointer_cast<PlayerGameStateComponent>(player->GetGameStateComponent())->InventoryContainsItem("FirstKey"))
+    {
+        actorFactory->KillAllActorsByName("FirstKey");
+    }
 }

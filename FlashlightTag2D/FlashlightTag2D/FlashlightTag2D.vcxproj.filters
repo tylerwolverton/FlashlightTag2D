@@ -145,6 +145,9 @@
     <ClCompile Include="PlayerGameStateComponent.cpp">
       <Filter>Game\Components</Filter>
     </ClCompile>
+    <ClCompile Include="PickupPhysicsComponent.cpp">
+      <Filter>Game\Components\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -302,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="PlayerGameStateComponent.h">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PickupPhysicsComponent.h">
+      <Filter>Game\Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

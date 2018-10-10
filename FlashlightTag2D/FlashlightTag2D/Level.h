@@ -4,6 +4,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <memory>
 
 class GraphicsComponent;
@@ -22,6 +23,7 @@ public:
     std::vector<std::vector<int>> GetTileVec() { return m_tileVec; }
 	
 	virtual void PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrMap, Vector2D<float> cameraPos) = 0;
+    virtual void SetupLevel() {};
 
 protected:
 	Vector2D<int> m_levelSize;

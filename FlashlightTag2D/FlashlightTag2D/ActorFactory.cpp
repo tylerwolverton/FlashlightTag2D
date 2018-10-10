@@ -20,6 +20,7 @@
 #include "PlayerPhysicsComponent.h"
 #include "EnemyTouchDamagePhysicsComponent.h"
 #include "ProjectilePhysicsComponent.h"
+#include "PickupPhysicsComponent.h"
 #include "AIComponent.h"
 #include "SeekBehavior.h"
 #include "RushBehavior.h"
@@ -112,6 +113,11 @@ std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId)
 
 std::shared_ptr<GameActor> ActorFactory::GetPlayer()
 {
+    if (m_pCurrentPlayer != nullptr)
+    {
+        return m_pCurrentPlayer;
+    }
+
     for (auto actorIter : m_pEntityMap)
     {
         auto gameStateComp = actorIter.second->GetGameStateComponent();
@@ -192,7 +198,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
                 else if (!strcmp(type.c_str(), "shoot_at_target"))
                 {
                     // TODO: make this more flexible
-                    behaviorVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_pCurrentPlayer));
+                    behaviorVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_pCurrentPlayer, actor["ai_component"]["behaviors"][i]["cooldown"].GetInt()));
                 }
             }
 		}
@@ -433,9 +439,36 @@ std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* 
                                                                       mass,
                                                                       restitution);
     }
+    else if (!strcmp(type, "pickup_physics_component"))
+    {
+        physicsCompPtr = std::make_shared<PickupPhysicsComponent>(getNextComponentId(),
+                                                                  transformCompPtr,
+                                                                  maxSpeed,
+                                                                  mass,
+                                                                  restitution);
+    }
 
 	actor->InsertComponent(EComponentNames::PhysicsComponentEnum, physicsCompPtr);
 	return physicsCompPtr;
+}
+
+void ActorFactory::KillAllActorsByName(std::string name)
+{
+    for (auto actorIter : m_pEntityMap)
+    {
+        auto gameStateComp = actorIter.second->GetGameStateComponent();
+        if (gameStateComp == nullptr)
+        {
+            continue;
+        }
+
+        if (gameStateComp->GetName() == name)
+        {
+            AddDeadActor(actorIter.second->GetActorId());
+            RemoveDeadActors();
+            return;
+        }
+    }
 }
 
 void ActorFactory::RemoveDeadActors()

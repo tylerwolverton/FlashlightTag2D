@@ -18,8 +18,8 @@ class World
 {
 public:
 	//Screen dimension constants
-	static const int SCREEN_WIDTH = 800;
-	static const int SCREEN_HEIGHT = 600;
+	static const int SCREEN_WIDTH = 1280;
+	static const int SCREEN_HEIGHT = 720;
 
 	World(SDL_Window* window);
 

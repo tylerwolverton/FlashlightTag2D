@@ -42,9 +42,10 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
 	d.ParseStream(is);
 	fclose(fp);
 
-	auto newLevel = createLevelFromJson(d["level"]);
+    std::shared_ptr<Level> newLevel = createLevelFromJson(d["level"]);
     m_pActorFactory->InitLevelActors(d["actor_list"], newLevel);
-
+    
+    newLevel->SetupLevel();
 	//ServiceLocator::GetWorld()->ResumeGame();
 }
 

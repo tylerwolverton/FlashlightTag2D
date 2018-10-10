@@ -2,8 +2,7 @@
 #include "GameStateComponent.h"
 
 #include <map>
-
-class GameActor;
+#include <string>
 
 class PlayerGameStateComponent :
     public GameStateComponent
@@ -12,13 +11,13 @@ public:
     PlayerGameStateComponent(ComponentId componentId, std::string actorName);
     virtual ~PlayerGameStateComponent();
 
-    bool HasKey() { return m_hasKey; }
-    void CollectKey() { m_hasKey = true; }
-    void LoseKey() { m_hasKey = false; }
+    void AddToInventory(std::shared_ptr<GameStateComponent> gameStateComp);
+    void RemoveFromInventoryByName(std::string compName);
+    bool InventoryContainsItem(std::string name);
+    std::shared_ptr<GameStateComponent> GetInventoryItemByName(std::string name);
 
 private:    
     // TODO: Create inventory
-	std::map<ActorId, std::shared_ptr<GameActor>> m_inventory;
-    bool m_hasKey;
+	std::map<std::string, std::shared_ptr<GameStateComponent>> m_inventory;
 };
 

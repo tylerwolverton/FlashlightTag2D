@@ -1,0 +1,21 @@
+{ 
+	"name": "SecondKey", 
+	"transform_component":{
+		"position":{"x":0, "y":0},
+		"size":{"x":32, "y":32}
+	},
+	"physics_component":{	
+		"type": "pickup_physics_component",
+		"mass":200,
+		"max_speed":0.0,
+		"restitution":0.5
+	},
+	"graphics_component":{
+		"sprite": "resources/second_key.png",
+		"animation_speed":300 
+	},
+	"game_state_component":{},
+	"life_component":{
+		"health":9999
+	}
+}

@@ -173,6 +173,7 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
+    <ClCompile Include="PickupPhysicsComponent.cpp" />
     <ClCompile Include="PlayerGameStateComponent.cpp" />
     <ClCompile Include="PlayerLifeComponent.cpp" />
     <ClCompile Include="PlayerPhysicsComponent.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />
+    <ClInclude Include="PickupPhysicsComponent.h" />
     <ClInclude Include="PlayerGameStateComponent.h" />
     <ClInclude Include="PlayerLifeComponent.h" />
     <ClInclude Include="PlayerPhysicsComponent.h" />
