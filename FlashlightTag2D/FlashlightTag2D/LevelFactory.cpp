@@ -2,7 +2,7 @@
 #include "ActorFactory.h"
 #include "Level.h"
 #include "Level1.h"
-#include "OutsideLevelDay.h"
+#include "LevelWithLightingLight.h"
 #include "MainMenuLevel.h"
 
 #include "ServiceLocator.h"
@@ -13,6 +13,8 @@
 
 const std::string LevelFactory::LevelNames::MainMenu = "MainMenu";
 const std::string LevelFactory::LevelNames::Level1 = "Level1";
+const std::string LevelFactory::LevelNames::Level2 = "Level2";
+const std::string LevelFactory::LevelNames::BossLevel1 = "BossLevel1";
 const std::string LevelFactory::LevelNames::Overworld1 = "Overworld1";
 
 const std::string LevelFactory::LevelPaths::MainMenu = "resources/levels/main_menu.json";
@@ -67,7 +69,7 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         }
         if (levelName == LevelNames::Overworld1)
         {
-            return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, sprite, vertShader, fragShader);
+            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, sprite, vertShader, fragShader);
         }
         else if (levelName == LevelNames::MainMenu)
         {
@@ -94,9 +96,11 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         {
             return std::make_shared<Level1>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
         }
-        if (levelName == LevelNames::Overworld1)
+        if (levelName == LevelNames::Overworld1 
+            || levelName == LevelNames::Level2
+            || levelName == LevelNames::BossLevel1)
         {
-            return std::make_shared<OutsideLevelDay>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
         }
         else if (levelName == LevelNames::MainMenu)
         {

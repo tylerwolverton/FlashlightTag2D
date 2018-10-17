@@ -2,7 +2,7 @@
 in vec2 texCoords;
 out vec4 color;
 
-#define MAX_NUM_LIGHTS 10
+#define MAX_NUM_LIGHTS 30
 
 //uniform int numLights;
 uniform sampler2D image;

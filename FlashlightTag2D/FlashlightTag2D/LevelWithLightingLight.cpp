@@ -1,4 +1,4 @@
-#include "OutsideLevelDay.h"
+#include "LevelWithLightingLight.h"
 #include "Shader.h"
 #include "GameActor.h"
 #include "TransformComponent.h"
@@ -7,23 +7,23 @@
 
 #include <SDL.h>
 
-#define MAX_NUM_LIGHTS 10
+#define MAX_NUM_LIGHTS 30
 
-OutsideLevelDay::OutsideLevelDay(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
+LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
     : Level(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
 {
 }
 
-OutsideLevelDay::OutsideLevelDay(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
     : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
 {
 }
 
-OutsideLevelDay::~OutsideLevelDay()
+LevelWithLightingLight::~LevelWithLightingLight()
 {
 }
 
-void OutsideLevelDay::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
+void LevelWithLightingLight::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
 {
     // opengl likes flat arrays...
     int flashingLightCount = 0;

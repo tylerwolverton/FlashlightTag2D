@@ -14,6 +14,8 @@ public:
 	public:
 		static const std::string MainMenu;
 		static const std::string Level1;
+        static const std::string Level2;
+        static const std::string BossLevel1;
         static const std::string Overworld1;
 	}; 
 
@@ -22,6 +24,8 @@ public:
 	public:
 		static const std::string MainMenu;
 		static const std::string Level1;
+        static const std::string Level2;
+        static const std::string BossLevel1;
         static const std::string Overworld1;
 	};
 

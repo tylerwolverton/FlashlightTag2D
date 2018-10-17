@@ -1,3 +1,11 @@
-﻿  ActorFactory.cpp
+﻿  Boss1Behavior.cpp
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\boss1behavior.cpp(20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\boss1behavior.cpp(21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\boss1behavior.cpp(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\boss1behavior.cpp(23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  ActorFactory.cpp
+  Generating Code...
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

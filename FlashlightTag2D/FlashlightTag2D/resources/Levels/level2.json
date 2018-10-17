@@ -1,11 +1,11 @@
 { 
 	"level":{ 
-		"name":"Level1",
+		"name":"Level2",
 		"size":{
 			"x":2880, "y":800 
 		},
 		"vert_shader":"Basic.vert",
-		"frag_shader":"LevelWithLightingDark.frag",
+		"frag_shader":"LevelWithLightingLight.frag",
 		"tiles":[
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -38,9 +38,6 @@
 		{"actor_path":"resources/Actors/player.json", "position":{"x":300, "y":100}},
 		{"actor_path":"resources/Actors/portal_to_overworld1.json", "position":{"x":120, "y":120}},
 		{"actor_path":"resources/Actors/cursor.json"},
-		{"actor_path":"resources/Actors/rush_enemy_spawner.json", "position":{"x":2700, "y":680}},
-		{"actor_path":"resources/Actors/rush_enemy_spawner.json", "position":{"x":200, "y":500}},
-		{"actor_path":"resources/Actors/shooter_enemy_spawner.json", "position":{"x":1300, "y":100}},
-		{"actor_path":"resources/Actors/first_key.json", "position":{"x":2800, "y":720}}
+		{"actor_path":"resources/Actors/second_key.json", "position":{"x":2800, "y":720}}
 	]
 }

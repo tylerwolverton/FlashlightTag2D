@@ -26,6 +26,7 @@
 #include "RushBehavior.h"
 #include "SpawnBehavior.h"
 #include "ShootAtTargetBehavior.h"
+#include "Boss1Behavior.h"
 #include "CameraFollowComponent.h"
 #include "GameStateComponent.h"
 #include "PlayerGameStateComponent.h"
@@ -199,6 +200,11 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
                 {
                     // TODO: make this more flexible
                     behaviorVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_pCurrentPlayer, actor["ai_component"]["behaviors"][i]["cooldown"].GetInt()));
+                }
+                else if (!strcmp(type.c_str(), "boss1"))
+                {
+                    behaviorVec.push_back(std::make_shared<Boss1Behavior>(m_pCurrentPlayer, Vector2D<int>(actor["ai_component"]["behaviors"][i]["level_size"]["x"].GetInt(), 
+                                                                                                          actor["ai_component"]["behaviors"][i]["level_size"]["y"].GetInt())));
                 }
             }
 		}

@@ -1,0 +1,32 @@
+{ 
+	"name": "Boss1", 
+	"ai_component":{
+		"behaviors":[{
+			"type":"boss1",
+			"level_size":{
+				"x":1280,
+				"y":720 
+			}
+		}
+		]
+	},
+	"transform_component":{
+		"position":{"x":1200, "y":700},
+		"size":{"x":300, "y":300}
+	},
+	"physics_component":{	
+		"type": "enemy_touch_damage_physics_component",
+		"mass":30.0,
+		"max_speed":30.0,
+		"restitution":0.5
+	},
+	"character_logic_component":{},
+	"graphics_component":{
+		"sprite": "resources/boss1_spritesheet.png",
+		"animation_speed":2
+	},
+	"game_state_component":{},
+	"life_component":{
+		"health":30
+	}
+}

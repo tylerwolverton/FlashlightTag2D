@@ -146,6 +146,7 @@
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="Boss1Behavior.cpp" />
     <ClCompile Include="CharacterInputComponent.cpp" />
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
@@ -169,7 +170,7 @@
     <ClCompile Include="MainMenuLevel.cpp" />
     <ClCompile Include="MainMenuLogicComponent.cpp" />
     <ClCompile Include="MouseLogicComponent.cpp" />
-    <ClCompile Include="OutsideLevelDay.cpp" />
+    <ClCompile Include="LevelWithLightingLight.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="Boss1Behavior.h" />
     <ClInclude Include="CharacterInputComponent.h" />
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
@@ -227,7 +229,7 @@
     <ClInclude Include="MainMenuLogicComponent.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MouseLogicComponent.h" />
-    <ClInclude Include="OutsideLevelDay.h" />
+    <ClInclude Include="LevelWithLightingLight.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />

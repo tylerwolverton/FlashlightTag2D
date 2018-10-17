@@ -1,0 +1,21 @@
+{ 
+	"name": "Portal", 
+	"transform_component":{
+		"position":{"x":600, "y":300},
+		"size":{"x":100, "y":100}
+	},
+	"physics_component":{	
+		"type": "default_physics_component",
+		"mass":999.0,
+		"max_speed":0.0,
+		"restitution":1
+	},
+	"portal_logic_component":{
+		"destination":"resources/levels/level2.json"
+	},
+	"graphics_component":{
+		"sprite": "resources/cave_entrance.png",
+		"animation_speed":30
+	},
+	"game_state_component":{}
+}

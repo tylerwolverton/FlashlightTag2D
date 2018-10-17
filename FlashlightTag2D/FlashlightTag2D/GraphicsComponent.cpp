@@ -2,7 +2,6 @@
 #include "TransformComponent.h"
 #include "GameActor.h"
 #include "World.h"
-//#include "Texture2D.h"
 
 GraphicsComponent::GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
 	: ActorComponent(componentId),
