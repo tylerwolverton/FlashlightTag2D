@@ -112,6 +112,23 @@ std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId)
     return nullptr; 
 }
 
+std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actorName)
+{
+    for (auto actorIter : m_pEntityMap)
+    {
+        auto gameStateComp = actorIter.second->GetGameStateComponent();
+        if (gameStateComp == nullptr)
+        {
+            continue;
+        }
+
+        if (gameStateComp->GetName() == actorName)
+        {
+            return actorIter.second;
+        }
+    }
+}
+
 std::shared_ptr<GameActor> ActorFactory::GetPlayer()
 {
     if (m_pCurrentPlayer != nullptr)
@@ -307,7 +324,12 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     }
     if (actor.HasMember("game_state_component"))
     {
-        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName);
+        std::string actorType = "";
+        if (actor["game_state_component"].HasMember("type"))
+        {
+            actorType = actor["game_state_component"]["type"].GetString();
+        }
+        std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, actorType);
 
 		newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
 

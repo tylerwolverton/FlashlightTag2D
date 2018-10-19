@@ -2,6 +2,8 @@
 #include "ActorFactory.h"
 #include "Level.h"
 #include "Level1.h"
+#include "Level2.h"
+#include "Overworld1.h"
 #include "LevelWithLightingLight.h"
 #include "MainMenuLevel.h"
 
@@ -91,20 +93,26 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
             }
             tileVecArrayIdx++;
         }
-
-        if (levelName == LevelNames::Level1)
+        
+        if (levelName == LevelNames::MainMenu)
+        {
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::Overworld1)
+        {
+            return std::make_shared<Overworld1>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::Level1)
         {
             return std::make_shared<Level1>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
         }
-        if (levelName == LevelNames::Overworld1 
-            || levelName == LevelNames::Level2
-            || levelName == LevelNames::BossLevel1)
+        else if (levelName == LevelNames::Level2)
+        {
+            return std::make_shared<Level2>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::BossLevel1)
         {
             return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
-        }
-        else if (levelName == LevelNames::MainMenu)
-        {
-            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
         }
     }
 	return nullptr;

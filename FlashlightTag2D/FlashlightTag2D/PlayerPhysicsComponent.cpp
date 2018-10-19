@@ -33,7 +33,7 @@ bool PlayerPhysicsComponent::SignalCollision(ActorId actorId)
     auto gameStateComponent = actor->GetGameStateComponent();
     if (gameStateComponent != nullptr)
     {
-        if (gameStateComponent->GetName() == "Portal")
+        if (gameStateComponent->GetType() == "Portal")
         {
             auto logicComponent = actor->GetLogicComponent();
             if (logicComponent != nullptr)

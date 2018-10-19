@@ -1,7 +1,7 @@
 #include "PlayerGameStateComponent.h"
 
 PlayerGameStateComponent::PlayerGameStateComponent(ComponentId componentId, std::string actorName)
-    : GameStateComponent(componentId, actorName),
+    : GameStateComponent(componentId, actorName, "Player"),
 	  m_inventory(std::map<std::string, std::shared_ptr<GameStateComponent>>())
 {
 }

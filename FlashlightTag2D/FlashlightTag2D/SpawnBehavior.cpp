@@ -47,4 +47,6 @@ Vector2D<float> SpawnBehavior::getNextSpawnPos(Vector2D<float> spawnerPos)
         return Vector2D<float>(rndNumGen->GetIntWithinRange(spawnerPos.x - 100, spawnerPos.x + 100),
                                rndNumGen->GetIntWithinRange(spawnerPos.y - 100, spawnerPos.y + 100));
     }
+
+    return Vector2D<float>(0,0);
 }

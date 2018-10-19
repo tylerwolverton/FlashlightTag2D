@@ -1,5 +1,5 @@
 { 
-	"name": "Portal", 
+	"name": "PortalToBossLevel1", 
 	"transform_component":{
 		"position":{"x":600, "y":300},
 		"size":{"x":100, "y":100}
@@ -17,5 +17,7 @@
 		"sprite": "resources/boss_entrance.png",
 		"animation_speed":30
 	},
-	"game_state_component":{}
+	"game_state_component":{
+		"type":"Portal"
+	}
 }

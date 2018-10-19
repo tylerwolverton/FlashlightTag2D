@@ -13,7 +13,7 @@ class GameStateComponent :
 	public ActorComponent
 {
 public:
-    GameStateComponent(ComponentId componentId, std::string actorName);
+    GameStateComponent(ComponentId componentId, std::string actorName, std::string actorType);
 	virtual ~GameStateComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;
@@ -21,7 +21,9 @@ public:
 	virtual const EComponentNames GetComponentName() const override;
     
     const std::string GetName() const { return m_actorName; }
+    const std::string GetType() const { return m_actorType; }
 
 private:
-	std::string m_actorName;
+    std::string m_actorName;
+    std::string m_actorType;
 };

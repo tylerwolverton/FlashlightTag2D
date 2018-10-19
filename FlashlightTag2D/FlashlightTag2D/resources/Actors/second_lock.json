@@ -1,0 +1,15 @@
+{ 
+	"name": "SecondLock", 
+	"transform_component":{
+		"position":{"x":0, "y":0},
+		"size":{"x":32, "y":32}
+	},
+	"graphics_component":{
+		"sprite": "resources/second_lock.png",
+		"animation_speed":300 
+	},
+	"game_state_component":{},
+	"life_component":{
+		"health":9999
+	}
+}

@@ -151,6 +151,12 @@
     <ClCompile Include="Boss1Behavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
+    <ClCompile Include="Level2.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Overworld1.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -314,6 +320,12 @@
     </ClInclude>
     <ClInclude Include="Boss1Behavior.h">
       <Filter>Game\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Level2.h">
+      <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Overworld1.h">
+      <Filter>Game\Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

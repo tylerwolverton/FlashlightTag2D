@@ -40,6 +40,16 @@ public:
 	std::shared_ptr<GameStateComponent>	     GetGameStateComponent() const;
     std::shared_ptr<LifeComponent>	         GetLifeComponent() const;
 
+    void RemoveAIComponent();
+    void RemoveLogicComponent();
+    void RemoveCameraFollowComponent();
+    void RemoveGraphicsComponent();
+    void RemoveInputComponent();
+    void RemovePhysicsComponent();
+    void RemoveTransformComponent();
+    void RemoveGameStateComponent();
+    void RemoveLifeComponent();
+
     const InputData GetInput() const { return m_input; }
 
     void SetCommands(std::shared_ptr<std::vector<std::shared_ptr<Command>>> commands) { m_pCommands = commands; }

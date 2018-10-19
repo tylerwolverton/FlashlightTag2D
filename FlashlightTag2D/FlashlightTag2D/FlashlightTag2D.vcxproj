@@ -151,6 +151,7 @@
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
+    <ClCompile Include="Level2.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
     <ClCompile Include="Behavior.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="MainMenuLogicComponent.cpp" />
     <ClCompile Include="MouseLogicComponent.cpp" />
     <ClCompile Include="LevelWithLightingLight.cpp" />
+    <ClCompile Include="Overworld1.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CharacterLogicComponent.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
+    <ClInclude Include="Level2.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />
     <ClInclude Include="Behavior.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="MouseLogicComponent.h" />
     <ClInclude Include="LevelWithLightingLight.h" />
+    <ClInclude Include="Overworld1.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CharacterLogicComponent.h" />

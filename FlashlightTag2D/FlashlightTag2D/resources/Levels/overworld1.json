@@ -39,6 +39,8 @@
 		{"actor_path":"resources/Actors/cursor.json"},
 		{"actor_path":"resources/Actors/portal_to_level1.json", "position":{"x":300, "y":600}},
 		{"actor_path":"resources/Actors/portal_to_level2.json", "position":{"x":900, "y":200}},
-		{"actor_path":"resources/Actors/portal_to_boss_level1.json", "position":{"x":2000, "y":400}}
+		{"actor_path":"resources/Actors/portal_to_boss_level1.json", "position":{"x":2000, "y":400}},
+		{"actor_path":"resources/Actors/first_lock.json", "position":{"x":1984, "y":370}},
+		{"actor_path":"resources/Actors/second_lock.json", "position":{"x":2015, "y":370}}
 	]
 }

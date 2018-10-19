@@ -195,6 +195,87 @@ std::shared_ptr<LifeComponent> GameActor::GetLifeComponent() const
     return std::dynamic_pointer_cast<LifeComponent>(component);
 }
 
+void GameActor::RemoveAIComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::AIComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::AIComponentEnum);
+    }
+}
+
+void GameActor::RemoveLogicComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LogicComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::LogicComponentEnum);
+    }
+}
+
+void GameActor::RemoveCameraFollowComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::CameraFollowComponentEnum);
+    }
+}
+
+void GameActor::RemoveGraphicsComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::GraphicsComponentEnum);
+    }
+}
+
+void GameActor::RemoveInputComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::InputComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::InputComponentEnum);
+    }
+}
+
+void GameActor::RemovePhysicsComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::PhysicsComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::PhysicsComponentEnum);
+    }
+}
+
+void GameActor::RemoveTransformComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::TransformComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::TransformComponentEnum);
+    }
+}
+
+void GameActor::RemoveGameStateComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GameStateComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::GameStateComponentEnum);
+    }
+}
+
+void GameActor::RemoveLifeComponent()
+{
+    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LifeComponentEnum);
+    if (component != nullptr)
+    {
+        m_componentMap.erase(EComponentNames::LifeComponentEnum);
+    }
+}
+
 Vector2D<float> GameActor::GetMousePosition()
 {
 	Vector2D<float> pos(0, 0);

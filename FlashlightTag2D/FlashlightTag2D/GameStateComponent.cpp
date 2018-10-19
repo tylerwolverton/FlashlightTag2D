@@ -1,9 +1,10 @@
 #include "GameStateComponent.h"
 #include "HideBehavior.h"
 
-GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName)
+GameStateComponent::GameStateComponent(ComponentId componentId, std::string actorName, std::string actorType)
 	: ActorComponent(componentId),
-	  m_actorName(actorName)
+	  m_actorName(actorName),
+      m_actorType(actorType)
 {
 }
 
