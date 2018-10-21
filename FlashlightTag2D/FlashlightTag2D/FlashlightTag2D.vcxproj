@@ -151,6 +151,8 @@
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
+    <ClCompile Include="GUIItemLogicComponent.cpp" />
+    <ClCompile Include="HealthBarGraphicsComponent.cpp" />
     <ClCompile Include="Level2.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
@@ -205,6 +207,8 @@
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
+    <ClInclude Include="GUIItemLogicComponent.h" />
+    <ClInclude Include="HealthBarGraphicsComponent.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />

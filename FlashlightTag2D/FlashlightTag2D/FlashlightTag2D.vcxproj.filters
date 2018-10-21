@@ -40,9 +40,6 @@
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="HideBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     <ClCompile Include="ShootAtTargetBehavior.cpp">
       <Filter>Game\Behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerGameStateComponent.cpp">
-      <Filter>Game\Components</Filter>
-    </ClCompile>
     <ClCompile Include="PickupPhysicsComponent.cpp">
       <Filter>Game\Components\Physics</Filter>
     </ClCompile>
@@ -156,6 +150,18 @@
     </ClCompile>
     <ClCompile Include="Overworld1.cpp">
       <Filter>Game\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBarGraphicsComponent.cpp">
+      <Filter>Game\Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateComponent.cpp">
+      <Filter>Game\Components\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGameStateComponent.cpp">
+      <Filter>Game\Components\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIItemLogicComponent.cpp">
+      <Filter>Game\Components\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateComponent.h">
-      <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="HideBehavior.h">
       <Filter>Game\Behaviors</Filter>
@@ -309,9 +312,6 @@
     <ClInclude Include="ShootAtTargetBehavior.h">
       <Filter>Game\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerGameStateComponent.h">
-      <Filter>Game\Components</Filter>
-    </ClInclude>
     <ClInclude Include="PickupPhysicsComponent.h">
       <Filter>Game\Components\Physics</Filter>
     </ClInclude>
@@ -326,6 +326,18 @@
     </ClInclude>
     <ClInclude Include="Overworld1.h">
       <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBarGraphicsComponent.h">
+      <Filter>Game\Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateComponent.h">
+      <Filter>Game\Components\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGameStateComponent.h">
+      <Filter>Game\Components\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIItemLogicComponent.h">
+      <Filter>Game\Components\Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +376,12 @@
     </Filter>
     <Filter Include="Game\Components\Input">
       <UniqueIdentifier>{adbd8c55-e496-489a-91e2-677b1f8860be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\Graphics">
+      <UniqueIdentifier>{e39f12d6-6a46-4583-bcc2-9b68dca2e395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\GameState">
+      <UniqueIdentifier>{c8d92da4-8f9d-4b28-9b87-fd8c5b093204}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,68 +1,66 @@
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc140.pdb
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc140.idb
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mouselogiccomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\outsidelevelday.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\physicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\physicsmanager.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterlogiccomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playerlifecomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playerphysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\portallogiccomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\defaultphysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\projectilephysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\randomnumbergenerator.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\rushbehavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\seekbehavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\servicelocator.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\shader.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\spawnbehavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\stb_image.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\texture2d.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\transformcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\world.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\cursorinputcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\enemytouchdamagephysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\lifecomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\logiccomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\behavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\camerafollowcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\gameactor.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\gamestatecomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\graphicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\graphicsmanager.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\hidebehavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\inputcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\inputmanager.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\level.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\level1.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\levelfactory.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\main.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenuinputcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenulevel.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenulogiccomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actor.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actorcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actorfactory.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\aicomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterinputcomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterphysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\shootattargetbehavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playergamestatecomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\pickupphysicscomponent.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\levelwithlightinglight.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\boss1behavior.obj
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.ilk
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.exe
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.pdb
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.command.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.read.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.write.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324-cvtres.read.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324-cvtres.write.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324-rc.read.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324-rc.write.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324.read.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.12324.write.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.command.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.read.1.tlog
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.write.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc140.pdb
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc140.idb
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\inputmanager.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\level.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\level1.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\levelfactory.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\main.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenuinputcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenulevel.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mainmenulogiccomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\physicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\physicsmanager.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterlogiccomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playerphysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\randomnumbergenerator.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\seekbehavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\servicelocator.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\shader.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\stb_image.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\texture2d.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\transformcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\world.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actor.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actorfactory.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\aicomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\logiccomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\behavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\camerafollowcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\gameactor.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\gamestatecomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\graphicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\graphicsmanager.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\hidebehavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\inputcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\mouselogiccomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\lifecomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\projectilephysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterinputcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\cursorinputcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\enemytouchdamagephysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\outsidelevelday.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playerlifecomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\portallogiccomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\defaultphysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\rushbehavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\spawnbehavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\characterphysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\actorcomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\playergamestatecomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\shootattargetbehavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\boss1behavior.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\level2.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\levelwithlightinglight.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\overworld1.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\pickupphysicscomponent.obj
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.ilk
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.exe
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.pdb
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc141.idb
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\vc141.pdb
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.command.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.read.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\cl.write.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.command.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.read.1.tlog
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\debug\flashlighttag2d.tlog\link.write.1.tlog

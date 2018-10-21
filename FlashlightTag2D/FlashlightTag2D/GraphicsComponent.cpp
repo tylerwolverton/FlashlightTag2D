@@ -3,7 +3,10 @@
 #include "GameActor.h"
 #include "World.h"
 
-GraphicsComponent::GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent)
+GraphicsComponent::GraphicsComponent(ComponentId componentId, 
+					                 std::string texturePath, 
+					                 int animationTimer, 
+					                 std::shared_ptr<TransformComponent> transformComponent)
 	: ActorComponent(componentId),
       m_animationTimer(animationTimer),
 	  m_curAnimationTime(animationTimer),
@@ -27,21 +30,24 @@ const EComponentNames GraphicsComponent::GetComponentName() const
 
 void GraphicsComponent::Update(GameActor& actor, float deltaMs)
 {
-	if (m_curAnimationTime < 0)
+	if (m_animationTimer > 0)
 	{
-		m_curAnimationTime = m_animationTimer;
-
-		m_texturePos.x = (float)((int)(m_texturePos.x + m_pTransformComponent->GetSize().x) % m_texture->GetWidth());
-		
-        // Move to next row of sprite sheet
-		if (m_texturePos.x == 0)
+		if (m_curAnimationTime < 0)
 		{
-			m_texturePos.y = (float)((int)(m_texturePos.y - m_pTransformComponent->GetSize().y) % m_texture->GetHeight());
+			m_curAnimationTime = m_animationTimer;
+
+			m_texturePos.x = (float)((int)(m_texturePos.x + m_pTransformComponent->GetSize().x) % m_texture->GetWidth());
+
+			// Move to next row of sprite sheet
+			if (m_texturePos.x == 0)
+			{
+				m_texturePos.y = (float)((int)(m_texturePos.y - m_pTransformComponent->GetSize().y) % m_texture->GetHeight());
+			}
 		}
-	}
-	else
-	{
-		m_curAnimationTime--;
+		else
+		{
+			m_curAnimationTime--;
+		}
 	}
 }
 

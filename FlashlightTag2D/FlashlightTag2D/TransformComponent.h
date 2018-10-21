@@ -14,8 +14,10 @@ public:
 	virtual const EComponentNames GetComponentName() const override;
 
 	Vector2D<float> GetPosition() { return m_position; }
+    Vector2D<float> GetInitPosition() { return m_initialPosition; }
 	void SetPosition(Vector2D<float> position) { m_position = position; }
 
+    Vector2D<float> GetInitSize() { return m_initialSize; }
 	Vector2D<float> GetSize() { return m_size; }
 	void SetSize(Vector2D<float> size) { m_size = size; }
 
@@ -26,8 +28,10 @@ public:
 	void SetRadius(float radius) { m_size.x = radius * 2; m_size.y = radius * 2; }
 
 private:
+    Vector2D<float> m_initialPosition;
 	Vector2D<float> m_position;
-	Vector2D<float> m_size;
+    Vector2D<float> m_initialSize;
+    Vector2D<float> m_size;
     Vector2D<float> m_direction;
 };
 

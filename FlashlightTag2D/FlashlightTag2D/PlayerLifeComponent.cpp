@@ -1,6 +1,11 @@
 #include "PlayerLifeComponent.h"
+#include "ActorFactory.h"
+#include "ServiceLocator.h"
+#include "GameActor.h"
+#include "TransformComponent.h"
 
 #include <SDL.h>
+#include <cmath>
 
 PlayerLifeComponent::PlayerLifeComponent(ComponentId componentId, ActorId parentId, int health)
     : LifeComponent(componentId, parentId, health)
@@ -14,7 +19,7 @@ PlayerLifeComponent::~PlayerLifeComponent()
 void PlayerLifeComponent::TakeDamage(int damage)
 {
     uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - lastTickVal > 1000)
+    if (curTicks - lastTickVal > 500)
     {
         lastTickVal = curTicks;
 
@@ -23,5 +28,30 @@ void PlayerLifeComponent::TakeDamage(int damage)
         {
             Die();
         }
+
+        UpdateHealthBar();
+    }
+}
+
+void PlayerLifeComponent::UpdateHealthBar()
+{
+    auto actorFactory = ServiceLocator::GetActorFactory();
+    if (actorFactory == nullptr)
+    {
+        return;
+    }
+
+    auto healthBar = actorFactory->GetFirstActorWithName("PlayerHealthBar");
+    if (healthBar == nullptr)
+    {
+        return;
+    }
+
+    std::shared_ptr<TransformComponent> transformComp = healthBar->GetTransformComponent();
+
+    float newX = transformComp->GetInitSize().x / m_maxHealth * m_health + 1;
+    if (newX > 0)
+    {
+        transformComp->SetSize(Vector2D<float>(newX, transformComp->GetSize().y));
     }
 }

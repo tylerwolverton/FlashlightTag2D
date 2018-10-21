@@ -1,0 +1,12 @@
+{
+	"name": "PlayerHealthBar", 
+	"transform_component":{
+		"position":{"x":140, "y":20},
+		"size":{"x":120, "y":35}
+	},
+	"graphics_component":{
+		"sprite": "resources/GUI/Health/health_fill.png"
+	},
+	"game_state_component":{},
+	"gui_item_logic_component":{}
+}

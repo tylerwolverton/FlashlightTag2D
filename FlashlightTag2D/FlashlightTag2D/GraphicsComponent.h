@@ -16,7 +16,10 @@ class GraphicsComponent :
 	public ActorComponent
 {
 public:
-	GraphicsComponent(ComponentId componentId, std::string texturePath, int animationTimer, std::shared_ptr<TransformComponent> transformComponent);
+	GraphicsComponent(ComponentId componentId, 
+					  std::string texturePath, 
+					  int animationTimer, 
+					  std::shared_ptr<TransformComponent> transformComponent);
 	virtual ~GraphicsComponent();
 
 	virtual void Update(GameActor& actor, float deltaMs) override;

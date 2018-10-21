@@ -9,6 +9,7 @@
 #include "MainMenuLogicComponent.h"
 #include "PortalLogicComponent.h"
 #include "MouseLogicComponent.h"
+#include "GUIItemLogicComponent.h"
 #include "InputComponent.h"
 #include "CharacterInputComponent.h"
 #include "CursorInputComponent.h"
@@ -98,6 +99,7 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     {
         m_pCurrentPlayer->InsertComponent(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateComp);
         m_pCurrentPlayer->InsertComponent(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeComp);
+        std::dynamic_pointer_cast<PlayerLifeComponent>(m_persistedPlayerLifeComp)->UpdateHealthBar();
     }
 }
 
@@ -127,30 +129,13 @@ std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actor
             return actorIter.second;
         }
     }
+
+	return nullptr;
 }
 
 std::shared_ptr<GameActor> ActorFactory::GetPlayer()
 {
-    if (m_pCurrentPlayer != nullptr)
-    {
-        return m_pCurrentPlayer;
-    }
-
-    for (auto actorIter : m_pEntityMap)
-    {
-        auto gameStateComp = actorIter.second->GetGameStateComponent();
-        if (gameStateComp == nullptr)
-        {
-            continue;
-        }
-
-        if (gameStateComp->GetName() == "Player")
-        {
-            return actorIter.second;
-        }
-    }
-
-    return nullptr;
+    return GetFirstActorWithName("Player");
 }
 
 void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actor)
@@ -268,9 +253,14 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
         if (actor.HasMember("graphics_component"))
         {
             ComponentId graphicsCompId = getNextComponentId();
+			int animSpeed = -1;
+			if (actor["graphics_component"].HasMember("animation_speed"))
+			{
+				animSpeed = actor["graphics_component"]["animation_speed"].GetInt();
+			}
             std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(graphicsCompId,
                                                                                                      actor["graphics_component"]["sprite"].GetString(),
-                                                                                                     actor["graphics_component"]["animation_speed"].GetInt(),
+                                                                                                     animSpeed,
                                                                                                      transformCompPtr);
 
             //m_graphicsMgr->AddGraphicsComponentPtr(graphicsCompId, graphicsCompPtr);
@@ -315,6 +305,10 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
         }
 
 		newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonGraphicsCompsMapPtr));
+    }
+    if (actor.HasMember("gui_item_logic_component"))
+    {
+        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<GUIItemLogicComponent>(getNextComponentId()));
     }
     if (actor.HasMember("portal_logic_component"))
     {
@@ -545,19 +539,6 @@ void ActorFactory::RemoveDeadActors()
         }
     }
 }
-
-//void ActorFactory::ChooseSeekers(int seekerCount)
-//{
-//    std::random_device rd;
-//    std::mt19937 g(rd());
-//
-//    std::shuffle(m_gameStateComponentVec.begin(), m_gameStateComponentVec.end(), g);
-//
-//    for (int i = 0; i < seekerCount && i < m_gameStateComponentVec.size(); i++)
-//    {
-//        m_gameStateComponentVec[i]->SetRole(EGameBehavior::Seek);
-//    }
-//}
 
 std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, Vector2D<float> position, Vector2D<float> velocity)
 {

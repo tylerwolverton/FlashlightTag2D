@@ -5,7 +5,8 @@
 LifeComponent::LifeComponent(ComponentId componentId, ActorId parentId, int health)
     : ActorComponent(componentId),
       m_parentId(parentId),
-      m_health(health)
+      m_health(health),
+	  m_maxHealth(health)
 {
 }
 

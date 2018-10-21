@@ -38,6 +38,8 @@
 		{"actor_path":"resources/Actors/player.json", "position":{"x":300, "y":100}},
 		{"actor_path":"resources/Actors/portal_to_overworld1.json", "position":{"x":120, "y":120}},
 		{"actor_path":"resources/Actors/cursor.json"},
-		{"actor_path":"resources/Actors/second_key.json", "position":{"x":2800, "y":720}}
+		{"actor_path":"resources/Actors/second_key.json", "position":{"x":2800, "y":720}},
+		{"actor_path":"resources/Actors/player_health_bar_border.json"},
+		{"actor_path":"resources/Actors/player_health_bar.json"}
 	]
 }

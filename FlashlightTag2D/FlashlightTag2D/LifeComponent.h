@@ -12,10 +12,21 @@ public:
     virtual void Die();
     virtual void TakeDamage(int damage);
 
-    void SetHealth(int health) { m_health = health; }
+	int GetHealth() { return m_health; }
+	int GetMaxHealth() { return m_maxHealth; }
+
+    void SetHealth(int health) 
+	{ 
+		m_health = health; 
+		if (m_health > m_maxHealth)
+		{
+			m_health = m_maxHealth;
+		}
+	}
 
 protected:
     ActorId m_parentId;
-    int m_health;
+	int m_maxHealth;
+	int m_health;
 };
 
