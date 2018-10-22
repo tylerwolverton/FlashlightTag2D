@@ -3,10 +3,7 @@
 	"ai_component":{
 		"behaviors":[{
 			"type":"boss1",
-			"level_size":{
-				"x":1280,
-				"y":720 
-			}
+			"level_size":{"x":1280,	"y":720}
 		}
 		]
 	},
@@ -26,7 +23,7 @@
 		"animation_speed":200
 	},
 	"game_state_component":{},
-	"life_component":{
-		"health":30
+	"boss1_life_component":{
+		"health":20
 	}
 }

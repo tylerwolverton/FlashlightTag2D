@@ -147,12 +147,12 @@
     <ClCompile Include="ActorFactory.cpp" />
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="Boss1Behavior.cpp" />
+    <ClCompile Include="Boss1LifeComponent.cpp" />
     <ClCompile Include="CharacterInputComponent.cpp" />
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
     <ClCompile Include="GUIItemLogicComponent.cpp" />
-    <ClCompile Include="HealthBarGraphicsComponent.cpp" />
     <ClCompile Include="Level2.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
@@ -203,12 +203,12 @@
     <ClInclude Include="ActorFactory.h" />
     <ClInclude Include="AIComponent.h" />
     <ClInclude Include="Boss1Behavior.h" />
+    <ClInclude Include="Boss1LifeComponent.h" />
     <ClInclude Include="CharacterInputComponent.h" />
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
     <ClInclude Include="GUIItemLogicComponent.h" />
-    <ClInclude Include="HealthBarGraphicsComponent.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="LifeComponent.h" />
     <ClInclude Include="LogicComponent.h" />

@@ -1,4 +1,4 @@
-#include "PlayerLifeComponent.h"
+#include "Boss1LifeComponent.h"
 #include "ActorFactory.h"
 #include "ServiceLocator.h"
 #include "GameActor.h"
@@ -6,33 +6,33 @@
 
 #include <SDL.h>
 
-PlayerLifeComponent::PlayerLifeComponent(ComponentId componentId, ActorId parentId, int health)
+Boss1LifeComponent::Boss1LifeComponent(ComponentId componentId, ActorId parentId, int health)
     : LifeComponent(componentId, parentId, health)
 {
 }
 
-PlayerLifeComponent::~PlayerLifeComponent()
+Boss1LifeComponent::~Boss1LifeComponent()
 {
 }
 
-void PlayerLifeComponent::TakeDamage(int damage)
+void Boss1LifeComponent::TakeDamage(int damage)
 {
     uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - m_lastTickVal > 500)
+    if (curTicks - lastTickVal > 500)
     {
-        m_lastTickVal = curTicks;
+        lastTickVal = curTicks;
 
         m_health -= damage;
+        updateHealthBar();
+
         if (m_health < 0)
         {
             Die();
         }
-
-        UpdateHealthBar();
     }
 }
 
-void PlayerLifeComponent::UpdateHealthBar()
+void Boss1LifeComponent::updateHealthBar()
 {
     auto actorFactory = ServiceLocator::GetActorFactory();
     if (actorFactory == nullptr)
@@ -40,7 +40,7 @@ void PlayerLifeComponent::UpdateHealthBar()
         return;
     }
 
-    auto healthBar = actorFactory->GetFirstActorWithName("PlayerHealthBar");
+    auto healthBar = actorFactory->GetFirstActorWithName("Boss1HealthBar");
     if (healthBar == nullptr)
     {
         return;

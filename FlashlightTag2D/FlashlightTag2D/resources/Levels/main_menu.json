@@ -2,7 +2,7 @@
 	"level":{ 
 		"name":"MainMenu",
 		"size":{
-			"x":1920, "y":800 
+			"x":1280, "y":720 
 		},
 		"vert_shader":"Basic.vert",
 		"frag_shader":"Basic.frag",

@@ -151,9 +151,6 @@
     <ClCompile Include="Overworld1.cpp">
       <Filter>Game\Levels</Filter>
     </ClCompile>
-    <ClCompile Include="HealthBarGraphicsComponent.cpp">
-      <Filter>Game\Components\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="GameStateComponent.cpp">
       <Filter>Game\Components\GameState</Filter>
     </ClCompile>
@@ -162,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="GUIItemLogicComponent.cpp">
       <Filter>Game\Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss1LifeComponent.cpp">
+      <Filter>Game\Components\Life</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +327,6 @@
     <ClInclude Include="Overworld1.h">
       <Filter>Game\Levels</Filter>
     </ClInclude>
-    <ClInclude Include="HealthBarGraphicsComponent.h">
-      <Filter>Game\Components\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="GameStateComponent.h">
       <Filter>Game\Components\GameState</Filter>
     </ClInclude>
@@ -338,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="GUIItemLogicComponent.h">
       <Filter>Game\Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss1LifeComponent.h">
+      <Filter>Game\Components\Life</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

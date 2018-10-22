@@ -12,6 +12,6 @@ public:
     void UpdateHealthBar();
 
 private:
-    uint32_t lastTickVal;
+    uint32_t m_lastTickVal;
 };
 

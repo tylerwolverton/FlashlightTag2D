@@ -1,8 +1,8 @@
 {
-	"name": "PlayerHealthBar", 
+	"name": "Boss1HealthBar", 
 	"transform_component":{
-		"position":{"x":140, "y":20},
-		"size":{"x":130, "y":35}
+		"position":{"x":640, "y":695},
+		"size":{"x":990, "y":35}
 	},
 	"graphics_component":{
 		"sprite": "resources/GUI/Health/health_fill.png"

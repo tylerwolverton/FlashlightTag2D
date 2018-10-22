@@ -1,0 +1,10 @@
+{ 
+	"name": "LoseScreenPortal", 
+	"portal_logic_component":{
+		"destination":"resources/levels/overworld1.json",
+		"countdown_time_sec":2.5
+	},
+	"game_state_component":{
+		"type":"Portal"
+	}
+}

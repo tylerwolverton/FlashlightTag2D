@@ -1,0 +1,12 @@
+{
+	"name": "Boss1HealthBarBorder", 
+	"transform_component":{
+		"position":{"x":640, "y":695},
+		"size":{"x":1000, "y":45}
+	},
+	"graphics_component":{
+		"sprite": "resources/GUI/Health/boss1_health_border.png"
+	},
+	"game_state_component":{},
+	"gui_item_logic_component":{}
+}

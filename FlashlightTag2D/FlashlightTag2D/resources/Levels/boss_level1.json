@@ -38,6 +38,8 @@
 		{"actor_path":"resources/Actors/cursor.json"},
 		{"actor_path":"resources/Actors/boss1.json", "position":{"x":640, "y":360}},
 		{"actor_path":"resources/Actors/player_health_bar_border.json"},
-		{"actor_path":"resources/Actors/player_health_bar.json"}
+		{"actor_path":"resources/Actors/player_health_bar.json"},
+		{"actor_path":"resources/Actors/boss1_health_bar_border.json"},
+		{"actor_path":"resources/Actors/boss1_health_bar.json"}
 	]
 }

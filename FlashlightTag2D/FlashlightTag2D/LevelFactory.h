@@ -17,6 +17,8 @@ public:
         static const std::string Level2;
         static const std::string BossLevel1;
         static const std::string Overworld1;
+        static const std::string LoseScreen;
+        static const std::string WinScreen;
 	}; 
 
 	const class LevelPaths
@@ -27,6 +29,8 @@ public:
         static const std::string Level2;
         static const std::string BossLevel1;
         static const std::string Overworld1;
+        static const std::string LoseScreen;
+        static const std::string WinScreen;
 	};
 
 	LevelFactory(std::shared_ptr<ActorFactory> actorFactory);

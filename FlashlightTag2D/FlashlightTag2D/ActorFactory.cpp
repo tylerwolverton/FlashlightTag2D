@@ -33,6 +33,7 @@
 #include "PlayerGameStateComponent.h"
 #include "LifeComponent.h"
 #include "PlayerLifeComponent.h"
+#include "Boss1LifeComponent.h"
 #include "World.h"
 #include "GraphicsManager.h"
 #include "PhysicsManager.h"
@@ -313,7 +314,12 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     if (actor.HasMember("portal_logic_component"))
     {
         std::string level = actor["portal_logic_component"]["destination"].GetString();
-        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<PortalLogicComponent>(getNextComponentId(), level));
+        float countdownTimeSec = -1;
+        if (actor["portal_logic_component"].HasMember("countdown_time_sec"))
+        {
+            countdownTimeSec = actor["portal_logic_component"]["countdown_time_sec"].GetFloat();
+        }
+        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<PortalLogicComponent>(getNextComponentId(), level, countdownTimeSec));
 
     }
     if (actor.HasMember("game_state_component"))
@@ -349,6 +355,14 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
         std::shared_ptr<PlayerLifeComponent> lifeCompPtr = std::make_shared<PlayerLifeComponent>(getNextComponentId(),
                                                                                                  actorId,
                                                                                                  actor["player_life_component"]["health"].GetInt());
+
+        newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
+    }
+    if (actor.HasMember("boss1_life_component"))
+    {
+        std::shared_ptr<Boss1LifeComponent> lifeCompPtr = std::make_shared<Boss1LifeComponent>(getNextComponentId(),
+                                                                                               actorId,
+                                                                                               actor["boss1_life_component"]["health"].GetInt());
 
         newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
     }
@@ -496,6 +510,7 @@ void ActorFactory::KillAllActorsByName(std::string name)
 void ActorFactory::RemoveDeadActors()
 {
     bool playerIsDead = false;
+    bool boss1IsDead = false;
 	for (auto id : m_deadActorVec)
 	{
 		auto actorIter = m_pEntityMap.find(id);
@@ -518,10 +533,16 @@ void ActorFactory::RemoveDeadActors()
 		}
 
         std::shared_ptr<GameStateComponent> actorGameStateComp = actorIter->second->GetGameStateComponent();
-        if (actorGameStateComp != nullptr
-            && actorGameStateComp->GetName() == "Player")
+        if (actorGameStateComp != nullptr)
         {
-            playerIsDead = true;
+            if (actorGameStateComp->GetName() == "Player")
+            {
+                playerIsDead = true;
+            }
+            if (actorGameStateComp->GetName() == "Boss1")
+            {
+                boss1IsDead = true;
+            }
         }
 
 		m_pEntityMap.erase(id);
@@ -535,7 +556,17 @@ void ActorFactory::RemoveDeadActors()
         if (levelFactory != nullptr)
         {
             m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::Overworld1);
+            levelFactory->ChangeLevel(LevelFactory::LevelPaths::LoseScreen);
+        }
+    }
+
+    if (boss1IsDead)
+    {
+        auto levelFactory = ServiceLocator::GetLevelFactory();
+        if (levelFactory != nullptr)
+        {
+            m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
+            levelFactory->ChangeLevel(LevelFactory::LevelPaths::WinScreen);
         }
     }
 }
