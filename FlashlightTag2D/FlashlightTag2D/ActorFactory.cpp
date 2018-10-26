@@ -66,7 +66,7 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     }
 
     m_physicsMgr->ClearPhysicsComponents();
-    m_physicsMgr->SetLevelSize(newLevel->GetLevelSize());
+    m_physicsMgr->LoadNewLevel(newLevel);
 
     m_graphicsMgr->Reset();
     m_graphicsMgr->LoadNewLevel(newLevel);

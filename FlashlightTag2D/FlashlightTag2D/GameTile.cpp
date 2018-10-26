@@ -2,8 +2,9 @@
 #include "GameActor.h"
 #include "PhysicsComponent.h"
 
-GameTile::GameTile(int spriteIdx, std::shared_ptr<PhysicsComponent> physicsComp)
+GameTile::GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformComp, std::shared_ptr<PhysicsComponent> physicsComp)
     : m_spriteIdx(spriteIdx),
+      m_transformComp(transformComp),
 	  m_physicsComp(physicsComp)
 {
 }

@@ -6,6 +6,7 @@
 #include <map>
 
 class TransformComponent;
+class Level;
 
 class PhysicsManager
 {
@@ -20,8 +21,10 @@ public:
 
     void AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> comp);
     void RemovePhysicsComponentPtr(ComponentId compId);
+    void AddEnvironmentPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> comp) { m_environmentPhysicsComponentPtrVec.push_back(comp); }
 
-    void SetLevelSize(Vector2D<int> levelSize) { m_levelSize = levelSize; }
+    void LoadNewLevel(std::shared_ptr<Level> level);
+    //void SetLevelSize(Vector2D<int> levelSize) { m_levelSize = levelSize; }
 
     // TODO: Cache changes
     //void AddPhysicsComponent(PhysicsComponent comp);
@@ -35,22 +38,26 @@ public:
 private:
     struct CollisionEvent
     {
+        bool collisionDetected;
         float penetrationDepth;
         Vector2D<float> normal;
 
 		CollisionEvent()
-			: penetrationDepth(0),
+			: collisionDetected(false),
+              penetrationDepth(0),
 			  normal(Vector2D<float>(0,0))
 		{
 		}
 
-        CollisionEvent(float p_penetrationDepth, Vector2D<float> p_normal)
-            : penetrationDepth(p_penetrationDepth),
+        CollisionEvent(bool p_collisionDetected, float p_penetrationDepth, Vector2D<float> p_normal)
+            : collisionDetected(p_collisionDetected),
+              penetrationDepth(p_penetrationDepth),
               normal(p_normal)
         {
         }
     };
 
+    bool handleCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, CollisionEvent collisionEvent);
     CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
 	CollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent);
 	CollisionEvent checkBoxCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
@@ -62,7 +69,9 @@ private:
     //std::vector<PhysicsComponent> m_physicsComponentVec;
     //std::vector<std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrVec;
     std::map<ComponentId, std::shared_ptr<PhysicsComponent>> m_physicsComponentPtrMap;
+    std::vector<std::shared_ptr<PhysicsComponent>> m_environmentPhysicsComponentPtrVec;
 
+    //std::shared_ptr<Level> m_curLevel;
     Vector2D<int> m_levelSize;
 
     int m_lastComponentId;

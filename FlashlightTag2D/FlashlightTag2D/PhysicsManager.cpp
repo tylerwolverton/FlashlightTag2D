@@ -1,6 +1,7 @@
 #include "PhysicsManager.h"
 #include "TransformComponent.h"
-//#include "GameActor.h"
+#include "Level.h"
+#include "GameTile.h"
 #include <stdlib.h>
 #include <algorithm>
 
@@ -18,6 +19,24 @@ void PhysicsManager::ClearPhysicsComponents()
 {
     //m_physicsComponentPtrVec.clear();
     m_physicsComponentPtrMap.clear();
+    m_environmentPhysicsComponentPtrVec.clear();
+}
+
+void PhysicsManager::LoadNewLevel(std::shared_ptr<Level> level)
+{
+    m_levelSize = level->GetLevelSize();
+
+    for (auto tileVec : level->GetTileVec())
+    {
+        for (auto tile : tileVec)
+        {
+            auto physicsComp = tile->GetPhysicsComponent();
+            if (physicsComp != nullptr)
+            {
+                m_environmentPhysicsComponentPtrVec.push_back(physicsComp);
+            }
+        }
+    }
 }
 
 void PhysicsManager::Update(float deltaTime)
@@ -29,53 +48,51 @@ void PhysicsManager::Update(float deltaTime)
 void PhysicsManager::ResolveCollisions(float deltaTime)
 {
     //for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
-    for (auto actorPhysicsComponent : m_physicsComponentPtrMap)
+    for (auto actorPhysicsComp : m_physicsComponentPtrMap)
     {
-        std::shared_ptr<TransformComponent> actorTransformComponent = actorPhysicsComponent.second->GetTransformComponent();
-
-		for (auto innerActorPhysicsComponent : m_physicsComponentPtrMap)
+        std::shared_ptr<TransformComponent> actorTransformComp = actorPhysicsComp.second->GetTransformComponent();
+		for (auto innerActorPhysicsComp : m_physicsComponentPtrMap)
 		{
-			if (actorPhysicsComponent.second->GetComponentId() != innerActorPhysicsComponent.second->GetComponentId())
+            std::shared_ptr<TransformComponent> innerTransformComp = innerActorPhysicsComp.second->GetTransformComponent();
+			if (actorPhysicsComp.second->GetComponentId() != innerActorPhysicsComp.second->GetComponentId())
 			{
-                std::shared_ptr<TransformComponent> innerTransformComponent = innerActorPhysicsComponent.second->GetTransformComponent();
-
-				CollisionEvent collisionEvent;
-				/*if (actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
-					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
-				{*/
-					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
-				/*}
-				else if (actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
-					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
-				{
-					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
-				}
-				else if(actorTransformComponent->GetSize().x == actorTransformComponent->GetSize().y
-					&& innerTransformComponent->GetSize().x == innerTransformComponent->GetSize().y)
-				{
-					collisionEvent = checkCircleCollision(actorTransformComponent, innerTransformComponent);
-				}
-				else
-				{
-
-				}*/
-
-				if (collisionEvent.penetrationDepth < 0)
-				{
-                    resolvePenetration(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
-                    resolveCollision(actorPhysicsComponent.second, innerActorPhysicsComponent.second, collisionEvent);
-                    if (actorPhysicsComponent.second->SignalCollision(innerActorPhysicsComponent.second->GetParentActorId()))
-                    {
-                        return;
-                    }
-                    if(innerActorPhysicsComponent.second->SignalCollision(actorPhysicsComponent.second->GetParentActorId()))
-                    {
-                        return;
-                    }
-				}
+                if (handleCollision(actorPhysicsComp.second, innerActorPhysicsComp.second, checkCircleCollision(actorTransformComp, innerTransformComp)))
+                {
+                    return;
+                }
 			}
 		}
+        for (auto environmentPhysicsComp : m_environmentPhysicsComponentPtrVec)
+        {
+            std::shared_ptr<TransformComponent> envTransformComp = environmentPhysicsComp->GetTransformComponent();
+            CollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp);
+            handleCollision(actorPhysicsComp.second, environmentPhysicsComp, collisionEv);
+
+            /*if (collisionEv.collisionDetected)
+            {
+                break;
+            }*/
+        }
 	}
+}
+
+bool PhysicsManager::handleCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, CollisionEvent collisionEvent)
+{
+    if (collisionEvent.collisionDetected)
+    {
+        resolvePenetration(actorPhysicsComp, innerActorPhysicsComp, collisionEvent);
+        resolveCollision(actorPhysicsComp, innerActorPhysicsComp, collisionEvent);
+        if (actorPhysicsComp->SignalCollision(innerActorPhysicsComp->GetParentActorId()))
+        {
+            return true;
+        }
+        if (innerActorPhysicsComp->SignalCollision(actorPhysicsComp->GetParentActorId()))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void PhysicsManager::AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> comp)
@@ -106,8 +123,14 @@ PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(std::shared_
 {
 	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
 	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
+    
+    bool collisionDetected = false;
+    if (dist.Length() - sizeSum < 0)
+    {
+        collisionDetected = true;
+    }
 
-    auto collisionEvent = CollisionEvent{ dist.Length() - sizeSum, dist.Normalize() };
+    auto collisionEvent = CollisionEvent{ collisionDetected, dist.Length() - sizeSum, dist.Normalize() };
 
 	return collisionEvent;
 }
@@ -116,28 +139,47 @@ PhysicsManager::CollisionEvent PhysicsManager::checkCircleBoxCollision(std::shar
 {
 	Vector2D<float> boxPos = boxActorTransformComponent->GetPosition();
 	Vector2D<float> boxSize = boxActorTransformComponent->GetSize();
-	/*Vector2D<float> boxTopLeft = boxPos + Vector2D<float>(-boxSize.x, -boxSize.y);
-	Vector2D<float> boxTopRight = boxPos + Vector2D<float>(boxSize.x, -boxSize.y);
-	Vector2D<float> boxBotLeft = boxPos + Vector2D<float>(-boxSize.x, boxSize.y);
-	Vector2D<float> boxBotRight = boxPos + Vector2D<float>(boxSize.x, boxSize.y);*/
+	float boxMinX = boxPos.x - boxSize.x;
+	float boxMaxX = boxPos.x + boxSize.x;
+	float boxMinY = boxPos.y - boxSize.y;
+	float boxMaxY = boxPos.y + boxSize.y;
 
-	float xMin = boxPos.x - boxSize.x;
-	float xMax = boxPos.x + boxSize.x;
-	float yMin = boxPos.y + boxSize.y;
-	float yMax = boxPos.y - boxSize.y;
+    Vector2D<float> circlePos = circleActorTransformComponent->GetPosition();
+    float circleRadius = circleActorTransformComponent->GetRadius();
+    float circleMinX = circlePos.x - circleRadius;
+    float circleMaxX = circlePos.x + circleRadius;
+    float circleMinY = circlePos.y - circleRadius;
+    float circleMaxY = circlePos.y + circleRadius;
 
-	Vector2D<float> circlePos = circleActorTransformComponent->GetPosition();
-	float circleRadius = circleActorTransformComponent->GetRadius();
-	if (circlePos.x + circleRadius < xMin 
-		|| circlePos.x - circleRadius > xMax
-		|| circlePos.y - circleRadius < yMin
-		|| circlePos.y + circleRadius > yMax)
+	if (circleMaxX < boxMinX
+		|| circleMinX > boxMaxX
+		|| circleMaxY < boxMinY
+		|| circleMinY > boxMaxY)
 	{
-		return CollisionEvent(-1, Vector2D<float>(0,0));
+		return CollisionEvent(false, -1, Vector2D<float>(0,0));
 	}
 
-	Vector2D<float> dist = boxActorTransformComponent->GetPosition() - circleActorTransformComponent->GetPosition();
-	auto collisionEvent = CollisionEvent{ dist.Length(), dist.Normalize() };
+    Vector2D<float> collisionPt;
+    if (circleMaxX > boxMinX)
+    {
+        collisionPt.x = boxMinX;
+    }
+    else if (circleMinX < boxMaxX)
+    { 
+        collisionPt.x = boxMaxX;
+    }
+
+    if (circleMaxY > boxMinY)
+    {
+        collisionPt.y = boxMinY;
+    }
+    else if (circleMinY < boxMaxY)
+    {
+        collisionPt.y = boxMaxY;
+    }
+
+	Vector2D<float> dist = circlePos - collisionPt;
+	auto collisionEvent = CollisionEvent{ true, dist.Length()/4, dist.Normalize() };
 
 	return collisionEvent;
 }
@@ -147,7 +189,7 @@ PhysicsManager::CollisionEvent PhysicsManager::checkBoxCollision(std::shared_ptr
 	Vector2D<float> dist = actorTransformComponent->GetPosition() - innerActorTransformComponent->GetPosition();
 	float sizeSum = actorTransformComponent->GetRadius() + innerActorTransformComponent->GetRadius();
 
-	auto collisionEvent = CollisionEvent{ dist.Length() - sizeSum, dist.Normalize() };
+	auto collisionEvent = CollisionEvent{ false, dist.Length() - sizeSum, dist.Normalize() };
 
 	return collisionEvent;
 }
