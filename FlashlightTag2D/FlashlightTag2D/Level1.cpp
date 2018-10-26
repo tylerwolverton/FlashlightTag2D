@@ -17,7 +17,7 @@ Level1::Level1(int levelWidth, int levelHeight, std::string spritePath, std::str
 {
 }
 
-Level1::Level1(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+Level1::Level1(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
     : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
 {
 }

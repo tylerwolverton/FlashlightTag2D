@@ -65,10 +65,10 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
     auto tileVec = m_curLevel->GetTileVec();
     for (int i = tileVec.size() - 1; i >= 0; i--)
     {
-        m_backgroundTileVec.push_back(std::vector <std::shared_ptr<Texture2D>>());
-        for (int idx : tileVec[i])
+        m_backgroundTileVec.push_back(std::vector<std::shared_ptr<Texture2D>>());
+        for (auto tile : tileVec[i])
         {
-            m_backgroundTileVec[textureVecIdx].push_back(m_tileVec[idx]);
+            m_backgroundTileVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
         }
         textureVecIdx++;
     }
@@ -165,9 +165,10 @@ bool GraphicsManager::initializeRenderData()
 
 void GraphicsManager::initializeTiles()
 {
-	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile00.png"));
-	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile01.png"));
-	m_tileVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile02.png"));
+	m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile00.png"));
+	m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile01.png"));
+	m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile02.png"));
+    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Wall01.png"));
 }
 
 //void GraphicsManager::UpdateComponents()

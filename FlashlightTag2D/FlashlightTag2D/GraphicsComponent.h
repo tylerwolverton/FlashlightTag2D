@@ -9,7 +9,6 @@
 
 class GameActor;
 class TransformComponent;
-//class Texture2D;
 struct SDL_Texture;
 
 class GraphicsComponent :

@@ -1,10 +1,12 @@
 #pragma once
 #include<memory>
+#include <vector>
 #include<string>
 #include<document.h>
 
 class Level;
 class ActorFactory;
+class GameTile;
 
 class LevelFactory
 {
@@ -42,5 +44,7 @@ private:
 	std::shared_ptr<ActorFactory> m_pActorFactory;
 
 	std::shared_ptr<Level> createLevelFromJson(const rapidjson::Value& level);
+
+    std::vector<std::vector<std::shared_ptr<GameTile>>> m_tileVec;
 };
 

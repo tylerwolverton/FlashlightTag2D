@@ -74,6 +74,7 @@ private:
 	int m_lastComponentId;
 	int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
-    std::vector<std::shared_ptr<Texture2D>> m_tileVec;
+    std::vector<std::shared_ptr<Texture2D>> m_tileTextureVec;
+    //std::map<std::string, std::shared_ptr<Texture2D>> m_tileMap;
 };
 

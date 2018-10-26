@@ -6,6 +6,9 @@
 #include "Overworld1.h"
 #include "LevelWithLightingLight.h"
 #include "MainMenuLevel.h"
+#include "GameTile.h"
+#include "TransformComponent.h"
+#include "DefaultPhysicsComponent.h"
 
 #include "ServiceLocator.h"
 #include "World.h"
@@ -68,6 +71,11 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
     if (level.HasMember("sprite"))
     {
         std::string sprite = level["sprite"].GetString();
+        for (auto vec : m_tileVec)
+        {
+            vec.clear();
+        }
+        m_tileVec.clear();
 
         if (levelName == LevelNames::Level1)
         {
@@ -85,7 +93,7 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         }
     }
 
-    if (level.HasMember("tiles"))
+    /*if (level.HasMember("tiles"))
     {
         int tileVecArrayIdx = 0;
         std::vector<std::vector<int>> tileVec;
@@ -122,6 +130,63 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         {
             return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, tileVec, vertShader, fragShader);
         }
+    }*/
+
+    if (level.HasMember("tiles"))
+    {
+        int tileVecArrayIdx = 0;
+        const rapidjson::Value& tiles = level["tiles"];
+        for (rapidjson::SizeType i = 0; i < tiles.Size(); i++)
+        {
+            m_tileVec.push_back(std::vector<std::shared_ptr<GameTile>>());
+            for (rapidjson::SizeType j = 0; j < tiles[i].Size(); j++)
+            {
+                int spriteIdx = tiles[i][j].GetInt();
+                // Hack to give walls a physics comp. Replace this with any other approach later
+                if (spriteIdx == 3)
+                {
+                    std::shared_ptr<TransformComponent> transformComp = std::make_shared<TransformComponent>(-1, 
+                                                                                                             Vector2D<float>(32 * j, levelHeight - (32 * i)),
+                                                                                                             Vector2D<float>(32, 32),
+                                                                                                             Vector2D<float>(0, 0));
+
+                    m_tileVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, std::make_shared<DefaultPhysicsComponent>(-1,
+                                                                                                                                         transformComp,
+                                                                                                                                         0,
+                                                                                                                                         9999,
+                                                                                                                                         .5f)));
+                }
+                else
+                {
+                    m_tileVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx));
+                }
+            }
+            tileVecArrayIdx++;
+        }
+
+        if (levelName == LevelNames::MainMenu)
+        {
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::Overworld1
+            || levelName == LevelNames::LoseScreen
+            || levelName == LevelNames::WinScreen)
+        {
+            return std::make_shared<Overworld1>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::Level1)
+        {
+            return std::make_shared<Level1>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::Level2)
+        {
+            return std::make_shared<Level2>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+        }
+        else if (levelName == LevelNames::BossLevel1)
+        {
+            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+        }
     }
+
 	return nullptr;
 }

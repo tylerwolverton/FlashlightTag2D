@@ -12,7 +12,7 @@ Overworld1::Overworld1(int levelWidth, int levelHeight, std::string spritePath, 
 {
 }
 
-Overworld1::Overworld1(int levelWidth, int levelHeight, std::vector<std::vector<int>> tileVec, std::string vertexShader, std::string fragmentShader)
+Overworld1::Overworld1(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
     : LevelWithLightingLight(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
 {
 }

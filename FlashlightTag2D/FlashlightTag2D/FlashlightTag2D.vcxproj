@@ -152,6 +152,7 @@
     <ClCompile Include="CharacterPhysicsComponent.cpp" />
     <ClCompile Include="CursorInputComponent.cpp" />
     <ClCompile Include="EnemyTouchDamagePhysicsComponent.cpp" />
+    <ClCompile Include="GameTile.cpp" />
     <ClCompile Include="GUIItemLogicComponent.cpp" />
     <ClCompile Include="Level2.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="CharacterPhysicsComponent.h" />
     <ClInclude Include="CursorInputComponent.h" />
     <ClInclude Include="EnemyTouchDamagePhysicsComponent.h" />
+    <ClInclude Include="GameTile.h" />
     <ClInclude Include="GUIItemLogicComponent.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="LifeComponent.h" />
