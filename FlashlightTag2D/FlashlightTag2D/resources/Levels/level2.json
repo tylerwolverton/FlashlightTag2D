@@ -55,7 +55,7 @@
 		]
 	},
 	"actor_list":[
-		{"actor_path":"resources/Actors/player.json", "position":{"x":300, "y":100}},
+		{"actor_path":"resources/Actors/player.json", "position":{"x":0, "y":0}},
 		{"actor_path":"resources/Actors/portal_to_overworld1.json", "position":{"x":1280, "y":80}},
 		{"actor_path":"resources/Actors/cursor.json"},
 		{"actor_path":"resources/Actors/second_key.json", "position":{"x":2800, "y":720}},
