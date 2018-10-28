@@ -61,7 +61,7 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
         m_backgroundTexture = std::make_shared<Texture2D>(m_curLevel->GetSpritePath());
     }
     
-    /*int textureVecIdx = 0;
+    int textureVecIdx = 0;
     auto tileVec = m_curLevel->GetTileVec();
     for (int i = tileVec.size() - 1; i >= 0; i--)
     {
@@ -71,7 +71,7 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
             m_backgroundTileVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
         }
         textureVecIdx++;
-    }*/
+    }
 
 	std::shared_ptr<Shader> shader = m_curLevel->GetShader();
 	if (shader->Init())
@@ -282,35 +282,48 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         Vector2D<GLfloat> textureSize(1.0f, 1.0f);
         Vector2D<GLfloat> texturePos(0, 0);
 
-        //int textureVecIdx = 0;
+        shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+
+        int textureVecIdx = 0;
         for (auto vec : m_curLevel->GetTileVec())
         {
-            //int texX = 0;
+            int texX = 0;
             for (auto tile : vec)
             {
+                //std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+
+                // Use the whole texture starting from the top left
+                //Vector2D<GLfloat> textureSize(1.0f, 1.0f);
+                //Vector2D<GLfloat> texturePos(0, 0);
+
+                Matrix4<GLfloat> backgroundModel;
                 //auto position = Vector2D<float>(tile->GetWidth() * texX, tile->GetHeight() * textureVecIdx) - cameraPos;
-                Matrix4<GLfloat> backgroundModel = backgroundModel.Translate(tile->GetTransformComponent()->GetPosition());
+                auto position = tile->GetTransformComponent()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
+                backgroundModel = backgroundModel.Translate(position);
 
                 // Scale by the actual size of the sprite
                 auto tileTex = m_tileTextureVec[tile->GetSpriteIdx()];
                 Vector2D<GLfloat> spriteSize((float)tileTex->GetWidth(), (float)tileTex->GetHeight());
+                //Vector2D<GLfloat> spriteSize((float)tile->GetWidth(), (float)tile->GetHeight());
                 backgroundModel = backgroundModel.Scale(spriteSize);
 
                 shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
-                shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-                shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+                //shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+                //shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
 
                 glActiveTexture(GL_TEXTURE0);
 
+                //tile->BindTexture();
                 tileTex->BindTexture();
 
                 glBindVertexArray(this->m_quadVAO);
                 glDrawArrays(GL_TRIANGLES, 0, 6);
                 glBindVertexArray(0);
 
-                //texX++;
+                texX++;
             }
-            //textureVecIdx++;
+            textureVecIdx++;
         }
     }
 }

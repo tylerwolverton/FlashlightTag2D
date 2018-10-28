@@ -2,6 +2,7 @@
 #include "Types.h"
 
 #include <map>
+#include <vector>
 #include <memory>
 
 class TransformComponent;
@@ -15,11 +16,13 @@ public:
     virtual ~GameTile();
         
     int GetSpriteIdx() { return m_spriteIdx; }
-    std::shared_ptr<TransformComponent> GetTransformComponent() { return m_transformComp; };
-    std::shared_ptr<PhysicsComponent> GetPhysicsComponent() { return m_physicsComp; };
+    std::shared_ptr<TransformComponent> GetTransformComponent() { return m_transformComp; }
+    std::shared_ptr<PhysicsComponent> GetPhysicsComponent() { return m_physicsComp; }
+    std::map<ActorId, std::shared_ptr<GameActor>> GetActorMap() { return m_gameActorMap; }
 
     void AddActor(std::shared_ptr<GameActor> gameActor);
     void RemoveActor(ActorId actorId);
+    void RemoveAllActors();
     std::shared_ptr<GameActor> GetActorOnTile(ActorId actorId);
 
 private:

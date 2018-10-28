@@ -12,6 +12,7 @@ GameTile::GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformC
 GameTile::~GameTile()
 {
     m_gameActorMap.clear();
+    //m_gameActorVec.clear();
 }
 
 void GameTile::AddActor(std::shared_ptr<GameActor> gameActor)
@@ -21,6 +22,8 @@ void GameTile::AddActor(std::shared_ptr<GameActor> gameActor)
     {
         m_gameActorMap.insert(std::make_pair(actorId, gameActor));
     }
+
+    //m_gameActorVec.push_back(gameActor);
 }
 
 void GameTile::RemoveActor(ActorId actorId)
@@ -29,6 +32,23 @@ void GameTile::RemoveActor(ActorId actorId)
     {
         m_gameActorMap.erase(actorId);
     }
+
+    /*int idx = 0;
+    for (auto actor : m_gameActorVec)
+    {
+        if (actor->GetActorId() == actorId)
+        {
+            break;
+        }
+        idx++;
+    }
+
+    m_gameActorVec.erase(m_gameActorVec.begin() + idx);*/
+}
+
+void GameTile::RemoveAllActors()
+{
+    m_gameActorMap.clear();
 }
 
 std::shared_ptr<GameActor> GameTile::GetActorOnTile(ActorId actorId)

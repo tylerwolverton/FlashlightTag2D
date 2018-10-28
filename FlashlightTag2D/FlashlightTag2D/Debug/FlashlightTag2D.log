@@ -1,3 +1,5 @@
-﻿  GraphicsManager.cpp
+﻿  PhysicsManager.cpp
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\physicsmanager.cpp(101): warning C4552: '-': operator has no effect; expected operator with side-effect
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\physicsmanager.cpp(105): warning C4552: '+': operator has no effect; expected operator with side-effect
   FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
   FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

@@ -57,9 +57,30 @@ private:
         }
     };
 
+    struct CircleBoxCollisionEvent
+    {
+        bool collisionDetected;
+        Vector2D<float> penetrationDepth;
+        Vector2D<float> normal;
+
+        CircleBoxCollisionEvent()
+            : collisionDetected(false),
+              penetrationDepth(Vector2D<float>(0, 0)),
+              normal(Vector2D<float>(0, 0))
+        {
+        }
+
+        CircleBoxCollisionEvent(bool p_collisionDetected, Vector2D<float> p_penetrationDepth, Vector2D<float> p_normal)
+            : collisionDetected(p_collisionDetected),
+              penetrationDepth(p_penetrationDepth),
+              normal(p_normal)
+        {
+        }
+    };
+
     bool handleCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, CollisionEvent collisionEvent);
     CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
-	CollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent);
+    CircleBoxCollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent);
 	CollisionEvent checkBoxCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
 	void resolvePenetration(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent);
     void resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, const PhysicsManager::CollisionEvent& collisionEvent);

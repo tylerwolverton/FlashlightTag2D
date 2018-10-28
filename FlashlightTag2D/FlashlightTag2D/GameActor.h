@@ -16,6 +16,7 @@ class AIComponent;
 class TransformComponent;
 class GameStateComponent;
 class LifeComponent;
+class GameTile;
 
 class GameActor 
 {
@@ -57,6 +58,9 @@ public:
     const ActorId GetActorId() const { return m_actorId; }
 	const std::string GetActorName() const { return m_actorName; }
 
+    const std::vector<std::shared_ptr<GameTile>> GetTileVec() const { return m_tileVec; }
+    void SetTileVec(std::vector<std::shared_ptr<GameTile>> tileVec) { m_tileVec = tileVec; }
+
 	// Component communication methods
 	Vector2D<float> GetMousePosition();
 
@@ -67,6 +71,7 @@ private:
     ComponentMap m_componentMap;
     InputData m_input;
     std::shared_ptr<std::vector<std::shared_ptr<Command>>> m_pCommands;
+    std::vector<std::shared_ptr<GameTile>> m_tileVec;
     ActorId m_actorId;
 	std::string m_actorName;
     // TODO: Cache changes

@@ -67,6 +67,7 @@ void World::RunGame()
 				for (auto entity : m_pActorFactory->GetActorMap())
 				{
 					entity.second->Update(dt, input); // Should this be in this sub loop?
+                    //m_pLevelFactory->UpdateLevelTilesForActor(entity.second);
 				}
 
 				m_pPhysicsManager->Update(dt);

@@ -7,6 +7,7 @@
 class Level;
 class ActorFactory;
 class GameTile;
+class GameActor;
 
 class LevelFactory
 {
@@ -40,11 +41,15 @@ public:
 
 	void ChangeLevel(const std::string& levelPath);
 
+    void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actor);
+
 private:
 	std::shared_ptr<ActorFactory> m_pActorFactory;
 
 	std::shared_ptr<Level> createLevelFromJson(const rapidjson::Value& level);
 
     std::vector<std::vector<std::shared_ptr<GameTile>>> m_tileVec;
+
+    std::shared_ptr<Level> m_curLevel;
 };
 

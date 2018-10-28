@@ -7,6 +7,7 @@
 #include "LevelWithLightingLight.h"
 #include "MainMenuLevel.h"
 #include "GameTile.h"
+#include "GameActor.h"
 #include "TransformComponent.h"
 #include "DefaultPhysicsComponent.h"
 
@@ -54,10 +55,10 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
 	d.ParseStream(is);
 	fclose(fp);
 
-    std::shared_ptr<Level> newLevel = createLevelFromJson(d["level"]);
-    m_pActorFactory->InitLevelActors(d["actor_list"], newLevel);
+    m_curLevel = createLevelFromJson(d["level"]);
+    m_pActorFactory->InitLevelActors(d["actor_list"], m_curLevel);
     
-    newLevel->SetupLevel();
+    m_curLevel->SetupLevel();
 	//ServiceLocator::GetWorld()->ResumeGame();
 }
 
@@ -107,8 +108,9 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
             {
                 int spriteIdx = tiles[i][j].GetInt();
                 std::shared_ptr<TransformComponent> transformComp = std::make_shared<TransformComponent>(-1, 
-                                                                                                         Vector2D<float>(32 * j, levelHeight - (32 * i)),
-                                                                                                         Vector2D<float>(32, 32),
+                                                                                                         Vector2D<float>(Level::TILE_WIDTH * j, 
+                                                                                                                         levelHeight - (Level::TILE_HEIGHT * i)),
+                                                                                                         Vector2D<float>(Level::TILE_WIDTH, Level::TILE_HEIGHT),
                                                                                                          Vector2D<float>(0, 0));
                 // Hack to give walls a physics comp. Replace this with any other approach later
                 if (spriteIdx == 3)
@@ -155,4 +157,9 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
     }
 
 	return nullptr;
+}
+
+void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actor)
+{
+    m_curLevel->AddActorToTiles(actor);
 }
