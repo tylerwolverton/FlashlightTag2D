@@ -60,19 +60,19 @@ private:
     struct CircleBoxCollisionEvent
     {
         bool collisionDetected;
-        Vector2D<float> penetrationDepth;
+        Vector2D<float> collisionLocation;
         Vector2D<float> normal;
 
         CircleBoxCollisionEvent()
             : collisionDetected(false),
-              penetrationDepth(Vector2D<float>(0, 0)),
+              collisionLocation(Vector2D<float>(0, 0)),
               normal(Vector2D<float>(0, 0))
         {
         }
 
         CircleBoxCollisionEvent(bool p_collisionDetected, Vector2D<float> p_penetrationDepth, Vector2D<float> p_normal)
             : collisionDetected(p_collisionDetected),
-              penetrationDepth(p_penetrationDepth),
+              collisionLocation(p_penetrationDepth),
               normal(p_normal)
         {
         }

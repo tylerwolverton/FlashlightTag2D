@@ -28,6 +28,7 @@ const std::string LevelFactory::LevelNames::WinScreen = "WinScreen";
 
 const std::string LevelFactory::LevelPaths::MainMenu = "resources/levels/main_menu.json";
 const std::string LevelFactory::LevelPaths::Level1 = "resources/levels/level1.json";
+const std::string LevelFactory::LevelPaths::Level2 = "resources/levels/level2.json";
 const std::string LevelFactory::LevelPaths::Overworld1 = "resources/levels/overworld1.json";
 const std::string LevelFactory::LevelPaths::LoseScreen = "resources/levels/lose_screen.json";
 const std::string LevelFactory::LevelPaths::WinScreen = "resources/levels/win_screen.json";
