@@ -117,42 +117,59 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 
     for (auto actorPhysicsComp : m_physicsComponentPtrMap)
     {
+        // Compare current pos with new pos and create cases to decide which order to go in. Break the loop and go the other way if necessary
         std::shared_ptr<TransformComponent> actorTransformComp = actorPhysicsComp.second->GetTransformComponent();
         //std::vector<std::shared_ptr<PhysicsComponent>> collisionTargets = m_environmentPhysicsComponentPtrVec;
-        for (auto environmentPhysicsComp : m_environmentPhysicsComponentPtrVec)
-            //while (!collisionTargets.empty())
+        if (actorPhysicsComp.second->GetVelocity().x < 0)
         {
-            //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets;
-            //CircleBoxCollisionEvent closestCollision(true, Vector2D<float>(2000, 2000), Vector2D<float>(0, 0));
-            /*for (int i = 0; i < collisionTargets.size(); i++)
-            {*/
-            std::shared_ptr<TransformComponent> envTransformComp = environmentPhysicsComp->GetTransformComponent();
-            CircleBoxCollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp, actorPhysicsComp.second);
-
-            if (collisionEv.collisionDetected)
+            for (int i = m_environmentPhysicsComponentPtrVec.size() - 1; i >= 0; i--)
             {
-                //Vector2D<float> moveVec(collisionEv.collisionLocation.x, collisionEv.collisionLocation.y);
-                //actorTransformComp->SetPosition(moveVec);
-
-                //Vector2D<float> newVelocity(actorPhysicsComp.second->GetVelocity());
-                /*if (collisionEv.collisionLocation.x != actorTransformComp->GetPosition().x)
-                {
-                newVelocity.x = 0;
-                }
-                if (collisionEv.collisionLocation.y != actorTransformComp->GetPosition().y)
-                {
-                newVelocity.y = 0;
-                }*/
-                //actorPhysicsComp.second->SetVelocity(newVelocity);
-                //break;
-                /*newCollisionTargets.push_back(collisionTargets[0]);
-                if (collisionEv.penetrationDepth.Length() < closestCollision.penetrationDepth.Length())
-                {
-                closestCollision = collisionEv;
-                }*/
-                //break;
+                //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets;
+                //CircleBoxCollisionEvent closestCollision(true, Vector2D<float>(2000, 2000), Vector2D<float>(0, 0));
+                /*for (int i = 0; i < collisionTargets.size(); i++)
+                {*/
+                std::shared_ptr<TransformComponent> envTransformComp = m_environmentPhysicsComponentPtrVec[i]->GetTransformComponent();
+                CircleBoxCollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp, actorPhysicsComp.second);
             }
-            //}
+        }
+        else
+        {
+            //for (auto environmentPhysicsComp : m_environmentPhysicsComponentPtrVec)
+                //while (!collisionTargets.empty())
+            for(int i = 0; i < m_environmentPhysicsComponentPtrVec.size(); i++)
+            {
+                //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets;
+                //CircleBoxCollisionEvent closestCollision(true, Vector2D<float>(2000, 2000), Vector2D<float>(0, 0));
+                /*for (int i = 0; i < collisionTargets.size(); i++)
+                {*/
+                std::shared_ptr<TransformComponent> envTransformComp = m_environmentPhysicsComponentPtrVec[i]->GetTransformComponent();
+                CircleBoxCollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp, actorPhysicsComp.second);
+
+                if (collisionEv.collisionDetected)
+                {
+                    //Vector2D<float> moveVec(collisionEv.collisionLocation.x, collisionEv.collisionLocation.y);
+                    //actorTransformComp->SetPosition(moveVec);
+
+                    //Vector2D<float> newVelocity(actorPhysicsComp.second->GetVelocity());
+                    /*if (collisionEv.collisionLocation.x != actorTransformComp->GetPosition().x)
+                    {
+                    newVelocity.x = 0;
+                    }
+                    if (collisionEv.collisionLocation.y != actorTransformComp->GetPosition().y)
+                    {
+                    newVelocity.y = 0;
+                    }*/
+                    //actorPhysicsComp.second->SetVelocity(newVelocity);
+                    //break;
+                    /*newCollisionTargets.push_back(collisionTargets[0]);
+                    if (collisionEv.penetrationDepth.Length() < closestCollision.penetrationDepth.Length())
+                    {
+                    closestCollision = collisionEv;
+                    }*/
+                    //break;
+                }
+                //}
+            }
         }
     }
 }
