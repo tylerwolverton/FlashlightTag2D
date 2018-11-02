@@ -566,6 +566,9 @@ void ActorFactory::RemoveDeadActors()
         if (levelFactory != nullptr)
         {
             m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
+            auto playerGameStateComp = std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent());
+            playerGameStateComp->RemoveFromInventoryByName("FirstKey");
+            playerGameStateComp->RemoveFromInventoryByName("SecondKey");
             levelFactory->ChangeLevel(LevelFactory::LevelPaths::WinScreen);
         }
     }

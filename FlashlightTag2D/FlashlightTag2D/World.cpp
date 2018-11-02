@@ -39,7 +39,7 @@ void World::RunGame()
 {
 	m_isGameRunning = true;    
 
-	m_pLevelFactory->ChangeLevel(LevelFactory::LevelPaths::Level2);
+	m_pLevelFactory->ChangeLevel(LevelFactory::LevelPaths::MainMenu);
 	changeGameMode();
 
 	float timeStepMs = 1000.0f / 60; //eg. 60fps

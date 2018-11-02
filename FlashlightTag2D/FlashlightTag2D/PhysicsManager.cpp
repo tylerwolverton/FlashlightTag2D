@@ -1,5 +1,7 @@
 #include "PhysicsManager.h"
 #include "TransformComponent.h"
+#include "GameStateComponent.h"
+#include "LifeComponent.h"
 #include "Level.h"
 #include "GameTile.h"
 #include "GameActor.h"
@@ -64,42 +66,7 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
 			}
 		}
 
-        //std::vector<std::shared_ptr<PhysicsComponent>> collisionTargets = m_environmentPhysicsComponentPtrVec;
-        for (auto environmentPhysicsComp : m_environmentPhysicsComponentPtrVec)
-        //while (!collisionTargets.empty())
-        {
-            //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets;
-            //CircleBoxCollisionEvent closestCollision(true, Vector2D<float>(2000, 2000), Vector2D<float>(0, 0));
-            /*for (int i = 0; i < collisionTargets.size(); i++)
-            {*/
-                std::shared_ptr<TransformComponent> envTransformComp = environmentPhysicsComp->GetTransformComponent();
-                CircleBoxCollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp, actorPhysicsComp.second);
-
-                if (collisionEv.collisionDetected)
-                {
-                    //Vector2D<float> moveVec(collisionEv.collisionLocation.x, collisionEv.collisionLocation.y);
-                    //actorTransformComp->SetPosition(moveVec);
-
-                    //Vector2D<float> newVelocity(actorPhysicsComp.second->GetVelocity());
-                    /*if (collisionEv.collisionLocation.x != actorTransformComp->GetPosition().x)
-                    {
-                        newVelocity.x = 0;
-                    }
-                    if (collisionEv.collisionLocation.y != actorTransformComp->GetPosition().y)
-                    {
-                        newVelocity.y = 0;
-                    }*/
-                    //actorPhysicsComp.second->SetVelocity(newVelocity);
-                    //break;
-                    /*newCollisionTargets.push_back(collisionTargets[0]);
-                    if (collisionEv.penetrationDepth.Length() < closestCollision.penetrationDepth.Length())
-                    {
-                        closestCollision = collisionEv;
-                    }*/
-                    //break;
-                }
-            //}
-        }
+       
 
         //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets = collisionTargets;
         //while (!newCollisionTargets.empty())
@@ -147,6 +114,47 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
         //    //actorPhysicsComp.second->SetVelocity(resolutionVec);
         //}
 	}
+
+    for (auto actorPhysicsComp : m_physicsComponentPtrMap)
+    {
+        std::shared_ptr<TransformComponent> actorTransformComp = actorPhysicsComp.second->GetTransformComponent();
+        //std::vector<std::shared_ptr<PhysicsComponent>> collisionTargets = m_environmentPhysicsComponentPtrVec;
+        for (auto environmentPhysicsComp : m_environmentPhysicsComponentPtrVec)
+            //while (!collisionTargets.empty())
+        {
+            //std::vector<std::shared_ptr<PhysicsComponent>> newCollisionTargets;
+            //CircleBoxCollisionEvent closestCollision(true, Vector2D<float>(2000, 2000), Vector2D<float>(0, 0));
+            /*for (int i = 0; i < collisionTargets.size(); i++)
+            {*/
+            std::shared_ptr<TransformComponent> envTransformComp = environmentPhysicsComp->GetTransformComponent();
+            CircleBoxCollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, envTransformComp, actorPhysicsComp.second);
+
+            if (collisionEv.collisionDetected)
+            {
+                //Vector2D<float> moveVec(collisionEv.collisionLocation.x, collisionEv.collisionLocation.y);
+                //actorTransformComp->SetPosition(moveVec);
+
+                //Vector2D<float> newVelocity(actorPhysicsComp.second->GetVelocity());
+                /*if (collisionEv.collisionLocation.x != actorTransformComp->GetPosition().x)
+                {
+                newVelocity.x = 0;
+                }
+                if (collisionEv.collisionLocation.y != actorTransformComp->GetPosition().y)
+                {
+                newVelocity.y = 0;
+                }*/
+                //actorPhysicsComp.second->SetVelocity(newVelocity);
+                //break;
+                /*newCollisionTargets.push_back(collisionTargets[0]);
+                if (collisionEv.penetrationDepth.Length() < closestCollision.penetrationDepth.Length())
+                {
+                closestCollision = collisionEv;
+                }*/
+                //break;
+            }
+            //}
+        }
+    }
 }
 
 //void PhysicsManager::ResolveCollisions(float deltaTime)
@@ -254,6 +262,10 @@ PhysicsManager::CollisionEvent PhysicsManager::checkCircleCollision(std::shared_
 
 PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent, std::shared_ptr<PhysicsComponent> actorPhysicsComp)
 {
+    // The y values for positions follow the traditional math convention of y increases as it moves up the screen
+    // as opposed to the graphics convention where y increases as it moves down the screen
+
+    // Box position is at the top left
 	Vector2D<float> boxPos = boxActorTransformComponent->GetPosition();
 	Vector2D<float> boxSize = boxActorTransformComponent->GetSize();
     float boxMinX = boxPos.x;
@@ -261,6 +273,7 @@ PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(
     float boxMinY = boxPos.y - boxSize.y;
     float boxMaxY = boxPos.y;
 
+    // Circle position is in middle of circle
     Vector2D<float> circlePos = circleActorTransformComponent->GetPosition();
     float circleRadius = circleActorTransformComponent->GetRadius();
     float circleMinX = circlePos.x - circleRadius;
@@ -277,15 +290,16 @@ PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(
 	}
 
     Vector2D<float> lastCirclePos(circlePos - actorPhysicsComp->GetVelocity());
-    Vector2D<float> collisionPt(lastCirclePos);
-    if (lastCirclePos.x < boxMinX && boxMinX < circlePos.x)
+    Vector2D<float> collisionPt(Vector2D<float>(circlePos.x, circlePos.y));
+
+    if (lastCirclePos.x + circleRadius < boxMinX && boxMinX < circleMaxX)
     {
         //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMinX - circleRadius - .01f, circlePos.y - actorPhysicsComp->GetVelocity().y));
         //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMinX - circleRadius - .01f, circlePos.y));
         //actorPhysicsComp->SetVelocity(Vector2D<float>(0, actorPhysicsComp->GetVelocity().y));
         collisionPt.x = boxMinX - circleRadius - .01f;
     }
-    else if (lastCirclePos.x > boxMaxX && boxMaxX > circlePos.x)
+    else if (lastCirclePos.x - circleRadius > boxMaxX && boxMaxX > circleMinX)
     {
         //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMaxX + circleRadius + .01f, circlePos.y - actorPhysicsComp->GetVelocity().y));
         //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMaxX + circleRadius + .01f, circlePos.y));
@@ -293,22 +307,27 @@ PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(
         collisionPt.x = boxMaxX + circleRadius + .01f;
     }
 
-    if (lastCirclePos.y < boxMaxY && boxMaxY < circlePos.y)
+    // Check against bottom of box
+    if (lastCirclePos.y + circleRadius < boxMinY && boxMinY < circleMaxY)
+    //if (lastCirclePos.y + circleRadius < boxMaxY && boxMaxY < circleMinY)
     {
         //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x, boxMinY - circleRadius - .01f));
         //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x, boxMinY - circleRadius - .01f));
         //actorPhysicsComp->SetVelocity(Vector2D<float>(actorPhysicsComp->GetVelocity().y, 0));
         collisionPt.y = boxMinY - circleRadius - .01f;
+        //collisionPt.y = boxMaxY - circleRadius - .01f;
     }
-    else if (lastCirclePos.y > boxMinY && boxMinY > circlePos.y)
+    //else if (lastCirclePos.y - circleRadius > boxMinY && boxMinY > circleMaxY)
+    else if (lastCirclePos.y - circleRadius > boxMaxY && boxMaxY > circleMinY)
     {
         //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x, boxMaxY + circleRadius + .01f));
         //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x, boxMaxY + circleRadius + .01f));
         //actorPhysicsComp->SetVelocity(Vector2D<float>(actorPhysicsComp->GetVelocity().y, 0));
         collisionPt.y = boxMaxY + circleRadius + .01f;
+        //collisionPt.y = boxMinY + circleRadius + .01f;
     }
     circleActorTransformComponent->SetPosition(collisionPt);
-    actorPhysicsComp->SetVelocity(Vector2D<float>(0,0));
+    //actorPhysicsComp->SetVelocity(Vector2D<float>(0,0));
 
     //Vector2D<float> collisionPt(circlePos);
     //if (abs(actorPhysicsComp->GetVelocity().x) > abs(actorPhysicsComp->GetVelocity().y))
@@ -356,6 +375,17 @@ PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(
     //circleActorTransformComponent->SetPosition(circleActorTransformComponent->GetPosition() - actorPhysicsComp->GetVelocity());
     //auto collisionEvent = CircleBoxCollisionEvent{ true, circleActorTransformComponent->GetPosition() - actorPhysicsComp->GetVelocity(), dist.Normalize() };
     auto collisionEvent = CircleBoxCollisionEvent{ true, dist, dist.Normalize() };
+
+    auto gameStateComp = circleActorTransformComponent->GetParent()->GetGameStateComponent();
+    if (gameStateComp != nullptr
+        && gameStateComp->GetName() == "Projectile")
+    {
+        auto lifeComp = circleActorTransformComponent->GetParent()->GetLifeComponent();
+        if (lifeComp != nullptr)
+        {
+            lifeComp->Die();
+        }
+    }
 
 	return collisionEvent;
 }

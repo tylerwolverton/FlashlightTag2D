@@ -21,7 +21,7 @@
 	},
 	"spawner_logic_component":{},
 	"graphics_component":{
-		"sprite": "resources/background.png",
+		"sprite": "resources/shooter_enemy_spawner.png",
 		"animation_speed":300
 	},
 	"life_component":{
