@@ -1,4 +1,4 @@
 ﻿  PhysicsManager.cpp
-c:\users\tyler wolverton\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\physicsmanager.cpp(138): warning C4018: '<': signed/unsigned mismatch
-  FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
-  FlashlightTag2D.vcxproj -> C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)
+c:\users\tyler\documents\github\flashlighttag2d\flashlighttag2d\flashlighttag2d\physicsmanager.cpp(136): warning C4018: '<': signed/unsigned mismatch
+  FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.exe
+  FlashlightTag2D.vcxproj -> C:\Users\Tyler\Documents\GitHub\FlashlightTag2D\FlashlightTag2D\Debug\FlashlightTag2D.pdb (Partial PDB)

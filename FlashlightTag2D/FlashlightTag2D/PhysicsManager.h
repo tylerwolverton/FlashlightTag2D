@@ -78,6 +78,8 @@ private:
         }
     };
 
+    bool checkEnvironmentCollisionTopDown(std::shared_ptr<PhysicsComponent> actorPhysicsComp);
+    bool checkEnvironmentCollisionBottomUp(std::shared_ptr<PhysicsComponent> actorPhysicsComp);
     bool handleCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsComp, CollisionEvent collisionEvent);
     CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformComponent, std::shared_ptr<TransformComponent> innerActorTransformComponent);
     CircleBoxCollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformComponent, std::shared_ptr<TransformComponent> boxActorTransformComponent, std::shared_ptr<PhysicsComponent> actorPhysicsComp);
