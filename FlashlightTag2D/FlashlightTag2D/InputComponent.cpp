@@ -8,6 +8,10 @@ InputComponent::InputComponent(ComponentId componentId)
 	  m_pButtonS(nullptr),
 	  m_pButtonD(nullptr),
 	  m_pButtonA(nullptr),
+      m_pButtonUp(nullptr),
+      m_pButtonLeft(nullptr),
+      m_pButtonDown(nullptr),
+      m_pButtonRight(nullptr),
 	  m_pButtonEsc(nullptr),
 	  m_pButtonSpace(nullptr),
 	  m_pButtonReturn(nullptr),
@@ -42,6 +46,22 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	{
 		commandList.push_back(m_pButtonD);
 	}
+    if (input.buttonsPressed & EInputValues::Up)
+    {
+        commandList.push_back(m_pButtonUp);
+    }
+    if (input.buttonsPressed & EInputValues::Left)
+    {
+        commandList.push_back(m_pButtonLeft);
+    }
+    if (input.buttonsPressed & EInputValues::Down)
+    {
+        commandList.push_back(m_pButtonDown);
+    }
+    if (input.buttonsPressed & EInputValues::Right)
+    {
+        commandList.push_back(m_pButtonRight);
+    }
 	if (input.buttonsPressed & EInputValues::Esc)
 	{
 		commandList.push_back(m_pButtonEsc);
@@ -66,12 +86,10 @@ void InputComponent::Update(GameActor& actor, float deltaMs)
 	{
 		commandList.push_back(m_pMouseButtonMiddle);
 	}
-	//if (input.mousePos != m_oldMousePos)
-	//{
-		m_oldMousePos = input.mousePos;
-		m_pMousePositionMoved->SetMousePosition(input.mousePos);
-		commandList.push_back(m_pMousePositionMoved);
-	//}
+
+	m_oldMousePos = input.mousePos;
+	m_pMousePositionMoved->SetMousePosition(input.mousePos);
+	commandList.push_back(m_pMousePositionMoved);
 
 	actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandList));
 }

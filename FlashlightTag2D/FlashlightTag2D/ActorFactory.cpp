@@ -90,17 +90,33 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
 
 		m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
 		addComponentsToManagers(actor);
-    }
-    
-    m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
 
-    if (m_pCurrentPlayer != nullptr
-        && m_persistedPlayerGameStateComp != nullptr
-        && m_persistedPlayerLifeComp != nullptr)
+        if (i == 0)
+        {
+            m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
+        }
+    }
+
+    if (m_pCurrentPlayer != nullptr)
     {
-        m_pCurrentPlayer->InsertComponent(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateComp);
-        m_pCurrentPlayer->InsertComponent(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeComp);
-        std::dynamic_pointer_cast<PlayerLifeComponent>(m_persistedPlayerLifeComp)->UpdateHealthBar();
+        if (m_persistedPlayerGameStateComp != nullptr
+            && m_persistedPlayerLifeComp != nullptr)
+        {
+            m_pCurrentPlayer->InsertComponent(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateComp);
+            m_pCurrentPlayer->InsertComponent(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeComp);
+            std::dynamic_pointer_cast<PlayerLifeComponent>(m_persistedPlayerLifeComp)->UpdateHealthBar();
+        }
+
+        // TODO: Move this into function
+        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent())->InventoryContainsItem("FirstKey"))
+        {
+            KillAllActorsByName("FirstKeyInventory");
+        }
+
+        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent())->InventoryContainsItem("SecondKey"))
+        {
+            KillAllActorsByName("SecondKeyInventory");
+        }
     }
 }
 

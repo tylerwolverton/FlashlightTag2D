@@ -19,10 +19,9 @@ void GUIItemLogicComponent::Update(GameActor& actor, float deltaMs)
     if (m_cameraTransformComp == nullptr)
     {
         m_cameraTransformComp = ServiceLocator::GetActorFactory()->GetCurrentCamera()->GetTransformComponent();
-        return;
     }
 
     auto actorTransformComp = actor.GetTransformComponent();
-    actorTransformComp->SetPosition(actorTransformComp->GetInitPosition() 
+    actorTransformComp->SetPosition(actorTransformComp->GetInitPosition()
                                     + m_cameraTransformComp->GetPosition());
 }

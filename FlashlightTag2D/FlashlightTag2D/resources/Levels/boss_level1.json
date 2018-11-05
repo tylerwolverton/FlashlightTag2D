@@ -37,9 +37,12 @@
 		{"actor_path":"resources/Actors/player.json", "position":{"x":300, "y":100}},
 		{"actor_path":"resources/Actors/cursor.json"},
 		{"actor_path":"resources/Actors/boss1.json", "position":{"x":640, "y":360}},
+		{"actor_path":"resources/Actors/gui_background.json"},
 		{"actor_path":"resources/Actors/player_health_bar_border.json"},
 		{"actor_path":"resources/Actors/player_health_bar.json"},
 		{"actor_path":"resources/Actors/boss1_health_bar_border.json"},
-		{"actor_path":"resources/Actors/boss1_health_bar.json"}
+		{"actor_path":"resources/Actors/boss1_health_bar.json"},
+		{"actor_path":"resources/Actors/first_key_inventory.json"},
+		{"actor_path":"resources/Actors/second_key_inventory.json"}
 	]
 }

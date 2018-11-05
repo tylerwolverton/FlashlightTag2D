@@ -1,7 +1,7 @@
 {
 	"name": "PlayerHealthBarBorder", 
 	"transform_component":{
-		"position":{"x":110, "y":20},
+		"position":{"x":110, "y":30},
 		"size":{"x":200, "y":45}
 	},
 	"graphics_component":{

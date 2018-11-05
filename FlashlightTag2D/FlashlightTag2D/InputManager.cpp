@@ -33,6 +33,22 @@ const InputData InputManager::ReadInput() const
 	{
 		input.buttonsPressed |= EInputValues::D;
 	}
+    if (keys[SDL_SCANCODE_UP])
+    {
+        input.buttonsPressed |= EInputValues::Up;
+    }
+    if (keys[SDL_SCANCODE_LEFT])
+    {
+        input.buttonsPressed |= EInputValues::Left;
+    }
+    if (keys[SDL_SCANCODE_DOWN])
+    {
+        input.buttonsPressed |= EInputValues::Down;
+    }
+    if (keys[SDL_SCANCODE_RIGHT])
+    {
+        input.buttonsPressed |= EInputValues::Right;
+    }
 	if (keys[SDL_SCANCODE_SPACE])
 	{
 		input.buttonsPressed |= EInputValues::Space;

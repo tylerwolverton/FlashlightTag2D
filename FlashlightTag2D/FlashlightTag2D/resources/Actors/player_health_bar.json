@@ -1,7 +1,7 @@
 {
 	"name": "PlayerHealthBar", 
 	"transform_component":{
-		"position":{"x":140, "y":20},
+		"position":{"x":140, "y":30},
 		"size":{"x":130, "y":35}
 	},
 	"graphics_component":{

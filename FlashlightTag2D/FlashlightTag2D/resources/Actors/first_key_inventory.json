@@ -1,0 +1,15 @@
+{
+	"name": "FirstKeyInventory", 
+	"transform_component":{
+		"position":{"x":250, "y":32},
+		"size":{"x":32, "y":32}
+	},
+	"graphics_component":{
+		"sprite": "resources/first_key.png"
+	},
+	"game_state_component":{},
+	"gui_item_logic_component":{},
+	"life_component":{
+		"health":9999
+	}
+}

@@ -423,9 +423,9 @@ void PhysicsManager::moveActorsBackIntoLevel()
         {
             newPosition.x = m_levelSize.x - actorTransformComponent->GetSize().x / 2;
         }
-        if (newPosition.y - actorTransformComponent->GetSize().y / 2 < 0)
+        if (newPosition.y - actorTransformComponent->GetSize().y / 2 < Level::TILE_HEIGHT * 2)
         {
-            newPosition.y = actorTransformComponent->GetSize().y / 2;
+            newPosition.y = actorTransformComponent->GetSize().y / 2 + Level::TILE_HEIGHT * 2;
         }
         else if (newPosition.y + actorTransformComponent->GetSize().y / 2 > m_levelSize.y)
         {

@@ -51,7 +51,11 @@ enum EInputValues : uint32_t
 	Return = 1 << 6,
 	MouseLeft = 1 << 7,
 	MouseRight = 1 << 8,
-	MouseMiddle = 1 << 9
+	MouseMiddle = 1 << 9,
+    Up = 1 << 10,
+    Left = 1 << 11,
+    Down = 1 << 12,
+    Right = 1 << 13
 };
 
 class InputData

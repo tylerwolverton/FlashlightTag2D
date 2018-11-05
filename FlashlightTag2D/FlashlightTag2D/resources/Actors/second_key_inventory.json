@@ -1,0 +1,15 @@
+{
+	"name": "SecondKeyInventory", 
+	"transform_component":{
+		"position":{"x":300, "y":32},
+		"size":{"x":32, "y":32}
+	},
+	"graphics_component":{
+		"sprite": "resources/second_key.png"
+	},
+	"game_state_component":{},
+	"gui_item_logic_component":{},
+	"life_component":{
+		"health":9999
+	}
+}
