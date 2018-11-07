@@ -1,4 +1,4 @@
-# FlashlightTag2D
+# ProjectPurple
 An action RPG created in a custom engine built using SDL2 and OpenGL.
 
 I used the following resources to aid in the design of the engine:
