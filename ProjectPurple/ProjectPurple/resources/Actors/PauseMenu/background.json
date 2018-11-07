@@ -1,0 +1,10 @@
+{
+	"name": "PauseMenuBackground", 
+	"transform_component":{
+		"position":{"x":640, "y":360},
+		"size":{"x":640, "y":300}
+	},
+	"graphics_component":{
+		"sprite": "resources/PauseMenu/Background.png"
+	}
+}

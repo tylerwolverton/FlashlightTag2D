@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0CF69E3C-83B5-4E35-B3DC-C292E6DE7DAE}</ProjectGuid>
+    <RootNamespace>SDLTutorial</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>ProjectPurple</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\..\glew-2.0.0\include\GL;..\..\SDL\SDL2-2.0.3\include;..\..\rapidjson;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\SDL\SDL2-2.0.3\lib\x86;..\..\glew-2.0.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Components;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Managers;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Behaviors;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\GameState;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Input;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Life;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Logic;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Physics;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Levels;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>..\..\glew-2.0.0\lib\Release\Win32;..\..\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Components;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Managers;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Behaviors;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\GameState;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Input;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Life;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Logic;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Physics;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Levels;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>..\..\glew-2.0.0\lib\Release\Win32;..\..\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Components;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Managers;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Behaviors;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\GameState;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Input;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Life;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Logic;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Physics;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Levels;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>..\..\glew-2.0.0\lib\Release\Win32;..\..\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Components;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Engine\Managers;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Behaviors;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\GameState;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Input;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Life;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Logic;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Components\Physics;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Levels;C:\Users\Tyler Wolverton\Documents\GitHub\FlashlightTag2D\ProjectPurple\ProjectPurple\Game\Shaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>..\..\glew-2.0.0\lib\Release\Win32;..\..\SDL\SDL2-2.0.3\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Actor.cpp" />
+    <ClCompile Include="Engine\Components\ActorComponent.cpp" />
+    <ClCompile Include="Game\ActorFactory.cpp" />
+    <ClCompile Include="Engine\Components\AIComponent.cpp" />
+    <ClCompile Include="Game\Behaviors\Boss1Behavior.cpp" />
+    <ClCompile Include="Game\Components\Life\Boss1LifeComponent.cpp" />
+    <ClCompile Include="Game\Components\Input\CharacterInputComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\CharacterPhysicsComponent.cpp" />
+    <ClCompile Include="Game\Components\Input\CursorInputComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\EnemyTouchDamagePhysicsComponent.cpp" />
+    <ClCompile Include="Game\GameTile.cpp" />
+    <ClCompile Include="Game\Components\Logic\GUIItemLogicComponent.cpp" />
+    <ClCompile Include="Game\Levels\Level2.cpp" />
+    <ClCompile Include="Engine\Components\LifeComponent.cpp" />
+    <ClCompile Include="Engine\Components\LogicComponent.cpp" />
+    <ClCompile Include="Engine\Behavior.cpp" />
+    <ClCompile Include="Game\Components\Logic\CameraFollowComponent.cpp" />
+    <ClCompile Include="Game\GameActor.cpp" />
+    <ClCompile Include="Game\Components\GameState\GameStateComponent.cpp" />
+    <ClCompile Include="Engine\Components\GraphicsComponent.cpp" />
+    <ClCompile Include="Engine\Managers\GraphicsManager.cpp" />
+    <ClCompile Include="Game\Behaviors\HideBehavior.cpp" />
+    <ClCompile Include="Engine\Components\InputComponent.cpp" />
+    <ClCompile Include="Engine\Managers\InputManager.cpp" />
+    <ClCompile Include="Engine\Level.cpp" />
+    <ClCompile Include="Game\Levels\Level1.cpp" />
+    <ClCompile Include="Game\LevelFactory.cpp" />
+    <ClCompile Include="Engine\main.cpp" />
+    <ClCompile Include="Game\Components\Input\MainMenuInputComponent.cpp" />
+    <ClCompile Include="Game\Levels\MainMenuLevel.cpp" />
+    <ClCompile Include="Game\Components\Logic\MainMenuLogicComponent.cpp" />
+    <ClCompile Include="Game\Components\Logic\MouseLogicComponent.cpp" />
+    <ClCompile Include="Game\Levels\LevelWithLightingLight.cpp" />
+    <ClCompile Include="Game\Levels\Overworld1.cpp" />
+    <ClCompile Include="Engine\Components\PhysicsComponent.cpp" />
+    <ClCompile Include="Engine\Managers\PhysicsManager.cpp" />
+    <ClCompile Include="Game\Components\Logic\CharacterLogicComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\PickupPhysicsComponent.cpp" />
+    <ClCompile Include="Game\Components\GameState\PlayerGameStateComponent.cpp" />
+    <ClCompile Include="Game\Components\Life\PlayerLifeComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\PlayerPhysicsComponent.cpp" />
+    <ClCompile Include="Game\Components\Logic\PortalLogicComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\DefaultPhysicsComponent.cpp" />
+    <ClCompile Include="Game\Components\Physics\ProjectilePhysicsComponent.cpp" />
+    <ClCompile Include="Engine\RandomNumberGenerator.cpp" />
+    <ClCompile Include="Game\Behaviors\RushBehavior.cpp" />
+    <ClCompile Include="Game\Behaviors\SeekBehavior.cpp" />
+    <ClCompile Include="Engine\ServiceLocator.cpp" />
+    <ClCompile Include="Engine\Shader.cpp" />
+    <ClCompile Include="Game\Behaviors\ShootAtTargetBehavior.cpp" />
+    <ClCompile Include="Game\Behaviors\SpawnBehavior.cpp" />
+    <ClCompile Include="Engine\stb_image.cpp" />
+    <ClCompile Include="Engine\Texture2D.cpp" />
+    <ClCompile Include="Engine\Components\TransformComponent.cpp" />
+    <ClCompile Include="Engine\World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Actor.h" />
+    <ClInclude Include="Engine\Components\ActorComponent.h" />
+    <ClInclude Include="Game\ActorFactory.h" />
+    <ClInclude Include="Engine\Components\AIComponent.h" />
+    <ClInclude Include="Game\Behaviors\Boss1Behavior.h" />
+    <ClInclude Include="Game\Components\Life\Boss1LifeComponent.h" />
+    <ClInclude Include="Game\Components\Input\CharacterInputComponent.h" />
+    <ClInclude Include="Game\Components\Physics\CharacterPhysicsComponent.h" />
+    <ClInclude Include="Game\Components\Input\CursorInputComponent.h" />
+    <ClInclude Include="Game\Components\Physics\EnemyTouchDamagePhysicsComponent.h" />
+    <ClInclude Include="Game\GameTile.h" />
+    <ClInclude Include="Game\Components\Logic\GUIItemLogicComponent.h" />
+    <ClInclude Include="Game\Levels\Level2.h" />
+    <ClInclude Include="Engine\Components\LifeComponent.h" />
+    <ClInclude Include="Engine\Components\LogicComponent.h" />
+    <ClInclude Include="Engine\Behavior.h" />
+    <ClInclude Include="Engine\Command.h" />
+    <ClInclude Include="Game\Components\Logic\CameraFollowComponent.h" />
+    <ClInclude Include="Game\GameActor.h" />
+    <ClInclude Include="Game\Components\GameState\GameStateComponent.h" />
+    <ClInclude Include="Game\GameTypes.h" />
+    <ClInclude Include="Engine\Components\GraphicsComponent.h" />
+    <ClInclude Include="Engine\Managers\GraphicsManager.h" />
+    <ClInclude Include="Game\Behaviors\HideBehavior.h" />
+    <ClInclude Include="Engine\Components\InputComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\InputManager.h" />
+    <ClInclude Include="Engine\Level.h" />
+    <ClInclude Include="Game\Levels\Level1.h" />
+    <ClInclude Include="Game\LevelFactory.h" />
+    <ClInclude Include="Game\Components\Input\MainMenuInputComponent.h" />
+    <ClInclude Include="Game\Levels\MainMenuLevel.h" />
+    <ClInclude Include="Game\Components\Logic\MainMenuLogicComponent.h" />
+    <ClInclude Include="Engine\Matrix4.h" />
+    <ClInclude Include="Game\Components\Logic\MouseLogicComponent.h" />
+    <ClInclude Include="Game\Levels\LevelWithLightingLight.h" />
+    <ClInclude Include="Game\Levels\Overworld1.h" />
+    <ClInclude Include="Engine\Components\PhysicsComponent.h" />
+    <ClInclude Include="Engine\Managers\PhysicsManager.h" />
+    <ClInclude Include="Game\Components\Logic\CharacterLogicComponent.h" />
+    <ClInclude Include="Game\Components\Physics\PickupPhysicsComponent.h" />
+    <ClInclude Include="Game\Components\GameState\PlayerGameStateComponent.h" />
+    <ClInclude Include="Game\Components\Life\PlayerLifeComponent.h" />
+    <ClInclude Include="Game\Components\Physics\PlayerPhysicsComponent.h" />
+    <ClInclude Include="Game\Components\Logic\PortalLogicComponent.h" />
+    <ClInclude Include="Game\Components\Physics\DefaultPhysicsComponent.h" />
+    <ClInclude Include="Game\Components\Physics\ProjectilePhysicsComponent.h" />
+    <ClInclude Include="Engine\RandomNumberGenerator.h" />
+    <ClInclude Include="Game\Behaviors\RushBehavior.h" />
+    <ClInclude Include="Game\Behaviors\SeekBehavior.h" />
+    <ClInclude Include="Engine\ServiceLocator.h" />
+    <ClInclude Include="Engine\Shader.h" />
+    <ClInclude Include="Game\Behaviors\ShootAtTargetBehavior.h" />
+    <ClInclude Include="Game\Behaviors\SpawnBehavior.h" />
+    <ClInclude Include="Engine\stb_image.h" />
+    <ClInclude Include="Engine\Texture2D.h" />
+    <ClInclude Include="Engine\Components\TransformComponent.h" />
+    <ClInclude Include="Engine\Types.h" />
+    <ClInclude Include="Engine\Vector2D.h" />
+    <ClInclude Include="Engine\World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Game\Shaders\Basic.frag" />
+    <None Include="Game\Shaders\Basic.vert" />
+    <None Include="Game\Shaders\LevelWithLightingDark.frag" />
+    <None Include="Game\Shaders\LevelWithLightingLight.frag" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

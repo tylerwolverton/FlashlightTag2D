@@ -1,0 +1,10 @@
+{
+	"name": "PauseYes", 
+	"transform_component":{
+		"position":{"x":660, "y":250},
+		"size":{"x":200, "y":100}
+	},
+	"graphics_component":{
+		"sprite": "resources/PauseMenu/Yes.png"
+	}
+}

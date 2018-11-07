@@ -1,0 +1,10 @@
+{
+	"name": "PauseNo", 
+	"transform_component":{
+		"position":{"x":500, "y":250},
+		"size":{"x":200, "y":100}
+	},
+	"graphics_component":{
+		"sprite": "resources/PauseMenu/No.png"
+	}
+}

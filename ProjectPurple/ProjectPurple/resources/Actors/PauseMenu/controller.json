@@ -1,0 +1,12 @@
+{
+	"name": "PauseController", 
+	"input_component":{
+		"type": "pause_menu_input"
+	},
+	"pause_menu_logic_component":{
+		"buttons":[
+			{"name": "No"},
+			{"name": "Yes"}
+		]
+	}
+}
