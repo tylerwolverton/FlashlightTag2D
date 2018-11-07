@@ -1,5 +1,5 @@
 # FlashlightTag2D
-The classic game of flashlight tag recreated with SDL2 and OpenGL.
+An action RPG created in a custom engine built using SDL2 and OpenGL.
 
 I used the following resources to aid in the design of the engine:
 
