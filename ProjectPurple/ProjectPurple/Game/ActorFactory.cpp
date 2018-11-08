@@ -298,7 +298,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     }
     if (actor.HasMember("main_menu_logic_component"))
     {
-        auto buttonGraphicsCompsMapPtr = std::make_shared<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>>();
+        auto buttonTransformCompsMapPtr = std::make_shared<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>>();
         const rapidjson::Value& buttons = actor["main_menu_logic_component"]["buttons"];
         for (rapidjson::SizeType i = 0; i < buttons.Size(); i++)
         {
@@ -310,18 +310,18 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
                     continue;
                 }
 
-                std::shared_ptr<GraphicsComponent> graphicsComp = actor.second->GetGraphicsComponent();
-                if (graphicsComp == nullptr)
+                std::shared_ptr<TransformComponent> transformComp = actor.second->GetTransformComponent();
+                if (transformComp == nullptr)
                 {
                     continue;
                 }
 
-                buttonGraphicsCompsMapPtr->emplace(actor.second->GetActorName(), graphicsComp);
+                buttonTransformCompsMapPtr->emplace(actor.second->GetActorName(), transformComp);
                 break;
             }
         }
 
-        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonGraphicsCompsMapPtr));
+        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonTransformCompsMapPtr));
     }
     if (actor.HasMember("gui_item_logic_component"))
     {

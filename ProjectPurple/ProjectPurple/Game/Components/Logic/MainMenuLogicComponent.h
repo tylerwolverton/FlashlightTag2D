@@ -3,13 +3,13 @@
 
 #include "LogicComponent.h"
 
-class GraphicsComponent;
+class TransformComponent;
 
 class MainMenuLogicComponent :
     public LogicComponent
 {
 public:
-    MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>> buttonGraphicsCompMapPtr);
+    MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> buttonTransformCompMapPtr);
     virtual ~MainMenuLogicComponent();
 
     void MoveUp() override;
@@ -20,13 +20,12 @@ private:
     enum EMenuButtons
     {
         Play,
-        Controls,
         Exit
     };
 
     int selectedButtonIdx;
     std::vector<EMenuButtons> buttons;
-    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<GraphicsComponent>>> m_buttonGraphicsCompMapPtr;
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> m_buttonTransformCompMapPtr;
 
     uint32_t lastTickVal;
 };

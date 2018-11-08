@@ -5,7 +5,7 @@
 		"size":{"x":200, "y":100}
 	},
 	"graphics_component":{
-		"sprite": "resources/MainMenu/playSelected.png",
+		"sprite": "resources/MainMenu/play.png",
 		"animation_speed":500 
 	}
 }

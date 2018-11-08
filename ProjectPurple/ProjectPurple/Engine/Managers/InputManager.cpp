@@ -74,15 +74,20 @@ const InputData InputManager::ReadInput() const
         input.buttonsPressed |= EInputValues::MouseMiddle;
     }
 
+    if (keys[SDL_SCANCODE_ESCAPE])
+    {
+        input.buttonsPressed |= EInputValues::Esc;
+    }
+
     //Handle events on queue
     // SDL_PollEvent takes the next event from the queue, returns 0 if no events are present
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0)
     {
         //User requests quit
-        if (e.type == SDL_QUIT || keys[SDL_SCANCODE_ESCAPE])
+        if (e.type == SDL_QUIT)// || keys[SDL_SCANCODE_ESCAPE])
         {
-            input.buttonsPressed |= EInputValues::Esc;
+            input.buttonsPressed |= EInputValues::Quit;
         }
     }
 

@@ -6,8 +6,8 @@
 	"main_menu_logic_component":{
 		"buttons":[
 			{"name": "Play"},
-			{"name": "Controls"},
-			{"name": "Exit"}
+			{"name": "Exit"},
+			{"name": "SelectionBorder"}
 		]
 	}
 }

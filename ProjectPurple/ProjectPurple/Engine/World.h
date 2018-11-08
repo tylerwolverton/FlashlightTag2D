@@ -27,13 +27,12 @@ public:
 
     void RunGame();
     void QuitGame();
-    void PauseGame() { m_isGamePaused = true; }
-    void ResumeGame() { m_isGamePaused = false; }
 
 private:
     SDL_Window* m_window;
     bool m_isGameRunning;
-    bool m_isGamePaused;
+
+    float m_escHoldTime;
 
     std::shared_ptr<InputManager> m_pInputManager;
     std::shared_ptr<PhysicsManager> m_pPhysicsManager;

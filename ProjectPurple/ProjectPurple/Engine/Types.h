@@ -43,19 +43,20 @@ enum EInputValues : uint32_t
 {
     None = 0,
     Esc = 1 << 0,
-    W = 1 << 1,
-    A = 1 << 2,
-    S = 1 << 3,
-    D = 1 << 4,
-    Space = 1 << 5,
-    Return = 1 << 6,
-    MouseLeft = 1 << 7,
-    MouseRight = 1 << 8,
-    MouseMiddle = 1 << 9,
-    Up = 1 << 10,
-    Left = 1 << 11,
-    Down = 1 << 12,
-    Right = 1 << 13
+    Quit = 1 << 1,
+    W = 1 << 2,
+    A = 1 << 3,
+    S = 1 << 4,
+    D = 1 << 5,
+    Space = 1 << 6,
+    Return = 1 << 7,
+    MouseLeft = 1 << 8,
+    MouseRight = 1 << 9,
+    MouseMiddle = 1 << 10,
+    Up = 1 << 11,
+    Left = 1 << 12,
+    Down = 1 << 13,
+    Right = 1 << 14
 };
 
 class InputData

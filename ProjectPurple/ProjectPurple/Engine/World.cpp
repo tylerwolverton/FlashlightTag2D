@@ -16,7 +16,7 @@
 
 World::World(SDL_Window* window)
     : m_window(window),
-      m_isGamePaused(false),
+      m_escHoldTime(0),
       m_pInputManager(std::make_shared<InputManager>()),
       m_pPhysicsManager(std::make_shared<PhysicsManager>()),
       m_pGraphicsManager(std::make_shared<GraphicsManager>(m_window)),
@@ -47,15 +47,27 @@ void World::RunGame()
     while (m_isGameRunning)
     {
         InputData input = m_pInputManager->ReadInput();
+        
+        timeLastMs = timeCurrentMs;
+        timeCurrentMs = (float)SDL_GetTicks();
+        float timeDeltaMs = timeCurrentMs - timeLastMs;
+
         if (input.buttonsPressed & EInputValues::Esc)
+        {
+            m_escHoldTime += timeDeltaMs;
+        }
+        else
+        {
+            m_escHoldTime = 0;
+        }
+        
+        if (input.buttonsPressed & EInputValues::Quit
+            || m_escHoldTime > 2 * 1000)
         {
             m_isGameRunning = false;
             break;
         }
 
-        timeLastMs = timeCurrentMs;
-        timeCurrentMs = (float)SDL_GetTicks();
-        float timeDeltaMs = timeCurrentMs - timeLastMs;
         timeAccumulatedMs += timeDeltaMs;
         while (timeAccumulatedMs >= timeStepMs)
         {
