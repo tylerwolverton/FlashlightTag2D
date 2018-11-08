@@ -74,10 +74,10 @@ void LevelWithLightingLight::PrepShaders(std::map<ComponentId, std::shared_ptr<G
         flashingLightSrcVec.push_back(-901.0f);
     }
 
-    m_shader->SetInt("timeElapsed", SDL_GetTicks() / 50);
-    m_shader->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
+    m_shaderPtr->SetInt("timeElapsed", SDL_GetTicks() / 50);
+    m_shaderPtr->SetVec3("flashingLightSrc", &flashingLightSrcVec.front(), flashingLightSrcVec.size() / 3);
     if (flashingLightCount > 0)
     {
-        m_shader->SetVec3("flashingLightColor", &flashingLightColorVec.front(), flashingLightColorVec.size() / 3);
+        m_shaderPtr->SetVec3("flashingLightColor", &flashingLightColorVec.front(), flashingLightColorVec.size() / 3);
     }
 }

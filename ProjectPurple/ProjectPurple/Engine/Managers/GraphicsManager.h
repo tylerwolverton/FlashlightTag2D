@@ -28,7 +28,6 @@ public:
     void ClearScreen();
 
     void LoadNewLevel(std::shared_ptr<Level> level);
-    //void SetBackgroundTexture(std::string texturePath) { m_backgroundTexture = std::make_shared<Texture2D>(texturePath); };
     
     void AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp);
     void RemoveGraphicsComponentPtr(ComponentId compId);
@@ -41,40 +40,38 @@ public:
     //void UpdateComponents();
 
     void AddCamera(std::shared_ptr<GameActor> camera);
-    std::shared_ptr<GameActor> GetCurrentCamera() { return m_pCurrentCamera; }
+    std::shared_ptr<GameActor> GetCurrentCamera() { return m_curCameraPtr; }
 
 private:
-    SDL_Window* m_window;
+    SDL_Window* m_windowPtr;
 
     // Our opengl context handle
     SDL_GLContext m_mainContext;
 
-    std::shared_ptr<Level> m_curLevel;
-    //std::shared_ptr<Shader> m_shader;
-    GLuint VBO, m_quadVAO;
+    std::shared_ptr<Level> m_curLevelPtr;
+    GLuint m_VBO, m_quadVAO;
     
-    std::unique_ptr<Matrix4<GLfloat>> m_projMatrix;
+    std::unique_ptr<Matrix4<GLfloat>> m_projMatrixPtr;
 
-    std::shared_ptr<Texture2D> m_backgroundTexture;
-    std::vector<std::vector<std::shared_ptr<Texture2D>>> m_backgroundTileVec;
-
-    bool setOpenGLAttributes();
-    bool initializeRenderData();
-    void initializeTiles();
-    void renderBackground(Vector2D<float> cameraPos);
-    
+    std::shared_ptr<Texture2D> m_backgroundTexturePtr;
+    std::vector<std::vector<std::shared_ptr<Texture2D>>> m_backgroundTilePtrVecVec;
+	    
     // TODO: Cache changes
     //std::vector<GraphicsComponent> m_graphicsComponentVec;
     //std::vector<std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrVec;
-    std::map<ComponentId, std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrMap;
+    std::map<ComponentId, std::shared_ptr<GraphicsComponent>> m_graphicsCompPtrMap;
 
-    std::vector<std::shared_ptr<GameActor>> m_pCameraVec;
-    std::shared_ptr<GameActor> m_pCurrentCamera;
+    std::vector<std::shared_ptr<GameActor>> m_cameraPtrVec;
+    std::shared_ptr<GameActor> m_curCameraPtr;
 
     int m_lastComponentId;
     int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
     std::vector<std::shared_ptr<Texture2D>> m_tileTextureVec;
-    //std::map<std::string, std::shared_ptr<Texture2D>> m_tileMap;
+
+	bool setOpenGLAttributes();
+	bool initializeRenderData();
+	void initializeTiles();
+	void renderBackground(Vector2D<float> cameraPos);
 };
 

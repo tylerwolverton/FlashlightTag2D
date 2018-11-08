@@ -8,13 +8,13 @@
 #include "Level.h"
 
 GraphicsManager::GraphicsManager(SDL_Window* window)
-    : m_window(window),
+    : m_windowPtr(window),
       m_lastComponentId(0)
 {
     setOpenGLAttributes();
 
     // Create our opengl context and attach it to our window
-    m_mainContext = SDL_GL_CreateContext(m_window);
+    m_mainContext = SDL_GL_CreateContext(m_windowPtr);
 
     // This makes our buffer swap synchronized with the monitor's vertical refresh
     SDL_GL_SetSwapInterval(1);
@@ -31,7 +31,7 @@ GraphicsManager::GraphicsManager(SDL_Window* window)
 GraphicsManager::~GraphicsManager()
 {
     glDisableVertexAttribArray(0);
-    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &m_VBO);
     glDeleteVertexArrays(1, &m_quadVAO);
 
     // Delete our OpengL context
@@ -40,60 +40,60 @@ GraphicsManager::~GraphicsManager()
 
 void GraphicsManager::Reset()
 {
-    m_graphicsComponentPtrMap.clear();
-    m_pCameraVec.clear();
-    m_pCurrentCamera = nullptr;
-    m_backgroundTexture = nullptr;
+    m_graphicsCompPtrMap.clear();
+    m_cameraPtrVec.clear();
+    m_curCameraPtr = nullptr;
+    m_backgroundTexturePtr = nullptr;
 
-    for (auto vec : m_backgroundTileVec)
+    for (auto vec : m_backgroundTilePtrVecVec)
     {
         vec.clear();
     }
-    m_backgroundTileVec.clear();
+    m_backgroundTilePtrVecVec.clear();
 }
 
 void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
 {
-    m_curLevel = level;
+    m_curLevelPtr = level;
 
-    if (m_curLevel->GetSpritePath() != "")
+    if (m_curLevelPtr->GetSpritePath() != "")
     {
-        m_backgroundTexture = std::make_shared<Texture2D>(m_curLevel->GetSpritePath());
+        m_backgroundTexturePtr = std::make_shared<Texture2D>(m_curLevelPtr->GetSpritePath());
     }
     
     int textureVecIdx = 0;
-    auto tileVec = m_curLevel->GetTileVec();
+    auto tileVec = m_curLevelPtr->GetTileVec();
     for (int i = tileVec.size() - 1; i >= 0; i--)
     {
-        m_backgroundTileVec.push_back(std::vector<std::shared_ptr<Texture2D>>());
+        m_backgroundTilePtrVecVec.push_back(std::vector<std::shared_ptr<Texture2D>>());
         for (auto tile : tileVec[i])
         {
-            m_backgroundTileVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
+            m_backgroundTilePtrVecVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
         }
         textureVecIdx++;
     }
 
-    std::shared_ptr<Shader> shader = m_curLevel->GetShader();
-    if (shader->Init())
+    std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
+    if (shaderPtr->Init())
     {
-        shader->UseProgram();
+        shaderPtr->UseProgram();
     }
 
     int windowWidth, windowHeight;
-    SDL_GetWindowSize(m_window, &windowWidth, &windowHeight);
-    m_projMatrix = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
-    shader->SetMatrix4("projection", m_projMatrix->GetPtrToFlattenedData().get());
-    shader->SetInt("image", 0);
+    SDL_GetWindowSize(m_windowPtr, &windowWidth, &windowHeight);
+    m_projMatrixPtr = Matrix4<GLfloat>::CreateOrthoMatrix(0, (float)windowWidth, (float)windowHeight, 0, -1, 1);
+    shaderPtr->SetMatrix4("projection", m_projMatrixPtr->GetPtrToFlattenedData().get());
+    shaderPtr->SetInt("image", 0);
 }
 
 void GraphicsManager::AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp)
 {
-    m_graphicsComponentPtrMap.insert(std::make_pair(compId, comp));
+    m_graphicsCompPtrMap.insert(std::make_pair(compId, comp));
 }
 
 void GraphicsManager::RemoveGraphicsComponentPtr(ComponentId compId)
 {
-    m_graphicsComponentPtrMap.erase(compId);
+    m_graphicsCompPtrMap.erase(compId);
 }
 
 // TODO: Cache changes
@@ -181,37 +181,40 @@ void GraphicsManager::initializeTiles()
 
 void GraphicsManager::AddCamera(std::shared_ptr<GameActor> camera)
 {
-    if (m_pCurrentCamera == nullptr)
+    if (m_curCameraPtr == nullptr)
     {
-        m_pCurrentCamera = camera;
+        m_curCameraPtr = camera;
     }
 
-    m_pCameraVec.push_back(camera);
+    m_cameraPtrVec.push_back(camera);
 }
 
 void GraphicsManager::Render()
 {
-    auto cameraTransformComponent = m_pCurrentCamera->GetTransformComponent();
-    if (cameraTransformComponent == nullptr) { return; }
+    auto cameraTransformCompPtr = m_curCameraPtr->GetTransformComponent();
+    if (cameraTransformCompPtr == nullptr) 
+	{ 
+		return;
+	}
 
-    Vector2D<float> cameraPos = cameraTransformComponent->GetPosition();
-    Vector2D<float> cameraSize = cameraTransformComponent->GetSize();
+    Vector2D<float> cameraPos = cameraTransformCompPtr->GetPosition();
+    Vector2D<float> cameraSize = cameraTransformCompPtr->GetSize();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+    std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
     
     renderBackground(cameraPos);
 
-    m_curLevel->PrepShaders(m_graphicsComponentPtrMap, cameraPos);
+    m_curLevelPtr->PrepShaders(m_graphicsCompPtrMap, cameraPos);
 
 
-    for (auto graphicsComponent : m_graphicsComponentPtrMap)
+    for (auto graphicsCompEntry : m_graphicsCompPtrMap)
     {
-        auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());   
+        auto actorTransformCompPtr = *(graphicsCompEntry.second->GetTransformComponent());
 
-        Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-        Vector2D<float> actorSize = actorTransformComponent.GetSize();
+        Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
+        Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
 
         if (actorPos.x < cameraPos.x || actorPos.x > cameraPos.x + cameraSize.x
             || actorPos.y < cameraPos.y || actorPos.y > cameraPos.y + cameraSize.y)
@@ -221,19 +224,19 @@ void GraphicsManager::Render()
 
         // Prepare transformations
         Matrix4<GLfloat> model;
-        Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
+        Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompEntry.second->GetImageOffset();
         model = model.Translate(actorLocation);
 
         // TODO: find a better scaling method
         model = model.Scale(actorSize);
 
-        shader->SetMatrix4("model", model.GetPtrToFlattenedData().get());
-        shader->SetVec2("textureSize", graphicsComponent.second->GetTextureSize().GetPtrToFlattenedData().get());
-        shader->SetVec2("texturePos", graphicsComponent.second->GetTexturePos().GetPtrToFlattenedData().get());
+        shaderPtr->SetMatrix4("model", model.GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("textureSize", graphicsCompEntry.second->GetTextureSize().GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("texturePos", graphicsCompEntry.second->GetTexturePos().GetPtrToFlattenedData().get());
         
         glActiveTexture(GL_TEXTURE0);
                 
-        graphicsComponent.second->GetTexture()->BindTexture();
+		graphicsCompEntry.second->GetTexture()->BindTexture();
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
         glBindVertexArray(this->m_quadVAO);
@@ -241,15 +244,15 @@ void GraphicsManager::Render()
         glBindVertexArray(0);
     }
 
-    SDL_GL_SwapWindow(m_window);
+    SDL_GL_SwapWindow(m_windowPtr);
 }
 
 void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
 {
     // Render the background
-    if (m_backgroundTexture != nullptr && m_backgroundTexture->GetWidth() != 0)
+    if (m_backgroundTexturePtr != nullptr && m_backgroundTexturePtr->GetWidth() != 0)
     {
-        std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+        std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
 
         // Use the whole texture starting from the top left
         Vector2D<GLfloat> textureSize(1.0f, 1.0f);
@@ -259,16 +262,16 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         backgroundModel = backgroundModel.Translate(-cameraPos);
         
         // Scale by the actual size of the sprite
-        Vector2D<GLfloat> spriteSize((float)m_backgroundTexture->GetWidth(), (float)m_backgroundTexture->GetHeight());
+        Vector2D<GLfloat> spriteSize((float)m_backgroundTexturePtr->GetWidth(), (float)m_backgroundTexturePtr->GetHeight());
         backgroundModel = backgroundModel.Scale(spriteSize);
 
-        shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
-        shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-        shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+        shaderPtr->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
         
         glActiveTexture(GL_TEXTURE0);
 
-        m_backgroundTexture->BindTexture();
+        m_backgroundTexturePtr->BindTexture();
 
         glBindVertexArray(this->m_quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -276,46 +279,35 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
     }
     else
     {
-        std::shared_ptr<Shader> shader = m_curLevel->GetShader();
+        std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
 
         // Use the whole texture starting from the top left
         Vector2D<GLfloat> textureSize(1.0f, 1.0f);
         Vector2D<GLfloat> texturePos(0, 0);
 
-        shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-        shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
+        shaderPtr->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
 
         int textureVecIdx = 0;
-        for (auto vec : m_curLevel->GetTileVec())
+        for (auto gameTilePtrVec : m_curLevelPtr->GetTileVec())
         {
             int texX = 0;
-            for (auto tile : vec)
+            for (auto tilePtr : gameTilePtrVec)
             {
-                //std::shared_ptr<Shader> shader = m_curLevel->GetShader();
-
-                // Use the whole texture starting from the top left
-                //Vector2D<GLfloat> textureSize(1.0f, 1.0f);
-                //Vector2D<GLfloat> texturePos(0, 0);
-
                 Matrix4<GLfloat> backgroundModel;
-                //auto position = Vector2D<float>(tile->GetWidth() * texX, tile->GetHeight() * textureVecIdx) - cameraPos;
-                auto position = tile->GetTransformComponent()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
+                auto position = tilePtr->GetTransformComponent()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
                 backgroundModel = backgroundModel.Translate(position);
 
                 // Scale by the actual size of the sprite
-                auto tileTex = m_tileTextureVec[tile->GetSpriteIdx()];
-                Vector2D<GLfloat> spriteSize((float)tileTex->GetWidth(), (float)tileTex->GetHeight());
-                //Vector2D<GLfloat> spriteSize((float)tile->GetWidth(), (float)tile->GetHeight());
+                auto tileTexPtr = m_tileTextureVec[tilePtr->GetSpriteIdx()];
+                Vector2D<GLfloat> spriteSize((float)tileTexPtr->GetWidth(), (float)tileTexPtr->GetHeight());
                 backgroundModel = backgroundModel.Scale(spriteSize);
 
-                shader->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
-                //shader->SetVec2("textureSize", textureSize.GetPtrToFlattenedData().get());
-                //shader->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
+                shaderPtr->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
 
                 glActiveTexture(GL_TEXTURE0);
 
-                //tile->BindTexture();
-                tileTex->BindTexture();
+				tileTexPtr->BindTexture();
 
                 glBindVertexArray(this->m_quadVAO);
                 glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -332,5 +324,5 @@ void GraphicsManager::ClearScreen()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    SDL_GL_SwapWindow(m_window);
+    SDL_GL_SwapWindow(m_windowPtr);
 }

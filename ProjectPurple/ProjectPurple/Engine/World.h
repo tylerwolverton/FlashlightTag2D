@@ -1,7 +1,4 @@
 #pragma once
-#include "Vector2D.h"
-#include "document.h"
-
 #include <memory>
 #include <string>
 
@@ -29,17 +26,13 @@ public:
     void QuitGame();
 
 private:
-    SDL_Window* m_window;
     bool m_isGameRunning;
-
     float m_escHoldTime;
 
-    std::shared_ptr<InputManager> m_pInputManager;
-    std::shared_ptr<PhysicsManager> m_pPhysicsManager;
-    std::shared_ptr<GraphicsManager> m_pGraphicsManager;
-    std::shared_ptr<ActorFactory> m_pActorFactory;
-    std::shared_ptr<LevelFactory> m_pLevelFactory;
-    
-    void changeGameMode();
+    std::shared_ptr<InputManager> m_inputManagerPtr;
+    std::shared_ptr<PhysicsManager> m_physicsManagerPtr;
+    std::shared_ptr<GraphicsManager> m_graphicsManagerPtr;
+    std::shared_ptr<ActorFactory> m_actorFactoryPtr;
+    std::shared_ptr<LevelFactory> m_levelFactoryPtr;
 };
 

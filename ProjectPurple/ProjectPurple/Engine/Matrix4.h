@@ -23,12 +23,6 @@ public:
 
     Matrix4(T newElements[MATRIX_SIZE][MATRIX_SIZE])
     {
-        /*T newElements[MATRIX_SIZE][MATRIX_SIZE] =
-        { { 1,0,0,0 },
-        { 0,1,0,0 },
-        { 0,0,1,0 },
-        { 0,0,0,1 } };
-*/
         copyElementArray(newElements, Elements);
     }
 
@@ -52,22 +46,16 @@ public:
     {
         std::unique_ptr<T[]> pflat(new T[MATRIX_SIZE * MATRIX_SIZE]);
         T* flat = new T[MATRIX_SIZE * MATRIX_SIZE];
-        //std::cout << "Flattened ****************************" << std::endl;
         int k = 0;
         for (int i = 0; i < MATRIX_SIZE; i++)
         {
             for (int j = 0; j < MATRIX_SIZE; j++)
             {
-                //(pflat.get())[k] = Elements[i][j];
                 flat[k] = Elements[i][j];
                 ++k;
-
-                //std::cout << pflat[k] << ", ";
-                //std::cout << "flat[k]: " << flat[k-1] << ", Elements[i][j]: " << Elements[i][j] <<std::endl;
             }
         }
 
-        //std::cout << "****************************" << std::endl;
         return std::unique_ptr<T[]>(flat);
     }
 
@@ -118,10 +106,7 @@ public:
                         { -(right + left)/(right - left),-(top + bottom)/(top - bottom),-(far + near)/(far - near),1 } };
         
         std::unique_ptr<Matrix4<T>> pProj(new Matrix4<T>(newElements));
-
-        //Matrix4<T> proj;
-        //copyElementArray(newElements, proj.Elements);
-
+		
         return pProj;
     }
 

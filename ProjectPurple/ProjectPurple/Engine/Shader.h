@@ -53,7 +53,7 @@ private:
     bool linkShaders();
     void printShaderLinkingError(int32_t shaderId);
 
-    // If something went wrong whil compiling the shaders, we'll use this function to find the error
+    // If something went wrong while compiling the shaders, we'll use this function to find the error
     void printShaderCompilationErrorInfo(int32_t shaderId);
 
     // The handle to our shader program

@@ -9,8 +9,5 @@ public:
     ~InputManager();
 
     const InputData ReadInput() const;
-
-private:
-    uint32_t lastTickCount;
 };
 

@@ -35,10 +35,10 @@ bool PlayerPhysicsComponent::SignalCollision(ActorId actorId)
     {
         if (gameStateComponent->GetType() == "Portal")
         {
-            auto logicComponent = actor->GetLogicComponent();
-            if (logicComponent != nullptr)
+            auto logicComponentPtr = actor->GetLogicComponent();
+            if (logicComponentPtr != nullptr)
             {
-                std::dynamic_pointer_cast<PortalLogicComponent>(logicComponent)->ChangeLevel();
+                std::dynamic_pointer_cast<PortalLogicComponent>(logicComponentPtr)->ChangeLevel();
                 stopResolvingCollisions = true;
             }
         }

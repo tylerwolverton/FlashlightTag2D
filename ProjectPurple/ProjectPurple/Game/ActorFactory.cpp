@@ -1,7 +1,6 @@
 #include "ActorFactory.h"
 #include "GameTypes.h"
 #include "Vector2D.h"
-#include "Actor.h"
 #include "GameActor.h"
 #include "ActorComponent.h"
 #include "TransformComponent.h"

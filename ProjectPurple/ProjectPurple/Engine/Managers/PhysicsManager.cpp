@@ -20,7 +20,6 @@ PhysicsManager::~PhysicsManager()
 
 void PhysicsManager::ClearPhysicsComponents()
 {
-    //m_physicsComponentPtrVec.clear();
     m_physicsComponentPtrMap.clear();
     m_environmentPhysicsComponentPtrVec.clear();
 }
@@ -85,50 +84,6 @@ void PhysicsManager::ResolveCollisions(float deltaTime)
         }
     }
 }
-
-//void PhysicsManager::ResolveCollisions(float deltaTime)
-//{
-//    //for (auto actorPhysicsComponent : m_physicsComponentPtrVec)
-//    // check each actor for collision
-//    for (auto actorPhysicsComp : m_physicsComponentPtrMap)
-//    {
-//        std::shared_ptr<GameActor> actor = actorPhysicsComp.second->GetParent();
-//        std::shared_ptr<TransformComponent> actorTransformComp = actorPhysicsComp.second->GetTransformComponent();
-//        // check each tile the actor is touching
-//        for (auto tile : actor->GetTileVec())
-//        {
-//            // check collision agianst any actors also in the tile
-//            for (auto innerActor : tile->GetActorMap())
-//            {
-//                if (actor->GetActorId() != innerActor.second->GetActorId())
-//                {
-//                    std::shared_ptr<TransformComponent> innerTransformComp = innerActor.second->GetTransformComponent();
-//                    std::shared_ptr<PhysicsComponent> innerPhysicsComp = innerActor.second->GetPhysicsComponent();
-//                    if (innerTransformComp == nullptr
-//                        || innerPhysicsComp == nullptr)
-//                    {
-//                        continue;
-//                    }
-//                    if (handleCollision(actorPhysicsComp.second, innerPhysicsComp, checkCircleCollision(actorTransformComp, innerTransformComp)))
-//                    {
-//                        return;
-//                    }
-//                }
-//            }
-//
-//            // check collision against tile itself
-//            std::shared_ptr<PhysicsComponent> tilePhysicsComp = tile->GetPhysicsComponent();
-//            if (tilePhysicsComp == nullptr)
-//            {
-//                continue;
-//            }
-//
-//            std::shared_ptr<TransformComponent> tileTransformComp = tile->GetTransformComponent();
-//            CollisionEvent collisionEv = checkCircleBoxCollision(actorTransformComp, tileTransformComp);
-//            handleCollision(actorPhysicsComp.second, tilePhysicsComp, collisionEv);
-//        }
-//    }
-//}
 
 bool PhysicsManager::checkEnvironmentCollisionTopDown(std::shared_ptr<PhysicsComponent> actorPhysicsComp)
 {
@@ -199,7 +154,6 @@ bool PhysicsManager::handleCollision(std::shared_ptr<PhysicsComponent> actorPhys
 
 void PhysicsManager::AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> comp)
 {
-    //m_physicsComponentPtrVec.push_back(comp);
     m_physicsComponentPtrMap.insert(std::make_pair(compId, comp));
 }
 
@@ -271,86 +225,24 @@ PhysicsManager::CircleBoxCollisionEvent PhysicsManager::checkCircleBoxCollision(
 
     if (lastCirclePos.x + circleRadius < boxMinX && boxMinX < circleMaxX)
     {
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMinX - circleRadius - .01f, circlePos.y - actorPhysicsComp->GetVelocity().y));
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMinX - circleRadius - .01f, circlePos.y));
-        //actorPhysicsComp->SetVelocity(Vector2D<float>(0, actorPhysicsComp->GetVelocity().y));
         collisionPt.x = boxMinX - circleRadius - .01f;
     }
     else if (lastCirclePos.x - circleRadius > boxMaxX && boxMaxX > circleMinX)
     {
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMaxX + circleRadius + .01f, circlePos.y - actorPhysicsComp->GetVelocity().y));
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(boxMaxX + circleRadius + .01f, circlePos.y));
-        //actorPhysicsComp->SetVelocity(Vector2D<float>(0, actorPhysicsComp->GetVelocity().y));
         collisionPt.x = boxMaxX + circleRadius + .01f;
     }
 
     // Check against bottom of box
     if (lastCirclePos.y + circleRadius < boxMinY && boxMinY < circleMaxY)
-    //if (lastCirclePos.y + circleRadius < boxMaxY && boxMaxY < circleMinY)
     {
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x, boxMinY - circleRadius - .01f));
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x, boxMinY - circleRadius - .01f));
-        //actorPhysicsComp->SetVelocity(Vector2D<float>(actorPhysicsComp->GetVelocity().y, 0));
         collisionPt.y = boxMinY - circleRadius - .01f;
-        //collisionPt.y = boxMaxY - circleRadius - .01f;
     }
-    //else if (lastCirclePos.y - circleRadius > boxMinY && boxMinY > circleMaxY)
     else if (lastCirclePos.y - circleRadius > boxMaxY && boxMaxY > circleMinY)
     {
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x, boxMaxY + circleRadius + .01f));
-        //circleActorTransformComponent->SetPosition(Vector2D<float>(circleActorTransformComponent->GetPosition().x, boxMaxY + circleRadius + .01f));
-        //actorPhysicsComp->SetVelocity(Vector2D<float>(actorPhysicsComp->GetVelocity().y, 0));
         collisionPt.y = boxMaxY + circleRadius + .01f;
-        //collisionPt.y = boxMinY + circleRadius + .01f;
     }
-    //circleActorTransformComponent->SetPosition(collisionPt);
-    //actorPhysicsComp->SetVelocity(Vector2D<float>(0,0));
-
-    //Vector2D<float> collisionPt(circlePos);
-    //if (abs(actorPhysicsComp->GetVelocity().x) > abs(actorPhysicsComp->GetVelocity().y))
-    //if (abs(actorPhysicsComp->GetVelocity().x) > 0)
-    //{
-    //    if (circlePos.x > boxPos.x
-    //        && circleMinX < boxMaxX)
-    //    {
-    //        //collisionPt.x = boxMaxX + circleRadius + .01f;
-    //        //collisionPt.x = circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x;
-    //        //circleActorTransformComponent->SetPosition circleActorTransformComponent->GetPosition() - actorPhysicsComp->GetVelocity()
-    //    }
-
-    //    else if (circlePos.x < boxPos.x
-    //        &&  circleMaxX > boxMinX)
-    //    {
-    //        //collisionPt.x = boxMinX - circleRadius - .01f;
-    //        //collisionPt.x = circleActorTransformComponent->GetPosition().x - actorPhysicsComp->GetVelocity().x;
-    //    }
-    //}
-    //
-    //if(abs(actorPhysicsComp->GetVelocity().y) > 0)
-    //{
-    //    if (circleMaxY > boxMinY || circleMinY < boxMaxY)
-    //    {
-    //        //collisionPt.y = boxMinY - circleRadius - .01f;
-    //        collisionPt.y = circleActorTransformComponent->GetPosition().y - actorPhysicsComp->GetVelocity().y;
-    //    }
-    //    //if (circlePos.y < boxPos.y
-    //    //    &&  circleMaxY > boxMinY)
-    //    //{
-    //    //    //collisionPt.y = boxMinY - circleRadius - .01f;
-    //    //    collisionPt.y = circleActorTransformComponent->GetPosition().y - actorPhysicsComp->GetVelocity().y;
-    //    //}
-
-    //    //else if (circlePos.y > boxPos.y
-    //    //    &&  circleMinY < boxMaxY)
-    //    //{
-    //    //    //collisionPt.y = boxMaxY + circleRadius + .01f;
-    //    //    collisionPt.y = circleActorTransformComponent->GetPosition().y - actorPhysicsComp->GetVelocity().y;
-    //    //}
-    //}
 
     Vector2D<float> dist = circlePos - boxPos;
-    //circleActorTransformComponent->SetPosition(circleActorTransformComponent->GetPosition() - actorPhysicsComp->GetVelocity());
-    //auto collisionEvent = CircleBoxCollisionEvent{ true, circleActorTransformComponent->GetPosition() - actorPhysicsComp->GetVelocity(), dist.Normalize() };
     auto collisionEvent = CircleBoxCollisionEvent{ true, collisionPt, dist.Normalize() };
 
     auto gameStateComp = circleActorTransformComponent->GetParent()->GetGameStateComponent();

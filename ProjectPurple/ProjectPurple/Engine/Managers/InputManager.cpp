@@ -3,7 +3,6 @@
 #include "InputManager.h"
 
 InputManager::InputManager()
-    : lastTickCount(0)
 {
 }
 

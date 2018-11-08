@@ -12,27 +12,27 @@ std::vector<std::shared_ptr<Command>> Behavior::moveToPosition(Vector2D<float> c
                                                                Vector2D<float> targetPos, 
                                                                float speed)
 {
-    std::vector<std::shared_ptr<Command>> commands;
+    std::vector<std::shared_ptr<Command>> commandVec;
 
     Vector2D<float> dist = targetPos - currentPos;
 
     if (dist.x < -speed)
     {
-        commands.push_back(std::make_shared<MoveLeft>());
+		commandVec.push_back(std::make_shared<MoveLeft>());
     }
     else if (dist.x > speed)
     {
-        commands.push_back(std::make_shared<MoveRight>());
+		commandVec.push_back(std::make_shared<MoveRight>());
     }
 
     if (dist.y < -speed)
     {
-        commands.push_back(std::make_shared<MoveDown>());
+		commandVec.push_back(std::make_shared<MoveDown>());
     }
     else if (dist.y > speed)
     {
-        commands.push_back(std::make_shared<MoveUp>());
+		commandVec.push_back(std::make_shared<MoveUp>());
     }
 
-    return commands;
+    return commandVec;
 }
