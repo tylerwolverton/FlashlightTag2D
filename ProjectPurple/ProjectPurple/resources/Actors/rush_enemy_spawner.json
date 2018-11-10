@@ -5,7 +5,7 @@
 			{
 				"type":"spawn",
 				"target":"enemy",
-				"delay_time":4000
+				"delay_time":5000
 			}
 		]
 	},
@@ -25,6 +25,6 @@
 		"animation_speed":300
 	},
 	"life_component":{
-		"health":10
+		"health":3
 	}
 }

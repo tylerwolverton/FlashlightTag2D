@@ -26,6 +26,6 @@
 	},
 	"game_state_component":{},
 	"life_component":{
-		"health":2
+		"health":1
 	}
 }
