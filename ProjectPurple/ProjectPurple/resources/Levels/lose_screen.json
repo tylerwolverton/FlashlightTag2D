@@ -4,7 +4,7 @@
 		"size":{
 			"x":1280, "y":720 
 		},
-		"sprite":"resources/lose_screen.png",
+		"sprite":"resources/Art/lose_screen.png",
 		"vert_shader":"Game/Shaders/Basic.vert",
 		"frag_shader":"Game/Shaders/Basic.frag"
 	},

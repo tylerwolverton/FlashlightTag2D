@@ -14,7 +14,7 @@
 		"destination":"resources/levels/boss_level1.json"
 	},
 	"graphics_component":{
-		"sprite": "resources/boss_entrance.png",
+		"sprite": "resources/Art/boss_entrance.png",
 		"animation_speed":30
 	},
 	"game_state_component":{

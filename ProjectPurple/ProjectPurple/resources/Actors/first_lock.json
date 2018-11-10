@@ -5,7 +5,7 @@
 		"size":{"x":32, "y":32}
 	},
 	"graphics_component":{
-		"sprite": "resources/first_lock.png",
+		"sprite": "resources/Art/first_lock.png",
 		"animation_speed":300 
 	},
 	"game_state_component":{},

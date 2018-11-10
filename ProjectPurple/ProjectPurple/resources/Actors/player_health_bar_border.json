@@ -5,7 +5,7 @@
 		"size":{"x":200, "y":45}
 	},
 	"graphics_component":{
-		"sprite": "resources/GUI/Health/player_health_border.png"
+		"sprite": "resources/Art/GUI/Health/player_health_border.png"
 	},
 	"game_state_component":{},
 	"gui_item_logic_component":{}

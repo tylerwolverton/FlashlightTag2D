@@ -1,14 +1,14 @@
 { 
 	"level":{ 
-		"name":"WinScreen",
+		"name":"ControlsScreen",
 		"size":{
 			"x":1280, "y":720 
 		},
-		"sprite":"resources/Art/win_screen.png",
+		"sprite":"resources/Art/controls_screen.png",
 		"vert_shader":"Game/Shaders/Basic.vert",
 		"frag_shader":"Game/Shaders/Basic.frag"
 	},
 	"actor_list":[
-		{"actor_path":"resources/Actors/win_screen_portal.json"}
+		{"actor_path":"resources/Actors/controls_screen_portal.json"}
 	]
 }

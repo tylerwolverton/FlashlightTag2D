@@ -11,7 +11,7 @@
 		"restitution":0.5
 	},
 	"graphics_component":{
-		"sprite": "resources/projectile.png",
+		"sprite": "resources/Art/projectile.png",
 		"animation_speed":300 
 	},
 	"game_state_component":{},

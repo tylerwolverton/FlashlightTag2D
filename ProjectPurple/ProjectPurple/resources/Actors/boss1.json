@@ -19,7 +19,7 @@
 	},
 	"character_logic_component":{},
 	"graphics_component":{
-		"sprite": "resources/boss1_spritesheet.png",
+		"sprite": "resources/Art/boss1_spritesheet.png",
 		"animation_speed":200
 	},
 	"game_state_component":{},

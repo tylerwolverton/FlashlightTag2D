@@ -23,6 +23,7 @@ const std::string LevelFactory::LevelNames::Level1 = "Level1";
 const std::string LevelFactory::LevelNames::Level2 = "Level2";
 const std::string LevelFactory::LevelNames::BossLevel1 = "BossLevel1";
 const std::string LevelFactory::LevelNames::Overworld1 = "Overworld1";
+const std::string LevelFactory::LevelNames::ControlsScreen = "ControlsScreen";
 const std::string LevelFactory::LevelNames::LoseScreen = "LoseScreen";
 const std::string LevelFactory::LevelNames::WinScreen = "WinScreen";
 
@@ -30,6 +31,7 @@ const std::string LevelFactory::LevelPaths::MainMenu = "resources/levels/main_me
 const std::string LevelFactory::LevelPaths::Level1 = "resources/levels/level1.json";
 const std::string LevelFactory::LevelPaths::Level2 = "resources/levels/level2.json";
 const std::string LevelFactory::LevelPaths::Overworld1 = "resources/levels/overworld1.json";
+const std::string LevelFactory::LevelPaths::ControlsScreen = "resources/levels/controls_screen.json";
 const std::string LevelFactory::LevelPaths::LoseScreen = "resources/levels/lose_screen.json";
 const std::string LevelFactory::LevelPaths::WinScreen = "resources/levels/win_screen.json";
 
@@ -87,6 +89,7 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
             return std::make_shared<Level1>(levelWidth, levelHeight, sprite, vertShader, fragShader);
         }
         if (levelName == LevelNames::Overworld1
+            || levelName == LevelNames::ControlsScreen
             || levelName == LevelNames::LoseScreen
             || levelName == LevelNames::WinScreen)
         {
@@ -137,9 +140,7 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         {
             return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
         }
-        else if (levelName == LevelNames::Overworld1
-            || levelName == LevelNames::LoseScreen
-            || levelName == LevelNames::WinScreen)
+        else if (levelName == LevelNames::Overworld1)
         {
             return std::make_shared<Overworld1>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
         }
@@ -151,7 +152,10 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         {
             return std::make_shared<Level2>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
         }
-        else if (levelName == LevelNames::BossLevel1)
+        else if (levelName == LevelNames::BossLevel1
+                || levelName == LevelNames::ControlsScreen
+                || levelName == LevelNames::LoseScreen
+                || levelName == LevelNames::WinScreen)
         {
             return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
         }

@@ -165,10 +165,10 @@ bool GraphicsManager::initializeRenderData()
 
 void GraphicsManager::initializeTiles()
 {
-    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile00.png"));
-    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile01.png"));
-    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Tile02.png"));
-    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Tiles/Wall01.png"));
+    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Art/Tiles/Tile00.png"));
+    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Art/Tiles/Tile01.png"));
+    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Art/Tiles/Tile02.png"));
+    m_tileTextureVec.push_back(std::make_shared<Texture2D>("resources/Art/Tiles/Wall01.png"));
 }
 
 //void GraphicsManager::UpdateComponents()

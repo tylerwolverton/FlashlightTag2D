@@ -14,7 +14,7 @@
 		"destination":"resources/levels/overworld1.json"
 	},
 	"graphics_component":{
-		"sprite": "resources/cave_entrance.png",
+		"sprite": "resources/Art/cave_entrance.png",
 		"animation_speed":30
 	},
 	"game_state_component":{

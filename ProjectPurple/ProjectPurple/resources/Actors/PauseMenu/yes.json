@@ -5,6 +5,6 @@
 		"size":{"x":200, "y":100}
 	},
 	"graphics_component":{
-		"sprite": "resources/PauseMenu/Yes.png"
+		"sprite": "resources/Art/PauseMenu/Yes.png"
 	}
 }

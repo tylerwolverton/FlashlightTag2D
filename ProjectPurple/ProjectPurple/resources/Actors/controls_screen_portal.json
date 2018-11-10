@@ -1,0 +1,10 @@
+{ 
+	"name": "ControlsScreenPortal", 
+	"portal_logic_component":{
+		"destination":"resources/levels/overworld1.json",
+		"countdown_time_sec":3.0
+	},
+	"game_state_component":{
+		"type":"Portal"
+	}
+}

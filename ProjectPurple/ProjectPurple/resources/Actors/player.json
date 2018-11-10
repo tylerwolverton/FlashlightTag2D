@@ -15,7 +15,7 @@
 	},
 	"character_logic_component":{},
 	"graphics_component":{
-		"sprite": "resources/spritesheet.png",
+		"sprite": "resources/Art/spritesheet.png",
 		"animation_speed":50 
 	},
 	"player_game_state_component":{},

@@ -74,7 +74,7 @@ void MainMenuLogicComponent::Select()
 
         if (levelFactory != nullptr)
         {
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::Overworld1);
+            levelFactory->ChangeLevel(LevelFactory::LevelPaths::ControlsScreen);
         }
     }
     else

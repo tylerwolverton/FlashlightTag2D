@@ -21,7 +21,7 @@
 	},
 	"character_logic_component":{},
 	"graphics_component":{
-		"sprite": "resources/enemy_spritesheet.png",
+		"sprite": "resources/Art/enemy_spritesheet.png",
 		"animation_speed":30
 	},
 	"game_state_component":{},

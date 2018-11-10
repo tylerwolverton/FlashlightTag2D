@@ -5,6 +5,6 @@
 		"size":{"x":640, "y":300}
 	},
 	"graphics_component":{
-		"sprite": "resources/PauseMenu/Background.png"
+		"sprite": "resources/Art/PauseMenu/Background.png"
 	}
 }
