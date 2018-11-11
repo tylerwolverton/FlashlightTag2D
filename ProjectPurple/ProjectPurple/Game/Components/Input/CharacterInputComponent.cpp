@@ -4,12 +4,12 @@
 CharacterInputComponent::CharacterInputComponent(ComponentId componentId)
     :InputComponent(componentId)
 {
-    m_pButtonW = m_pButtonUp = std::make_shared<MoveUp>();
-    m_pButtonS = m_pButtonDown = std::make_shared<MoveDown>();
-    m_pButtonD = m_pButtonRight = std::make_shared<MoveRight>();
-    m_pButtonA = m_pButtonLeft = std::make_shared<MoveLeft>();
-    m_pMouseButtonLeft = std::make_shared<Shoot>();
-    m_pMousePositionMoved = std::make_shared<UpdateMousePosition>();
+    m_wButtonCmdPtr = m_upButtonCmdPtr = std::make_shared<MoveUp>();
+    m_sButtonCmdPtr = m_downButtonCmdPtr = std::make_shared<MoveDown>();
+    m_dButtonCmdPtr = m_rightButtonCmdPtr = std::make_shared<MoveRight>();
+    m_aButtonCmdPtr = m_leftButtonPtr = std::make_shared<MoveLeft>();
+    m_leftMouseButtonCmdPtr = std::make_shared<Shoot>();
+    m_updateMousePositionPtr = std::make_shared<UpdateMousePosition>();
 }
 
 CharacterInputComponent::~CharacterInputComponent()

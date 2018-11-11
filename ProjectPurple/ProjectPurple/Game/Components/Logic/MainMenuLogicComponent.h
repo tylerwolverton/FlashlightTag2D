@@ -25,7 +25,7 @@ private:
 
     int selectedButtonIdx;
     std::vector<EMenuButtons> buttons;
-    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> m_buttonTransformCompMapPtr;
+    std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> m_buttonTransformCompPtrMapPtr;
 
     uint32_t lastTickVal;
 };

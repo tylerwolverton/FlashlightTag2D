@@ -4,10 +4,10 @@
 
 const std::shared_ptr<GameActor> ActorComponent::GetParent() const
 {
-    auto actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory != nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr != nullptr)
     {
-        return actorFactory->GetActor(m_parentActorId);
+        return actorFactoryPtr->GetActor(m_parentActorId);
     }
 
     return nullptr;

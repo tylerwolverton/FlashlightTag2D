@@ -5,7 +5,7 @@ class CharacterLogicComponent :
     public LogicComponent
 {
 public:
-    CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent);
+    CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsCompPtr);
     virtual ~CharacterLogicComponent();
 
     void MoveUp() override;
@@ -15,7 +15,7 @@ public:
     void Shoot() override;
 
 private:
-    std::shared_ptr<PhysicsComponent> m_pPhysicsComponent; 
+    std::shared_ptr<PhysicsComponent> m_physicsCompPtr; 
 
     uint32_t m_lastTickVal;
 };

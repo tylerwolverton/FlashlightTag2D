@@ -9,7 +9,7 @@ class PhysicsComponent :
 {
 public:
     PhysicsComponent(ComponentId componentId,
-                     std::shared_ptr<TransformComponent> transformComponent, 
+                     std::shared_ptr<TransformComponent> transformCompPtr, 
                      float maxSpeed, 
                      float mass, 
                      float restitution,
@@ -22,7 +22,7 @@ public:
 
     virtual const EComponentNames GetComponentName() const override;
 
-    std::shared_ptr<TransformComponent> GetTransformComponent() { return m_pTransformComponent; }
+    std::shared_ptr<TransformComponent> GetTransformCompPtr() { return m_transformCompPtr; }
 
     const Vector2D<float> GetVelocity() const { return m_velocity; }
     const void SetVelocity(Vector2D<float> newVelocity);
@@ -43,7 +43,7 @@ public:
     void MoveActor(float deltaMs);
 
 protected:
-    std::shared_ptr<TransformComponent> m_pTransformComponent;
+    std::shared_ptr<TransformComponent> m_transformCompPtr;
     Vector2D<float> m_velocity;
     Vector2D<float> m_acceleration;
     Vector2D<float> m_sumOfForces;

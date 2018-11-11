@@ -24,14 +24,14 @@ std::vector<std::shared_ptr<Command>> SpawnBehavior::Update(const GameActor& thi
     {
         m_lastTickVal = curTicks;
 
-        auto transformComp = thisActor.GetTransformComponent();
-        if (transformComp != nullptr)
+        auto transformCompPtr = thisActor.GetTransformCompPtr();
+        if (transformCompPtr != nullptr)
         {
             auto rndNumGen = ServiceLocator::GetRandomNumberGenerator();
             if (rndNumGen != nullptr)
             {
-                auto actorFactory = ServiceLocator::GetActorFactory();
-                actorFactory->CreateActorFromName(m_targetName, getNextSpawnPos(transformComp->GetPosition()));
+                auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+                actorFactoryPtr->CreateActorFromName(m_targetName, getNextSpawnPos(transformCompPtr->GetPosition()));
             }
         }
     }
@@ -41,11 +41,11 @@ std::vector<std::shared_ptr<Command>> SpawnBehavior::Update(const GameActor& thi
 
 Vector2D<float> SpawnBehavior::getNextSpawnPos(Vector2D<float> spawnerPos)
 {
-    auto rndNumGen = ServiceLocator::GetRandomNumberGenerator();
-    if (rndNumGen != nullptr)
+    auto rndNumGenPtr = ServiceLocator::GetRandomNumberGenerator();
+    if (rndNumGenPtr != nullptr)
     {
-        return Vector2D<float>(rndNumGen->GetIntWithinRange(spawnerPos.x - 100, spawnerPos.x + 100),
-                               rndNumGen->GetIntWithinRange(spawnerPos.y - 100, spawnerPos.y + 100));
+        return Vector2D<float>(rndNumGenPtr->GetIntWithinRange(spawnerPos.x - 100, spawnerPos.x + 100),
+                               rndNumGenPtr->GetIntWithinRange(spawnerPos.y - 100, spawnerPos.y + 100));
     }
 
     return Vector2D<float>(0,0);

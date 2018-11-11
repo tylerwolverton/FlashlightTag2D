@@ -11,15 +11,9 @@ public:
 
     std::vector<std::shared_ptr<Command>> Update(const GameActor& actor) override;
 
-    void SetTarget(std::shared_ptr<GameActor> targetActor) { m_targetActor = targetActor; }
+    void SetTarget(std::shared_ptr<GameActor> targetActorPtr) { m_targetActorPtr = targetActorPtr; }
 
 private:
-    std::shared_ptr<GameActor> m_targetActor;
-    uint32_t m_lastTickVal;
-
-    void initializeMovePositions();
-    void spawnBullets(std::shared_ptr<TransformComponent> actorTransformComp);
-
     enum EBehaviorStates
     {
         Wait,
@@ -27,6 +21,8 @@ private:
         Explode
     };
 
+	std::shared_ptr<GameActor> m_targetActorPtr;
+	uint32_t m_lastTickVal;
     EBehaviorStates m_curState;
     Vector2D<float> m_moveDir;
     Vector2D<float> m_lastPos;
@@ -34,4 +30,7 @@ private:
     std::vector<Vector2D<float>> m_movePositionVec;
     int m_curPosIdx;
     int m_bulletCount;
+
+	void initializeMovePositions();
+	void spawnBullets(std::shared_ptr<TransformComponent> actorTransformCompPtr);
 };

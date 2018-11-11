@@ -6,12 +6,12 @@
 CameraFollowComponent::CameraFollowComponent(ComponentId componentId)
     : ActorComponent(componentId)
 {
-    m_pTarget = nullptr;
+    m_targetActorPtr = nullptr;
 }
 
-CameraFollowComponent::CameraFollowComponent(ComponentId componentId, std::shared_ptr<GameActor> target, Vector2D<int> levelSize)
+CameraFollowComponent::CameraFollowComponent(ComponentId componentId, std::shared_ptr<GameActor> targetActorPtr, Vector2D<int> levelSize)
     : ActorComponent(componentId),
-      m_pTarget(target),
+      m_targetActorPtr(targetActorPtr),
       m_levelSize(levelSize)
 {
 }
@@ -22,20 +22,20 @@ CameraFollowComponent::~CameraFollowComponent()
 
 void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
 {
-    if (m_pTarget == nullptr)
+    if (m_targetActorPtr == nullptr)
     {
         return;
     }
 
-    std::shared_ptr<TransformComponent> actorTransformComponent = actor.GetTransformComponent();
-    std::shared_ptr<TransformComponent> targetTransformComponent = m_pTarget->GetTransformComponent();
-    if (actorTransformComponent == nullptr || targetTransformComponent == nullptr)
+    auto actorTransformCompPtr = actor.GetTransformCompPtr();
+    auto targetTransformCompPtr = m_targetActorPtr->GetTransformCompPtr();
+    if (actorTransformCompPtr == nullptr || targetTransformCompPtr == nullptr)
     {
         return;
     }
 
-    Vector2D<float> newPosition(targetTransformComponent->GetPosition().x - World::SCREEN_WIDTH / 2,
-                                targetTransformComponent->GetPosition().y - World::SCREEN_HEIGHT / 2);
+    Vector2D<float> newPosition(targetTransformCompPtr->GetPosition().x - World::SCREEN_WIDTH / 2,
+                                targetTransformCompPtr->GetPosition().y - World::SCREEN_HEIGHT / 2);
 
 
     // if outside bounds of the level, move back in
@@ -71,7 +71,7 @@ void CameraFollowComponent::Update(GameActor& actor, float deltaMs)
         }
     }
 
-    actorTransformComponent->SetPosition(newPosition);
+    actorTransformCompPtr->SetPosition(newPosition);
 }
 
 const EComponentNames CameraFollowComponent::GetComponentName() const
@@ -81,5 +81,5 @@ const EComponentNames CameraFollowComponent::GetComponentName() const
 
 void CameraFollowComponent::SetTargetActor(std::shared_ptr<GameActor> actor)
 {
-    m_pTarget = actor;
+    m_targetActorPtr = actor;
 }

@@ -13,6 +13,6 @@ public:
     virtual void Update(GameActor& actor, float deltaMs) override;
 
 private:
-    std::shared_ptr<TransformComponent> m_cameraTransformComp;
+    std::shared_ptr<TransformComponent> m_cameraTransformCompPtr;
 };
 

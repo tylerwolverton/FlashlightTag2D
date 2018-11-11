@@ -6,9 +6,9 @@
 #include "World.h"
 #include "LevelFactory.h"
 
-MainMenuLogicComponent::MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> buttonTransformCompMapPtr)
+MainMenuLogicComponent::MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> buttonTransformCompPtrMapPtr)
     : LogicComponent(componentId),
-      m_buttonTransformCompMapPtr(buttonTransformCompMapPtr),
+	  m_buttonTransformCompPtrMapPtr(buttonTransformCompPtrMapPtr),
       selectedButtonIdx(0)
 {
     buttons.push_back(EMenuButtons::Play);
@@ -27,11 +27,11 @@ void MainMenuLogicComponent::MoveUp()
         lastTickVal = curTicks;
         if (buttons[selectedButtonIdx] == EMenuButtons::Play)
         {
-            m_buttonTransformCompMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompMapPtr->find("Exit")->second->GetPosition());
+			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Exit")->second->GetPosition());
         }
         else
         {
-            m_buttonTransformCompMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompMapPtr->find("Play")->second->GetPosition());
+			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Play")->second->GetPosition());
         }
 
         selectedButtonIdx--;
@@ -50,11 +50,11 @@ void MainMenuLogicComponent::MoveDown()
         lastTickVal = curTicks;
         if (buttons[selectedButtonIdx] == EMenuButtons::Play)
         {
-            m_buttonTransformCompMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompMapPtr->find("Exit")->second->GetPosition());
+			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Exit")->second->GetPosition());
         }
         else
         {
-            m_buttonTransformCompMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompMapPtr->find("Play")->second->GetPosition());
+			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Play")->second->GetPosition());
         }
 
 
@@ -70,20 +70,20 @@ void MainMenuLogicComponent::Select()
 {
     if (buttons[selectedButtonIdx] == EMenuButtons::Play)
     {
-        std::shared_ptr<LevelFactory> levelFactory = ServiceLocator::GetLevelFactory();
+        auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
 
-        if (levelFactory != nullptr)
+        if (levelFactoryPtr != nullptr)
         {
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::ControlsScreen);
+            levelFactoryPtr->ChangeLevel(LevelFactory::LevelPaths::ControlsScreen);
         }
     }
     else
     {
-        std::shared_ptr<World> world = ServiceLocator::GetWorld();
+        auto worldPtr = ServiceLocator::GetWorld();
 
-        if (world != nullptr)
+        if (worldPtr != nullptr)
         {
-            world->QuitGame();
+            worldPtr->QuitGame();
         }
     }
 }

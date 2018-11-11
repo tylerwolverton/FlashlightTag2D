@@ -10,7 +10,6 @@ public:
     TransformComponent(ComponentId componentId, Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction);
     virtual ~TransformComponent();
 
-    //virtual ComponentId GetComponentId() const override;
     virtual const EComponentNames GetComponentName() const override;
 
     Vector2D<float> GetPosition() { return m_position; }

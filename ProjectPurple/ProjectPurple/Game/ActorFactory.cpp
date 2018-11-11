@@ -47,30 +47,30 @@
 // from rapidjson
 #include "filereadstream.h"
 
-ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgr, std::shared_ptr<GraphicsManager> graphicsMgr)
+ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgrPtr, std::shared_ptr<GraphicsManager> graphicsMgrPtr)
     : m_lastActorId(0),
-      m_physicsMgr(physicsMgr),
-      m_graphicsMgr(graphicsMgr),
-      m_persistedPlayerGameStateComp(nullptr),
-      m_persistedPlayerLifeComp(nullptr)
+      m_physicsMgrPtr(physicsMgrPtr),
+      m_graphicsMgrPtr(graphicsMgrPtr),
+      m_persistedPlayerGameStateCompPtr(nullptr),
+      m_persistedPlayerLifeCompPtr(nullptr)
 {
 }
 
-void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevel)
+void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevelPtr)
 {
-    if (m_pCurrentPlayer != nullptr)
+    if (m_curPlayerPtr != nullptr)
     {
-        m_persistedPlayerGameStateComp = m_pCurrentPlayer->GetGameStateComponent();
-        m_persistedPlayerLifeComp = m_pCurrentPlayer->GetLifeComponent();
+        m_persistedPlayerGameStateCompPtr = m_curPlayerPtr->GetGameStateCompPtr();
+        m_persistedPlayerLifeCompPtr = m_curPlayerPtr->GetLifeCompPtr();
     }
 
-    m_physicsMgr->ClearPhysicsComponents();
-    m_physicsMgr->LoadNewLevel(newLevel);
+    m_physicsMgrPtr->ClearPhysicsComponents();
+    m_physicsMgrPtr->LoadNewLevel(newLevelPtr);
 
-    m_graphicsMgr->Reset();
-    m_graphicsMgr->LoadNewLevel(newLevel);
+    m_graphicsMgrPtr->Reset();
+    m_graphicsMgrPtr->LoadNewLevel(newLevelPtr);
 
-    m_pEntityMap.clear();
+    m_idToActorPtrMap.clear();
     m_lastActorId = 0;
 
     assert(actorList.IsArray());
@@ -87,32 +87,32 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
             actor = createActor(actorList[i]["actor_path"].GetString());
         }
 
-        m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
+        m_idToActorPtrMap.insert(std::make_pair(actor->GetActorId(), actor));
         addComponentsToManagers(actor);
 
         if (i == 0)
         {
-            m_graphicsMgr->AddCamera(CreateCamera(newLevel->GetLevelSize()));
+            m_graphicsMgrPtr->AddCamera(CreateCamera(newLevelPtr->GetLevelSize()));
         }
     }
 
-    if (m_pCurrentPlayer != nullptr)
+    if (m_curPlayerPtr != nullptr)
     {
-        if (m_persistedPlayerGameStateComp != nullptr
-            && m_persistedPlayerLifeComp != nullptr)
+        if (m_persistedPlayerGameStateCompPtr != nullptr
+            && m_persistedPlayerLifeCompPtr != nullptr)
         {
-            m_pCurrentPlayer->InsertComponent(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateComp);
-            m_pCurrentPlayer->InsertComponent(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeComp);
-            std::dynamic_pointer_cast<PlayerLifeComponent>(m_persistedPlayerLifeComp)->UpdateHealthBar();
+            m_curPlayerPtr->InsertCompPtr(EComponentNames::GameStateComponentEnum, m_persistedPlayerGameStateCompPtr);
+            m_curPlayerPtr->InsertCompPtr(EComponentNames::LifeComponentEnum, m_persistedPlayerLifeCompPtr);
+            std::dynamic_pointer_cast<PlayerLifeComponent>(m_persistedPlayerLifeCompPtr)->UpdateHealthBar();
         }
 
         // TODO: Move this into function
-        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent())->InventoryContainsItem("FirstKey"))
+        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_curPlayerPtr->GetGameStateCompPtr())->InventoryContainsItem("FirstKey"))
         {
             KillAllActorsByName("FirstKeyInventory");
         }
 
-        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent())->InventoryContainsItem("SecondKey"))
+        if (!std::dynamic_pointer_cast<PlayerGameStateComponent>(m_curPlayerPtr->GetGameStateCompPtr())->InventoryContainsItem("SecondKey"))
         {
             KillAllActorsByName("SecondKeyInventory");
         }
@@ -121,10 +121,10 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
 
 std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId) 
 { 
-    auto actorIter = m_pEntityMap.find(actorId);
-    if (actorIter != m_pEntityMap.end())
+    auto actorMapIter = m_idToActorPtrMap.find(actorId);
+    if (actorMapIter != m_idToActorPtrMap.end())
     {
-        return actorIter->second;
+        return actorMapIter->second;
     }
 
     return nullptr; 
@@ -132,9 +132,9 @@ std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId)
 
 std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actorName)
 {
-    for (auto actorIter : m_pEntityMap)
+    for (auto actorMapIter : m_idToActorPtrMap)
     {
-        auto gameStateComp = actorIter.second->GetGameStateComponent();
+        auto gameStateComp = actorMapIter.second->GetGameStateCompPtr();
         if (gameStateComp == nullptr)
         {
             continue;
@@ -142,7 +142,7 @@ std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actor
 
         if (gameStateComp->GetName() == actorName)
         {
-            return actorIter.second;
+            return actorMapIter.second;
         }
     }
 
@@ -154,17 +154,17 @@ std::shared_ptr<GameActor> ActorFactory::GetPlayer()
     return GetFirstActorWithName("Player");
 }
 
-void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actor)
+void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actorPtr)
 {
-    auto physicsCompPtr = actor->GetPhysicsComponent();
+    auto physicsCompPtr = actorPtr->GetPhysicsCompPtr();
     if (physicsCompPtr != nullptr)
     {
-        m_physicsMgr->AddPhysicsComponentPtr(physicsCompPtr->GetComponentId(), physicsCompPtr);
+        m_physicsMgrPtr->AddPhysicsComponentPtr(physicsCompPtr->GetComponentId(), physicsCompPtr);
     }
-    auto graphicsCompPtr = actor->GetGraphicsComponent();
+    auto graphicsCompPtr = actorPtr->GetGraphicsCompPtr();
     if (graphicsCompPtr != nullptr)
     {
-        m_graphicsMgr->AddGraphicsComponentPtr(graphicsCompPtr->GetComponentId(), graphicsCompPtr);
+        m_graphicsMgrPtr->AddGraphicsComponentPtr(graphicsCompPtr->GetComponentId(), graphicsCompPtr);
     }
 }
 
@@ -176,35 +176,34 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     char readBuffer[65536];
     rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 
-    rapidjson::Document actor;
-    actor.ParseStream(is);
+    rapidjson::Document actorJson;
+    actorJson.ParseStream(is);
     fclose(fp);
 
-    const char* actorName = actor["name"].GetString();
+    const char* actorName = actorJson["name"].GetString();
     ActorId actorId = getNextActorId();
     // TODO: Cache changes
     //m_entityVec.emplace_back(actorId);
-    auto newActor = std::make_shared<GameActor>(actorId, actorName);
+    auto newActorPtr = std::make_shared<GameActor>(actorId, actorName);
 
     auto components = std::vector<std::shared_ptr<ActorComponent>>();
-    if (actor.HasMember("input_component"))
+    if (actorJson.HasMember("input_component"))
     {
-        addInputComponent(actor["input_component"]["type"].GetString(), newActor);
+        addInputComponent(actorJson["input_component"]["type"].GetString(), newActorPtr);
     }
 
-    if (actor.HasMember("ai_component"))
+    if (actorJson.HasMember("ai_component"))
     {
-        std::vector<std::shared_ptr<Behavior>> behaviorVec;
-        if (actor["ai_component"].HasMember("behaviors"))
+        std::vector<std::shared_ptr<Behavior>> behaviorPtrVec;
+        if (actorJson["ai_component"].HasMember("behaviors"))
         {
-            for (rapidjson::SizeType i = 0; i < actor["ai_component"]["behaviors"].Size(); i++)
+            for (rapidjson::SizeType i = 0; i < actorJson["ai_component"]["behaviors"].Size(); i++)
             {
-                std::string type = actor["ai_component"]["behaviors"][i]["type"].GetString();
+                std::string type = actorJson["ai_component"]["behaviors"][i]["type"].GetString();
                 if (!strcmp(type.c_str(), "spawn"))
                 {
-                    //std::function<std::shared_ptr<GameActor>(const ActorFactory&, Vector2D<float>)> spawnActor = &ActorFactory::CreateEnemy;
-                    behaviorVec.push_back(std::make_shared<SpawnBehavior>(actor["ai_component"]["behaviors"][i]["delay_time"].GetInt(), 
-                                                                          actor["ai_component"]["behaviors"][i]["target"].GetString()));
+                    behaviorPtrVec.push_back(std::make_shared<SpawnBehavior>(actorJson["ai_component"]["behaviors"][i]["delay_time"].GetInt(), 
+                                                                          actorJson["ai_component"]["behaviors"][i]["target"].GetString()));
                 }
                 else if (!strcmp(type.c_str(), "seek"))
                 {
@@ -212,32 +211,32 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
                 }
                 else if (!strcmp(type.c_str(), "rush"))
                 {
-                    behaviorVec.push_back(std::make_shared<RushBehavior>());
+                    behaviorPtrVec.push_back(std::make_shared<RushBehavior>());
                 }
                 else if (!strcmp(type.c_str(), "shoot_at_target"))
                 {
                     // TODO: make this more flexible
-                    behaviorVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_pCurrentPlayer, actor["ai_component"]["behaviors"][i]["cooldown"].GetInt()));
+                    behaviorPtrVec.push_back(std::make_shared<ShootAtTargetBehavior>(m_curPlayerPtr, actorJson["ai_component"]["behaviors"][i]["cooldown"].GetInt()));
                 }
                 else if (!strcmp(type.c_str(), "boss1"))
                 {
-                    behaviorVec.push_back(std::make_shared<Boss1Behavior>(m_pCurrentPlayer, Vector2D<int>(actor["ai_component"]["behaviors"][i]["level_size"]["x"].GetInt(), 
-                                                                                                          actor["ai_component"]["behaviors"][i]["level_size"]["y"].GetInt())));
+                    behaviorPtrVec.push_back(std::make_shared<Boss1Behavior>(m_curPlayerPtr, Vector2D<int>(actorJson["ai_component"]["behaviors"][i]["level_size"]["x"].GetInt(), 
+                                                                                                          actorJson["ai_component"]["behaviors"][i]["level_size"]["y"].GetInt())));
                 }
             }
         }
 
-        newActor->InsertComponent(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId(), behaviorVec));
+        newActorPtr->InsertCompPtr(EComponentNames::AIComponentEnum, std::make_shared<AIComponent>(getNextComponentId(), behaviorPtrVec));
     }
 
-    if (actor.HasMember("transform_component"))
+    if (actorJson.HasMember("transform_component"))
     {
         //rapidjson::Value actorTransform = actorList[i]["transform_component"];
         Vector2D<float> actorPos;
         if (position == Vector2D<float>(-1.0f, -1.0f))
         {
-            actorPos = Vector2D<float>(actor["transform_component"]["position"]["x"].GetFloat(),
-                                       actor["transform_component"]["position"]["y"].GetFloat());
+            actorPos = Vector2D<float>(actorJson["transform_component"]["position"]["x"].GetFloat(),
+                                       actorJson["transform_component"]["position"]["y"].GetFloat());
         }
         else
         {
@@ -246,42 +245,40 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
         auto transformCompPtr = std::make_shared<TransformComponent>(getNextComponentId(),
                                                                      actorPos,
-                                                                     Vector2D<float>(actor["transform_component"]["size"]["x"].GetFloat(),
-                                                                                     actor["transform_component"]["size"]["y"].GetFloat()),
+                                                                     Vector2D<float>(actorJson["transform_component"]["size"]["x"].GetFloat(),
+                                                                                     actorJson["transform_component"]["size"]["y"].GetFloat()),
                                                                      Vector2D<float>(1, 0));
 
-        newActor->InsertComponent(EComponentNames::TransformComponentEnum, transformCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::TransformComponentEnum, transformCompPtr);
 
-        if (actor.HasMember("physics_component"))
+        if (actorJson.HasMember("physics_component"))
         {
-            auto physicsCompPtr = addPhysicsComponent(actor["physics_component"]["type"].GetString(), 
-                                                      newActor,
+            auto physicsCompPtr = addPhysicsComponent(actorJson["physics_component"]["type"].GetString(), 
+                                                      newActorPtr,
                                                       transformCompPtr,
-                                                      actor["physics_component"]["max_speed"].GetFloat(),
-                                                      actor["physics_component"]["mass"].GetFloat(),
-                                                      actor["physics_component"]["restitution"].GetFloat());
+                                                      actorJson["physics_component"]["max_speed"].GetFloat(),
+                                                      actorJson["physics_component"]["mass"].GetFloat(),
+                                                      actorJson["physics_component"]["restitution"].GetFloat());
 
-            if (actor.HasMember("character_logic_component"))
+            if (actorJson.HasMember("character_logic_component"))
             {
-                newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<CharacterLogicComponent>(getNextComponentId(), physicsCompPtr));
+                newActorPtr->InsertCompPtr(EComponentNames::LogicComponentEnum, std::make_shared<CharacterLogicComponent>(getNextComponentId(), physicsCompPtr));
             }
         }
-        if (actor.HasMember("graphics_component"))
+        if (actorJson.HasMember("graphics_component"))
         {
             ComponentId graphicsCompId = getNextComponentId();
             int animSpeed = -1;
-            if (actor["graphics_component"].HasMember("animation_speed"))
+            if (actorJson["graphics_component"].HasMember("animation_speed"))
             {
-                animSpeed = actor["graphics_component"]["animation_speed"].GetInt();
+                animSpeed = actorJson["graphics_component"]["animation_speed"].GetInt();
             }
             std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(graphicsCompId,
-                                                                                                     actor["graphics_component"]["sprite"].GetString(),
+                                                                                                     actorJson["graphics_component"]["sprite"].GetString(),
                                                                                                      animSpeed,
                                                                                                      transformCompPtr);
 
-            //m_graphicsMgr->AddGraphicsComponentPtr(graphicsCompId, graphicsCompPtr);
-
-            newActor->InsertComponent(EComponentNames::GraphicsComponentEnum, graphicsCompPtr);
+            newActorPtr->InsertCompPtr(EComponentNames::GraphicsComponentEnum, graphicsCompPtr);
 
             // TODO: Cache changes
             /*m_entityVec.back().m_componentIndexVec[EComponentTypes::Graphics] =
@@ -290,26 +287,26 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
             transformCompPtr);*/
         }
 
-        if (actor.HasMember("mouse_logic_component"))
+        if (actorJson.HasMember("mouse_logic_component"))
         {
-            newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MouseLogicComponent>(getNextComponentId(), transformCompPtr));
+            newActorPtr->InsertCompPtr(EComponentNames::LogicComponentEnum, std::make_shared<MouseLogicComponent>(getNextComponentId(), transformCompPtr));
         }
     }
-    if (actor.HasMember("main_menu_logic_component"))
+    if (actorJson.HasMember("main_menu_logic_component"))
     {
         auto buttonTransformCompsMapPtr = std::make_shared<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>>();
-        const rapidjson::Value& buttons = actor["main_menu_logic_component"]["buttons"];
+        const rapidjson::Value& buttons = actorJson["main_menu_logic_component"]["buttons"];
         for (rapidjson::SizeType i = 0; i < buttons.Size(); i++)
         {
             // TODO: Optimize this
-            for (auto actor : m_pEntityMap)
+            for (auto actor : m_idToActorPtrMap)
             {
                 if (actor.second->GetActorName() != buttons[i]["name"].GetString())
                 {
                     continue;
                 }
 
-                std::shared_ptr<TransformComponent> transformComp = actor.second->GetTransformComponent();
+                std::shared_ptr<TransformComponent> transformComp = actor.second->GetTransformCompPtr();
                 if (transformComp == nullptr)
                 {
                     continue;
@@ -320,66 +317,66 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
             }
         }
 
-        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonTransformCompsMapPtr));
+        newActorPtr->InsertCompPtr(EComponentNames::LogicComponentEnum, std::make_shared<MainMenuLogicComponent>(getNextComponentId(), buttonTransformCompsMapPtr));
     }
-    if (actor.HasMember("gui_item_logic_component"))
+    if (actorJson.HasMember("gui_item_logic_component"))
     {
-        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<GUIItemLogicComponent>(getNextComponentId()));
+        newActorPtr->InsertCompPtr(EComponentNames::LogicComponentEnum, std::make_shared<GUIItemLogicComponent>(getNextComponentId()));
     }
-    if (actor.HasMember("portal_logic_component"))
+    if (actorJson.HasMember("portal_logic_component"))
     {
-        std::string level = actor["portal_logic_component"]["destination"].GetString();
+        std::string level = actorJson["portal_logic_component"]["destination"].GetString();
         float countdownTimeSec = -1;
-        if (actor["portal_logic_component"].HasMember("countdown_time_sec"))
+        if (actorJson["portal_logic_component"].HasMember("countdown_time_sec"))
         {
-            countdownTimeSec = actor["portal_logic_component"]["countdown_time_sec"].GetFloat();
+            countdownTimeSec = actorJson["portal_logic_component"]["countdown_time_sec"].GetFloat();
         }
-        newActor->InsertComponent(EComponentNames::LogicComponentEnum, std::make_shared<PortalLogicComponent>(getNextComponentId(), level, countdownTimeSec));
+        newActorPtr->InsertCompPtr(EComponentNames::LogicComponentEnum, std::make_shared<PortalLogicComponent>(getNextComponentId(), level, countdownTimeSec));
 
     }
-    if (actor.HasMember("game_state_component"))
+    if (actorJson.HasMember("game_state_component"))
     {
         std::string actorType = "";
-        if (actor["game_state_component"].HasMember("type"))
+        if (actorJson["game_state_component"].HasMember("type"))
         {
-            actorType = actor["game_state_component"]["type"].GetString();
+            actorType = actorJson["game_state_component"]["type"].GetString();
         }
         std::shared_ptr<GameStateComponent> gameStateCompPtr = std::make_shared<GameStateComponent>(getNextComponentId(), actorName, actorType);
 
-        newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
 
         // TODO: Cache changes
         //m_gameStateComponentVec.emplace_back(getNextComponentId(), actorName, role);
     }
-    if (actor.HasMember("player_game_state_component"))
+    if (actorJson.HasMember("player_game_state_component"))
     {
         std::shared_ptr<PlayerGameStateComponent> gameStateCompPtr = std::make_shared<PlayerGameStateComponent>(getNextComponentId(), actorName);
 
-        newActor->InsertComponent(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::GameStateComponentEnum, gameStateCompPtr);
     }
-    if (actor.HasMember("life_component"))
+    if (actorJson.HasMember("life_component"))
     {
         std::shared_ptr<LifeComponent> lifeCompPtr = std::make_shared<LifeComponent>(getNextComponentId(), 
                                                                                      actorId, 
-                                                                                     actor["life_component"]["health"].GetInt());
+                                                                                     actorJson["life_component"]["health"].GetInt());
 
-        newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::LifeComponentEnum, lifeCompPtr);
     }
-    if (actor.HasMember("player_life_component"))
+    if (actorJson.HasMember("player_life_component"))
     {
         std::shared_ptr<PlayerLifeComponent> lifeCompPtr = std::make_shared<PlayerLifeComponent>(getNextComponentId(),
                                                                                                  actorId,
-                                                                                                 actor["player_life_component"]["health"].GetInt());
+                                                                                                 actorJson["player_life_component"]["health"].GetInt());
 
-        newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::LifeComponentEnum, lifeCompPtr);
     }
-    if (actor.HasMember("boss1_life_component"))
+    if (actorJson.HasMember("boss1_life_component"))
     {
         std::shared_ptr<Boss1LifeComponent> lifeCompPtr = std::make_shared<Boss1LifeComponent>(getNextComponentId(),
                                                                                                actorId,
-                                                                                               actor["boss1_life_component"]["health"].GetInt());
+                                                                                               actorJson["boss1_life_component"]["health"].GetInt());
 
-        newActor->InsertComponent(EComponentNames::LifeComponentEnum, lifeCompPtr);
+        newActorPtr->InsertCompPtr(EComponentNames::LifeComponentEnum, lifeCompPtr);
     }
     //if (actorList[i].HasMember("follow_target_ai_component"))
     //{
@@ -387,7 +384,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     //	auto targetName = actorList[i]["follow_target_ai_component"]["target_name"].GetString();
     //	for (auto entity : m_pEntityList)
     //	{
-    //		auto gameStateComp = entity->GetGameStateComponent();
+    //		auto gameStateComp = entity->GetGameStateCompPtr();
     //		if (gameStateComp == nullptr)
     //		{
     //			continue;
@@ -409,30 +406,30 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
     if (!strcmp(actorName, "Player"))
     {
-        m_pCurrentPlayer = newActor;
+        m_curPlayerPtr = newActorPtr;
     }
 
-    return newActor;
+    return newActorPtr;
 }
 
-void ActorFactory::addInputComponent(const char* const type, std::shared_ptr<GameActor> actor)
+void ActorFactory::addInputComponent(const char* const type, std::shared_ptr<GameActor> actorPtr)
 {
     if (!strcmp(type, "character_input"))
     {
-        actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CharacterInputComponent>(getNextComponentId()));
+        actorPtr->InsertCompPtr(EComponentNames::InputComponentEnum, std::make_shared<CharacterInputComponent>(getNextComponentId()));
     }
     else if (!strcmp(type, "main_menu_input"))
     {
-        actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<MainMenuInputComponent>(getNextComponentId()));
+        actorPtr->InsertCompPtr(EComponentNames::InputComponentEnum, std::make_shared<MainMenuInputComponent>(getNextComponentId()));
     }
     else if (!strcmp(type, "cursor_input"))
     {
-        actor->InsertComponent(EComponentNames::InputComponentEnum, std::make_shared<CursorInputComponent>(getNextComponentId()));
+        actorPtr->InsertCompPtr(EComponentNames::InputComponentEnum, std::make_shared<CursorInputComponent>(getNextComponentId()));
     }
 }
 
 std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* const type,
-                                                                    std::shared_ptr<GameActor> actor, 
+                                                                    std::shared_ptr<GameActor> actorPtr, 
                                                                     std::shared_ptr<TransformComponent> transformCompPtr,
                                                                     float maxSpeed,
                                                                     float mass,
@@ -499,21 +496,21 @@ std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* 
                                                                   restitution);
     }
 
-    actor->InsertComponent(EComponentNames::PhysicsComponentEnum, physicsCompPtr);
+    actorPtr->InsertCompPtr(EComponentNames::PhysicsComponentEnum, physicsCompPtr);
     return physicsCompPtr;
 }
 
 void ActorFactory::KillAllActorsByName(std::string name)
 {
-    for (auto actorIter : m_pEntityMap)
+    for (auto actorIter : m_idToActorPtrMap)
     {
-        auto gameStateComp = actorIter.second->GetGameStateComponent();
-        if (gameStateComp == nullptr)
+        auto gameStateCompPtr = actorIter.second->GetGameStateCompPtr();
+        if (gameStateCompPtr == nullptr)
         {
             continue;
         }
 
-        if (gameStateComp->GetName() == name)
+        if (gameStateCompPtr->GetName() == name)
         {
             AddDeadActor(actorIter.second->GetActorId());
             RemoveDeadActors();
@@ -526,65 +523,65 @@ void ActorFactory::RemoveDeadActors()
 {
     bool playerIsDead = false;
     bool boss1IsDead = false;
-    for (auto id : m_deadActorVec)
+    for (auto id : m_deadActorIdVec)
     {
-        auto actorIter = m_pEntityMap.find(id);
-        if (actorIter == m_pEntityMap.end())
+        auto actorMapIter = m_idToActorPtrMap.find(id);
+        if (actorMapIter == m_idToActorPtrMap.end())
         {
             // Actor already removed
             continue;
         }
 
-        std::shared_ptr<PhysicsComponent> actorPhysComp = actorIter->second->GetPhysicsComponent();
-        if (actorPhysComp != nullptr)
+        auto actorPhysCompPtr = actorMapIter->second->GetPhysicsCompPtr();
+        if (actorPhysCompPtr != nullptr)
         {
-            m_physicsMgr->RemovePhysicsComponentPtr(actorPhysComp->GetComponentId());
+            m_physicsMgrPtr->RemovePhysicsComponentPtr(actorPhysCompPtr->GetComponentId());
         }
 
-        std::shared_ptr<GraphicsComponent> actorGraphicsComp = actorIter->second->GetGraphicsComponent();
-        if (actorGraphicsComp != nullptr)
+        auto actorGraphicsCompPtr = actorMapIter->second->GetGraphicsCompPtr();
+        if (actorGraphicsCompPtr != nullptr)
         {
-            m_graphicsMgr->RemoveGraphicsComponentPtr(actorGraphicsComp->GetComponentId());
+            m_graphicsMgrPtr->RemoveGraphicsComponentPtr(actorGraphicsCompPtr->GetComponentId());
         }
 
-        std::shared_ptr<GameStateComponent> actorGameStateComp = actorIter->second->GetGameStateComponent();
-        if (actorGameStateComp != nullptr)
+        auto actorGameStateCompPtr = actorMapIter->second->GetGameStateCompPtr();
+        if (actorGameStateCompPtr != nullptr)
         {
-            if (actorGameStateComp->GetName() == "Player")
+            if (actorGameStateCompPtr->GetName() == "Player")
             {
                 playerIsDead = true;
             }
-            if (actorGameStateComp->GetName() == "Boss1")
+            if (actorGameStateCompPtr->GetName() == "Boss1")
             {
                 boss1IsDead = true;
             }
         }
 
-        m_pEntityMap.erase(id);
+        m_idToActorPtrMap.erase(id);
     }
 
-    m_deadActorVec.clear();
+    m_deadActorIdVec.clear();
 
     if (playerIsDead)
     {
-        auto levelFactory = ServiceLocator::GetLevelFactory();
-        if (levelFactory != nullptr)
+        auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
+        if (levelFactoryPtr != nullptr)
         {
-            m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::LoseScreen);
+            m_curPlayerPtr->GetLifeCompPtr()->SetHealth(10);
+            levelFactoryPtr->ChangeLevel(LevelFactory::LevelPaths::LoseScreen);
         }
     }
 
     if (boss1IsDead)
     {
-        auto levelFactory = ServiceLocator::GetLevelFactory();
-        if (levelFactory != nullptr)
+        auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
+        if (levelFactoryPtr != nullptr)
         {
-            m_pCurrentPlayer->GetLifeComponent()->SetHealth(10);
-            auto playerGameStateComp = std::dynamic_pointer_cast<PlayerGameStateComponent>(m_pCurrentPlayer->GetGameStateComponent());
+            m_curPlayerPtr->GetLifeCompPtr()->SetHealth(10);
+            auto playerGameStateComp = std::dynamic_pointer_cast<PlayerGameStateComponent>(m_curPlayerPtr->GetGameStateCompPtr());
             playerGameStateComp->RemoveFromInventoryByName("FirstKey");
             playerGameStateComp->RemoveFromInventoryByName("SecondKey");
-            levelFactory->ChangeLevel(LevelFactory::LevelPaths::WinScreen);
+            levelFactoryPtr->ChangeLevel(LevelFactory::LevelPaths::WinScreen);
         }
     }
 }
@@ -593,11 +590,11 @@ std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, V
 {
     std::string actorPath = "resources/actors/" + name + ".json";
     std::shared_ptr<GameActor> actor = createActor(actorPath.c_str());
-    actor->GetTransformComponent()->SetPosition(position);
-    actor->GetTransformComponent()->SetDirection(velocity.Normalize());
-    actor->GetPhysicsComponent()->SetVelocity(velocity);
+    actor->GetTransformCompPtr()->SetPosition(position);
+    actor->GetTransformCompPtr()->SetDirection(velocity.Normalize());
+    actor->GetPhysicsCompPtr()->SetVelocity(velocity);
 
-    m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
+    m_idToActorPtrMap.insert(std::make_pair(actor->GetActorId(), actor));
 
     addComponentsToManagers(actor);
 
@@ -607,11 +604,11 @@ std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, V
 std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> position, Vector2D<float> velocity)
 {
     std::shared_ptr<GameActor> actor = createActor("resources/actors/projectile.json");
-    actor->GetTransformComponent()->SetPosition(position);
-    actor->GetTransformComponent()->SetDirection(velocity.Normalize());
-    actor->GetPhysicsComponent()->SetVelocity(velocity);
+    actor->GetTransformCompPtr()->SetPosition(position);
+    actor->GetTransformCompPtr()->SetDirection(velocity.Normalize());
+    actor->GetPhysicsCompPtr()->SetVelocity(velocity);
 
-    m_pEntityMap.insert(std::make_pair(actor->GetActorId(), actor));
+    m_idToActorPtrMap.insert(std::make_pair(actor->GetActorId(), actor));
 
     addComponentsToManagers(actor);
 
@@ -620,7 +617,7 @@ std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> positi
 
 std::shared_ptr<GameActor> ActorFactory::CreateCamera(const Vector2D<int>& levelSize)
 {
-    return CreateCamera(m_pCurrentPlayer, levelSize);
+    return CreateCamera(m_curPlayerPtr, levelSize);
 }
 
 std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<GameActor>& target, const Vector2D<int>& levelSize)
@@ -641,8 +638,8 @@ std::shared_ptr<GameActor> ActorFactory::CreateCamera(const std::shared_ptr<Game
         (EComponentNames::CameraFollowComponentEnum, cameraFollowCompPtr));
 
     //m_pEntityVec.push_back(newActor);
-    m_pEntityMap.insert(std::make_pair(actorId, newActor));
-    m_pCurrentCamera = newActor;
+    m_idToActorPtrMap.insert(std::make_pair(actorId, newActor));
+    m_curCameraPtr = newActor;
 
     return newActor;
 }

@@ -20,10 +20,7 @@ public:
     const ComponentId GetComponentId() const { return m_componentId; }
     virtual const EComponentNames GetComponentName() const = 0;
 
-    //void SetOwner(std::shared_ptr<GameActor> pOwner) { m_pOwner = pOwner; }
-
 protected:
-    //std::shared_ptr<GameActor> m_pOwner;
     ActorId m_parentActorId;
 
 private:

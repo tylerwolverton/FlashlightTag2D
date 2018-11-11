@@ -6,13 +6,13 @@
 #include "ServiceLocator.h"
 
 EnemyTouchDamagePhysicsComponent::EnemyTouchDamagePhysicsComponent(ComponentId componentId,
-                                                                   std::shared_ptr<TransformComponent> transformComponent, 
+                                                                   std::shared_ptr<TransformComponent> transformCompPtr, 
                                                                    float maxSpeed,
                                                                    float mass,
                                                                    float restitution,
                                                                    Vector2D<float> velocity, 
                                                                    Vector2D<float> acceleration)
-    : CharacterPhysicsComponent(componentId, transformComponent, maxSpeed, mass, restitution, velocity, acceleration)
+    : CharacterPhysicsComponent(componentId, transformCompPtr, maxSpeed, mass, restitution, velocity, acceleration)
 {
 }
 
@@ -24,21 +24,21 @@ bool EnemyTouchDamagePhysicsComponent::SignalCollision(ActorId actorId)
 {
     bool stopResolvingCollisions = false;
 
-    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
-    if (actor == nullptr)
+    auto actorPtr = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actorPtr == nullptr)
     {
         return stopResolvingCollisions;
     }
 
-    auto gameStateComponent = actor->GetGameStateComponent();
-    if (gameStateComponent != nullptr)
+    auto gameStateCompPtr = actorPtr->GetGameStateCompPtr();
+    if (gameStateCompPtr != nullptr)
     {
-        if (gameStateComponent->GetName() == "Player")
+        if (gameStateCompPtr->GetName() == "Player")
         {
-            auto lifeComponent = actor->GetLifeComponent();
-            if (lifeComponent != nullptr)
+            auto lifeCompPtr = actorPtr->GetLifeCompPtr();
+            if (lifeCompPtr != nullptr)
             {
-                lifeComponent->TakeDamage(1);
+                lifeCompPtr->TakeDamage(1);
             }
         }
     }

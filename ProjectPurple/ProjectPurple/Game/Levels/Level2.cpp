@@ -23,20 +23,20 @@ Level2::~Level2()
 
 void Level2::SetupLevel()
 {
-    std::shared_ptr<ActorFactory> actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory == nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr == nullptr)
     {
         return;
     }
 
-    std::shared_ptr<GameActor> player = actorFactory->GetPlayer();
-    if (player == nullptr)
+    auto playerPtr = actorFactoryPtr->GetPlayer();
+    if (playerPtr == nullptr)
     {
         return;
     }
 
-    if(std::dynamic_pointer_cast<PlayerGameStateComponent>(player->GetGameStateComponent())->InventoryContainsItem("SecondKey"))
+    if(std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("SecondKey"))
     {
-        actorFactory->KillAllActorsByName("SecondKey");
+        actorFactoryPtr->KillAllActorsByName("SecondKey");
     }
 }

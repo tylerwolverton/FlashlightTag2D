@@ -2,14 +2,14 @@
 #include "TransformComponent.h"
 
 PhysicsComponent::PhysicsComponent(ComponentId componentId,
-                                   std::shared_ptr<TransformComponent> transformComponent, 
+                                   std::shared_ptr<TransformComponent> transformCompPtr, 
                                    float maxSpeed, 
                                    float mass, 
                                    float restitution,
                                    Vector2D<float> velocity,
                                    Vector2D<float> acceleration)
     : ActorComponent(componentId),
-      m_pTransformComponent(transformComponent),
+      m_transformCompPtr(transformCompPtr),
       m_maxSpeed(maxSpeed),
       m_curSpeed(maxSpeed),
       m_mass(mass),
@@ -60,11 +60,11 @@ void PhysicsComponent::MoveActor(float deltaMs)
     //m_sumOfImpulses = Vector2D<float>(0, 0);
     ////m_acceleration = Vector2D<float>(0, 0);
 
-    m_pTransformComponent->SetPosition(m_pTransformComponent->GetPosition() + m_velocity);
+    m_transformCompPtr->SetPosition(m_transformCompPtr->GetPosition() + m_velocity);
 
     if (m_velocity.Length() > 0.1f)
     {
-        m_pTransformComponent->SetDirection(m_velocity.Normalize());
+        m_transformCompPtr->SetDirection(m_velocity.Normalize());
     }
 }
 

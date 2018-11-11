@@ -8,7 +8,6 @@
 
 class Behavior;
 
-// This is a class that would be good for actor type, health, status effects, game role, etc.
 class GameStateComponent :
     public ActorComponent
 {

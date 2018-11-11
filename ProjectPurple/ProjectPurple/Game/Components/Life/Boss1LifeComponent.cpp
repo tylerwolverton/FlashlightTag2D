@@ -34,23 +34,23 @@ void Boss1LifeComponent::TakeDamage(int damage)
 
 void Boss1LifeComponent::updateHealthBar()
 {
-    auto actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory == nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr == nullptr)
     {
         return;
     }
 
-    auto healthBar = actorFactory->GetFirstActorWithName("Boss1HealthBar");
-    if (healthBar == nullptr)
+    auto healthBarPtr = actorFactoryPtr->GetFirstActorWithName("Boss1HealthBar");
+    if (healthBarPtr == nullptr)
     {
         return;
     }
 
-    std::shared_ptr<TransformComponent> transformComp = healthBar->GetTransformComponent();
+    auto transformCompPtr = healthBarPtr->GetTransformCompPtr();
 
-    float newX = transformComp->GetInitSize().x / m_maxHealth * m_health + 1;
+    float newX = transformCompPtr->GetInitSize().x / m_maxHealth * m_health + 1;
     if (newX > 0)
     {
-        transformComp->SetSize(Vector2D<float>(newX, transformComp->GetSize().y));
+        transformCompPtr->SetSize(Vector2D<float>(newX, transformCompPtr->GetSize().y));
     }
 }

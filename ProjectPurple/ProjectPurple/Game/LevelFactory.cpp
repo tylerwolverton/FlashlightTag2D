@@ -35,8 +35,8 @@ const std::string LevelFactory::LevelPaths::ControlsScreen = "resources/levels/c
 const std::string LevelFactory::LevelPaths::LoseScreen = "resources/levels/lose_screen.json";
 const std::string LevelFactory::LevelPaths::WinScreen = "resources/levels/win_screen.json";
 
-LevelFactory::LevelFactory(std::shared_ptr<ActorFactory> actorFactory)
-    : m_pActorFactory(actorFactory)
+LevelFactory::LevelFactory(std::shared_ptr<ActorFactory> actorFactoryPtr)
+    : m_actorFactoryPtr(actorFactoryPtr)
 {
 }
 
@@ -46,8 +46,6 @@ LevelFactory::~LevelFactory()
 
 void LevelFactory::ChangeLevel(const std::string& levelPath)
 {
-    //ServiceLocator::GetWorld()->PauseGame();
-
     FILE* fp;
     fopen_s(&fp, levelPath.c_str(), "rb");
 
@@ -58,11 +56,10 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
     d.ParseStream(is);
     fclose(fp);
 
-    m_curLevel = createLevelFromJson(d["level"]);
-    m_pActorFactory->InitLevelActors(d["actor_list"], m_curLevel);
+    m_curLevelPtr = createLevelFromJson(d["level"]);
+	m_actorFactoryPtr->InitLevelActors(d["actor_list"], m_curLevelPtr);
     
-    m_curLevel->SetupLevel();
-    //ServiceLocator::GetWorld()->ResumeGame();
+	m_curLevelPtr->SetupLevel();
 }
 
 std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value& level)
@@ -74,11 +71,11 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
     std::string fragShader = level["frag_shader"].GetString();
 
     // clear existing tile vector
-    for (auto vec : m_tileVec)
+    for (auto tilePtrVec : m_tilePtrVecVec)
     {
-        vec.clear();
+		tilePtrVec.clear();
     }
-    m_tileVec.clear();
+	m_tilePtrVecVec.clear();
 
     if (level.HasMember("sprite"))
     {
@@ -107,7 +104,7 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
         const rapidjson::Value& tiles = level["tiles"];
         for (rapidjson::SizeType i = 0; i < tiles.Size(); i++)
         {
-            m_tileVec.push_back(std::vector<std::shared_ptr<GameTile>>());
+			m_tilePtrVecVec.push_back(std::vector<std::shared_ptr<GameTile>>());
             for (rapidjson::SizeType j = 0; j < tiles[i].Size(); j++)
             {
                 int spriteIdx = tiles[i][j].GetInt();
@@ -126,11 +123,11 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
                                                                                                                .9f);
 
 
-                    m_tileVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp, physicsComp));
+					m_tilePtrVecVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp, physicsComp));
                 }
                 else
                 {
-                    m_tileVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp));
+					m_tilePtrVecVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp));
                 }
             }
             tileVecArrayIdx++;
@@ -138,33 +135,33 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
 
         if (levelName == LevelNames::MainMenu)
         {
-            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Overworld1)
         {
-            return std::make_shared<Overworld1>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+            return std::make_shared<Overworld1>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Level1)
         {
-            return std::make_shared<Level1>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+            return std::make_shared<Level1>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Level2)
         {
-            return std::make_shared<Level2>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+            return std::make_shared<Level2>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
         }
         else if (levelName == LevelNames::BossLevel1
                 || levelName == LevelNames::ControlsScreen
                 || levelName == LevelNames::LoseScreen
                 || levelName == LevelNames::WinScreen)
         {
-            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, m_tileVec, vertShader, fragShader);
+            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
         }
     }
 
     return nullptr;
 }
 
-void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actor)
+void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actorPtr)
 {
-    m_curLevel->AddActorToTiles(actor);
+	m_curLevelPtr->AddActorToTiles(actorPtr);
 }

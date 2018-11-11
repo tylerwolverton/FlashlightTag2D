@@ -19,13 +19,12 @@ struct SDL_Window;
 class GraphicsManager
 {
 public:
-    GraphicsManager(SDL_Window* window);
+    GraphicsManager(SDL_Window* windowPtr);
     ~GraphicsManager();
 
     void Reset();
 
     void Render();
-    void ClearScreen();
 
     void LoadNewLevel(std::shared_ptr<Level> level);
     
@@ -36,7 +35,7 @@ public:
     //void AddGraphicsComponent(GraphicsComponent comp);
     //int AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
 
-    //void RemoveGraphicsComponent();
+    //void RemoveGraphicsCompPtr();
     //void UpdateComponents();
 
     void AddCamera(std::shared_ptr<GameActor> camera);

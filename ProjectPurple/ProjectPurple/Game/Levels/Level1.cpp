@@ -26,7 +26,7 @@ Level1::~Level1()
 {
 }
 
-void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
+void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsCompPtrMap, Vector2D<float> cameraPos)
 {
     // opengl likes flat arrays...
     int lightCount = 0;
@@ -36,50 +36,50 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
     //std::vector<GLfloat> lightPosVec;
     std::vector<GLfloat> flashingLightSrcVec;
     std::vector<GLfloat> flashingLightColorVec;
-    for (auto graphicsComponent : graphicsComponentPtrVec)
+    for (auto graphicsCompPtrEntry : graphicsCompPtrMap)
     {
         if (lightCount >= MAX_NUM_LIGHTS) { break; }
 
-        auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());
+        auto actorTransformCompPtr = *(graphicsCompPtrEntry.second->GetTransformCompPtr());
 
-        std::shared_ptr<GameActor> parent = graphicsComponent.second->GetParent();
-        if (parent == nullptr)
+        auto parentActorPtr = graphicsCompPtrEntry.second->GetParent();
+        if (parentActorPtr == nullptr)
         {
             continue;
         }
 
-        std::shared_ptr<GameStateComponent> gameStateComp = parent->GetGameStateComponent();
-        if (gameStateComp == nullptr)
+        auto gameStateCompPtr = parentActorPtr->GetGameStateCompPtr();
+        if (gameStateCompPtr == nullptr)
         {
             continue;
         }
 
         // Static lights
-        if(gameStateComp->GetName() == "Player")
+        if(gameStateCompPtr->GetName() == "Player")
         {
             if (lightCount >= MAX_NUM_LIGHTS) { break; }
 
-            Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-            Vector2D<float> actorSize = actorTransformComponent.GetSize();
-            Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
+            Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
+            Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
+            Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompPtrEntry.second->GetImageOffset();
 
             lightSrcVec.push_back(actorLocation.x + actorSize.x / 2); 
             lightSrcVec.push_back(actorLocation.y + actorSize.y / 2); 
             lightSrcVec.push_back(100.0f);
 
-            lightDirVec.push_back(actorTransformComponent.GetDirection().x);
-            lightDirVec.push_back(actorTransformComponent.GetDirection().y);
+            lightDirVec.push_back(actorTransformCompPtr.GetDirection().x);
+            lightDirVec.push_back(actorTransformCompPtr.GetDirection().y);
 
             lightCount++;
         }
         // Flashing lights
-        else if (gameStateComp->GetName() == "Projectile")
+        else if (gameStateCompPtr->GetName() == "Projectile")
         {
             if (flashingLightCount >= MAX_NUM_LIGHTS) { break; }
 
-            Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-            Vector2D<float> actorSize = actorTransformComponent.GetSize();
-            Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
+            Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
+            Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
+            Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompPtrEntry.second->GetImageOffset();
 
             flashingLightSrcVec.push_back(actorLocation.x + actorSize.x / 2); 
             flashingLightSrcVec.push_back(actorLocation.y + actorSize.y / 2); 
@@ -118,20 +118,20 @@ void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent
 
 void Level1::SetupLevel() 
 {
-    std::shared_ptr<ActorFactory> actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory == nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr == nullptr)
     {
         return;
     }
 
-    std::shared_ptr<GameActor> player = actorFactory->GetPlayer();
-    if (player == nullptr)
+    auto playerPtr = actorFactoryPtr->GetPlayer();
+    if (playerPtr == nullptr)
     {
         return;
     }
 
-    if(std::dynamic_pointer_cast<PlayerGameStateComponent>(player->GetGameStateComponent())->InventoryContainsItem("FirstKey"))
+    if(std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("FirstKey"))
     {
-        actorFactory->KillAllActorsByName("FirstKey");
+        actorFactoryPtr->KillAllActorsByName("FirstKey");
     }
 }

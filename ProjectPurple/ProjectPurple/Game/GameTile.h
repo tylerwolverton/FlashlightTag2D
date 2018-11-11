@@ -12,13 +12,13 @@ class GameActor;
 class GameTile
 {
 public:
-    GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformComp, std::shared_ptr<PhysicsComponent> physicsComp = nullptr);
+    GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformCompPtr, std::shared_ptr<PhysicsComponent> physicsCompPtr = nullptr);
     virtual ~GameTile();
         
     int GetSpriteIdx() { return m_spriteIdx; }
-    std::shared_ptr<TransformComponent> GetTransformComponent() { return m_transformComp; }
-    std::shared_ptr<PhysicsComponent> GetPhysicsComponent() { return m_physicsComp; }
-    std::map<ActorId, std::shared_ptr<GameActor>> GetActorMap() { return m_gameActorMap; }
+    std::shared_ptr<TransformComponent> GetTransformCompPtr() { return m_transformCompPtr; }
+    std::shared_ptr<PhysicsComponent> GetPhysicsCompPtr() { return m_physicsCompPtr; }
+    std::map<ActorId, std::shared_ptr<GameActor>> GetActorMap() { return m_idToActorPtrMap; }
 
     void AddActor(std::shared_ptr<GameActor> gameActor);
     void RemoveActor(ActorId actorId);
@@ -27,8 +27,8 @@ public:
 
 private:
     int m_spriteIdx;
-    std::shared_ptr<TransformComponent> m_transformComp;
-    std::shared_ptr<PhysicsComponent> m_physicsComp;
-    std::map<ActorId, std::shared_ptr<GameActor>> m_gameActorMap;
+    std::shared_ptr<TransformComponent> m_transformCompPtr;
+    std::shared_ptr<PhysicsComponent> m_physicsCompPtr;
+    std::map<ActorId, std::shared_ptr<GameActor>> m_idToActorPtrMap;
 };
 

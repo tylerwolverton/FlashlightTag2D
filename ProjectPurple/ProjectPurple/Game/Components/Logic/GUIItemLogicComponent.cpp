@@ -6,7 +6,7 @@
 
 GUIItemLogicComponent::GUIItemLogicComponent(ComponentId componentId)
     : LogicComponent(componentId),
-      m_cameraTransformComp(nullptr)
+      m_cameraTransformCompPtr(nullptr)
 {
 }
 
@@ -16,12 +16,18 @@ GUIItemLogicComponent::~GUIItemLogicComponent()
 
 void GUIItemLogicComponent::Update(GameActor& actor, float deltaMs) 
 {
-    if (m_cameraTransformComp == nullptr)
+    if (m_cameraTransformCompPtr == nullptr)
     {
-        m_cameraTransformComp = ServiceLocator::GetActorFactory()->GetCurrentCamera()->GetTransformComponent();
+		auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+		if (actorFactoryPtr == nullptr)
+		{
+			return;
+		}
+
+        m_cameraTransformCompPtr = actorFactoryPtr->GetCurrentCamera()->GetTransformCompPtr();
     }
 
-    auto actorTransformComp = actor.GetTransformComponent();
-    actorTransformComp->SetPosition(actorTransformComp->GetInitPosition()
-                                    + m_cameraTransformComp->GetPosition());
+    auto actorTransformCompPtr = actor.GetTransformCompPtr();
+    actorTransformCompPtr->SetPosition(actorTransformCompPtr->GetInitPosition()
+										+ m_cameraTransformCompPtr->GetPosition());
 }

@@ -15,7 +15,7 @@
 RushBehavior::RushBehavior()
     : m_chaseActor(false)
 {
-    m_targetActor = ServiceLocator::GetActorFactory()->GetPlayer();
+    m_targetActorPtr = ServiceLocator::GetActorFactory()->GetPlayer();
 }
 
 RushBehavior::~RushBehavior()
@@ -24,43 +24,31 @@ RushBehavior::~RushBehavior()
 
 std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& thisActor)
 {
-    auto thisActorTransformComponent = thisActor.GetTransformComponent();
-    if (thisActorTransformComponent == nullptr)
+    auto thisActorTransformCompPtr = thisActor.GetTransformCompPtr();
+    if (thisActorTransformCompPtr == nullptr)
     {
         return std::vector<std::shared_ptr<Command>>();
     }
         
-    auto targetActorTransformComponent = m_targetActor->GetTransformComponent();
-    if (targetActorTransformComponent == nullptr)
+    auto targetActorTransformCompPtr = m_targetActorPtr->GetTransformCompPtr();
+    if (targetActorTransformCompPtr == nullptr)
     {
         return std::vector<std::shared_ptr<Command>>();
     }
 
-    /*if (m_chaseActor)
-    {*/
-        float speed = 1.0;
-        auto thisActorPhysicsComponent = thisActor.GetPhysicsComponent();
-        if (thisActorPhysicsComponent != nullptr)
-        {
-            speed = thisActorPhysicsComponent->GetCurSpeed();
-        }
-
-        return moveTowardsTarget(thisActorTransformComponent, targetActorTransformComponent, speed);
-   /* }
-    else
+    float speed = 1.0;
+    auto thisActorPhysicsCompPtr = thisActor.GetPhysicsCompPtr();
+    if (thisActorPhysicsCompPtr != nullptr)
     {
-        if((targetActorTransformComponent->GetPosition() - thisActorTransformComponent->GetPosition()).Length() < 500)
-        {
-            m_chaseActor = true;
-        }
-    }*/
+        speed = thisActorPhysicsCompPtr->GetCurSpeed();
+    }
 
-    return std::vector<std::shared_ptr<Command>>();
+    return moveTowardsTarget(thisActorTransformCompPtr, targetActorTransformCompPtr, speed);
 }
 
-std::vector<std::shared_ptr<Command>> RushBehavior::moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformComponent,
-                                                                      std::shared_ptr<TransformComponent> targetActorTransformComponent, 
+std::vector<std::shared_ptr<Command>> RushBehavior::moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformCompPtr,
+                                                                      std::shared_ptr<TransformComponent> targetActorTransformCompPtr, 
                                                                       float speed)
 {
-    return moveToPosition(thisActorTransformComponent->GetPosition(), targetActorTransformComponent->GetPosition(), speed);
+    return moveToPosition(thisActorTransformCompPtr->GetPosition(), targetActorTransformCompPtr->GetPosition(), speed);
 }

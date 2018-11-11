@@ -17,7 +17,6 @@ public:
     std::shared_ptr<GameStateComponent> GetInventoryItemByName(std::string name);
 
 private:    
-    // TODO: Create inventory
     std::map<std::string, std::shared_ptr<GameStateComponent>> m_inventory;
 };
 

@@ -5,8 +5,8 @@
 
 #include <SDL.h>
 
-Boss1Behavior::Boss1Behavior(std::shared_ptr<GameActor> targetActor, Vector2D<int> levelSize)
-    : m_targetActor(targetActor),
+Boss1Behavior::Boss1Behavior(std::shared_ptr<GameActor> targetActorPtr, Vector2D<int> levelSize)
+    : m_targetActorPtr(targetActorPtr),
       m_levelSize(levelSize),
       m_curState(EBehaviorStates::Move),
       m_lastTickVal(SDL_GetTicks()),
@@ -30,15 +30,15 @@ Boss1Behavior::~Boss1Behavior()
 std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& actor)
 {
     uint32_t curTicks = SDL_GetTicks();
-    auto thisTransformComp = actor.GetTransformComponent();
-    auto thisPhysicsComp = actor.GetPhysicsComponent();
-    if (thisTransformComp == nullptr
-        || thisPhysicsComp == nullptr)
+    auto thisTransformCompPtr = actor.GetTransformCompPtr();
+    auto thisPhysicsCompPtr = actor.GetPhysicsCompPtr();
+    if (thisTransformCompPtr == nullptr
+        || thisPhysicsCompPtr == nullptr)
     {
         return std::vector<std::shared_ptr<Command>>();
     }
 
-    Vector2D<float> curPos = thisTransformComp->GetPosition();
+    Vector2D<float> curPos = thisTransformCompPtr->GetPosition();
     int nextIdx = m_curPosIdx;
     switch (m_curState)
     {
@@ -47,8 +47,8 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
             {
                 m_lastTickVal = curTicks;
                 m_curState = EBehaviorStates::Move;
-                auto playerTransformComp = m_targetActor->GetTransformComponent();
-                if (playerTransformComp != nullptr)
+                auto playerTransformCompPtr = m_targetActorPtr->GetTransformCompPtr();
+                if (playerTransformCompPtr != nullptr)
                 {
                     m_curPosIdx = (m_curPosIdx + 1) % m_movePositionVec.size();
                 }
@@ -70,7 +70,7 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
             if (curTicks - m_lastTickVal > 300)
             {
                 m_lastTickVal = curTicks;
-                spawnBullets(thisTransformComp);
+                spawnBullets(thisTransformCompPtr);
                 m_bulletCount++;
             }
             if (m_bulletCount == 5)
@@ -83,11 +83,11 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
     return std::vector<std::shared_ptr<Command>>();
 }
 
-void Boss1Behavior::spawnBullets(std::shared_ptr<TransformComponent> actorTransformComp)
+void Boss1Behavior::spawnBullets(std::shared_ptr<TransformComponent> actorTransformCompPtr)
 {
     // calculate 8 positions surrounding boss
-    auto pos = actorTransformComp->GetPosition();
-    auto size = actorTransformComp->GetSize();
+    auto pos = actorTransformCompPtr->GetPosition();
+    auto size = actorTransformCompPtr->GetSize();
     
     auto actorFactory = ServiceLocator::GetActorFactory();
     if (actorFactory == nullptr)

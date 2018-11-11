@@ -166,7 +166,6 @@
     <ClCompile Include="Game\Components\GameState\GameStateComponent.cpp" />
     <ClCompile Include="Engine\Components\GraphicsComponent.cpp" />
     <ClCompile Include="Engine\Managers\GraphicsManager.cpp" />
-    <ClCompile Include="Game\Behaviors\HideBehavior.cpp" />
     <ClCompile Include="Engine\Components\InputComponent.cpp" />
     <ClCompile Include="Engine\Managers\InputManager.cpp" />
     <ClCompile Include="Engine\Level.cpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="Game\GameTypes.h" />
     <ClInclude Include="Engine\Components\GraphicsComponent.h" />
     <ClInclude Include="Engine\Managers\GraphicsManager.h" />
-    <ClInclude Include="Game\Behaviors\HideBehavior.h" />
     <ClInclude Include="Engine\Components\InputComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

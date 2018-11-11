@@ -8,9 +8,9 @@
 
 #include <SDL.h>
 
-CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsComponent)
+CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsCompPtr)
     : LogicComponent(componentId),
-      m_pPhysicsComponent(physicsComponent)
+      m_physicsCompPtr(physicsCompPtr)
 {
 }
 
@@ -20,22 +20,22 @@ CharacterLogicComponent::~CharacterLogicComponent()
 
 void CharacterLogicComponent::MoveUp()
 {
-    m_pPhysicsComponent->AddForce(Vector2D<float>(0, m_pPhysicsComponent->GetCurSpeed()));
+    m_physicsCompPtr->AddForce(Vector2D<float>(0, m_physicsCompPtr->GetCurSpeed()));
 }
 
 void CharacterLogicComponent::MoveDown()
 {
-    m_pPhysicsComponent->AddForce(Vector2D<float>(0, -m_pPhysicsComponent->GetCurSpeed()));
+    m_physicsCompPtr->AddForce(Vector2D<float>(0, -m_physicsCompPtr->GetCurSpeed()));
 }
 
 void CharacterLogicComponent::MoveRight()
 {
-    m_pPhysicsComponent->AddForce(Vector2D<float>(m_pPhysicsComponent->GetCurSpeed(), 0));
+    m_physicsCompPtr->AddForce(Vector2D<float>(m_physicsCompPtr->GetCurSpeed(), 0));
 }
 
 void CharacterLogicComponent::MoveLeft()
 {
-    m_pPhysicsComponent->AddForce(Vector2D<float>(-m_pPhysicsComponent->GetCurSpeed(), 0));
+    m_physicsCompPtr->AddForce(Vector2D<float>(-m_physicsCompPtr->GetCurSpeed(), 0));
 }
 
 void CharacterLogicComponent::Shoot()
@@ -44,25 +44,25 @@ void CharacterLogicComponent::Shoot()
     if (curTicks - m_lastTickVal > 400)
     {
         m_lastTickVal = curTicks;
-        auto actorFactory = ServiceLocator::GetActorFactory();
-        if (actorFactory == nullptr)
+        auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+        if (actorFactoryPtr == nullptr)
         {
             return;
         }
 
-        std::shared_ptr<GameActor> actor = actorFactory->GetActor(m_parentActorId);
+        std::shared_ptr<GameActor> actor = actorFactoryPtr->GetActor(m_parentActorId);
         if (actor == nullptr)
         {
             return;
         }
 
         // Need to add camera position to mouse position, since mouse pos will always be within screen bounds
-        Vector2D<float> cameraPos = actorFactory->GetCurrentCamera()->GetTransformComponent()->GetPosition();
+        Vector2D<float> cameraPos = actorFactoryPtr->GetCurrentCamera()->GetTransformCompPtr()->GetPosition();
         Vector2D<float> relMousePos = Vector2D<float>(actor->GetMousePosition().x + cameraPos.x, actor->GetMousePosition().y - cameraPos.y);
         relMousePos.y = World::SCREEN_HEIGHT - relMousePos.y;
 
-        auto actorPos = m_pPhysicsComponent->GetTransformComponent()->GetPosition();
+		Vector2D<float> actorPos = m_physicsCompPtr->GetTransformCompPtr()->GetPosition();
         Vector2D<float> dirVec = (relMousePos - actorPos).Normalize();
-        actorFactory->CreateProjectile(actorPos + (dirVec * 70), dirVec * 15.0f);
+        actorFactoryPtr->CreateProjectile(actorPos + (dirVec * 70), dirVec * 15.0f);
     }
 }

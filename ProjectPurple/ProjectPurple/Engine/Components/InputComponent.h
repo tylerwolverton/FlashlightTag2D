@@ -18,21 +18,21 @@ public:
 protected:
     InputComponent(ComponentId componentId);
 
-    std::shared_ptr<Command> m_pButtonW;
-    std::shared_ptr<Command> m_pButtonA;
-    std::shared_ptr<Command> m_pButtonS;
-    std::shared_ptr<Command> m_pButtonD;
-    std::shared_ptr<Command> m_pButtonUp;
-    std::shared_ptr<Command> m_pButtonLeft;
-    std::shared_ptr<Command> m_pButtonDown;
-    std::shared_ptr<Command> m_pButtonRight;
-    std::shared_ptr<Command> m_pButtonEsc;
-    std::shared_ptr<Command> m_pButtonSpace;
-    std::shared_ptr<Command> m_pButtonReturn;
-    std::shared_ptr<Command> m_pMouseButtonRight;
-    std::shared_ptr<Command> m_pMouseButtonLeft;
-    std::shared_ptr<Command> m_pMouseButtonMiddle;
-    std::shared_ptr<UpdateMousePosition> m_pMousePositionMoved;
+    std::shared_ptr<Command> m_wButtonCmdPtr;
+    std::shared_ptr<Command> m_aButtonCmdPtr;
+    std::shared_ptr<Command> m_sButtonCmdPtr;
+    std::shared_ptr<Command> m_dButtonCmdPtr;
+    std::shared_ptr<Command> m_upButtonCmdPtr;
+    std::shared_ptr<Command> m_leftButtonPtr;
+    std::shared_ptr<Command> m_downButtonCmdPtr;
+    std::shared_ptr<Command> m_rightButtonCmdPtr;
+    std::shared_ptr<Command> m_escButtonCmdPtr;
+    std::shared_ptr<Command> m_spaceButtonCmdPtr;
+    std::shared_ptr<Command> m_returnButtonCmdPtr;
+    std::shared_ptr<Command> m_rightMouseButtonCmdPtr;
+    std::shared_ptr<Command> m_leftMouseButtonCmdPtr;
+    std::shared_ptr<Command> m_middleMouseButtonCmdPtr;
+    std::shared_ptr<UpdateMousePosition> m_updateMousePositionPtr;
 
 private:
     Vector2D<int> m_oldMousePos;

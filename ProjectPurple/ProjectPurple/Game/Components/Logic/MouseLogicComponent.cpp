@@ -5,10 +5,10 @@
 #include "GameActor.h"
 #include "World.h"
 
-MouseLogicComponent::MouseLogicComponent(ComponentId componentId, std::shared_ptr<TransformComponent> transformComponent)
+MouseLogicComponent::MouseLogicComponent(ComponentId componentId, std::shared_ptr<TransformComponent> transformCompPtr)
     : LogicComponent(componentId),
-      m_transformComp(transformComponent),
-      m_cameraTransformComp(nullptr)
+      m_transformCompPtr(transformCompPtr),
+      m_cameraTransformCompPtr(nullptr)
 {
 }
 
@@ -18,10 +18,10 @@ MouseLogicComponent::~MouseLogicComponent()
 
 void MouseLogicComponent::UpdateMousePosition(Vector2D<int> mousePos)
 {
-    if (m_cameraTransformComp == nullptr)
+    if (m_cameraTransformCompPtr == nullptr)
     {
-        m_cameraTransformComp = ServiceLocator::GetGraphicsManager()->GetCurrentCamera()->GetTransformComponent();
+        m_cameraTransformCompPtr = ServiceLocator::GetGraphicsManager()->GetCurrentCamera()->GetTransformCompPtr();
     }
 
-    m_transformComp->SetPosition(Vector2D<float>(mousePos.x, World::SCREEN_HEIGHT - mousePos.y) + m_cameraTransformComp->GetPosition());
+    m_transformCompPtr->SetPosition(Vector2D<float>(mousePos.x, World::SCREEN_HEIGHT - mousePos.y) + m_cameraTransformCompPtr->GetPosition());
 }

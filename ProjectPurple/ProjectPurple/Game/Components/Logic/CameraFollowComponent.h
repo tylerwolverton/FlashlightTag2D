@@ -18,7 +18,7 @@ public:
     void SetTargetActor(std::shared_ptr<GameActor> actor);
 
 private:
-    std::shared_ptr<GameActor> m_pTarget;
+    std::shared_ptr<GameActor> m_targetActorPtr;
     Vector2D<int> m_levelSize;
 };
 

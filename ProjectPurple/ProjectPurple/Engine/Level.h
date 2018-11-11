@@ -28,7 +28,7 @@ public:
     std::shared_ptr<Shader> GetShader() { return m_shaderPtr; }
     std::string GetSpritePath() { return m_spritePath; }
     //std::vector<std::vector<int>> GetTileVec() { return m_tileVec; }
-    std::vector<std::vector<std::shared_ptr<GameTile>>> GetTileVec() { return m_tileVec; }
+    std::vector<std::vector<std::shared_ptr<GameTile>>> GetTileVec() { return m_tilePtrVecVec; }
     void AddActorToTiles(std::shared_ptr<GameActor> actor);
 
     virtual void PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrMap, Vector2D<float> cameraPos) = 0;
@@ -39,11 +39,11 @@ protected:
     std::shared_ptr<Shader> m_shaderPtr;
     std::string m_spritePath;
     //std::vector<std::vector<int>> m_tileVec;
-    std::vector<std::vector<std::shared_ptr<GameTile>>> m_tileVec;
+    std::vector<std::vector<std::shared_ptr<GameTile>>> m_tilePtrVecVec;
 
 private:
     std::map<ActorId, std::vector<std::shared_ptr<GameTile>>> m_actorToTilesMap;
 
-    std::vector<std::shared_ptr<GameTile>> getTilesUnderActor(std::shared_ptr<TransformComponent> transformComp);
+    std::vector<std::shared_ptr<GameTile>> getTilesUnderActor(std::shared_ptr<TransformComponent> transformCompPtr);
 };
 

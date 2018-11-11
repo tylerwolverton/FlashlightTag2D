@@ -6,13 +6,13 @@
 #include "ServiceLocator.h"
 
 ProjectilePhysicsComponent::ProjectilePhysicsComponent(ComponentId componentId,
-                                                       std::shared_ptr<TransformComponent> transformComponent,
+                                                       std::shared_ptr<TransformComponent> transformCompPtr,
                                                        float maxSpeed,
                                                        float mass,
                                                        float restitution,
                                                        Vector2D<float> velocity,
                                                        Vector2D<float> acceleration)
-    : PhysicsComponent(componentId, transformComponent, maxSpeed, mass, restitution, velocity, acceleration)
+    : PhysicsComponent(componentId, transformCompPtr, maxSpeed, mass, restitution, velocity, acceleration)
 {
 }
 
@@ -22,12 +22,12 @@ ProjectilePhysicsComponent::~ProjectilePhysicsComponent()
 
 void ProjectilePhysicsComponent::Update(GameActor& actor, float deltaMs)
 {
-    auto prevDir = actor.GetTransformComponent()->GetDirection();
+    Vector2D<float> prevDir = actor.GetTransformCompPtr()->GetDirection();
     MoveActor(deltaMs);
 
-    if (prevDir != actor.GetTransformComponent()->GetDirection())
+    if (prevDir != actor.GetTransformCompPtr()->GetDirection())
     {
-        actor.GetLifeComponent()->Die();
+        actor.GetLifeCompPtr()->Die();
     }
 }
 
@@ -35,26 +35,26 @@ bool ProjectilePhysicsComponent::SignalCollision(ActorId actorId)
 {
     bool stopResolvingCollisions = false;
 
-    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
-    if (actor == nullptr)
+    auto actorPtr = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actorPtr == nullptr)
     {
         return stopResolvingCollisions;
     }
-    auto actorLifeComponent = actor->GetLifeComponent();
-    if (actorLifeComponent != nullptr)
+    auto actorLifeCompPtr = actorPtr->GetLifeCompPtr();
+    if (actorLifeCompPtr != nullptr)
     {
-        actorLifeComponent->TakeDamage(1);
+        actorLifeCompPtr->TakeDamage(1);
     }
 
-    std::shared_ptr<GameActor> thisActor = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
-    if (thisActor == nullptr)
+    auto thisActorPtr = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
+    if (thisActorPtr == nullptr)
     {
         return stopResolvingCollisions;
     }
-    auto thisLifeComponent = thisActor->GetLifeComponent();
-    if (thisLifeComponent != nullptr)
+    auto thisLifeCompPtr = thisActorPtr->GetLifeCompPtr();
+    if (thisLifeCompPtr != nullptr)
     {
-        thisLifeComponent->Die();
+        thisLifeCompPtr->Die();
     }
 
     return stopResolvingCollisions;

@@ -7,13 +7,13 @@
 #include "ServiceLocator.h"
 
 PlayerPhysicsComponent::PlayerPhysicsComponent(ComponentId componentId,
-                                               std::shared_ptr<TransformComponent> transformComponent, 
+                                               std::shared_ptr<TransformComponent> transformCompPtr, 
                                                float maxSpeed,
                                                float mass,
                                                float restitution,
                                                Vector2D<float> velocity, 
                                                Vector2D<float> acceleration)
-    : PhysicsComponent(componentId, transformComponent, maxSpeed, mass, restitution, velocity, acceleration)
+    : PhysicsComponent(componentId, transformCompPtr, maxSpeed, mass, restitution, velocity, acceleration)
 {
 }
 
@@ -24,21 +24,21 @@ PlayerPhysicsComponent::~PlayerPhysicsComponent()
 bool PlayerPhysicsComponent::SignalCollision(ActorId actorId)
 {
     bool stopResolvingCollisions = false;
-    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
-    if (actor == nullptr)
+    auto actorPtr = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actorPtr == nullptr)
     {
         return stopResolvingCollisions;
     }
     
-    auto gameStateComponent = actor->GetGameStateComponent();
-    if (gameStateComponent != nullptr)
+    auto gameStateCompPtr = actorPtr->GetGameStateCompPtr();
+    if (gameStateCompPtr != nullptr)
     {
-        if (gameStateComponent->GetType() == "Portal")
+        if (gameStateCompPtr->GetType() == "Portal")
         {
-            auto logicComponentPtr = actor->GetLogicComponent();
-            if (logicComponentPtr != nullptr)
+            auto logicCompPtr = actorPtr->GetLogicCompPtr();
+            if (logicCompPtr != nullptr)
             {
-                std::dynamic_pointer_cast<PortalLogicComponent>(logicComponentPtr)->ChangeLevel();
+                std::dynamic_pointer_cast<PortalLogicComponent>(logicCompPtr)->ChangeLevel();
                 stopResolvingCollisions = true;
             }
         }

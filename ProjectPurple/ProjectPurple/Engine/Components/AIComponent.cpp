@@ -8,9 +8,9 @@
 
 #include <memory>
 
-AIComponent::AIComponent(ComponentId componentId, std::vector<std::shared_ptr<Behavior>> behaviorVec)
+AIComponent::AIComponent(ComponentId componentId, std::vector<std::shared_ptr<Behavior>> behaviorPtrVec)
     : ActorComponent(componentId),
-      m_behaviorVec(behaviorVec)
+      m_behaviorPtrVec(behaviorPtrVec)
 {
 }
 
@@ -20,23 +20,16 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, float deltaMs)
 {	
-    /*auto gameStateComponent = actor.GetGameStateComponent();
-    if (gameStateComponent == nullptr)
+    if (!m_behaviorPtrVec.empty())
     {
-        return;
-    }
-
-    auto behavior = gameStateComponent->GetBehavior();*/
-    if (!m_behaviorVec.empty())
-    {
-        std::shared_ptr<std::vector<std::shared_ptr<Command>>> commandsVec(std::make_shared<std::vector<std::shared_ptr<Command>>>());
-        for (auto behavior : m_behaviorVec)
+        std::shared_ptr<std::vector<std::shared_ptr<Command>>> commandPtrVecPtr(std::make_shared<std::vector<std::shared_ptr<Command>>>());
+        for (auto behavior : m_behaviorPtrVec)
         {
-            auto cmds = behavior->Update(actor);
-            commandsVec->insert(commandsVec->end(), cmds.begin(), cmds.end());
+            auto cmdPtrVec = behavior->Update(actor);
+            commandPtrVecPtr->insert(commandPtrVecPtr->end(), cmdPtrVec.begin(), cmdPtrVec.end());
         }
 
-        actor.SetCommands(commandsVec);
+        actor.SetCommands(commandPtrVecPtr);
     }
 }
 

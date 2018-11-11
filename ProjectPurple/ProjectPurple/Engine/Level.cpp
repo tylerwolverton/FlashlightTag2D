@@ -10,9 +10,9 @@ Level::Level(int levelWidth, int levelHeight, std::string spritePath, std::strin
 {
 }
 
-Level::Level(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
+Level::Level(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tilePtrVecVec, std::string vertexShader, std::string fragmentShader)
     : m_levelSizeVec(Vector2D<int>(levelWidth, levelHeight)),
-      m_tileVec(tileVec),
+      m_tilePtrVecVec(tilePtrVecVec),
       m_shaderPtr(std::make_shared<Shader>(vertexShader, fragmentShader))
 {
 }
@@ -23,8 +23,8 @@ Level::~Level()
 
 void Level::AddActorToTiles(std::shared_ptr<GameActor> actor)
 {
-    auto transformCompPtr = actor->GetTransformComponent();
-    auto physicsCompPtr = actor->GetPhysicsComponent();
+    auto transformCompPtr = actor->GetTransformCompPtr();
+    auto physicsCompPtr = actor->GetPhysicsCompPtr();
     if (transformCompPtr == nullptr
         || physicsCompPtr == nullptr) // only care about actors with physics component
     {
@@ -43,22 +43,22 @@ void Level::AddActorToTiles(std::shared_ptr<GameActor> actor)
         actorIter->second.clear();
     }
 
-    std::vector<std::shared_ptr<GameTile>> newTileVec = getTilesUnderActor(transformCompPtr);
+    std::vector<std::shared_ptr<GameTile>> newTilePtrVec = getTilesUnderActor(transformCompPtr);
 
-    m_actorToTilesMap.insert(std::make_pair(actorId, newTileVec));
+    m_actorToTilesMap.insert(std::make_pair(actorId, newTilePtrVec));
     
-    actor->SetTileVec(newTileVec);
+    actor->SetTileVec(newTilePtrVec);
     // add actor to each of its game tiles
-    for (auto tile : newTileVec)
+    for (auto tile : newTilePtrVec)
     {
         tile->AddActor(actor);
     }
 }
 
-std::vector<std::shared_ptr<GameTile>> Level::getTilesUnderActor(std::shared_ptr<TransformComponent> transformComp)
+std::vector<std::shared_ptr<GameTile>> Level::getTilesUnderActor(std::shared_ptr<TransformComponent> transformCompPtr)
 {
-    Vector2D<float> actorPos = transformComp->GetPosition();
-    Vector2D<float> actorSize = transformComp->GetSize();
+    Vector2D<float> actorPos = transformCompPtr->GetPosition();
+    Vector2D<float> actorSize = transformCompPtr->GetSize();
 
     Vector2D<float> topLeft(actorPos - actorSize / 2);
     Vector2D<int> topLeftTileIdx(topLeft.x / TILE_WIDTH, topLeft.y / TILE_HEIGHT);
@@ -71,7 +71,7 @@ std::vector<std::shared_ptr<GameTile>> Level::getTilesUnderActor(std::shared_ptr
     {
         for (int j = topLeftTileIdx.x; j < bottomRightTileIdx.x; j++)
         {
-            tileVec.push_back(m_tileVec[i][j]);
+            tileVec.push_back(m_tilePtrVecVec[i][j]);
         }
     }
 

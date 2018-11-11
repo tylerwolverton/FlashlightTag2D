@@ -23,33 +23,33 @@ Overworld1::~Overworld1()
 
 void Overworld1::SetupLevel()
 {
-    std::shared_ptr<ActorFactory> actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory == nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr == nullptr)
     {
         return;
     }
 
-    std::shared_ptr<GameActor> player = actorFactory->GetPlayer();
-    if (player == nullptr)
+    auto playerPtr = actorFactoryPtr->GetPlayer();
+    if (playerPtr == nullptr)
     {
         return;
     }
 
-    bool hasFirstKey = std::dynamic_pointer_cast<PlayerGameStateComponent>(player->GetGameStateComponent())->InventoryContainsItem("FirstKey");
+    bool hasFirstKey = std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("FirstKey");
     if(hasFirstKey)
     {
-        actorFactory->KillAllActorsByName("FirstLock");
+        actorFactoryPtr->KillAllActorsByName("FirstLock");
     }
 
-    bool hasSecondKey = std::dynamic_pointer_cast<PlayerGameStateComponent>(player->GetGameStateComponent())->InventoryContainsItem("SecondKey");
+    bool hasSecondKey = std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("SecondKey");
     if (hasSecondKey)
     {
-        actorFactory->KillAllActorsByName("SecondLock");
+        actorFactoryPtr->KillAllActorsByName("SecondLock");
     }
 
     if (!(hasFirstKey && hasSecondKey))
     {
-        auto door = actorFactory->GetFirstActorWithName("PortalToBossLevel1");
-        door->RemoveLogicComponent();
+        auto door = actorFactoryPtr->GetFirstActorWithName("PortalToBossLevel1");
+        door->RemoveLogicCompPtr();
     }
 }

@@ -81,7 +81,7 @@ std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames co
     return nullptr;
 }
 
-void GameActor::InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
+void GameActor::InsertCompPtr(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
 {
     if (m_componentMap.find(compName) != m_componentMap.end())
     {
@@ -96,7 +96,7 @@ void GameActor::InsertComponent(EComponentNames compName, std::shared_ptr<ActorC
     comp->SetParentActorId(m_actorId);
 }
 
-std::shared_ptr<AIComponent> GameActor::GetAIComponent() const
+std::shared_ptr<AIComponent> GameActor::GetAICompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::AIComponentEnum);
     if (component == nullptr)
@@ -107,7 +107,7 @@ std::shared_ptr<AIComponent> GameActor::GetAIComponent() const
     return std::dynamic_pointer_cast<AIComponent>(component);
 }
 
-std::shared_ptr<LogicComponent> GameActor::GetLogicComponent() const
+std::shared_ptr<LogicComponent> GameActor::GetLogicCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LogicComponentEnum);
     if (component == nullptr)
@@ -118,7 +118,7 @@ std::shared_ptr<LogicComponent> GameActor::GetLogicComponent() const
     return std::dynamic_pointer_cast<LogicComponent>(component);
 }
 
-std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowComponent() const
+std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
     if (component == nullptr)
@@ -129,7 +129,7 @@ std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowComponent() con
     return std::dynamic_pointer_cast<CameraFollowComponent>(component);
 }
 
-std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsComponent() const
+std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
     if (component == nullptr)
@@ -140,7 +140,7 @@ std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsComponent() const
     return std::dynamic_pointer_cast<GraphicsComponent>(component);
 }
 
-std::shared_ptr<InputComponent> GameActor::GetInputComponent() const
+std::shared_ptr<InputComponent> GameActor::GetInputCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::InputComponentEnum);
     if (component == nullptr)
@@ -151,7 +151,7 @@ std::shared_ptr<InputComponent> GameActor::GetInputComponent() const
     return std::dynamic_pointer_cast<InputComponent>(component);
 }
 
-std::shared_ptr<PhysicsComponent> GameActor::GetPhysicsComponent() const
+std::shared_ptr<PhysicsComponent> GameActor::GetPhysicsCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::PhysicsComponentEnum);
     if (component == nullptr)
@@ -162,7 +162,7 @@ std::shared_ptr<PhysicsComponent> GameActor::GetPhysicsComponent() const
     return std::dynamic_pointer_cast<PhysicsComponent>(component);
 }
 
-std::shared_ptr<TransformComponent> GameActor::GetTransformComponent() const
+std::shared_ptr<TransformComponent> GameActor::GetTransformCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::TransformComponentEnum);
     if (component == nullptr)
@@ -173,7 +173,7 @@ std::shared_ptr<TransformComponent> GameActor::GetTransformComponent() const
     return std::dynamic_pointer_cast<TransformComponent>(component);
 }
 
-std::shared_ptr<GameStateComponent> GameActor::GetGameStateComponent() const
+std::shared_ptr<GameStateComponent> GameActor::GetGameStateCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GameStateComponentEnum);
     if (component == nullptr)
@@ -184,7 +184,7 @@ std::shared_ptr<GameStateComponent> GameActor::GetGameStateComponent() const
     return std::dynamic_pointer_cast<GameStateComponent>(component);
 }
 
-std::shared_ptr<LifeComponent> GameActor::GetLifeComponent() const
+std::shared_ptr<LifeComponent> GameActor::GetLifeCompPtr() const
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LifeComponentEnum);
     if (component == nullptr)
@@ -195,7 +195,7 @@ std::shared_ptr<LifeComponent> GameActor::GetLifeComponent() const
     return std::dynamic_pointer_cast<LifeComponent>(component);
 }
 
-void GameActor::RemoveAIComponent()
+void GameActor::RemoveAICompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::AIComponentEnum);
     if (component != nullptr)
@@ -204,7 +204,7 @@ void GameActor::RemoveAIComponent()
     }
 }
 
-void GameActor::RemoveLogicComponent()
+void GameActor::RemoveLogicCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LogicComponentEnum);
     if (component != nullptr)
@@ -213,7 +213,7 @@ void GameActor::RemoveLogicComponent()
     }
 }
 
-void GameActor::RemoveCameraFollowComponent()
+void GameActor::RemoveCameraFollowCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::CameraFollowComponentEnum);
     if (component != nullptr)
@@ -222,7 +222,7 @@ void GameActor::RemoveCameraFollowComponent()
     }
 }
 
-void GameActor::RemoveGraphicsComponent()
+void GameActor::RemoveGraphicsCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
     if (component != nullptr)
@@ -231,7 +231,7 @@ void GameActor::RemoveGraphicsComponent()
     }
 }
 
-void GameActor::RemoveInputComponent()
+void GameActor::RemoveInputCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::InputComponentEnum);
     if (component != nullptr)
@@ -240,7 +240,7 @@ void GameActor::RemoveInputComponent()
     }
 }
 
-void GameActor::RemovePhysicsComponent()
+void GameActor::RemovePhysicsCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::PhysicsComponentEnum);
     if (component != nullptr)
@@ -249,7 +249,7 @@ void GameActor::RemovePhysicsComponent()
     }
 }
 
-void GameActor::RemoveTransformComponent()
+void GameActor::RemoveTransformCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::TransformComponentEnum);
     if (component != nullptr)
@@ -258,7 +258,7 @@ void GameActor::RemoveTransformComponent()
     }
 }
 
-void GameActor::RemoveGameStateComponent()
+void GameActor::RemoveGameStateCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GameStateComponentEnum);
     if (component != nullptr)
@@ -267,7 +267,7 @@ void GameActor::RemoveGameStateComponent()
     }
 }
 
-void GameActor::RemoveLifeComponent()
+void GameActor::RemoveLifeCompPtr()
 {
     std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::LifeComponentEnum);
     if (component != nullptr)
@@ -280,11 +280,10 @@ Vector2D<float> GameActor::GetMousePosition()
 {
     Vector2D<float> pos(0, 0);
 
-    auto inputComp = GetInputComponent();
-    if (inputComp != nullptr)
+    auto inputCompPtr = GetInputCompPtr();
+    if (inputCompPtr != nullptr)
     {
-        pos = Vector2D<float>(inputComp->GetOldMousePos().x, inputComp->GetOldMousePos().y);
-        //pos = Vector2D<float>(m_input.mousePos.x, m_input.mousePos.y);
+        pos = Vector2D<float>(inputCompPtr->GetOldMousePos().x, inputCompPtr->GetOldMousePos().y);
     }
 
     return pos;

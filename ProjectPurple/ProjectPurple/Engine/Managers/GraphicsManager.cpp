@@ -7,8 +7,8 @@
 #include "Vector2D.h"
 #include "Level.h"
 
-GraphicsManager::GraphicsManager(SDL_Window* window)
-    : m_windowPtr(window),
+GraphicsManager::GraphicsManager(SDL_Window* windowPtr)
+    : m_windowPtr(windowPtr),
       m_lastComponentId(0)
 {
     setOpenGLAttributes();
@@ -191,7 +191,7 @@ void GraphicsManager::AddCamera(std::shared_ptr<GameActor> camera)
 
 void GraphicsManager::Render()
 {
-    auto cameraTransformCompPtr = m_curCameraPtr->GetTransformComponent();
+    auto cameraTransformCompPtr = m_curCameraPtr->GetTransformCompPtr();
     if (cameraTransformCompPtr == nullptr) 
 	{ 
 		return;
@@ -208,16 +208,15 @@ void GraphicsManager::Render()
 
     m_curLevelPtr->PrepShaders(m_graphicsCompPtrMap, cameraPos);
 
-
     for (auto graphicsCompEntry : m_graphicsCompPtrMap)
     {
-        auto actorTransformCompPtr = *(graphicsCompEntry.second->GetTransformComponent());
+        auto actorTransformCompPtr = *(graphicsCompEntry.second->GetTransformCompPtr());
 
         Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
         Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
 
-        if (actorPos.x < cameraPos.x || actorPos.x > cameraPos.x + cameraSize.x
-            || actorPos.y < cameraPos.y || actorPos.y > cameraPos.y + cameraSize.y)
+        if (actorPos.x + actorSize.x < cameraPos.x || actorPos.x - actorSize.x > cameraPos.x + cameraSize.x
+            || actorPos.y + actorSize.y < cameraPos.y || actorPos.y - actorSize.y > cameraPos.y + cameraSize.y)
         {
             continue;
         }
@@ -295,7 +294,7 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
             for (auto tilePtr : gameTilePtrVec)
             {
                 Matrix4<GLfloat> backgroundModel;
-                auto position = tilePtr->GetTransformComponent()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
+                auto position = tilePtr->GetTransformCompPtr()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
                 backgroundModel = backgroundModel.Translate(position);
 
                 // Scale by the actual size of the sprite
@@ -318,11 +317,4 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
             textureVecIdx++;
         }
     }
-}
-
-void GraphicsManager::ClearScreen()
-{
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    SDL_GL_SwapWindow(m_windowPtr);
 }

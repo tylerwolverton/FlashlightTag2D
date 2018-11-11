@@ -31,27 +31,27 @@ void LevelWithLightingLight::PrepShaders(std::map<ComponentId, std::shared_ptr<G
     std::vector<GLfloat> flashingLightColorVec;
     for (auto graphicsComponent : graphicsComponentPtrVec)
     {
-        auto actorTransformComponent = *(graphicsComponent.second->GetTransformComponent());
+        auto actorTransformCompPtr = *(graphicsComponent.second->GetTransformCompPtr());
 
-        std::shared_ptr<GameActor> parent = graphicsComponent.second->GetParent();
-        if (parent == nullptr)
+        auto parentActorPtr = graphicsComponent.second->GetParent();
+        if (parentActorPtr == nullptr)
         {
             continue;
         }
 
-        std::shared_ptr<GameStateComponent> gameStateComp = parent->GetGameStateComponent();
-        if (gameStateComp == nullptr)
+        auto gameStateCompPtr = parentActorPtr->GetGameStateCompPtr();
+        if (gameStateCompPtr == nullptr)
         {
             continue;
         }
 
         // Flashing lights
-        else if (gameStateComp->GetName() == "Projectile")
+        else if (gameStateCompPtr->GetName() == "Projectile")
         {
             if (flashingLightCount >= MAX_NUM_LIGHTS) { break; }
 
-            Vector2D<float> actorPos = actorTransformComponent.GetPosition();
-            Vector2D<float> actorSize = actorTransformComponent.GetSize();
+            Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
+            Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
             Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComponent.second->GetImageOffset();
 
             flashingLightSrcVec.push_back(actorLocation.x + actorSize.x / 2);

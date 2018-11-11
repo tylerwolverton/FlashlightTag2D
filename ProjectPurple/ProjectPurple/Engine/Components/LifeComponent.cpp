@@ -21,13 +21,13 @@ const EComponentNames LifeComponent::GetComponentName() const
 
 void LifeComponent::Die()
 {
-    auto actorFactory = ServiceLocator::GetActorFactory();
-    if (actorFactory == nullptr)
+    auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+    if (actorFactoryPtr == nullptr)
     {
         return;
     }
 
-    actorFactory->AddDeadActor(m_parentId);
+    actorFactoryPtr->AddDeadActor(m_parentId);
 }
 
 void LifeComponent::TakeDamage(int damage)

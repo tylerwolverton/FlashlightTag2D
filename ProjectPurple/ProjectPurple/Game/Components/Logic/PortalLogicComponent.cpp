@@ -30,10 +30,10 @@ void PortalLogicComponent::Update(GameActor& actor, float deltaMs)
 
 void PortalLogicComponent::ChangeLevel()
 {
-    std::shared_ptr<LevelFactory> levelFactory = ServiceLocator::GetLevelFactory();
+    auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
 
-    if (levelFactory != nullptr)
+    if (levelFactoryPtr != nullptr)
     {
-        levelFactory->ChangeLevel(m_levelName);
+        levelFactoryPtr->ChangeLevel(m_levelName);
     }
 }

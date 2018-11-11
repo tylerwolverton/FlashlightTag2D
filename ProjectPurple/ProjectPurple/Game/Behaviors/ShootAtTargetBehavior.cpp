@@ -5,8 +5,8 @@
 
 #include <SDL.h>
 
-ShootAtTargetBehavior::ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActor, int cooldown)
-    : m_targetActor(targetActor),
+ShootAtTargetBehavior::ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActorPtr, int cooldown)
+    : m_targetActorPtr(targetActorPtr),
       m_cooldown(cooldown)
 {
 }
@@ -21,16 +21,16 @@ std::vector<std::shared_ptr<Command>> ShootAtTargetBehavior::Update(const GameAc
     if (curTicks - m_lastTickVal > m_cooldown * 1000)
     {
         m_lastTickVal = curTicks;
-        auto actorFactory = ServiceLocator::GetActorFactory();
-        auto thisTransformComp = actor.GetTransformComponent();
-        if (actorFactory != nullptr && m_targetActor != nullptr
-            && thisTransformComp != nullptr)
+        auto actorFactoryPtr = ServiceLocator::GetActorFactory();
+        auto thisTransformCompPtr = actor.GetTransformCompPtr();
+        if (actorFactoryPtr != nullptr && m_targetActorPtr != nullptr
+            && thisTransformCompPtr != nullptr)
         {
-            auto targetTransformComp = m_targetActor->GetTransformComponent();
-            if (targetTransformComp != nullptr)
+            auto targetTransformCompPtr = m_targetActorPtr->GetTransformCompPtr();
+            if (targetTransformCompPtr != nullptr)
             {
-                Vector2D<float> dirVec = (targetTransformComp->GetPosition() - thisTransformComp->GetPosition()).Normalize();
-                actorFactory->CreateProjectile(thisTransformComp->GetPosition() + (dirVec * 70), dirVec * 15.0f);
+                Vector2D<float> dirVec = (targetTransformCompPtr->GetPosition() - thisTransformCompPtr->GetPosition()).Normalize();
+                actorFactoryPtr->CreateProjectile(thisTransformCompPtr->GetPosition() + (dirVec * 70), dirVec * 15.0f);
             }
         }
     }

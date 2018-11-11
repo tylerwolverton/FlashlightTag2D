@@ -7,13 +7,13 @@
 #include "ServiceLocator.h"
 
 PickupPhysicsComponent::PickupPhysicsComponent(ComponentId componentId,
-                                               std::shared_ptr<TransformComponent> transformComponent, 
+                                               std::shared_ptr<TransformComponent> transformCompPtr, 
                                                float maxSpeed,
                                                float mass,
                                                float restitution,
                                                Vector2D<float> velocity, 
                                                Vector2D<float> acceleration)
-    : PhysicsComponent(componentId, transformComponent, maxSpeed, mass, restitution, velocity, acceleration)
+    : PhysicsComponent(componentId, transformCompPtr, maxSpeed, mass, restitution, velocity, acceleration)
 {
 }
 
@@ -25,33 +25,33 @@ bool PickupPhysicsComponent::SignalCollision(ActorId actorId)
 {
     bool stopResolvingCollisions = false;
 
-    std::shared_ptr<GameActor> actor = ServiceLocator::GetActorFactory()->GetActor(actorId);
-    if (actor == nullptr)
+    auto actorPtr = ServiceLocator::GetActorFactory()->GetActor(actorId);
+    if (actorPtr == nullptr)
     {
         return stopResolvingCollisions;
     }
 
-    auto gameStateComponent = actor->GetGameStateComponent();
-    if (gameStateComponent != nullptr)
+    auto gameStateCompPtr = actorPtr->GetGameStateCompPtr();
+    if (gameStateCompPtr != nullptr)
     {
-        if (gameStateComponent->GetName() == "Player")
+        if (gameStateCompPtr->GetName() == "Player")
         {
-            std::shared_ptr<GameActor> thisActor = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
-            if (thisActor == nullptr)
+            auto thisActorPtr = ServiceLocator::GetActorFactory()->GetActor(GetParentActorId());
+            if (thisActorPtr == nullptr)
             {
                 return stopResolvingCollisions;
             }
 
-            auto thisGameStateComponent = thisActor->GetGameStateComponent();
-            if (thisGameStateComponent != nullptr)
+            auto thisGameStateCompPtr = thisActorPtr->GetGameStateCompPtr();
+            if (thisGameStateCompPtr != nullptr)
             {
-                std::dynamic_pointer_cast<PlayerGameStateComponent>(gameStateComponent)->AddToInventory(thisGameStateComponent);
+                std::dynamic_pointer_cast<PlayerGameStateComponent>(gameStateCompPtr)->AddToInventory(thisGameStateCompPtr);
             }
 
-            auto thisLifeComponent = thisActor->GetLifeComponent();
-            if (thisLifeComponent != nullptr)
+            auto thisLifeCompPtr = thisActorPtr->GetLifeCompPtr();
+            if (thisLifeCompPtr != nullptr)
             {
-                thisLifeComponent->Die();
+                thisLifeCompPtr->Die();
             }
         }
     }

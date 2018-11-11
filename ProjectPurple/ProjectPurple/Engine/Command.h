@@ -16,7 +16,7 @@ public:
     virtual ~MoveUp() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->MoveUp();
@@ -30,7 +30,7 @@ public:
     virtual ~MoveDown() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->MoveDown();
@@ -44,7 +44,7 @@ public:
     virtual ~MoveRight() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->MoveRight();
@@ -58,7 +58,7 @@ public:
     virtual ~MoveLeft() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->MoveLeft();
@@ -72,7 +72,7 @@ public:
     virtual ~Select() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->Select();
@@ -86,7 +86,7 @@ public:
     virtual ~Shoot() {}
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->Shoot();
@@ -101,7 +101,7 @@ public:
     void SetSpawnLocation(Vector2D<float> location) { m_location = location; }
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->Spawn();
@@ -118,7 +118,7 @@ public:
     void SetMousePosition(Vector2D<int> mousePos) { m_mousePosVec = mousePos; }
     virtual void Execute(GameActor& actor)
     {
-        auto logicComponentPtr = actor.GetLogicComponent();
+        auto logicComponentPtr = actor.GetLogicCompPtr();
         if (logicComponentPtr != nullptr)
         {
             logicComponentPtr->UpdateMousePosition(m_mousePosVec);

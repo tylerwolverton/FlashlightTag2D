@@ -4,7 +4,7 @@
 CursorInputComponent::CursorInputComponent(ComponentId componentId)
     :InputComponent(componentId)
 {
-    m_pMousePositionMoved = std::make_shared<UpdateMousePosition>();
+    m_updateMousePositionPtr = std::make_shared<UpdateMousePosition>();
 }
 
 CursorInputComponent::~CursorInputComponent()

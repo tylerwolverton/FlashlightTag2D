@@ -29,27 +29,27 @@ public:
 
     virtual void Update(float delatMs, InputData input);
     
-    void InsertComponent(EComponentNames compName, std::shared_ptr<ActorComponent> comp);
+    void InsertCompPtr(EComponentNames compName, std::shared_ptr<ActorComponent> comp);
 
-    std::shared_ptr<AIComponent>             GetAIComponent() const;
-    std::shared_ptr<LogicComponent>	         GetLogicComponent() const;
-    std::shared_ptr<CameraFollowComponent>   GetCameraFollowComponent() const;
-    std::shared_ptr<GraphicsComponent>	     GetGraphicsComponent() const;
-    std::shared_ptr<InputComponent>	         GetInputComponent() const;
-    std::shared_ptr<PhysicsComponent>	     GetPhysicsComponent() const;
-    std::shared_ptr<TransformComponent>	     GetTransformComponent() const;
-    std::shared_ptr<GameStateComponent>	     GetGameStateComponent() const;
-    std::shared_ptr<LifeComponent>	         GetLifeComponent() const;
+    std::shared_ptr<AIComponent>             GetAICompPtr() const;
+    std::shared_ptr<LogicComponent>	         GetLogicCompPtr() const;
+    std::shared_ptr<CameraFollowComponent>   GetCameraFollowCompPtr() const;
+    std::shared_ptr<GraphicsComponent>	     GetGraphicsCompPtr() const;
+    std::shared_ptr<InputComponent>	         GetInputCompPtr() const;
+    std::shared_ptr<PhysicsComponent>	     GetPhysicsCompPtr() const;
+    std::shared_ptr<TransformComponent>	     GetTransformCompPtr() const;
+    std::shared_ptr<GameStateComponent>	     GetGameStateCompPtr() const;
+    std::shared_ptr<LifeComponent>	         GetLifeCompPtr() const;
 
-    void RemoveAIComponent();
-    void RemoveLogicComponent();
-    void RemoveCameraFollowComponent();
-    void RemoveGraphicsComponent();
-    void RemoveInputComponent();
-    void RemovePhysicsComponent();
-    void RemoveTransformComponent();
-    void RemoveGameStateComponent();
-    void RemoveLifeComponent();
+    void RemoveAICompPtr();
+    void RemoveLogicCompPtr();
+    void RemoveCameraFollowCompPtr();
+    void RemoveGraphicsCompPtr();
+    void RemoveInputCompPtr();
+    void RemovePhysicsCompPtr();
+    void RemoveTransformCompPtr();
+    void RemoveGameStateCompPtr();
+    void RemoveLifeCompPtr();
 
     const InputData GetInput() const { return m_input; }
 

@@ -24,11 +24,6 @@ TransformComponent::~TransformComponent()
 {
 }
 
-//ComponentId TransformComponent::GetComponentId() const
-//{
-//	return ComponentId();
-//}
-
 const EComponentNames TransformComponent::GetComponentName() const
 {
     return EComponentNames::TransformComponentEnum;

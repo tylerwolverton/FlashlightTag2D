@@ -4,21 +4,21 @@
 InputComponent::InputComponent(ComponentId componentId)
     : ActorComponent(componentId),
       m_oldMousePos(Vector2D<int>(0, 0)),
-      m_pButtonW(nullptr),
-      m_pButtonS(nullptr),
-      m_pButtonD(nullptr),
-      m_pButtonA(nullptr),
-      m_pButtonUp(nullptr),
-      m_pButtonLeft(nullptr),
-      m_pButtonDown(nullptr),
-      m_pButtonRight(nullptr),
-      m_pButtonEsc(nullptr),
-      m_pButtonSpace(nullptr),
-      m_pButtonReturn(nullptr),
-      m_pMouseButtonRight(nullptr),
-      m_pMouseButtonLeft(nullptr),
-      m_pMouseButtonMiddle(nullptr),
-      m_pMousePositionMoved(nullptr)
+      m_wButtonCmdPtr(nullptr),
+      m_sButtonCmdPtr(nullptr),
+      m_dButtonCmdPtr(nullptr),
+      m_aButtonCmdPtr(nullptr),
+      m_upButtonCmdPtr(nullptr),
+      m_leftButtonPtr(nullptr),
+      m_downButtonCmdPtr(nullptr),
+      m_rightButtonCmdPtr(nullptr),
+      m_escButtonCmdPtr(nullptr),
+      m_spaceButtonCmdPtr(nullptr),
+      m_returnButtonCmdPtr(nullptr),
+      m_rightMouseButtonCmdPtr(nullptr),
+      m_leftMouseButtonCmdPtr(nullptr),
+      m_middleMouseButtonCmdPtr(nullptr),
+      m_updateMousePositionPtr(nullptr)
 {
 }
 
@@ -28,70 +28,70 @@ InputComponent::~InputComponent()
 
 void InputComponent::Update(GameActor& actor, float deltaMs)
 {
-    std::vector<std::shared_ptr<Command>> commandList;
+    std::vector<std::shared_ptr<Command>> commandPtrVec;
     InputData input = actor.GetInput();
     if (input.buttonsPressed & EInputValues::W)
     {
-        commandList.push_back(m_pButtonW);
+        commandPtrVec.push_back(m_wButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::A)
     {
-        commandList.push_back(m_pButtonA);
+        commandPtrVec.push_back(m_aButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::S)
     {
-        commandList.push_back(m_pButtonS);
+        commandPtrVec.push_back(m_sButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::D)
     {
-        commandList.push_back(m_pButtonD);
+        commandPtrVec.push_back(m_dButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Up)
     {
-        commandList.push_back(m_pButtonUp);
+        commandPtrVec.push_back(m_upButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Left)
     {
-        commandList.push_back(m_pButtonLeft);
+        commandPtrVec.push_back(m_leftButtonPtr);
     }
     if (input.buttonsPressed & EInputValues::Down)
     {
-        commandList.push_back(m_pButtonDown);
+        commandPtrVec.push_back(m_downButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Right)
     {
-        commandList.push_back(m_pButtonRight);
+        commandPtrVec.push_back(m_rightButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Esc)
     {
-        commandList.push_back(m_pButtonEsc);
+        commandPtrVec.push_back(m_escButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Space)
     {
-        commandList.push_back(m_pButtonSpace);
+        commandPtrVec.push_back(m_spaceButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::Return)
     {
-        commandList.push_back(m_pButtonReturn);
+        commandPtrVec.push_back(m_returnButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::MouseRight)
     {
-        commandList.push_back(m_pMouseButtonRight);
+        commandPtrVec.push_back(m_rightMouseButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::MouseLeft)
     {
-        commandList.push_back(m_pMouseButtonLeft);
+        commandPtrVec.push_back(m_leftMouseButtonCmdPtr);
     }
     if (input.buttonsPressed & EInputValues::MouseMiddle)
     {
-        commandList.push_back(m_pMouseButtonMiddle);
+        commandPtrVec.push_back(m_middleMouseButtonCmdPtr);
     }
 
     m_oldMousePos = input.mousePos;
-    m_pMousePositionMoved->SetMousePosition(input.mousePos);
-    commandList.push_back(m_pMousePositionMoved);
+    m_updateMousePositionPtr->SetMousePosition(input.mousePos);
+    commandPtrVec.push_back(m_updateMousePositionPtr);
 
-    actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandList));
+    actor.SetCommands(std::make_shared<std::vector<std::shared_ptr<Command>>>(commandPtrVec));
 }
 
 const EComponentNames InputComponent::GetComponentName() const

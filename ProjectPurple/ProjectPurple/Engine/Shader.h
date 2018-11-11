@@ -47,15 +47,6 @@ public:
     }
 
 private:
-    std::string readFile(const char* file);
-    bool loadVertexShader(const std::string &filename);
-    bool loadFragmentShader(const std::string &filename);
-    bool linkShaders();
-    void printShaderLinkingError(int32_t shaderId);
-
-    // If something went wrong while compiling the shaders, we'll use this function to find the error
-    void printShaderCompilationErrorInfo(int32_t shaderId);
-
     // The handle to our shader program
     GLuint m_shaderProgram;
 
@@ -63,4 +54,13 @@ private:
     GLuint m_vertexshader, m_fragmentShader;
 
     std::string m_vertexShaderStr, m_fragmentShaderStr;
+
+	std::string readFile(const char* file);
+	bool loadVertexShader(const std::string &filename);
+	bool loadFragmentShader(const std::string &filename);
+	bool linkShaders();
+	void printShaderLinkingError(int32_t shaderId);
+
+	// If something went wrong while compiling the shaders, we'll use this function to find the error
+	void printShaderCompilationErrorInfo(int32_t shaderId);
 };

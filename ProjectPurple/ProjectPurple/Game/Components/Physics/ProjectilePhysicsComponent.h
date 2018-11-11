@@ -5,7 +5,7 @@ class ProjectilePhysicsComponent :
 {
 public:
     ProjectilePhysicsComponent(ComponentId componentId,
-                               std::shared_ptr<TransformComponent> transformComponent,
+                               std::shared_ptr<TransformComponent> transformCompPtr,
                                float maxSpeed,
                                float mass,
                                float restitution,

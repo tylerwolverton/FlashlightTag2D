@@ -1,8 +1,8 @@
 #pragma once
-#include<memory>
+#include <memory>
 #include <vector>
-#include<string>
-#include<document.h>
+#include <string>
+#include <document.h>
 
 class Level;
 class ActorFactory;
@@ -38,20 +38,18 @@ public:
         static const std::string WinScreen;
     };
 
-    LevelFactory(std::shared_ptr<ActorFactory> actorFactory);
+    LevelFactory(std::shared_ptr<ActorFactory> actorFactoryPtr);
     ~LevelFactory();
 
     void ChangeLevel(const std::string& levelPath);
 
-    void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actor);
+    void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actorPtr);
 
 private:
-    std::shared_ptr<ActorFactory> m_pActorFactory;
+    std::shared_ptr<ActorFactory> m_actorFactoryPtr;
+	std::vector<std::vector<std::shared_ptr<GameTile>>> m_tilePtrVecVec;
+	std::shared_ptr<Level> m_curLevelPtr;
 
     std::shared_ptr<Level> createLevelFromJson(const rapidjson::Value& level);
-
-    std::vector<std::vector<std::shared_ptr<GameTile>>> m_tileVec;
-
-    std::shared_ptr<Level> m_curLevel;
 };
 

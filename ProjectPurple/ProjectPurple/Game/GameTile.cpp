@@ -2,25 +2,25 @@
 #include "GameActor.h"
 #include "PhysicsComponent.h"
 
-GameTile::GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformComp, std::shared_ptr<PhysicsComponent> physicsComp)
+GameTile::GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformCompPtr, std::shared_ptr<PhysicsComponent> physicsCompPtr)
     : m_spriteIdx(spriteIdx),
-      m_transformComp(transformComp),
-      m_physicsComp(physicsComp)
+      m_transformCompPtr(transformCompPtr),
+      m_physicsCompPtr(physicsCompPtr)
 {
 }
 
 GameTile::~GameTile()
 {
-    m_gameActorMap.clear();
+	m_idToActorPtrMap.clear();
     //m_gameActorVec.clear();
 }
 
 void GameTile::AddActor(std::shared_ptr<GameActor> gameActor)
 {
     ActorId actorId = gameActor->GetActorId();
-    if (m_gameActorMap.find(actorId) == m_gameActorMap.end())
+    if (m_idToActorPtrMap.find(actorId) == m_idToActorPtrMap.end())
     {
-        m_gameActorMap.insert(std::make_pair(actorId, gameActor));
+		m_idToActorPtrMap.insert(std::make_pair(actorId, gameActor));
     }
 
     //m_gameActorVec.push_back(gameActor);
@@ -28,9 +28,9 @@ void GameTile::AddActor(std::shared_ptr<GameActor> gameActor)
 
 void GameTile::RemoveActor(ActorId actorId)
 {
-    if (m_gameActorMap.find(actorId) != m_gameActorMap.end())
+    if (m_idToActorPtrMap.find(actorId) != m_idToActorPtrMap.end())
     {
-        m_gameActorMap.erase(actorId);
+		m_idToActorPtrMap.erase(actorId);
     }
 
     /*int idx = 0;
@@ -48,15 +48,15 @@ void GameTile::RemoveActor(ActorId actorId)
 
 void GameTile::RemoveAllActors()
 {
-    m_gameActorMap.clear();
+	m_idToActorPtrMap.clear();
 }
 
 std::shared_ptr<GameActor> GameTile::GetActorOnTile(ActorId actorId)
 {
-    auto actorIter = m_gameActorMap.find(actorId);
-    if (actorIter != m_gameActorMap.end())
+    auto actorMapIter = m_idToActorPtrMap.find(actorId);
+    if (actorMapIter != m_idToActorPtrMap.end())
     {
-        return actorIter->second;
+        return actorMapIter->second;
     }
 
     return nullptr;
