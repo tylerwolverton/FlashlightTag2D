@@ -9,7 +9,8 @@ class MainMenuLogicComponent :
     public LogicComponent
 {
 public:
-    MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> buttonTransformCompMapPtr);
+    MainMenuLogicComponent(ComponentId componentId, 
+                           const std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>>& buttonTransformCompMapPtr);
     virtual ~MainMenuLogicComponent();
 
     void MoveUp() override;
@@ -23,10 +24,10 @@ private:
         Exit
     };
 
-    int selectedButtonIdx;
-    std::vector<EMenuButtons> buttons;
+    int m_selectedButtonIdx;
+    std::vector<EMenuButtons> m_buttonVec;
     std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> m_buttonTransformCompPtrMapPtr;
 
-    uint32_t lastTickVal;
+    uint32_t m_lastTickVal;
 };
 

@@ -12,7 +12,7 @@ class GameStateComponent :
     public ActorComponent
 {
 public:
-    GameStateComponent(ComponentId componentId, std::string actorName, std::string actorType);
+    GameStateComponent(ComponentId componentId, const std::string& actorName, const std::string& actorType);
     virtual ~GameStateComponent();
 
     virtual void Update(GameActor& actor, float deltaMs) override;

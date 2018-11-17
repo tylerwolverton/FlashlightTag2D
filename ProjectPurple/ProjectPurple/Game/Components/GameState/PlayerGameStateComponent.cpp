@@ -1,6 +1,6 @@
 #include "PlayerGameStateComponent.h"
 
-PlayerGameStateComponent::PlayerGameStateComponent(ComponentId componentId, std::string actorName)
+PlayerGameStateComponent::PlayerGameStateComponent(ComponentId componentId, const std::string& actorName)
     : GameStateComponent(componentId, actorName, "Player"),
       m_inventory(std::map<std::string, std::shared_ptr<GameStateComponent>>())
 {
@@ -10,7 +10,7 @@ PlayerGameStateComponent::~PlayerGameStateComponent()
 {
 }
 
-void PlayerGameStateComponent::RemoveFromInventoryByName(std::string compName)
+void PlayerGameStateComponent::RemoveFromInventoryByName(const std::string& compName)
 {
     if (m_inventory.find(compName) != m_inventory.end())
     {
@@ -18,18 +18,18 @@ void PlayerGameStateComponent::RemoveFromInventoryByName(std::string compName)
     }
 }
 
-void PlayerGameStateComponent::AddToInventory(std::shared_ptr<GameStateComponent> gameStateComp)
+void PlayerGameStateComponent::AddToInventory(const std::shared_ptr<GameStateComponent>& gameStateComp)
 {
     m_inventory.insert(std::make_pair(gameStateComp->GetName(), gameStateComp)); 
 }
 
-bool PlayerGameStateComponent::InventoryContainsItem(std::string name)
+bool PlayerGameStateComponent::InventoryContainsItem(const std::string& name) const
 {
     return GetInventoryItemByName(name) != nullptr;
 
 }
 
-std::shared_ptr<GameStateComponent> PlayerGameStateComponent::GetInventoryItemByName(std::string name)
+std::shared_ptr<GameStateComponent> PlayerGameStateComponent::GetInventoryItemByName(const std::string& name) const
 {
     auto inventoryIter = m_inventory.find(name);
     if (inventoryIter == m_inventory.end())

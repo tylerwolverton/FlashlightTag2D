@@ -6,7 +6,7 @@
 
 #include <SDL.h>
 
-SpawnBehavior::SpawnBehavior(int spawnDelay, std::string targetName)
+SpawnBehavior::SpawnBehavior(int spawnDelay, const std::string& targetName)
     : m_spawnVecPos(0),
       m_spawnDelay(spawnDelay),
       m_targetName(targetName)
@@ -39,13 +39,13 @@ std::vector<std::shared_ptr<Command>> SpawnBehavior::Update(const GameActor& thi
     return std::vector<std::shared_ptr<Command>>();
 }
 
-Vector2D<float> SpawnBehavior::getNextSpawnPos(Vector2D<float> spawnerPos)
+Vector2D<float> SpawnBehavior::getNextSpawnPos(const Vector2D<float>& spawnerPos)
 {
     auto rndNumGenPtr = ServiceLocator::GetRandomNumberGenerator();
     if (rndNumGenPtr != nullptr)
     {
-        return Vector2D<float>(rndNumGenPtr->GetIntWithinRange(spawnerPos.x - 100, spawnerPos.x + 100),
-                               rndNumGenPtr->GetIntWithinRange(spawnerPos.y - 100, spawnerPos.y + 100));
+        return Vector2D<float>(rndNumGenPtr->GetFloatWithinRange(spawnerPos.x - 100, spawnerPos.x + 100),
+                               rndNumGenPtr->GetFloatWithinRange(spawnerPos.y - 100, spawnerPos.y + 100));
     }
 
     return Vector2D<float>(0,0);

@@ -5,12 +5,12 @@
 #include "ServiceLocator.h"
 
 CharacterPhysicsComponent::CharacterPhysicsComponent(ComponentId componentId,
-                                                     std::shared_ptr<TransformComponent> transformCompPtr, 
+                                                     const std::shared_ptr<TransformComponent>& transformCompPtr, 
                                                      float maxSpeed,
                                                      float mass,
                                                      float restitution,
-                                                     Vector2D<float> velocity, 
-                                                     Vector2D<float> acceleration)
+                                                     const Vector2D<float>& velocity, 
+                                                     const Vector2D<float>& acceleration)
     : PhysicsComponent(componentId, transformCompPtr, maxSpeed, mass, restitution, velocity, acceleration)
 {
 }

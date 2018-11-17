@@ -11,7 +11,7 @@
 #include "LifeComponent.h"
 #include "Command.h"
 
-GameActor::GameActor(ActorId actorId, std::string actorName, ComponentMap components)
+GameActor::GameActor(ActorId actorId, const std::string& actorName, ComponentMap components)
     : m_actorId(actorId),
       m_actorName(actorName),
       m_componentMap(components)
@@ -20,7 +20,7 @@ GameActor::GameActor(ActorId actorId, std::string actorName, ComponentMap compon
 }
 
 // TODO: Cache changes
-GameActor::GameActor(ActorId actorId, std::string actorName)
+GameActor::GameActor(ActorId actorId, const std::string& actorName)
     : m_actorId(actorId),
       m_actorName(actorName)
 {
@@ -81,7 +81,7 @@ std::shared_ptr<ActorComponent> GameActor::getComponentByName(EComponentNames co
     return nullptr;
 }
 
-void GameActor::InsertCompPtr(EComponentNames compName, std::shared_ptr<ActorComponent> comp)
+void GameActor::InsertCompPtr(EComponentNames compName, const std::shared_ptr<ActorComponent>& comp)
 {
     if (m_componentMap.find(compName) != m_componentMap.end())
     {
@@ -278,12 +278,12 @@ void GameActor::RemoveLifeCompPtr()
 
 Vector2D<float> GameActor::GetMousePosition()
 {
-    Vector2D<float> pos(0, 0);
+    Vector2D<float> pos(0.0f, 0.0f);
 
     auto inputCompPtr = GetInputCompPtr();
     if (inputCompPtr != nullptr)
     {
-        pos = Vector2D<float>(inputCompPtr->GetOldMousePos().x, inputCompPtr->GetOldMousePos().y);
+        pos = Vector2D<float>((float)inputCompPtr->GetOldMousePos().x, (float)inputCompPtr->GetOldMousePos().y);
     }
 
     return pos;

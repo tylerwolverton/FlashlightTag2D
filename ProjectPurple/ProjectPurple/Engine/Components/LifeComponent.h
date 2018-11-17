@@ -9,11 +9,11 @@ public:
 
     virtual const EComponentNames GetComponentName() const override;
 
-    virtual void Die();
+    virtual void Die() const;
     virtual void TakeDamage(int damage);
 
-    int GetHealth() { return m_health; }
-    int GetMaxHealth() { return m_maxHealth; }
+    int GetHealth() const { return m_health; }
+    int GetMaxHealth() const { return m_maxHealth; }
 
     void SetHealth(int health) 
     { 

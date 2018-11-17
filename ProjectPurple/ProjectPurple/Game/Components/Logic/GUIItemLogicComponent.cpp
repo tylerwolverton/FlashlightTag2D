@@ -27,6 +27,7 @@ void GUIItemLogicComponent::Update(GameActor& actor, float deltaMs)
         m_cameraTransformCompPtr = actorFactoryPtr->GetCurrentCamera()->GetTransformCompPtr();
     }
 
+    // Maintain the same position on screen regardless of the camera position
     auto actorTransformCompPtr = actor.GetTransformCompPtr();
     actorTransformCompPtr->SetPosition(actorTransformCompPtr->GetInitPosition()
 										+ m_cameraTransformCompPtr->GetPosition());

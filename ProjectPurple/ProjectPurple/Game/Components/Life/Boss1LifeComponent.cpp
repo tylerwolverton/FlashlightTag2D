@@ -32,7 +32,7 @@ void Boss1LifeComponent::TakeDamage(int damage)
     }
 }
 
-void Boss1LifeComponent::updateHealthBar()
+void Boss1LifeComponent::updateHealthBar() const
 {
     auto actorFactoryPtr = ServiceLocator::GetActorFactory();
     if (actorFactoryPtr == nullptr)

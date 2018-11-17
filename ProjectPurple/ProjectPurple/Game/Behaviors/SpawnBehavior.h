@@ -8,7 +8,7 @@ class SpawnBehavior :
     public Behavior
 {
 public:
-    SpawnBehavior(int spawnDelay, std::string targetName);
+    SpawnBehavior(int spawnDelay, const std::string& targetName);
     virtual ~SpawnBehavior();
 
     std::vector<std::shared_ptr<Command>> Update(const GameActor& thisActor) override;
@@ -19,6 +19,6 @@ private:
     int m_spawnDelay;
     std::string m_targetName;
 
-	Vector2D<float> getNextSpawnPos(Vector2D<float> spawnerPos);
+	Vector2D<float> getNextSpawnPos(const Vector2D<float>& spawnerPos);
 };
 

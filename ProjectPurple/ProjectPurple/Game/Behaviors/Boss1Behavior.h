@@ -6,12 +6,12 @@ class Boss1Behavior :
     public Behavior
 {
 public:
-    Boss1Behavior(std::shared_ptr<GameActor> targetActor, Vector2D<int> levelSize);
+    Boss1Behavior(const std::shared_ptr<GameActor>& targetActor, const Vector2D<int>& levelSize);
     virtual ~Boss1Behavior();
 
     std::vector<std::shared_ptr<Command>> Update(const GameActor& actor) override;
 
-    void SetTarget(std::shared_ptr<GameActor> targetActorPtr) { m_targetActorPtr = targetActorPtr; }
+    void SetTarget(const std::shared_ptr<GameActor>& targetActorPtr) { m_targetActorPtr = targetActorPtr; }
 
 private:
     enum EBehaviorStates
@@ -32,5 +32,5 @@ private:
     int m_bulletCount;
 
 	void initializeMovePositions();
-	void spawnBullets(std::shared_ptr<TransformComponent> actorTransformCompPtr);
+	void spawnBullets(const std::shared_ptr<TransformComponent>& actorTransformCompPtr);
 };

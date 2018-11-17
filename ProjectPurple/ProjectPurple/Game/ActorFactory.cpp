@@ -47,7 +47,8 @@
 // from rapidjson
 #include "filereadstream.h"
 
-ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgrPtr, std::shared_ptr<GraphicsManager> graphicsMgrPtr)
+ActorFactory::ActorFactory(const std::shared_ptr<PhysicsManager>& physicsMgrPtr, 
+                           const std::shared_ptr<GraphicsManager>& graphicsMgrPtr)
     : m_lastActorId(0),
       m_physicsMgrPtr(physicsMgrPtr),
       m_graphicsMgrPtr(graphicsMgrPtr),
@@ -56,7 +57,8 @@ ActorFactory::ActorFactory(std::shared_ptr<PhysicsManager> physicsMgrPtr, std::s
 {
 }
 
-void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::shared_ptr<Level> newLevelPtr)
+void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, 
+                                   const std::shared_ptr<Level>& newLevelPtr)
 {
     if (m_curPlayerPtr != nullptr)
     {
@@ -119,7 +121,7 @@ void ActorFactory::InitLevelActors(const rapidjson::Value& actorList, std::share
     }
 }
 
-std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId) 
+std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId) const
 { 
     auto actorMapIter = m_idToActorPtrMap.find(actorId);
     if (actorMapIter != m_idToActorPtrMap.end())
@@ -130,7 +132,7 @@ std::shared_ptr<GameActor> ActorFactory::GetActor(ActorId actorId)
     return nullptr; 
 }
 
-std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actorName)
+std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actorName) const
 {
     for (auto actorMapIter : m_idToActorPtrMap)
     {
@@ -149,12 +151,12 @@ std::shared_ptr<GameActor> ActorFactory::GetFirstActorWithName(std::string actor
     return nullptr;
 }
 
-std::shared_ptr<GameActor> ActorFactory::GetPlayer()
+std::shared_ptr<GameActor> ActorFactory::GetPlayer() const
 {
     return GetFirstActorWithName("Player");
 }
 
-void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actorPtr)
+void ActorFactory::addComponentsToManagers(const std::shared_ptr<GameActor>& actorPtr)
 {
     auto physicsCompPtr = actorPtr->GetPhysicsCompPtr();
     if (physicsCompPtr != nullptr)
@@ -168,7 +170,7 @@ void ActorFactory::addComponentsToManagers(std::shared_ptr<GameActor> actorPtr)
     }
 }
 
-std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath, Vector2D<float> position)
+std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath, const Vector2D<float>& position)
 {
     FILE* fp;
     fopen_s(&fp, actorPath, "rb");
@@ -378,29 +380,6 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
 
         newActorPtr->InsertCompPtr(EComponentNames::LifeComponentEnum, lifeCompPtr);
     }
-    //if (actorList[i].HasMember("follow_target_ai_component"))
-    //{
-    //	StrongActorPtr target = nullptr;
-    //	auto targetName = actorList[i]["follow_target_ai_component"]["target_name"].GetString();
-    //	for (auto entity : m_pEntityList)
-    //	{
-    //		auto gameStateComp = entity->GetGameStateCompPtr();
-    //		if (gameStateComp == nullptr)
-    //		{
-    //			continue;
-    //		}
-    //		if (targetName == gameStateComp->GetName())
-    //		{
-    //			// Set to first occurance of target
-    //			target = entity;
-    //			break;
-    //		}
-    //	}
-    //	if (target != nullptr)
-    //	{
-    //		components.push_back(std::make_shared<FollowTargetAIComponent>(target));
-    //	}
-    //}
 
     //m_pEntityVec.push_back(newActor);
 
@@ -412,7 +391,7 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
     return newActorPtr;
 }
 
-void ActorFactory::addInputComponent(const char* const type, std::shared_ptr<GameActor> actorPtr)
+void ActorFactory::addInputComponent(const char* const type, const std::shared_ptr<GameActor>& actorPtr)
 {
     if (!strcmp(type, "character_input"))
     {
@@ -429,8 +408,8 @@ void ActorFactory::addInputComponent(const char* const type, std::shared_ptr<Gam
 }
 
 std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* const type,
-                                                                    std::shared_ptr<GameActor> actorPtr, 
-                                                                    std::shared_ptr<TransformComponent> transformCompPtr,
+                                                                    const std::shared_ptr<GameActor>& actorPtr, 
+                                                                    const std::shared_ptr<TransformComponent>& transformCompPtr,
                                                                     float maxSpeed,
                                                                     float mass,
                                                                     float restitution)
@@ -500,7 +479,7 @@ std::shared_ptr<PhysicsComponent> ActorFactory::addPhysicsComponent(const char* 
     return physicsCompPtr;
 }
 
-void ActorFactory::KillAllActorsByName(std::string name)
+void ActorFactory::KillAllActorsByName(const std::string& name)
 {
     for (auto actorIter : m_idToActorPtrMap)
     {
@@ -586,7 +565,9 @@ void ActorFactory::RemoveDeadActors()
     }
 }
 
-std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, Vector2D<float> position, Vector2D<float> velocity)
+std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(const std::string& name, 
+                                                             const Vector2D<float>& position, 
+                                                             const Vector2D<float>& velocity)
 {
     std::string actorPath = "resources/actors/" + name + ".json";
     std::shared_ptr<GameActor> actor = createActor(actorPath.c_str());
@@ -601,7 +582,8 @@ std::shared_ptr<GameActor> ActorFactory::CreateActorFromName(std::string name, V
     return actor;
 }
 
-std::shared_ptr<GameActor> ActorFactory::CreateProjectile(Vector2D<float> position, Vector2D<float> velocity)
+std::shared_ptr<GameActor> ActorFactory::CreateProjectile(const Vector2D<float>& position, 
+                                                          const Vector2D<float>& velocity)
 {
     std::shared_ptr<GameActor> actor = createActor("resources/actors/projectile.json");
     actor->GetTransformCompPtr()->SetPosition(position);

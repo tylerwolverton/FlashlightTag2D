@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 
-Boss1Behavior::Boss1Behavior(std::shared_ptr<GameActor> targetActorPtr, Vector2D<int> levelSize)
+Boss1Behavior::Boss1Behavior(const std::shared_ptr<GameActor>& targetActorPtr, const Vector2D<int>& levelSize)
     : m_targetActorPtr(targetActorPtr),
       m_levelSize(levelSize),
       m_curState(EBehaviorStates::Move),
@@ -17,10 +17,10 @@ Boss1Behavior::Boss1Behavior(std::shared_ptr<GameActor> targetActorPtr, Vector2D
 
 void Boss1Behavior::initializeMovePositions()
 {
-    m_movePositionVec.push_back(Vector2D<float>(m_levelSize.x / 2, m_levelSize.y));
-    m_movePositionVec.push_back(Vector2D<float>(m_levelSize.x, m_levelSize.y / 2));
-    m_movePositionVec.push_back(Vector2D<float>(m_levelSize.x / 2, 0));
-    m_movePositionVec.push_back(Vector2D<float>(0, m_levelSize.y / 2));
+    m_movePositionVec.push_back(Vector2D<float>(m_levelSize.x / 2.0f, (float)m_levelSize.y));
+    m_movePositionVec.push_back(Vector2D<float>((float)m_levelSize.x, m_levelSize.y / 2.0f));
+    m_movePositionVec.push_back(Vector2D<float>(m_levelSize.x / 2.0f, 0.0f));
+    m_movePositionVec.push_back(Vector2D<float>(0.0f, m_levelSize.y / 2.0f));
 }
 
 Boss1Behavior::~Boss1Behavior()
@@ -55,6 +55,7 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
             }
             break;
 
+        // Ram into the next wall
         case EBehaviorStates::Move:
             if (curTicks - m_lastTickVal > 500)
             {
@@ -66,6 +67,7 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
 
             return moveToPosition(curPos, m_movePositionVec[nextIdx], 30);
 
+        // Fire bullets in all directions
         case EBehaviorStates::Explode:
             if (curTicks - m_lastTickVal > 300)
             {
@@ -83,7 +85,7 @@ std::vector<std::shared_ptr<Command>> Boss1Behavior::Update(const GameActor& act
     return std::vector<std::shared_ptr<Command>>();
 }
 
-void Boss1Behavior::spawnBullets(std::shared_ptr<TransformComponent> actorTransformCompPtr)
+void Boss1Behavior::spawnBullets(const std::shared_ptr<TransformComponent>& actorTransformCompPtr)
 {
     // calculate 8 positions surrounding boss
     auto pos = actorTransformCompPtr->GetPosition();

@@ -2,12 +2,12 @@
 #include "TransformComponent.h"
 
 PhysicsComponent::PhysicsComponent(ComponentId componentId,
-                                   std::shared_ptr<TransformComponent> transformCompPtr, 
+                                   const std::shared_ptr<TransformComponent>& transformCompPtr, 
                                    float maxSpeed, 
                                    float mass, 
                                    float restitution,
-                                   Vector2D<float> velocity,
-                                   Vector2D<float> acceleration)
+                                   const Vector2D<float>& velocity,
+                                   const Vector2D<float>& acceleration)
     : ActorComponent(componentId),
       m_transformCompPtr(transformCompPtr),
       m_maxSpeed(maxSpeed),
@@ -68,7 +68,7 @@ void PhysicsComponent::MoveActor(float deltaMs)
     }
 }
 
-const void PhysicsComponent::SetVelocity(Vector2D<float> newVelocity)
+const void PhysicsComponent::SetVelocity(const Vector2D<float>& newVelocity)
 {
     m_velocity = newVelocity;
     if (m_velocity.Length() > m_maxSpeed)
@@ -88,20 +88,20 @@ const void PhysicsComponent::SetVelocityToMax()
     m_velocity = dirVec * m_maxSpeed;
 }
 
-void PhysicsComponent::AddImpulse(Vector2D<float> impulse)
+void PhysicsComponent::AddImpulse(const Vector2D<float>& impulse)
 {
     // impulse = f * t;
     m_sumOfImpulses += impulse;
 }
 
-void PhysicsComponent::AddForce(Vector2D<float> force)
+void PhysicsComponent::AddForce(const Vector2D<float>& force)
 {
     // f = m * a
     //m_sumOfForces += force;
     AddVelocity(force / m_mass);
 }
 
-void PhysicsComponent::AddVelocity(Vector2D<float> velocity)
+void PhysicsComponent::AddVelocity(const Vector2D<float>& velocity)
 {
     m_velocity += velocity;
     if (m_velocity.Length() > m_maxSpeed)

@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 
-PortalLogicComponent::PortalLogicComponent(ComponentId componentId, std::string levelName, float countdownTimeSec)
+PortalLogicComponent::PortalLogicComponent(ComponentId componentId, const std::string& levelName, float countdownTimeSec)
     : LogicComponent(componentId),
       m_levelName(levelName),
       m_countdownTimeSec(countdownTimeSec)
@@ -28,7 +28,7 @@ void PortalLogicComponent::Update(GameActor& actor, float deltaMs)
     }
 }
 
-void PortalLogicComponent::ChangeLevel()
+void PortalLogicComponent::ChangeLevel() const
 {
     auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
 

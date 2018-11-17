@@ -8,7 +8,7 @@
 
 #include <memory>
 
-AIComponent::AIComponent(ComponentId componentId, std::vector<std::shared_ptr<Behavior>> behaviorPtrVec)
+AIComponent::AIComponent(ComponentId componentId, const std::vector<std::shared_ptr<Behavior>>& behaviorPtrVec)
     : ActorComponent(componentId),
       m_behaviorPtrVec(behaviorPtrVec)
 {
@@ -20,6 +20,7 @@ AIComponent::~AIComponent()
 
 void AIComponent::Update(GameActor& actor, float deltaMs)
 {	
+    // AI components will run their current behaviors and generate commands to execute
     if (!m_behaviorPtrVec.empty())
     {
         std::shared_ptr<std::vector<std::shared_ptr<Command>>> commandPtrVecPtr(std::make_shared<std::vector<std::shared_ptr<Command>>>());

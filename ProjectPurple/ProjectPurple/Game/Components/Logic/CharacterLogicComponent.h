@@ -5,7 +5,7 @@ class CharacterLogicComponent :
     public LogicComponent
 {
 public:
-    CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsCompPtr);
+    CharacterLogicComponent(ComponentId componentId, const std::shared_ptr<PhysicsComponent>& physicsCompPtr);
     virtual ~CharacterLogicComponent();
 
     void MoveUp() override;

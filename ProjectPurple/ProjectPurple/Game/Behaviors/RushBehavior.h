@@ -15,8 +15,8 @@ private:
 	std::shared_ptr<GameActor> m_targetActorPtr;
 	bool m_chaseActor;
 
-    std::vector<std::shared_ptr<Command>> moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformCompPtr,
-                                                            std::shared_ptr<TransformComponent> targetActorTransformCompPtr,
+    std::vector<std::shared_ptr<Command>> moveTowardsTarget(const std::shared_ptr<TransformComponent>& thisActorTransformCompPtr,
+                                                            const std::shared_ptr<TransformComponent>& targetActorTransformCompPtr,
                                                             float speed);
 };
 

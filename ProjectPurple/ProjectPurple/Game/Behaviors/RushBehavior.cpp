@@ -24,6 +24,7 @@ RushBehavior::~RushBehavior()
 
 std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& thisActor)
 {
+    // Run towards target
     auto thisActorTransformCompPtr = thisActor.GetTransformCompPtr();
     if (thisActorTransformCompPtr == nullptr)
     {
@@ -46,8 +47,8 @@ std::vector<std::shared_ptr<Command>> RushBehavior::Update(const GameActor& this
     return moveTowardsTarget(thisActorTransformCompPtr, targetActorTransformCompPtr, speed);
 }
 
-std::vector<std::shared_ptr<Command>> RushBehavior::moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformCompPtr,
-                                                                      std::shared_ptr<TransformComponent> targetActorTransformCompPtr, 
+std::vector<std::shared_ptr<Command>> RushBehavior::moveTowardsTarget(const std::shared_ptr<TransformComponent>& thisActorTransformCompPtr,
+                                                                      const std::shared_ptr<TransformComponent>& targetActorTransformCompPtr, 
                                                                       float speed)
 {
     return moveToPosition(thisActorTransformCompPtr->GetPosition(), targetActorTransformCompPtr->GetPosition(), speed);

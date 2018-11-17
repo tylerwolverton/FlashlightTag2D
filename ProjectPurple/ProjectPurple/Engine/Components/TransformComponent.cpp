@@ -1,6 +1,9 @@
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(ComponentId componentId, Vector2D<float> position, float radius, Vector2D<float> direction)
+TransformComponent::TransformComponent(ComponentId componentId, 
+                                       const Vector2D<float>& position, 
+                                       float radius, 
+                                       const Vector2D<float>& direction)
     : ActorComponent(componentId),
       m_position(position),
       m_initialPosition(position),
@@ -10,7 +13,10 @@ TransformComponent::TransformComponent(ComponentId componentId, Vector2D<float> 
 {
 }
 
-TransformComponent::TransformComponent(ComponentId componentId, Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction)
+TransformComponent::TransformComponent(ComponentId componentId, 
+                                       const Vector2D<float>& position, 
+                                       const Vector2D<float>& size, 
+                                       const Vector2D<float>& direction)
     : ActorComponent(componentId),
       m_position(position),
       m_initialPosition(position),

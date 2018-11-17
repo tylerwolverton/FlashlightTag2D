@@ -12,6 +12,7 @@ public:
 
 private:
     uint32_t lastTickVal;
-    void updateHealthBar();
+
+    void updateHealthBar() const;
 };
 

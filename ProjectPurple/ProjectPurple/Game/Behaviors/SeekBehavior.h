@@ -30,15 +30,12 @@ private:
 	int m_maxTicksSinceLastMove;
 	Vector2D<int> m_levelSize;
 
-    std::vector<std::shared_ptr<Command>> moveTowardsTarget(std::shared_ptr<TransformComponent> thisActorTransformCompPtr,
-                                                            std::shared_ptr<TransformComponent> targetActorTransformCompPtr,
+    void initSearchPositions(const std::shared_ptr<TransformComponent>& transformCompPtr);
+    
+    std::vector<std::shared_ptr<Command>> moveTowardsTarget(const std::shared_ptr<TransformComponent>& thisActorTransformCompPtr,
+                                                            const std::shared_ptr<TransformComponent>& targetActorTransformCompPtr,
                                                             float speed);
-    std::vector<std::shared_ptr<Command>> moveInSearchPattern(std::shared_ptr<TransformComponent> thisActorTransformCompPtr, float speed);
 
-    std::vector<std::shared_ptr<Command>> moveToPosition(Vector2D<float> currentPos,
-                                                         Vector2D<float> targetPos,
-                                                         float speed);
-
-    void initSearchPositions(std::shared_ptr<TransformComponent> transformCompPtr);
+    std::vector<std::shared_ptr<Command>> moveInSearchPattern(const std::shared_ptr<TransformComponent>& thisActorTransformCompPtr, float speed);
 };
 

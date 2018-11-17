@@ -2,7 +2,9 @@
 #include "GameActor.h"
 #include "PhysicsComponent.h"
 
-GameTile::GameTile(int spriteIdx, std::shared_ptr<TransformComponent> transformCompPtr, std::shared_ptr<PhysicsComponent> physicsCompPtr)
+GameTile::GameTile(int spriteIdx, 
+                   const std::shared_ptr<TransformComponent>& transformCompPtr, 
+                   const std::shared_ptr<PhysicsComponent>& physicsCompPtr)
     : m_spriteIdx(spriteIdx),
       m_transformCompPtr(transformCompPtr),
       m_physicsCompPtr(physicsCompPtr)
@@ -15,7 +17,7 @@ GameTile::~GameTile()
     //m_gameActorVec.clear();
 }
 
-void GameTile::AddActor(std::shared_ptr<GameActor> gameActor)
+void GameTile::AddActor(const std::shared_ptr<GameActor>& gameActor)
 {
     ActorId actorId = gameActor->GetActorId();
     if (m_idToActorPtrMap.find(actorId) == m_idToActorPtrMap.end())
@@ -33,6 +35,7 @@ void GameTile::RemoveActor(ActorId actorId)
 		m_idToActorPtrMap.erase(actorId);
     }
 
+    // TODO: Tile actor list
     /*int idx = 0;
     for (auto actor : m_gameActorVec)
     {
@@ -51,7 +54,7 @@ void GameTile::RemoveAllActors()
 	m_idToActorPtrMap.clear();
 }
 
-std::shared_ptr<GameActor> GameTile::GetActorOnTile(ActorId actorId)
+std::shared_ptr<GameActor> GameTile::GetActorOnTile(ActorId actorId) const
 {
     auto actorMapIter = m_idToActorPtrMap.find(actorId);
     if (actorMapIter != m_idToActorPtrMap.end())

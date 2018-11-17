@@ -6,24 +6,27 @@ class TransformComponent :
     public ActorComponent
 {
 public:
-    TransformComponent(ComponentId componentId, Vector2D<float> position, float radius, Vector2D<float> direction);
-    TransformComponent(ComponentId componentId, Vector2D<float> position, Vector2D<float> size, Vector2D<float> direction);
+    TransformComponent(ComponentId componentId, 
+                       const Vector2D<float>& position, 
+                       float radius, 
+                       const Vector2D<float>& direction);
+    TransformComponent(ComponentId componentId, const Vector2D<float>& position, const Vector2D<float>& size, const Vector2D<float>& direction);
     virtual ~TransformComponent();
 
     virtual const EComponentNames GetComponentName() const override;
 
-    Vector2D<float> GetPosition() { return m_position; }
-    Vector2D<float> GetInitPosition() { return m_initialPosition; }
-    void SetPosition(Vector2D<float> position) { m_position = position; }
+    Vector2D<float> GetPosition() const { return m_position; }
+    Vector2D<float> GetInitPosition() const { return m_initialPosition; }
+    void SetPosition(const Vector2D<float>& position) { m_position = position; }
 
-    Vector2D<float> GetInitSize() { return m_initialSize; }
-    Vector2D<float> GetSize() { return m_size; }
-    void SetSize(Vector2D<float> size) { m_size = size; }
+    Vector2D<float> GetInitSize() const { return m_initialSize; }
+    Vector2D<float> GetSize() const { return m_size; }
+    void SetSize(const Vector2D<float>& size) { m_size = size; }
 
-    Vector2D<float> GetDirection() { return m_direction; }
-    void SetDirection(Vector2D<float> direction) { m_direction = direction; }
+    Vector2D<float> GetDirection() const { return m_direction; }
+    void SetDirection(const Vector2D<float>& direction) { m_direction = direction; }
 
-    float GetRadius() { return m_size.x / 2; }
+    float GetRadius() const { return m_size.x / 2; }
     void SetRadius(float radius) { m_size.x = radius * 2; m_size.y = radius * 2; }
 
 private:

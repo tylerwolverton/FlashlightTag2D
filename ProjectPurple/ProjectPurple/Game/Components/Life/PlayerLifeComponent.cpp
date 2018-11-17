@@ -32,7 +32,7 @@ void PlayerLifeComponent::TakeDamage(int damage)
     }
 }
 
-void PlayerLifeComponent::UpdateHealthBar()
+void PlayerLifeComponent::UpdateHealthBar() const
 {
     auto actorFactoryPtr = ServiceLocator::GetActorFactory();
     if (actorFactoryPtr == nullptr)

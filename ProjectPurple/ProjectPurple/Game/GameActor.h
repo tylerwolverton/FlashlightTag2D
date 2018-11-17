@@ -23,13 +23,13 @@ class GameActor
     friend class ActorFactory;
 
 public:
-    GameActor(ActorId actorId, std::string actorName, ComponentMap components);
-    GameActor(ActorId actorId, std::string actorName);
+    GameActor(ActorId actorId, const std::string& actorName, ComponentMap components);
+    GameActor(ActorId actorId, const std::string& actorName);
     virtual ~GameActor();
 
     virtual void Update(float delatMs, InputData input);
     
-    void InsertCompPtr(EComponentNames compName, std::shared_ptr<ActorComponent> comp);
+    void InsertCompPtr(EComponentNames compName, const std::shared_ptr<ActorComponent>& comp);
 
     std::shared_ptr<AIComponent>             GetAICompPtr() const;
     std::shared_ptr<LogicComponent>	         GetLogicCompPtr() const;
@@ -53,13 +53,13 @@ public:
 
     const InputData GetInput() const { return m_input; }
 
-    void SetCommands(std::shared_ptr<std::vector<std::shared_ptr<Command>>> commands) { m_pCommands = commands; }
+    void SetCommands(const std::shared_ptr<std::vector<std::shared_ptr<Command>>>& commands) { m_pCommands = commands; }
 
     const ActorId GetActorId() const { return m_actorId; }
     const std::string GetActorName() const { return m_actorName; }
 
     const std::vector<std::shared_ptr<GameTile>> GetTileVec() const { return m_tileVec; }
-    void SetTileVec(std::vector<std::shared_ptr<GameTile>> tileVec) { m_tileVec = tileVec; }
+    void SetTileVec(const std::vector<std::shared_ptr<GameTile>>& tileVec) { m_tileVec = tileVec; }
 
     // Component communication methods
     Vector2D<float> GetMousePosition();

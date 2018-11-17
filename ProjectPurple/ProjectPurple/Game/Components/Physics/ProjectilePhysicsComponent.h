@@ -5,12 +5,12 @@ class ProjectilePhysicsComponent :
 {
 public:
     ProjectilePhysicsComponent(ComponentId componentId,
-                               std::shared_ptr<TransformComponent> transformCompPtr,
-                               float maxSpeed,
-                               float mass,
+                               const std::shared_ptr<TransformComponent>& transformCompPtr, 
+                               float maxSpeed, 
+                               float mass, 
                                float restitution,
-                               Vector2D<float> velocity = Vector2D<float>(0, 0),
-                               Vector2D<float> acceleration = Vector2D<float>(0, 0));
+                               const Vector2D<float>& velocity = Vector2D<float>(0, 0), 
+                               const Vector2D<float>& acceleration = Vector2D<float>(0, 0));
     virtual ~ProjectilePhysicsComponent();
 
     void virtual Update(GameActor& actor, float deltaMs) override;

@@ -9,7 +9,7 @@ public:
     virtual ~PlayerLifeComponent();
 
     virtual void TakeDamage(int damage) override;
-    void UpdateHealthBar();
+    void UpdateHealthBar() const;
 
 private:
     uint32_t m_lastTickVal;

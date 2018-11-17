@@ -35,7 +35,7 @@ const std::string LevelFactory::LevelPaths::ControlsScreen = "resources/levels/c
 const std::string LevelFactory::LevelPaths::LoseScreen = "resources/levels/lose_screen.json";
 const std::string LevelFactory::LevelPaths::WinScreen = "resources/levels/win_screen.json";
 
-LevelFactory::LevelFactory(std::shared_ptr<ActorFactory> actorFactoryPtr)
+LevelFactory::LevelFactory(const std::shared_ptr<ActorFactory>& actorFactoryPtr)
     : m_actorFactoryPtr(actorFactoryPtr)
 {
 }
@@ -154,8 +154,8 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
     return nullptr;
 }
 
-void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actorPtr)
+void LevelFactory::UpdateLevelTilesForActor(const std::shared_ptr<GameActor>& actorPtr)
 {
-    // TODO: Check if nre tile methods can be optimized
+    // TODO: Check if new tile methods can be optimized enough to be useful
 	//m_curLevelPtr->AddActorToTiles(actorPtr);
 }

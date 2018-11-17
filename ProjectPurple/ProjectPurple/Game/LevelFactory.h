@@ -38,12 +38,12 @@ public:
         static const std::string WinScreen;
     };
 
-    LevelFactory(std::shared_ptr<ActorFactory> actorFactoryPtr);
+    LevelFactory(const std::shared_ptr<ActorFactory>& actorFactoryPtr);
     ~LevelFactory();
 
     void ChangeLevel(const std::string& levelPath);
 
-    void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actorPtr);
+    void LevelFactory::UpdateLevelTilesForActor(const std::shared_ptr<GameActor>& actorPtr);
 
 private:
     std::shared_ptr<ActorFactory> m_actorFactoryPtr;

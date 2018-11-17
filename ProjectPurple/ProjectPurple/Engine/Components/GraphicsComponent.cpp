@@ -4,9 +4,9 @@
 #include "World.h"
 
 GraphicsComponent::GraphicsComponent(ComponentId componentId, 
-                                     std::string texturePath, 
+                                     const std::string& texturePath, 
                                      int animationTimer, 
-                                     std::shared_ptr<TransformComponent> transformCompPtr)
+                                     const std::shared_ptr<TransformComponent>& transformCompPtr)
     : ActorComponent(componentId),
       m_animationTimer(animationTimer),
       m_curAnimationTime(animationTimer),
@@ -72,7 +72,7 @@ void GraphicsComponent::Update()
 }
 
 // Get the size of the texture and normalize to value between 0 and 1
-Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
+Vector2D<GLfloat> GraphicsComponent::GetTextureSize() const
 {
     auto size = Vector2D<GLfloat>(m_transformCompPtr->GetSize()); 
     size.x /= m_texturePtr->GetWidth();
@@ -82,7 +82,7 @@ Vector2D<GLfloat> GraphicsComponent::GetTextureSize()
 }
 
 // Get the position of the texture in the spritesheet, normalized to between 0 and 1.
-Vector2D<GLfloat> GraphicsComponent::GetTexturePos()
+Vector2D<GLfloat> GraphicsComponent::GetTexturePos() const
 {
     auto pos = m_texturePos;
     pos.x /= m_texturePtr->GetWidth();

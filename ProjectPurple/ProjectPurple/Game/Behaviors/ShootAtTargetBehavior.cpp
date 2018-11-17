@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 
-ShootAtTargetBehavior::ShootAtTargetBehavior(std::shared_ptr<GameActor> targetActorPtr, int cooldown)
+ShootAtTargetBehavior::ShootAtTargetBehavior(const std::shared_ptr<GameActor>& targetActorPtr, int cooldown)
     : m_targetActorPtr(targetActorPtr),
       m_cooldown(cooldown)
 {

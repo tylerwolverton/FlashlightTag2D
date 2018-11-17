@@ -4,15 +4,12 @@ out vec4 color;
 
 #define MAX_NUM_LIGHTS 30
 
-//uniform int numLights;
 uniform sampler2D image;
 uniform int timeElapsed;
-//uniform vec3 spriteColor;
 uniform vec3[MAX_NUM_LIGHTS] lightSrc;
 uniform vec2[MAX_NUM_LIGHTS] lightDir;
 uniform vec3[MAX_NUM_LIGHTS] flashingLightSrc;
 uniform vec3[MAX_NUM_LIGHTS] flashingLightColor;
-//uniform vec2[MAX_NUM_LIGHTS] lightPos;
 
 void main()
 {    

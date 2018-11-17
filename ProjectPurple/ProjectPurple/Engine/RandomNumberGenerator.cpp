@@ -16,3 +16,10 @@ int RandomNumberGenerator::GetIntWithinRange(int min, int max)
 
     return dist(ServiceLocator::GetRandomNumberGenerator()->m_mt);
 }
+
+float RandomNumberGenerator::GetFloatWithinRange(float min, float max)
+{
+    std::uniform_real_distribution<float> dist(min, max);
+
+    return dist(ServiceLocator::GetRandomNumberGenerator()->m_mt);
+}

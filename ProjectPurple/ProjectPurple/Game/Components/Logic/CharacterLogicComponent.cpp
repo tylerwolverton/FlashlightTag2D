@@ -8,7 +8,7 @@
 
 #include <SDL.h>
 
-CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, std::shared_ptr<PhysicsComponent> physicsCompPtr)
+CharacterLogicComponent::CharacterLogicComponent(ComponentId componentId, const std::shared_ptr<PhysicsComponent>& physicsCompPtr)
     : LogicComponent(componentId),
       m_physicsCompPtr(physicsCompPtr)
 {

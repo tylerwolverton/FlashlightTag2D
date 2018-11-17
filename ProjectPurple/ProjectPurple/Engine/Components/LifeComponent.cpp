@@ -19,7 +19,7 @@ const EComponentNames LifeComponent::GetComponentName() const
     return EComponentNames::LifeComponentEnum;
 }
 
-void LifeComponent::Die()
+void LifeComponent::Die() const
 {
     auto actorFactoryPtr = ServiceLocator::GetActorFactory();
     if (actorFactoryPtr == nullptr)

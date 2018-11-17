@@ -65,10 +65,10 @@ std::vector<std::shared_ptr<GameTile>> Level::getTilesUnderActor(const std::shar
     Vector2D<float> actorSize = transformCompPtr->GetSize();
 
     Vector2D<float> topLeft(actorPos - actorSize / 2);
-    Vector2D<int> topLeftTileIdx(topLeft.x / TILE_WIDTH, topLeft.y / TILE_HEIGHT);
+    Vector2D<int> topLeftTileIdx((int)topLeft.x / TILE_WIDTH, (int)topLeft.y / TILE_HEIGHT);
 
     Vector2D<float> bottomRight(actorPos + actorSize / 2);
-    Vector2D<int> bottomRightTileIdx(bottomRight.x / TILE_WIDTH, bottomRight.y / TILE_HEIGHT);
+    Vector2D<int> bottomRightTileIdx((int)bottomRight.x / TILE_WIDTH, (int)bottomRight.y / TILE_HEIGHT);
 
     std::vector<std::shared_ptr<GameTile>> tileVec;
     for (int i = topLeftTileIdx.y; i < bottomRightTileIdx.y; i++)

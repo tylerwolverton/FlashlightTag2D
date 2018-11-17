@@ -10,7 +10,7 @@ class AIComponent :
     public ActorComponent
 {
 public:
-    AIComponent(ComponentId componentId, std::vector<std::shared_ptr<Behavior>> behaviorPtrVec);
+    AIComponent(ComponentId componentId, const std::vector<std::shared_ptr<Behavior>>& behaviorPtrVec);
     virtual ~AIComponent();
 
     void Update(GameActor& actor, float deltaMs) override;

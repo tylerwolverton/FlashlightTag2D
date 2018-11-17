@@ -6,10 +6,10 @@ class PortalLogicComponent :
     public LogicComponent
 {
 public:
-    PortalLogicComponent(ComponentId componentId, std::string levelName, float countdownTimeSec);
+    PortalLogicComponent(ComponentId componentId, const std::string& levelName, float countdownTimeSec);
     virtual ~PortalLogicComponent();
 
-    void ChangeLevel();
+    void ChangeLevel() const;
     void Update(GameActor& actor, float deltaMs) override;
 
 private:

@@ -13,7 +13,7 @@ public:
 
     virtual const EComponentNames GetComponentName() const override;
 
-    Vector2D<int> GetOldMousePos() { return m_oldMousePos; }
+    Vector2D<int> GetOldMousePos() const { return m_oldMousePos; }
 
 protected:
     InputComponent(ComponentId componentId);

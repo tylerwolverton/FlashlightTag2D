@@ -6,13 +6,14 @@
 #include "World.h"
 #include "LevelFactory.h"
 
-MainMenuLogicComponent::MainMenuLogicComponent(ComponentId componentId, std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>> buttonTransformCompPtrMapPtr)
+MainMenuLogicComponent::MainMenuLogicComponent(ComponentId componentId, 
+                                               const std::shared_ptr<std::unordered_map<std::string, std::shared_ptr<TransformComponent>>>& buttonTransformCompPtrMapPtr)
     : LogicComponent(componentId),
 	  m_buttonTransformCompPtrMapPtr(buttonTransformCompPtrMapPtr),
-      selectedButtonIdx(0)
+      m_selectedButtonIdx(0)
 {
-    buttons.push_back(EMenuButtons::Play);
-    buttons.push_back(EMenuButtons::Exit);
+    m_buttonVec.push_back(EMenuButtons::Play);
+    m_buttonVec.push_back(EMenuButtons::Exit);
 }
 
 MainMenuLogicComponent::~MainMenuLogicComponent()
@@ -22,10 +23,10 @@ MainMenuLogicComponent::~MainMenuLogicComponent()
 void MainMenuLogicComponent::MoveUp()
 {
     uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - lastTickVal > 200)
+    if (curTicks - m_lastTickVal > 200)
     {
-        lastTickVal = curTicks;
-        if (buttons[selectedButtonIdx] == EMenuButtons::Play)
+        m_lastTickVal = curTicks;
+        if (m_buttonVec[m_selectedButtonIdx] == EMenuButtons::Play)
         {
 			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Exit")->second->GetPosition());
         }
@@ -34,10 +35,10 @@ void MainMenuLogicComponent::MoveUp()
 			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Play")->second->GetPosition());
         }
 
-        selectedButtonIdx--;
-        if (selectedButtonIdx < 0)
+        m_selectedButtonIdx--;
+        if (m_selectedButtonIdx < 0)
         {
-            selectedButtonIdx = buttons.size() - 1;
+            m_selectedButtonIdx = m_buttonVec.size() - 1;
         }
     }
 }
@@ -45,10 +46,10 @@ void MainMenuLogicComponent::MoveUp()
 void MainMenuLogicComponent::MoveDown()
 {
     uint32_t curTicks = SDL_GetTicks();
-    if (curTicks - lastTickVal > 200)
+    if (curTicks - m_lastTickVal > 200)
     {
-        lastTickVal = curTicks;
-        if (buttons[selectedButtonIdx] == EMenuButtons::Play)
+        m_lastTickVal = curTicks;
+        if (m_buttonVec[m_selectedButtonIdx] == EMenuButtons::Play)
         {
 			m_buttonTransformCompPtrMapPtr->find("SelectionBorder")->second->SetPosition(m_buttonTransformCompPtrMapPtr->find("Exit")->second->GetPosition());
         }
@@ -58,17 +59,17 @@ void MainMenuLogicComponent::MoveDown()
         }
 
 
-        selectedButtonIdx++;
-        if (selectedButtonIdx >= buttons.size())
+        m_selectedButtonIdx++;
+        if (m_selectedButtonIdx >= m_buttonVec.size())
         {
-            selectedButtonIdx = 0;
+            m_selectedButtonIdx = 0;
         }
     }
 }
 
 void MainMenuLogicComponent::Select()
 {
-    if (buttons[selectedButtonIdx] == EMenuButtons::Play)
+    if (m_buttonVec[m_selectedButtonIdx] == EMenuButtons::Play)
     {
         auto levelFactoryPtr = ServiceLocator::GetLevelFactory();
 
