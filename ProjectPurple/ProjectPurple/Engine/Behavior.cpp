@@ -8,8 +8,8 @@ Behavior::~Behavior()
 {
 }
 
-std::vector<std::shared_ptr<Command>> Behavior::moveToPosition(Vector2D<float> currentPos,
-                                                               Vector2D<float> targetPos, 
+std::vector<std::shared_ptr<Command>> Behavior::moveToPosition(const Vector2D<float>& currentPos,
+                                                               const Vector2D<float>& targetPos, 
                                                                float speed)
 {
     std::vector<std::shared_ptr<Command>> commandVec;

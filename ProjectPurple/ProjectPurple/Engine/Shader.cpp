@@ -6,7 +6,7 @@
 
 #include "Shader.h"
 
-Shader::Shader(std::string vertexShader, std::string fragmentShader)
+Shader::Shader(const std::string& vertexShader, const std::string& fragmentShader)
     : m_vertexShaderStr(vertexShader),
       m_fragmentShaderStr(fragmentShader)
 {
@@ -40,7 +40,7 @@ bool Shader::Init()
     return linkShaders();
 }
 
-std::string Shader::readFile(const char* file)
+std::string Shader::readFile(const char* file) const
 {
     // Open file
     std::ifstream t(file);
@@ -55,7 +55,7 @@ std::string Shader::readFile(const char* file)
     return fileContent;
 }
 
-bool Shader::loadVertexShader(const std::string &filename)
+bool Shader::loadVertexShader(const std::string& filename)
 {
     std::cout << "Linking Vertex shader" << std::endl;
 
@@ -88,7 +88,7 @@ bool Shader::loadVertexShader(const std::string &filename)
     return true;
 }
 
-bool Shader::loadFragmentShader(const std::string &filename)
+bool Shader::loadFragmentShader(const std::string& filename)
 {
     std::cout << "Loading Fragment Shader" << std::endl;
 
@@ -121,7 +121,7 @@ bool Shader::loadFragmentShader(const std::string &filename)
     return true;
 }
 
-bool Shader::linkShaders()
+bool Shader::linkShaders() const
 {
     // Link. At this point, our shaders will be inspected/optized and the binary code generated
     // The binary code will then be uploaded to the GPU
@@ -137,7 +137,7 @@ bool Shader::linkShaders()
     return isLinked != 0;
 }
 
-void Shader::printShaderLinkingError(int32_t shaderId)
+void Shader::printShaderLinkingError(const int32_t shaderId) const
 {
     std::cout << "=======================================\n";
     std::cout << "Shader linking failed : " << std::endl;
@@ -157,11 +157,10 @@ void Shader::printShaderLinkingError(int32_t shaderId)
     /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
     /* In this simple program, we'll just leave */
     delete shaderProgramInfoLog;
-    return;
 }
 
-// If something went wrong whil compiling the shaders, we'll use this function to find the error
-void Shader::printShaderCompilationErrorInfo(int32_t shaderId)
+// If something went wrong while compiling the shaders, we'll use this function to find the error
+void Shader::printShaderCompilationErrorInfo(const int32_t shaderId) const
 {
     std::cout << "=======================================\n";
     std::cout << "Shader compilation failed : " << std::endl;

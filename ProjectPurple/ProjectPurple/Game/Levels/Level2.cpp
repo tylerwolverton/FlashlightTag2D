@@ -7,13 +7,17 @@
 #include "ServiceLocator.h"
 #include "ActorFactory.h"
 
-Level2::Level2(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
+Level2::Level2(int levelWidth, int levelHeight, 
+               const std::string& spritePath, 
+               const std::string& vertexShader, const std::string& fragmentShader)
     : LevelWithLightingLight(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
 {
 }
 
-Level2::Level2(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
-    : LevelWithLightingLight(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+Level2::Level2(int levelWidth, int levelHeight, 
+               const std::shared_ptr<std::vector<std::vector<std::shared_ptr<GameTile>>>>& tilePtrVecVecPtr, 
+               const std::string& vertexShader, const std::string& fragmentShader)
+    : LevelWithLightingLight(levelWidth, levelHeight, tilePtrVecVecPtr, vertexShader, fragmentShader)
 {
 }
 
@@ -35,6 +39,7 @@ void Level2::SetupLevel()
         return;
     }
 
+    // Remove key if player already has it
     if(std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("SecondKey"))
     {
         actorFactoryPtr->KillAllActorsByName("SecondKey");

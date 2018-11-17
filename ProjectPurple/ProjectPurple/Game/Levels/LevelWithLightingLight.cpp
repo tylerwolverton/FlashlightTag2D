@@ -9,13 +9,17 @@
 
 #define MAX_NUM_LIGHTS 30
 
-LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
+LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight,
+                                               const std::string& spritePath,
+                                               const std::string& vertexShader, const std::string& fragmentShader) 
     : Level(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
 {
 }
 
-LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
-    : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+LevelWithLightingLight::LevelWithLightingLight(int levelWidth, int levelHeight, 
+                                               const std::shared_ptr<std::vector<std::vector<std::shared_ptr<GameTile>>>>& tilePtrVecVecPtr, 
+                                               const std::string& vertexShader, const std::string& fragmentShader)
+    : Level(levelWidth, levelHeight, tilePtrVecVecPtr, vertexShader, fragmentShader)
 {
 }
 
@@ -23,7 +27,8 @@ LevelWithLightingLight::~LevelWithLightingLight()
 {
 }
 
-void LevelWithLightingLight::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsComponentPtrVec, Vector2D<float> cameraPos)
+void LevelWithLightingLight::PrepShaders(const std::map<ComponentId, std::shared_ptr<GraphicsComponent>>& graphicsComponentPtrVec, 
+                                         const Vector2D<float>& cameraPos)
 {
     // opengl likes flat arrays...
     int flashingLightCount = 0;

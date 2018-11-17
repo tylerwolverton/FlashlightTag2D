@@ -56,10 +56,10 @@ void LevelFactory::ChangeLevel(const std::string& levelPath)
     d.ParseStream(is);
     fclose(fp);
 
-    m_curLevelPtr = createLevelFromJson(d["level"]);
-	m_actorFactoryPtr->InitLevelActors(d["actor_list"], m_curLevelPtr);
+    std::shared_ptr<Level> curLevelPtr = createLevelFromJson(d["level"]);
+	m_actorFactoryPtr->InitLevelActors(d["actor_list"], curLevelPtr);
     
-	m_curLevelPtr->SetupLevel();
+    curLevelPtr->SetupLevel();
 }
 
 std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value& level)
@@ -69,13 +69,6 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
     int levelHeight = level["size"]["y"].GetInt();
     std::string vertShader = level["vert_shader"].GetString();
     std::string fragShader = level["frag_shader"].GetString();
-
-    // clear existing tile vector
-    for (auto tilePtrVec : m_tilePtrVecVec)
-    {
-		tilePtrVec.clear();
-    }
-	m_tilePtrVecVec.clear();
 
     if (level.HasMember("sprite"))
     {
@@ -100,11 +93,12 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
 
     if (level.HasMember("tiles"))
     {
+        auto tilePtrVecVecPtr = std::make_shared<std::vector<std::vector<std::shared_ptr<GameTile>>>>();
         int tileVecArrayIdx = 0;
         const rapidjson::Value& tiles = level["tiles"];
         for (rapidjson::SizeType i = 0; i < tiles.Size(); i++)
         {
-			m_tilePtrVecVec.push_back(std::vector<std::shared_ptr<GameTile>>());
+            tilePtrVecVecPtr->push_back(std::vector<std::shared_ptr<GameTile>>());
             for (rapidjson::SizeType j = 0; j < tiles[i].Size(); j++)
             {
                 int spriteIdx = tiles[i][j].GetInt();
@@ -122,12 +116,11 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
                                                                                                                9999,
                                                                                                                .9f);
 
-
-					m_tilePtrVecVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp, physicsComp));
+                    (*tilePtrVecVecPtr)[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp, physicsComp));
                 }
                 else
                 {
-					m_tilePtrVecVec[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp));
+                    (*tilePtrVecVecPtr)[tileVecArrayIdx].push_back(std::make_shared<GameTile>(spriteIdx, transformComp));
                 }
             }
             tileVecArrayIdx++;
@@ -135,26 +128,26 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
 
         if (levelName == LevelNames::MainMenu)
         {
-            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
+            return std::make_shared<MainMenuLevel>(levelWidth, levelHeight, tilePtrVecVecPtr, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Overworld1)
         {
-            return std::make_shared<Overworld1>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
+            return std::make_shared<Overworld1>(levelWidth, levelHeight, tilePtrVecVecPtr, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Level1)
         {
-            return std::make_shared<Level1>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
+            return std::make_shared<Level1>(levelWidth, levelHeight, tilePtrVecVecPtr, vertShader, fragShader);
         }
         else if (levelName == LevelNames::Level2)
         {
-            return std::make_shared<Level2>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
+            return std::make_shared<Level2>(levelWidth, levelHeight, tilePtrVecVecPtr, vertShader, fragShader);
         }
         else if (levelName == LevelNames::BossLevel1
                 || levelName == LevelNames::ControlsScreen
                 || levelName == LevelNames::LoseScreen
                 || levelName == LevelNames::WinScreen)
         {
-            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, m_tilePtrVecVec, vertShader, fragShader);
+            return std::make_shared<LevelWithLightingLight>(levelWidth, levelHeight, tilePtrVecVecPtr, vertShader, fragShader);
         }
     }
 
@@ -163,5 +156,6 @@ std::shared_ptr<Level> LevelFactory::createLevelFromJson(const rapidjson::Value&
 
 void LevelFactory::UpdateLevelTilesForActor(std::shared_ptr<GameActor> actorPtr)
 {
-	m_curLevelPtr->AddActorToTiles(actorPtr);
+    // TODO: Check if nre tile methods can be optimized
+	//m_curLevelPtr->AddActorToTiles(actorPtr);
 }

@@ -16,23 +16,23 @@ public:
     static std::shared_ptr<GraphicsManager> GetGraphicsManager() { return m_graphicsManagerServicePtr; }
     static std::shared_ptr<RandomNumberGenerator> GetRandomNumberGenerator() { return m_randomNumberGeneratorPtr; }
 
-    static void Provide(std::shared_ptr<World> service)
+    static void Provide(const std::shared_ptr<World>& service)
     {
         m_worldServicePtr = service;
     }
-    static void Provide(std::shared_ptr<ActorFactory> service)
+    static void Provide(const std::shared_ptr<ActorFactory>& service)
     {
         m_actorFactoryServicePtr = service;
     }
-    static void Provide(std::shared_ptr<LevelFactory> service)
+    static void Provide(const std::shared_ptr<LevelFactory>& service)
     {
         m_levelFactoryServicePtr = service;
     }
-    static void Provide(std::shared_ptr<GraphicsManager> service)
+    static void Provide(const std::shared_ptr<GraphicsManager>& service)
     {
         m_graphicsManagerServicePtr = service;
     }
-    static void Provide(std::shared_ptr<RandomNumberGenerator> service)
+    static void Provide(const std::shared_ptr<RandomNumberGenerator>& service)
     {
         m_randomNumberGeneratorPtr = service;
     }

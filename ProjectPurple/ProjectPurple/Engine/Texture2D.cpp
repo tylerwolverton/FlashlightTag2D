@@ -7,7 +7,7 @@ Texture2D::Texture2D()
 {
 }
 
-Texture2D::Texture2D(std::string texturePath)
+Texture2D::Texture2D(const std::string& texturePath)
 {
     loadTexture(texturePath);
 }
@@ -16,7 +16,12 @@ Texture2D::~Texture2D()
 {
 }
 
-void Texture2D::loadTexture(std::string texturePath)
+void Texture2D::BindTexture() const
+{
+    glBindTexture(GL_TEXTURE_2D, m_texture);
+}
+
+void Texture2D::loadTexture(const std::string& texturePath)
 {
     // Texture code
     glGenTextures(1, &m_texture);
@@ -40,9 +45,4 @@ void Texture2D::loadTexture(std::string texturePath)
         //std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
-}
-
-void Texture2D::BindTexture()
-{
-    glBindTexture(GL_TEXTURE_2D, m_texture);
 }

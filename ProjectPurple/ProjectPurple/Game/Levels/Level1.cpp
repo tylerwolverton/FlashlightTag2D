@@ -12,13 +12,17 @@
 
 #define MAX_NUM_LIGHTS 10
 
-Level1::Level1(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
+Level1::Level1(int levelWidth, int levelHeight,
+               const std::string& spritePath,
+               const std::string& vertexShader, const std::string& fragmentShader)
     : Level(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
 {
 }
 
-Level1::Level1(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
-    : Level(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+Level1::Level1(int levelWidth, int levelHeight, 
+               const std::shared_ptr<std::vector<std::vector<std::shared_ptr<GameTile>>>>& tilePtrVecVecPtr, 
+               const std::string& vertexShader, const std::string& fragmentShader)
+    : Level(levelWidth, levelHeight, tilePtrVecVecPtr, vertexShader, fragmentShader)
 {
 }
 
@@ -26,7 +30,8 @@ Level1::~Level1()
 {
 }
 
-void Level1::PrepShaders(std::map<ComponentId, std::shared_ptr<GraphicsComponent>> graphicsCompPtrMap, Vector2D<float> cameraPos)
+void Level1::PrepShaders(const std::map<ComponentId, std::shared_ptr<GraphicsComponent>>& graphicsCompPtrMap, 
+                         const Vector2D<float>& cameraPos)
 {
     // opengl likes flat arrays...
     int lightCount = 0;
@@ -130,6 +135,7 @@ void Level1::SetupLevel()
         return;
     }
 
+    // Remove key if player already has it
     if(std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("FirstKey"))
     {
         actorFactoryPtr->KillAllActorsByName("FirstKey");

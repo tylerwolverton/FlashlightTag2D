@@ -59,7 +59,7 @@ public:
         return std::unique_ptr<T[]>(flat);
     }
 
-    Matrix4<T> Translate(Vector2D<T> pos)
+    Matrix4<T> Translate(const Vector2D<T>& pos) const
     {
         Matrix4<T> newMatrix(*this);
 
@@ -69,7 +69,7 @@ public:
         return newMatrix;
     }
 
-    Matrix4<T> Scale(Vector2D<T> size)
+    Matrix4<T> Scale(const Vector2D<T>& size) const
     {
         Matrix4<T> newMatrix(*this);
 
@@ -79,7 +79,7 @@ public:
         return newMatrix;
     }
 
-    Matrix4<T> operator*(const Matrix4<T>& inMatrix)
+    Matrix4<T> operator*(const Matrix4<T>& inMatrix) const
     {
         Matrix4<T> newMatrix;
         for (int i = 0; i < MATRIX_SIZE; i++)
@@ -97,7 +97,9 @@ public:
         return newMatrix;
     }
 
-    static std::unique_ptr<Matrix4<T>> CreateOrthoMatrix(float left, float right, float top, float bottom, float near, float far)
+    static std::unique_ptr<Matrix4<T>> CreateOrthoMatrix(const float left, const float right, 
+                                                         const float top, const float bottom, 
+                                                         const float near, const float far)
     {
         T newElements[MATRIX_SIZE][MATRIX_SIZE] =
                       { { 2/(right - left),0,0,0 },
@@ -110,7 +112,7 @@ public:
         return pProj;
     }
 
-    void Print()
+    void Print() const
     {
         std::cout << "****************************" << std::endl;
         for (int i = 0; i < MATRIX_SIZE; i++)
@@ -125,7 +127,7 @@ public:
     }
 
 private:
-    void copyElementArray(const T sourceElements[MATRIX_SIZE][MATRIX_SIZE], T targetElements[MATRIX_SIZE][MATRIX_SIZE])
+    void copyElementArray(const T sourceElements[MATRIX_SIZE][MATRIX_SIZE], T targetElements[MATRIX_SIZE][MATRIX_SIZE]) const
     {
         for (int i = 0; i < MATRIX_SIZE; i++)
         {

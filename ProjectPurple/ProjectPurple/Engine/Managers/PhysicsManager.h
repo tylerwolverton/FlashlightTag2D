@@ -15,14 +15,17 @@ public:
     ~PhysicsManager();
 
     void ClearPhysicsComponents();
-	void LoadNewLevel(std::shared_ptr<Level> level);
+	void LoadNewLevel(const std::shared_ptr<Level>& level);
 
     void Update(float deltaTime);
     void ResolveCollisions(float deltaTime);
 
-    void AddPhysicsComponentPtr(ComponentId compId, std::shared_ptr<PhysicsComponent> physicsCompPtr);
+    void AddPhysicsComponentPtr(ComponentId compId, const std::shared_ptr<PhysicsComponent>& physicsCompPtr);
     void RemovePhysicsComponentPtr(ComponentId compId);
-    void AddEnvironmentPhysicsComponentPtr(std::shared_ptr<PhysicsComponent> physicsCompPtr) { m_environmentPhysicsComponentPtrVec.push_back(physicsCompPtr); }
+    void AddEnvironmentPhysicsComponentPtr(const std::shared_ptr<PhysicsComponent>& physicsCompPtr) 
+    { 
+        m_environmentPhysicsComponentPtrVec.push_back(physicsCompPtr); 
+    }
 
     // TODO: Cache changes
     //void AddPhysicsComponent(PhysicsComponent comp);
@@ -47,7 +50,7 @@ private:
         {
         }
 
-        CollisionEvent(bool p_collisionDetected, float p_penetrationDepth, Vector2D<float> p_normal)
+        CollisionEvent(bool p_collisionDetected, float p_penetrationDepth, const Vector2D<float>& p_normal)
             : collisionDetected(p_collisionDetected),
               penetrationDepth(p_penetrationDepth),
               normal(p_normal)
@@ -68,9 +71,9 @@ private:
         {
         }
 
-        CircleBoxCollisionEvent(bool p_collisionDetected, Vector2D<float> p_penetrationDepth, Vector2D<float> p_normal)
+        CircleBoxCollisionEvent(bool p_collisionDetected, const Vector2D<float>& p_collisionLocation, const Vector2D<float>& p_normal)
             : collisionDetected(p_collisionDetected),
-              collisionLocation(p_penetrationDepth),
+              collisionLocation(p_collisionLocation),
               normal(p_normal)
         {
         }
@@ -87,14 +90,32 @@ private:
     int m_lastComponentId;
     int getNextComponentId() { ++m_lastComponentId; return m_lastComponentId; };
 
-	bool handleCollision(std::shared_ptr<PhysicsComponent> actorPhysicsComp, std::shared_ptr<PhysicsComponent> innerActorPhysicsCompPtr, const CollisionEvent& collisionEvent);
-	bool checkEnvironmentCollisionTopDown(std::shared_ptr<PhysicsComponent> actorPhysicsCompPtr);
-	bool checkEnvironmentCollisionBottomUp(std::shared_ptr<PhysicsComponent> actorPhysicsCompPtr);
-	CollisionEvent checkCircleCollision(std::shared_ptr<TransformComponent> actorTransformCompPtr, std::shared_ptr<TransformComponent> innerActorTransformCompPtr);
-	CircleBoxCollisionEvent checkCircleBoxCollision(std::shared_ptr<TransformComponent> circleActorTransformCompPtr, std::shared_ptr<TransformComponent> boxActorTransformCompPtr, std::shared_ptr<PhysicsComponent> actorPhysicsCompPtr);
-	CollisionEvent checkBoxCollision(std::shared_ptr<TransformComponent> actorTransformCompPtr, std::shared_ptr<TransformComponent> innerActorTransformCompPtr);
-	void resolvePenetration(std::shared_ptr<PhysicsComponent> actorPhysicsCompPtr, std::shared_ptr<PhysicsComponent> innerActorPhysicsCompPtr, const CollisionEvent& collisionEvent);
-	void resolveCollision(std::shared_ptr<PhysicsComponent> actorPhysicsCompPtr, std::shared_ptr<PhysicsComponent> innerActorPhysicsCompPtr, const CollisionEvent& collisionEvent);
-	void moveActorsBackIntoLevel();
+	bool handleCollision(const std::shared_ptr<PhysicsComponent>& actorPhysicsComp, 
+                         const std::shared_ptr<PhysicsComponent>& innerActorPhysicsCompPtr, 
+                         const CollisionEvent& collisionEvent);
+
+	bool checkEnvironmentCollisionTopDown(const std::shared_ptr<PhysicsComponent>& actorPhysicsCompPtr);
+
+	bool checkEnvironmentCollisionBottomUp(const std::shared_ptr<PhysicsComponent>& actorPhysicsCompPtr);
+
+	CollisionEvent checkCircleCollision(const std::shared_ptr<TransformComponent>& actorTransformCompPtr, 
+                                        const std::shared_ptr<TransformComponent>& innerActorTransformCompPtr);
+
+	CircleBoxCollisionEvent checkCircleBoxCollision(const std::shared_ptr<TransformComponent>& circleActorTransformCompPtr, 
+                                                    const std::shared_ptr<TransformComponent>& boxActorTransformCompPtr, 
+                                                    const std::shared_ptr<PhysicsComponent>& actorPhysicsCompPtr);
+
+	CollisionEvent checkBoxCollision(const std::shared_ptr<TransformComponent>& actorTransformCompPtr, 
+                                     const std::shared_ptr<TransformComponent>& innerActorTransformCompPtr);
+
+	void resolvePenetration(const std::shared_ptr<PhysicsComponent>& actorPhysicsCompPtr, 
+                            const std::shared_ptr<PhysicsComponent>& innerActorPhysicsCompPtr, 
+                            const CollisionEvent& collisionEvent);
+	
+    void resolveCollision(const std::shared_ptr<PhysicsComponent>& actorPhysicsCompPtr, 
+                          const std::shared_ptr<PhysicsComponent>& innerActorPhysicsCompPtr, 
+                          const CollisionEvent& collisionEvent);
+	
+    void moveActorsBackIntoLevel();
 };
 

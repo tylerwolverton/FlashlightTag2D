@@ -12,8 +12,8 @@ public:
     virtual std::vector<std::shared_ptr<Command>> Update(const GameActor& actor) { return std::vector<std::shared_ptr<Command>>(); };
 
 protected:
-    std::vector<std::shared_ptr<Command>> moveToPosition(Vector2D<float> currentPos,
-                                                         Vector2D<float> targetPos,
+    std::vector<std::shared_ptr<Command>> moveToPosition(const Vector2D<float>& currentPos,
+                                                         const Vector2D<float>& targetPos,
                                                          float speed);
 };
 

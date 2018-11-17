@@ -52,7 +52,7 @@ void GraphicsManager::Reset()
     m_backgroundTilePtrVecVec.clear();
 }
 
-void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
+void GraphicsManager::LoadNewLevel(const std::shared_ptr<Level>& level)
 {
     m_curLevelPtr = level;
 
@@ -63,14 +63,17 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
     
     int textureVecIdx = 0;
     auto tileVec = m_curLevelPtr->GetTileVec();
-    for (int i = tileVec.size() - 1; i >= 0; i--)
+    if (tileVec != nullptr)
     {
-        m_backgroundTilePtrVecVec.push_back(std::vector<std::shared_ptr<Texture2D>>());
-        for (auto tile : tileVec[i])
+        for (int i = tileVec->size() - 1; i >= 0; i--)
         {
-            m_backgroundTilePtrVecVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
+            m_backgroundTilePtrVecVec.push_back(std::vector<std::shared_ptr<Texture2D>>());
+            for (auto tile : (*tileVec)[i])
+            {
+                m_backgroundTilePtrVecVec[textureVecIdx].push_back(m_tileTextureVec[tile->GetSpriteIdx()]);
+            }
+            textureVecIdx++;
         }
-        textureVecIdx++;
     }
 
     std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
@@ -86,7 +89,7 @@ void GraphicsManager::LoadNewLevel(std::shared_ptr<Level> level)
     shaderPtr->SetInt("image", 0);
 }
 
-void GraphicsManager::AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp)
+void GraphicsManager::AddGraphicsComponentPtr(ComponentId compId, const std::shared_ptr<GraphicsComponent>& comp)
 {
     m_graphicsCompPtrMap.insert(std::make_pair(compId, comp));
 }
@@ -109,7 +112,7 @@ void GraphicsManager::RemoveGraphicsComponentPtr(ComponentId compId)
 //	return compId;
 //}
 
-bool GraphicsManager::setOpenGLAttributes()
+bool GraphicsManager::setOpenGLAttributes() const
 {
     // Set our OpenGL version.
     // SDL_GL_CONTEXT_CORE gives us only the newer version, deprecated functions are disabled
@@ -179,7 +182,7 @@ void GraphicsManager::initializeTiles()
 //	}
 //}
 
-void GraphicsManager::AddCamera(std::shared_ptr<GameActor> camera)
+void GraphicsManager::AddCamera(const std::shared_ptr<GameActor>& camera)
 {
     if (m_curCameraPtr == nullptr)
     {
@@ -225,10 +228,9 @@ void GraphicsManager::Render()
         Matrix4<GLfloat> model;
         Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompEntry.second->GetImageOffset();
         model = model.Translate(actorLocation);
-
-        // TODO: find a better scaling method
         model = model.Scale(actorSize);
 
+        // Set shader variables
         shaderPtr->SetMatrix4("model", model.GetPtrToFlattenedData().get());
         shaderPtr->SetVec2("textureSize", graphicsCompEntry.second->GetTextureSize().GetPtrToFlattenedData().get());
         shaderPtr->SetVec2("texturePos", graphicsCompEntry.second->GetTexturePos().GetPtrToFlattenedData().get());
@@ -246,9 +248,9 @@ void GraphicsManager::Render()
     SDL_GL_SwapWindow(m_windowPtr);
 }
 
-void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
+void GraphicsManager::renderBackground(const Vector2D<float>& cameraPos)
 {
-    // Render the background
+    // Render the background with one large sprite
     if (m_backgroundTexturePtr != nullptr && m_backgroundTexturePtr->GetWidth() != 0)
     {
         std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
@@ -276,6 +278,7 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
     }
+    // Render using a set of tiles
     else
     {
         std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
@@ -288,33 +291,38 @@ void GraphicsManager::renderBackground(Vector2D<float> cameraPos)
         shaderPtr->SetVec2("texturePos", texturePos.GetPtrToFlattenedData().get());
 
         int textureVecIdx = 0;
-        for (auto gameTilePtrVec : m_curLevelPtr->GetTileVec())
+        auto tilePtrVec = m_curLevelPtr->GetTileVec();
+        if (tilePtrVec != nullptr)
         {
-            int texX = 0;
-            for (auto tilePtr : gameTilePtrVec)
+            for (auto gameTilePtrVec : *tilePtrVec)
             {
-                Matrix4<GLfloat> backgroundModel;
-                auto position = tilePtr->GetTransformCompPtr()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
-                backgroundModel = backgroundModel.Translate(position);
+                int texX = 0;
+                for (auto tilePtr : gameTilePtrVec)
+                {
+                    Matrix4<GLfloat> backgroundModel;
+                    // Shift size based on camera position and one tile's height
+                    auto position = tilePtr->GetTransformCompPtr()->GetPosition() - cameraPos + Vector2D<float>(0, -Level::TILE_HEIGHT);
+                    backgroundModel = backgroundModel.Translate(position);
 
-                // Scale by the actual size of the sprite
-                auto tileTexPtr = m_tileTextureVec[tilePtr->GetSpriteIdx()];
-                Vector2D<GLfloat> spriteSize((float)tileTexPtr->GetWidth(), (float)tileTexPtr->GetHeight());
-                backgroundModel = backgroundModel.Scale(spriteSize);
+                    // Scale by the actual size of the sprite
+                    auto tileTexPtr = m_tileTextureVec[tilePtr->GetSpriteIdx()];
+                    Vector2D<GLfloat> spriteSize((float)tileTexPtr->GetWidth(), (float)tileTexPtr->GetHeight());
+                    backgroundModel = backgroundModel.Scale(spriteSize);
 
-                shaderPtr->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
+                    shaderPtr->SetMatrix4("model", backgroundModel.GetPtrToFlattenedData().get());
 
-                glActiveTexture(GL_TEXTURE0);
+                    glActiveTexture(GL_TEXTURE0);
 
-				tileTexPtr->BindTexture();
+                    tileTexPtr->BindTexture();
 
-                glBindVertexArray(this->m_quadVAO);
-                glDrawArrays(GL_TRIANGLES, 0, 6);
-                glBindVertexArray(0);
+                    glBindVertexArray(this->m_quadVAO);
+                    glDrawArrays(GL_TRIANGLES, 0, 6);
+                    glBindVertexArray(0);
 
-                texX++;
+                    texX++;
+                }
+                textureVecIdx++;
             }
-            textureVecIdx++;
         }
     }
 }

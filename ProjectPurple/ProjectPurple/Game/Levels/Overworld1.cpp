@@ -7,13 +7,17 @@
 #include "ServiceLocator.h"
 #include "ActorFactory.h"
 
-Overworld1::Overworld1(int levelWidth, int levelHeight, std::string spritePath, std::string vertexShader, std::string fragmentShader)
+Overworld1::Overworld1(int levelWidth, int levelHeight, 
+                       const std::string& spritePath, 
+                       const std::string& vertexShader, const std::string& fragmentShader)
     : LevelWithLightingLight(levelWidth, levelHeight, spritePath, vertexShader, fragmentShader)
 {
 }
 
-Overworld1::Overworld1(int levelWidth, int levelHeight, std::vector<std::vector<std::shared_ptr<GameTile>>> tileVec, std::string vertexShader, std::string fragmentShader)
-    : LevelWithLightingLight(levelWidth, levelHeight, tileVec, vertexShader, fragmentShader)
+Overworld1::Overworld1(int levelWidth, int levelHeight, 
+                       const std::shared_ptr<std::vector<std::vector<std::shared_ptr<GameTile>>>>& tilePtrVecVecPtr, 
+                       const std::string& vertexShader, const std::string& fragmentShader)
+    : LevelWithLightingLight(levelWidth, levelHeight, tilePtrVecVecPtr, vertexShader, fragmentShader)
 {
 }
 
@@ -35,6 +39,7 @@ void Overworld1::SetupLevel()
         return;
     }
 
+    // Remove locks if player has corresponding key
     bool hasFirstKey = std::dynamic_pointer_cast<PlayerGameStateComponent>(playerPtr->GetGameStateCompPtr())->InventoryContainsItem("FirstKey");
     if(hasFirstKey)
     {
@@ -47,6 +52,7 @@ void Overworld1::SetupLevel()
         actorFactoryPtr->KillAllActorsByName("SecondLock");
     }
 
+    // Don't allow entry to boss if the door is locked
     if (!(hasFirstKey && hasSecondKey))
     {
         auto door = actorFactoryPtr->GetFirstActorWithName("PortalToBossLevel1");

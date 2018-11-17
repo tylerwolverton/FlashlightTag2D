@@ -47,8 +47,6 @@ public:
 
 private:
     std::shared_ptr<ActorFactory> m_actorFactoryPtr;
-	std::vector<std::vector<std::shared_ptr<GameTile>>> m_tilePtrVecVec;
-	std::shared_ptr<Level> m_curLevelPtr;
 
     std::shared_ptr<Level> createLevelFromJson(const rapidjson::Value& level);
 };

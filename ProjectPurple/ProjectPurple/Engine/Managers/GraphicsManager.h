@@ -26,9 +26,9 @@ public:
 
     void Render();
 
-    void LoadNewLevel(std::shared_ptr<Level> level);
+    void LoadNewLevel(const std::shared_ptr<Level>& level);
     
-    void AddGraphicsComponentPtr(ComponentId compId, std::shared_ptr<GraphicsComponent> comp);
+    void AddGraphicsComponentPtr(ComponentId compId, const std::shared_ptr<GraphicsComponent>& comp);
     void RemoveGraphicsComponentPtr(ComponentId compId);
 
     // TODO: Cache changes
@@ -38,8 +38,8 @@ public:
     //void RemoveGraphicsCompPtr();
     //void UpdateComponents();
 
-    void AddCamera(std::shared_ptr<GameActor> camera);
-    std::shared_ptr<GameActor> GetCurrentCamera() { return m_curCameraPtr; }
+    void AddCamera(const std::shared_ptr<GameActor>& camera);
+    std::shared_ptr<GameActor> GetCurrentCamera() const { return m_curCameraPtr; }
 
 private:
     SDL_Window* m_windowPtr;
@@ -68,9 +68,9 @@ private:
 
     std::vector<std::shared_ptr<Texture2D>> m_tileTextureVec;
 
-	bool setOpenGLAttributes();
+	bool setOpenGLAttributes() const;
 	bool initializeRenderData();
 	void initializeTiles();
-	void renderBackground(Vector2D<float> cameraPos);
+	void renderBackground(const Vector2D<float>& cameraPos);
 };
 

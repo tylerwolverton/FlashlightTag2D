@@ -83,12 +83,12 @@ public:
         this->y = rhs.y;
     }
 
-    bool operator==(const Vector2D& rhs)
+    bool operator==(const Vector2D& rhs) const
     {
         return (this->x == rhs.x && this->y == rhs.y);
     }
 
-    bool operator!=(const Vector2D& rhs)
+    bool operator!=(const Vector2D& rhs) const
     {
         return !(this->x == rhs.x && this->y == rhs.y);
     }
@@ -117,7 +117,7 @@ public:
         return newVec;
     }
 
-    std::unique_ptr<T[]> GetPtrToFlattenedData()
+    std::unique_ptr<T[]> GetPtrToFlattenedData() const
     {
         std::unique_ptr<T[]> pflat(new T[2]);
         T* flat = new T[2] {x, y};
