@@ -1,6 +1,8 @@
 # ProjectPurple
 An action RPG created in a custom engine built using SDL2 and OpenGL. I'm using an entity component based design and json files for all game data.
 
+Everything inside the ProjectPurple/ProjectPurple directory is my code. (The Engine, Game, and Resources subdirectories.)
+
 I used the following resources to aid in the design of the engine:
 
 			Game Coding Complete, Fourth Edition by Mike McShaffry and David Graham
