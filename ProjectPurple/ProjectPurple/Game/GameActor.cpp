@@ -57,7 +57,7 @@ void GameActor::Update(float deltaMs, InputData input)
     
     updateComponent(EComponentNames::PhysicsComponentEnum, deltaMs);
     updateComponent(EComponentNames::LogicComponentEnum, deltaMs);
-    updateComponent(EComponentNames::GraphicsComponentEnum, deltaMs);
+    //updateComponent(EComponentNames::GraphicsComponentEnum, deltaMs);
     updateComponent(EComponentNames::GameStateComponentEnum, deltaMs);
 }
 
@@ -129,16 +129,16 @@ std::shared_ptr<CameraFollowComponent> GameActor::GetCameraFollowCompPtr() const
     return std::dynamic_pointer_cast<CameraFollowComponent>(component);
 }
 
-std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsCompPtr() const
-{
-    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
-    if (component == nullptr)
-    {
-        return nullptr;
-    }
-
-    return std::dynamic_pointer_cast<GraphicsComponent>(component);
-}
+//std::shared_ptr<GraphicsComponent> GameActor::GetGraphicsCompPtr() const
+//{
+//    std::shared_ptr<ActorComponent> component = getComponentByName(EComponentNames::GraphicsComponentEnum);
+//    if (component == nullptr)
+//    {
+//        return nullptr;
+//    }
+//
+//    return std::dynamic_pointer_cast<GraphicsComponent>(component);
+//}
 
 std::shared_ptr<InputComponent> GameActor::GetInputCompPtr() const
 {

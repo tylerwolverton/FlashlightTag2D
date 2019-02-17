@@ -163,11 +163,11 @@ void ActorFactory::addComponentsToManagers(const std::shared_ptr<GameActor>& act
     {
         m_physicsMgrPtr->AddPhysicsComponentPtr(physicsCompPtr->GetComponentId(), physicsCompPtr);
     }
-    auto graphicsCompPtr = actorPtr->GetGraphicsCompPtr();
+    /*auto graphicsCompPtr = actorPtr->GetGraphicsCompPtr();
     if (graphicsCompPtr != nullptr)
     {
         m_graphicsMgrPtr->AddGraphicsComponentPtr(graphicsCompPtr->GetComponentId(), graphicsCompPtr);
-    }
+    }*/
 }
 
 std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath, const Vector2D<float>& position)
@@ -269,24 +269,26 @@ std::shared_ptr<GameActor> ActorFactory::createActor(const char* const actorPath
         }
         if (actorJson.HasMember("graphics_component"))
         {
-            ComponentId graphicsCompId = getNextComponentId();
+            //ComponentId graphicsCompId = getNextComponentId();
             int animSpeed = -1;
             if (actorJson["graphics_component"].HasMember("animation_speed"))
             {
                 animSpeed = actorJson["graphics_component"]["animation_speed"].GetInt();
             }
-            std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(graphicsCompId,
+            /*std::shared_ptr<GraphicsComponent> graphicsCompPtr = std::make_shared<GraphicsComponent>(graphicsCompId,
                                                                                                      actorJson["graphics_component"]["sprite"].GetString(),
                                                                                                      animSpeed,
-                                                                                                     transformCompPtr);
+                                                                                                     transformCompPtr);*/
 
-            newActorPtr->InsertCompPtr(EComponentNames::GraphicsComponentEnum, graphicsCompPtr);
+            //newActorPtr->InsertCompPtr(EComponentNames::GraphicsComponentEnum, graphicsCompPtr);
 
-            // TODO: Cache changes
-            /*m_entityVec.back().m_componentIndexVec[EComponentTypes::Graphics] =
-            graphicsMgr.AddGraphicsComponent(actorList[i]["graphics_component"]["sprite"].GetString(),
-            actorList[i]["graphics_component"]["animation_speed"].GetInt(),
-            transformCompPtr);*/
+            // Cache changes
+			int graphicsCompIdx = m_graphicsMgrPtr->AddGraphicsComponent(actorJson["graphics_component"]["sprite"].GetString(),
+											                             animSpeed,
+			                                                             transformCompPtr);
+
+			newActorPtr->SetGraphicsCompIdx(graphicsCompIdx);
+
         }
 
         if (actorJson.HasMember("mouse_logic_component"))
@@ -517,11 +519,11 @@ void ActorFactory::RemoveDeadActors()
             m_physicsMgrPtr->RemovePhysicsComponentPtr(actorPhysCompPtr->GetComponentId());
         }
 
-        auto actorGraphicsCompPtr = actorMapIter->second->GetGraphicsCompPtr();
+        /*auto actorGraphicsCompPtr = actorMapIter->second->GetGraphicsCompPtr();
         if (actorGraphicsCompPtr != nullptr)
         {
             m_graphicsMgrPtr->RemoveGraphicsComponentPtr(actorGraphicsCompPtr->GetComponentId());
-        }
+        }*/
 
         auto actorGameStateCompPtr = actorMapIter->second->GetGameStateCompPtr();
         if (actorGameStateCompPtr != nullptr)

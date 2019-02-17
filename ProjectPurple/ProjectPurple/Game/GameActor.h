@@ -34,7 +34,7 @@ public:
     std::shared_ptr<AIComponent>             GetAICompPtr() const;
     std::shared_ptr<LogicComponent>	         GetLogicCompPtr() const;
     std::shared_ptr<CameraFollowComponent>   GetCameraFollowCompPtr() const;
-    std::shared_ptr<GraphicsComponent>	     GetGraphicsCompPtr() const;
+    //std::shared_ptr<GraphicsComponent>	     GetGraphicsCompPtr() const;
     std::shared_ptr<InputComponent>	         GetInputCompPtr() const;
     std::shared_ptr<PhysicsComponent>	     GetPhysicsCompPtr() const;
     std::shared_ptr<TransformComponent>	     GetTransformCompPtr() const;
@@ -58,6 +58,9 @@ public:
     const ActorId GetActorId() const { return m_actorId; }
     const std::string GetActorName() const { return m_actorName; }
 
+	const void SetGraphicsCompIdx(int graphicsCompIdx) { m_graphicsCompIdx = graphicsCompIdx; }
+	const int GetGraphicsCompIdx() const { return m_graphicsCompIdx; }
+
     const std::vector<std::shared_ptr<GameTile>> GetTileVec() const { return m_tileVec; }
     void SetTileVec(const std::vector<std::shared_ptr<GameTile>>& tileVec) { m_tileVec = tileVec; }
 
@@ -76,5 +79,6 @@ private:
     std::string m_actorName;
     // TODO: Cache changes
     //std::vector<int> m_componentIndexVec;
+	int m_graphicsCompIdx;
 };
 

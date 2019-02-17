@@ -10,6 +10,7 @@
 
 #define GL3_PROTOTYPES 1
 
+class TransformComponent;
 class GraphicsComponent;
 class GameActor;
 class Level;
@@ -33,7 +34,7 @@ public:
 
     // TODO: Cache changes
     //void AddGraphicsComponent(GraphicsComponent comp);
-    //int AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent);
+    int AddGraphicsComponent(const std::string& texturePath, int animationTimer, const std::shared_ptr<TransformComponent>& transformCompPtr);
 
     //void RemoveGraphicsCompPtr();
     //void UpdateComponents();
@@ -56,7 +57,7 @@ private:
     std::vector<std::vector<std::shared_ptr<Texture2D>>> m_backgroundTilePtrVecVec;
 	    
     // TODO: Cache changes
-    //std::vector<GraphicsComponent> m_graphicsComponentVec;
+    std::vector<GraphicsComponent> m_graphicsCompVec;
     //std::vector<std::shared_ptr<GraphicsComponent>> m_graphicsComponentPtrVec;
     std::map<ComponentId, std::shared_ptr<GraphicsComponent>> m_graphicsCompPtrMap;
 

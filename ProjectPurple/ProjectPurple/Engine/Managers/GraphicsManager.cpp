@@ -104,13 +104,14 @@ void GraphicsManager::RemoveGraphicsComponentPtr(ComponentId compId)
 //{ 
 //    m_graphicsComponentVec.push_back(comp); 
 //};
-//
-//int GraphicsManager::AddGraphicsComponent(std::string texturePath, int animationTimer, StrongTransformComponentPtr transformComponent)
-//{
-//	int compId = getNextComponentId();
-//	m_graphicsComponentVec.emplace_back(compId, texturePath, animationTimer, transformComponent);
-//	return compId;
-//}
+
+int GraphicsManager::AddGraphicsComponent(const std::string& texturePath, int animationTimer, const std::shared_ptr<TransformComponent>& transformCompPtr)
+{
+	//int compId = getNextComponentId();
+	int compId = m_graphicsCompVec.size();
+	m_graphicsCompVec.emplace_back(compId, texturePath, animationTimer, transformCompPtr);
+	return compId;
+}
 
 bool GraphicsManager::setOpenGLAttributes() const
 {
@@ -194,59 +195,116 @@ void GraphicsManager::AddCamera(const std::shared_ptr<GameActor>& camera)
 
 void GraphicsManager::Render()
 {
-    auto cameraTransformCompPtr = m_curCameraPtr->GetTransformCompPtr();
-    if (cameraTransformCompPtr == nullptr) 
-	{ 
+	auto cameraTransformCompPtr = m_curCameraPtr->GetTransformCompPtr();
+	if (cameraTransformCompPtr == nullptr)
+	{
 		return;
 	}
 
-    Vector2D<float> cameraPos = cameraTransformCompPtr->GetPosition();
-    Vector2D<float> cameraSize = cameraTransformCompPtr->GetSize();
+	Vector2D<float> cameraPos = cameraTransformCompPtr->GetPosition();
+	Vector2D<float> cameraSize = cameraTransformCompPtr->GetSize();
 
-    glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 
-    std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
-    
-    renderBackground(cameraPos);
+	std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
 
-    m_curLevelPtr->PrepShaders(m_graphicsCompPtrMap, cameraPos);
+	renderBackground(cameraPos);
 
-    for (auto graphicsCompEntry : m_graphicsCompPtrMap)
-    {
-        auto actorTransformCompPtr = *(graphicsCompEntry.second->GetTransformCompPtr());
+	m_curLevelPtr->PrepShaders(m_graphicsCompPtrMap, cameraPos);
 
-        Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
-        Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
+	for (const auto& graphicsComp : m_graphicsCompVec)
+	{
+		// TODO: Check if this entry is valid
+		auto actorTransformCompPtr = graphicsComp.GetTransformCompPtr();
 
-        if (actorPos.x + actorSize.x < cameraPos.x || actorPos.x - actorSize.x > cameraPos.x + cameraSize.x
-            || actorPos.y + actorSize.y < cameraPos.y || actorPos.y - actorSize.y > cameraPos.y + cameraSize.y)
-        {
-            continue;
-        }
+		Vector2D<float> actorPos = actorTransformCompPtr->GetPosition();
+		Vector2D<float> actorSize = actorTransformCompPtr->GetSize();
 
-        // Prepare transformations
-        Matrix4<GLfloat> model;
-        Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompEntry.second->GetImageOffset();
-        model = model.Translate(actorLocation);
-        model = model.Scale(actorSize);
+		if (actorPos.x + actorSize.x < cameraPos.x || actorPos.x - actorSize.x > cameraPos.x + cameraSize.x
+			|| actorPos.y + actorSize.y < cameraPos.y || actorPos.y - actorSize.y > cameraPos.y + cameraSize.y)
+		{
+			continue;
+		}
 
-        // Set shader variables
-        shaderPtr->SetMatrix4("model", model.GetPtrToFlattenedData().get());
-        shaderPtr->SetVec2("textureSize", graphicsCompEntry.second->GetTextureSize().GetPtrToFlattenedData().get());
-        shaderPtr->SetVec2("texturePos", graphicsCompEntry.second->GetTexturePos().GetPtrToFlattenedData().get());
-        
-        glActiveTexture(GL_TEXTURE0);
-                
-		graphicsCompEntry.second->GetTexture()->BindTexture();
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		// Prepare transformations
+		Matrix4<GLfloat> model;
+		Vector2D<float> actorLocation = actorPos - cameraPos - graphicsComp.GetImageOffset();
+		model = model.Translate(actorLocation);
+		model = model.Scale(actorSize);
 
-        glBindVertexArray(this->m_quadVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
-    }
+		// Set shader variables
+		shaderPtr->SetMatrix4("model", model.GetPtrToFlattenedData().get());
+		shaderPtr->SetVec2("textureSize", graphicsComp.GetTextureSize().GetPtrToFlattenedData().get());
+		shaderPtr->SetVec2("texturePos", graphicsComp.GetTexturePos().GetPtrToFlattenedData().get());
 
-    SDL_GL_SwapWindow(m_windowPtr);
+		glActiveTexture(GL_TEXTURE0);
+
+		graphicsComp.GetTexture()->BindTexture();
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+		glBindVertexArray(this->m_quadVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+	}
+
+	SDL_GL_SwapWindow(m_windowPtr);
 }
+
+//void GraphicsManager::Render()
+//{
+//    auto cameraTransformCompPtr = m_curCameraPtr->GetTransformCompPtr();
+//    if (cameraTransformCompPtr == nullptr) 
+//	{ 
+//		return;
+//	}
+//
+//    Vector2D<float> cameraPos = cameraTransformCompPtr->GetPosition();
+//    Vector2D<float> cameraSize = cameraTransformCompPtr->GetSize();
+//
+//    glClear(GL_COLOR_BUFFER_BIT);
+//
+//    std::shared_ptr<Shader> shaderPtr = m_curLevelPtr->GetShader();
+//    
+//    renderBackground(cameraPos);
+//
+//    m_curLevelPtr->PrepShaders(m_graphicsCompPtrMap, cameraPos);
+//
+//    for (auto graphicsCompEntry : m_graphicsCompPtrMap)
+//    {
+//        auto actorTransformCompPtr = *(graphicsCompEntry.second->GetTransformCompPtr());
+//
+//        Vector2D<float> actorPos = actorTransformCompPtr.GetPosition();
+//        Vector2D<float> actorSize = actorTransformCompPtr.GetSize();
+//
+//        if (actorPos.x + actorSize.x < cameraPos.x || actorPos.x - actorSize.x > cameraPos.x + cameraSize.x
+//            || actorPos.y + actorSize.y < cameraPos.y || actorPos.y - actorSize.y > cameraPos.y + cameraSize.y)
+//        {
+//            continue;
+//        }
+//
+//        // Prepare transformations
+//        Matrix4<GLfloat> model;
+//        Vector2D<float> actorLocation = actorPos - cameraPos - graphicsCompEntry.second->GetImageOffset();
+//        model = model.Translate(actorLocation);
+//        model = model.Scale(actorSize);
+//
+//        // Set shader variables
+//        shaderPtr->SetMatrix4("model", model.GetPtrToFlattenedData().get());
+//        shaderPtr->SetVec2("textureSize", graphicsCompEntry.second->GetTextureSize().GetPtrToFlattenedData().get());
+//        shaderPtr->SetVec2("texturePos", graphicsCompEntry.second->GetTexturePos().GetPtrToFlattenedData().get());
+//        
+//        glActiveTexture(GL_TEXTURE0);
+//                
+//		graphicsCompEntry.second->GetTexture()->BindTexture();
+//        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+//
+//        glBindVertexArray(this->m_quadVAO);
+//        glDrawArrays(GL_TRIANGLES, 0, 6);
+//        glBindVertexArray(0);
+//    }
+//
+//    SDL_GL_SwapWindow(m_windowPtr);
+//}
 
 void GraphicsManager::renderBackground(const Vector2D<float>& cameraPos)
 {
